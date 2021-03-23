@@ -340,7 +340,7 @@ h2.section-header {
   ul[role="menubar"] ul[role="menu"] {
     display: none;
     position: absolute;
-    top: -2px;
+    top: 50px;
     left: -33px;
     margin: 0;
     padding: 0;
@@ -479,8 +479,14 @@ h2.section-header {
     }
 
     #menu-wrapper ul[role=menubar] ul[role=menu]{
-      left: 0;
-      padding: 0 33px 35px 35px;
+      padding: 10px 33px 35px 35px;
+      top: 40px !important;
+      right: -40vw !important;
+      left: -35vw !important;
+
+      li {
+        text-align: center;
+      }
     }
   }
 }
@@ -972,6 +978,13 @@ button:focus{
     .desktop-only{
       display: none;
     }
+    .mobile-only {
+      display: inline-block;
+    }
+
+    header {
+      background-color: yellow;
+    }
 
     // Hide the arrow on mobile
     .inline-monthly-upsell:before{
@@ -989,15 +1002,20 @@ button:focus{
     }
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"]{
-      left: -162px;
       padding-right: 28px;
       text-align: right;
+      top: 50px;
+      left: -80vw;
+      right: -5vw;
     }
   }
 
   @mixin on-desktop {
     .mobile-only{
       display: none;
+    }
+    .desktop-only{
+      display: inline-block;
     }
   }  
 
@@ -1407,7 +1425,7 @@ body#en__pagebuilder .content-footerSpacer{
     
     .body-footer {
       margin-bottom: 80px;
-    } 
+    }
   }
 
 }

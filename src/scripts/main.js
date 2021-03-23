@@ -847,7 +847,7 @@ document.onreadystatechange = () => {
         else {
         this.domNode.style.display = 'block';
         this.domNode.style.position = 'absolute';
-        this.domNode.style.top = (rect.height - 1) + 'px';
+        //this.domNode.style.top = (rect.height - 1) + 'px';
         this.domNode.style.zIndex = 100;
         }
 
