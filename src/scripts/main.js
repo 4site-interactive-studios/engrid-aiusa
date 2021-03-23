@@ -24,6 +24,11 @@ document.onreadystatechange = () => {
             enFieldMobilePhone.placeholder = "Phone Number (Optional)";
         }
 
+        let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
+        if(enFieldAddressLine2){
+          enFieldAddressLine2.placeholder = "#000";
+        }
+
         // Add "what's this" markup to the CVV field
         let ccvvLabel = document.querySelectorAll('.en__field--ccvv > label')[0];
         if(ccvvLabel){
