@@ -94,7 +94,8 @@ h1 {
   top: 10px;
   font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  font-family: var(--theme-typography-headline-font-family);
+  letter-spacing: 1px;;
 }
 
 .en__component--contactblock .en__contactDetails__rows:after{
@@ -102,7 +103,8 @@ h1 {
   top: 6px;
   font-size: 1.2rem;
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  font-family: var(--theme-typography-headline-font-family);
+  letter-spacing: 1px;;
 }
 
 input.en__field__input--checkbox:checked + label,
@@ -147,7 +149,6 @@ input.en__field__input--checkbox + label{
   padding: 12px 5px;
   width: 100%;
   text-transform: uppercase;
-  font-family: "AmnestyTradeGothic";
   justify-content: center;
   display: inline-block;
   text-align: center;
@@ -164,16 +165,16 @@ select {
 
 .en__component--formblock {
   label {
-    letter-spacing: 0.06rem;
     font-weight: 700;
-    letter-spacing: 0.1rem;
+    font-family: var(--theme-typography-headline-font-family);
+    letter-spacing: 1px;
   }
 }
 
 .en__submit button {
-  font-family: "AmnestyTradeGothic";
+  font-family: var(--theme-typography-headline-font-family);
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  letter-spacing: 1px;
 }
 
 // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
@@ -192,7 +193,7 @@ select {
 h2.section-header {
   width: 100%;
   text-align: center;
-  font-family: "AmnestyTradeGothic";
+  font-family: var(--theme-typography-headline-font-family);
   font-weight: 700;
   position: relative;
   letter-spacing: 1.25px;
@@ -263,7 +264,8 @@ h2.section-header {
   ul[role="menubar"] {
     text-transform: uppercase;
     font-weight: 700;
-    letter-spacing: 0.1rem;
+    font-family: var(--theme-typography-headline-font-family);
+    letter-spacing: 1px;
     // margin: 10px;
     // padding: 1rem;
     padding-right: 20px;
@@ -448,7 +450,9 @@ h2.section-header {
       }
       strong {
         font-weight: 700;
-        font-size: 1rem;
+        // the one place not to use the condensed
+        font-family: var(--theme-typography-default-font-family);
+        font-size: 14px;
         letter-spacing: 0.01rem;
       }
     }
@@ -665,7 +669,8 @@ button:focus{
     margin-top: 10px;
     text-align: center;
     font-weight: 700;
-    letter-spacing: 0.1rem;
+    font-family: var(--theme-typography-headline-font-family);
+    letter-spacing: 1px;;
 
     p{
       margin: 0;
@@ -719,7 +724,8 @@ button:focus{
     font-size: 1rem;
     line-height: 1.25rem;
     font-weight: 700;
-    letter-spacing: 0.1rem;
+    letter-spacing: 1px;;
+    font-family: var(--theme-typography-headline-font-family);
   }
   &::before {
     content: "";
@@ -773,7 +779,7 @@ button:focus{
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: 0.1rem;
+  letter-spacing: 1px;;
   line-height: 0;
   height: 0;
   left: 1rem;
@@ -919,7 +925,8 @@ button:focus{
       .en__pg__detail {
         .en__pg__name {
           font-weight: 700;
-          letter-spacing: 0.1rem;
+          font-family: var(--theme-typography-headline-font-family);
+          letter-spacing: 1px;;
           text-transform: none;
         }
       }
@@ -936,7 +943,8 @@ button:focus{
 .en__component--ecardblock {
   h2 {
     font-weight: 700;
-    letter-spacing: 0.1rem;
+    font-family: var(--theme-typography-headline-font-family);
+    letter-spacing: 1px;;
   }
   .en__ecardrecipients__email input, .en__ecardrecipients__name input {
     width: 100%;

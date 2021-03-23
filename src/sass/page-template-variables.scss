@@ -68,7 +68,7 @@
     --theme-typography-p-line-height: initial;
         
     // TYPOGRAPHY STRONG
-    --theme-typography-strong-font-family: var(--theme-typography-default-font-family);
+    --theme-typography-strong-font-family: var(--theme-font-stack-browser-fonts-cn);
     --theme-typography-strong-color: initial;
         
     // TYPOGRAPHY LABEL
@@ -179,7 +179,7 @@
     --theme-typography-textarea-checked-box-shadow: var(--theme-typography-input-checked-box-shadow);
 
     // TYPOGRAPHY BUTTON
-    --theme-typography-button-font-family: var(--theme-typography-default-font-family);
+    --theme-typography-button-font-family: var(--theme-typography-strong-font-family);
     --theme-typography-button-color: #252525;
     --theme-typography-button-font-size: 18px;
     --theme-typography-button-font-weight: bold;
@@ -416,7 +416,7 @@
 
     // ADD THEME CUSTOM CSS PROPERTIES HERE
     // TYPOGRAPHY HEADLINE
-    --theme-font-stack-browser-fonts-cn: "AmnestyTradeGothic", var(--theme-font-stack-browser-fonts);
+    --theme-font-stack-browser-fonts-cn: "AmnestyTradeGothicCn", var(--theme-font-stack-browser-fonts);
     --theme-typography-headline-font-family: var(--theme-font-stack-browser-fonts-cn);
     --theme-typography-headline-font-weight: 700;
 }
