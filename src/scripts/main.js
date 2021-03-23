@@ -21,7 +21,7 @@ document.onreadystatechange = () => {
         // Add placeholder to the Mobile Phone Field
         let enFieldMobilePhone = document.querySelectorAll('input#en__field_supporter_NOT_TAGGED_13')[0];
         if(enFieldMobilePhone){
-            enFieldMobilePhone.placeholder = "Phone Number (Optional)";
+            enFieldMobilePhone.placeholder = "000-000-0000 (Optional)";
         }
 
         let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
@@ -33,6 +33,13 @@ document.onreadystatechange = () => {
         if(enFieldPostalCode){
           enFieldPostalCode.placeholder = "00000";
         }
+        
+        let enFieldPhoneNumber = document.querySelectorAll('input#en__field_supporter_phoneNumber')[0];
+        if(enFieldPhoneNumber){
+          enFieldPhoneNumber.placeholder = "000-000-0000 (Optional)";
+        }
+
+        
 
         // Add "what's this" markup to the CVV field
         let ccvvLabel = document.querySelectorAll('.en__field--ccvv > label')[0];
