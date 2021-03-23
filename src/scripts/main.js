@@ -21,7 +21,7 @@ document.onreadystatechange = () => {
         // Add placeholder to the Mobile Phone Field
         let enFieldMobilePhone = document.querySelectorAll('input#en__field_supporter_NOT_TAGGED_13')[0];
         if(enFieldMobilePhone){
-            enFieldMobilePhone.placeholder = "000-000-0000 (Optional)";
+            enFieldMobilePhone.placeholder = "Phone Number (Optional)";
         }
 
         let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
@@ -36,7 +36,7 @@ document.onreadystatechange = () => {
         
         let enFieldPhoneNumber = document.querySelectorAll('input#en__field_supporter_phoneNumber')[0];
         if(enFieldPhoneNumber){
-          enFieldPhoneNumber.placeholder = "000-000-0000 (Optional)";
+          enFieldPhoneNumber.placeholder = "Phone Number (Optional)";
         }
 
         
