@@ -56,8 +56,7 @@ h1 {
   font-family: var(--theme-font-stack-browser-fonts);
 }
 
-.en__field.en__field--checkbox > label,
-#en__field_transaction_recurrpay {
+.en__field.en__field--checkbox > label{
   display: none;
 }
 
