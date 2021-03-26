@@ -794,6 +794,20 @@ button:focus{
   }
 }
 
+/*
+* ##########################################################
+* # GENERAL: Inline Label Tooltip
+* ##########################################################
+*/
+
+label a.label-tooltip {
+  text-transform: none;
+  position: absolute;
+  right: 0;
+  text-decoration: underline;
+  color: #767676;
+  font-weight: 400;
+}
 
 
 /*
@@ -801,16 +815,6 @@ button:focus{
 * # DONATION: PAYMENT FIELDS
 * ##########################################################
 */
-
-  a.whats-this {
-    font-size: 0.75rem;
-    text-transform: none;
-    position: absolute;
-    right: 0;
-    text-decoration: underline;
-    color: #767676;
-    font-weight: 400;
-  }
 
   .card,
   .check,

@@ -39,7 +39,25 @@ document.onreadystatechange = () => {
           enFieldPhoneNumber.placeholder = "Phone Number (Optional)";
         }
 
-        
+        // Add "Why is this required?" markup to the Title field
+        // Only show it if the Title field is marked as required
+        let titleLabel = document.querySelectorAll('.en__field--title.en__mandatory > label')[0];
+        if(titleLabel){
+            let el = document.createElement('span');
+            let childEl = document.createElement('a');
+            childEl.href='#';
+            childEl.id = 'title-tooltip';
+            childEl.className="label-tooltip";
+            childEl.tabIndex="-1";
+            childEl.innerText="Why is this required?";
+            childEl.addEventListener('click',e=>e.preventDefault());
+            el.appendChild(childEl);
+            titleLabel.appendChild(el);
+            tippy("#title-tooltip", {
+              content:
+                "The U.S. Senate is now requiring that all letters include one of the following titles: Mr., Mrs., Miss, Ms., Dr. We understand that not everyone identifies with one of these titles. In order to ensure that your voice is being heard, you need to select one of the above options or your letter will be rejected.",
+            });
+        }        
 
         // Add "what's this" markup to the CVV field
         let ccvvLabel = document.querySelectorAll('.en__field--ccvv > label')[0];
@@ -47,14 +65,14 @@ document.onreadystatechange = () => {
             let el = document.createElement('span');
             let childEl = document.createElement('a');
             childEl.href='#';
-            childEl.id = 'ccv-popcorn';
-            childEl.className="whats-this";
+            childEl.id = 'ccv-tooltip';
+            childEl.className="label-tooltip";
             childEl.tabIndex="-1";
             childEl.innerText="What's this?";
             childEl.addEventListener('click',e=>e.preventDefault());
             el.appendChild(childEl);
             ccvvLabel.appendChild(el);
-            tippy("#ccv-popcorn", {
+            tippy("#ccv-tooltip", {
               content:
                 "The three or four digit security code on your debit or credit card",
             });
