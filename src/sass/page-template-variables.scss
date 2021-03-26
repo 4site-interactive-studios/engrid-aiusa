@@ -34,7 +34,7 @@
 
     // TYPOGRAPHY DEFAULT
     --theme-typography-default-font-family: var(--theme-font-stack-aiusa);
-    --theme-typography-default-color: initial;
+    --theme-typography-default-color: #252525;
     --theme-typography-default-font-size: var(--theme-root-font-size);
     --theme-typography-default-font-weight: initial;
     --theme-typography-default-line-height: initial;
@@ -44,21 +44,21 @@
     --theme-typography-h1-color: initial;
     --theme-typography-h1-font-size: calc(var(--theme-root-font-size) * var(--scale-up-160pct));
     --theme-typography-h1-font-weight: var(--theme-typography-headline-font-weight);
-    --theme-typography-h1-line-height: initial;
+    --theme-typography-h1-line-height: var(--theme-typography-h1-font-size);
         
     // TYPOGRAPHY H2
     --theme-typography-h2-font-family: var(--theme-typography-h1-font-family);
     --theme-typography-h2-color: initial;
     --theme-typography-h2-font-size: calc(var(--theme-root-font-size) * var(--scale-up-80pct));
     --theme-typography-h2-font-weight: initial;
-    --theme-typography-h2-line-height: initial;
+    --theme-typography-h2-line-height: var(--theme-typography-h2-font-size);
         
     // TYPOGRAPHY H3
     --theme-typography-h3-font-family: var(--theme-typography-h1-font-family);
     --theme-typography-h3-color: initial;
     --theme-typography-h3-font-size: calc(var(--theme-root-font-size) * var(--scale-up-40pct));
     --theme-typography-h3-font-weight: initial;
-    --theme-typography-h3-line-height: initial;
+    --theme-typography-h3-line-height: var(--theme-typography-h3-font-size);
         
     // TYPOGRAPHY P
     --theme-typography-p-font-family: var(--theme-typography-default-font-family);
@@ -68,8 +68,8 @@
     --theme-typography-p-line-height: initial;
         
     // TYPOGRAPHY STRONG
-    --theme-typography-strong-font-family: var(--theme-typography-default-font-family);
-    --theme-typography-strong-color: initial;
+    // --theme-typography-strong-font-family: var(--theme-typography-default-font-family);
+    --theme-typography-strong-color: #252525;
         
     // TYPOGRAPHY LABEL
     --theme-typography-label-font-family: var(--theme-font-stack-aiusa-bold-condensed);

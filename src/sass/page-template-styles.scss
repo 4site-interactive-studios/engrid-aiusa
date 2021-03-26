@@ -195,7 +195,7 @@ h2.section-header {
   font-weight: 700;
   position: relative;
   letter-spacing: 1.25px;
-  font-size: 0.9rem;
+  font-size: 1rem;
   overflow: hidden;
   margin: 10px 0 20px;
   &:before,
@@ -445,15 +445,17 @@ figure.media-with-attribution figattribution a{
 
     p {
       margin: 0px;
-      line-height: 0.8rem;
-      font-size: 0.75rem;
+      line-height: 1rem;
+      font-size: 0.95rem;
       font-weight: 400;
       &:first-child {
         margin-bottom: 5px;
       }
       strong {
+        font-family: var(--theme-typography-default-font-family);
         font-weight: 700;
         font-size: 1rem;
+        // font-family: var(--theme-typography-donation-amount-button-font-family);
         // letter-spacing: 0.01rem;
       }
     }
@@ -507,7 +509,7 @@ figure.media-with-attribution figattribution a{
 .body-title {
   :last-child{
     padding-bottom: 0;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
 }
 
@@ -527,7 +529,7 @@ figure.media-with-attribution figattribution a{
   h1 {
     font-size: 2.5rem;
     line-height: 3.1rem;
-    margin-bottom: 0;
+    // margin-bottom: 0;
   }
 }
 
