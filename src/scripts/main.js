@@ -24,6 +24,23 @@ document.onreadystatechange = () => {
             enFieldMobilePhone.placeholder = "Phone Number (Optional)";
         }
 
+        let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
+        if(enFieldAddressLine2){
+          enFieldAddressLine2.placeholder = "#000";
+        }
+        
+        let enFieldPostalCode = document.querySelectorAll('input#en__field_supporter_postcode')[0];
+        if(enFieldPostalCode){
+          enFieldPostalCode.placeholder = "00000";
+        }
+        
+        let enFieldPhoneNumber = document.querySelectorAll('input#en__field_supporter_phoneNumber')[0];
+        if(enFieldPhoneNumber){
+          enFieldPhoneNumber.placeholder = "Phone Number (Optional)";
+        }
+
+        
+
         // Add "what's this" markup to the CVV field
         let ccvvLabel = document.querySelectorAll('.en__field--ccvv > label')[0];
         if(ccvvLabel){
@@ -830,7 +847,7 @@ document.onreadystatechange = () => {
         else {
         this.domNode.style.display = 'block';
         this.domNode.style.position = 'absolute';
-        this.domNode.style.top = (rect.height - 1) + 'px';
+        //this.domNode.style.top = (rect.height - 1) + 'px';
         this.domNode.style.zIndex = 100;
         }
 

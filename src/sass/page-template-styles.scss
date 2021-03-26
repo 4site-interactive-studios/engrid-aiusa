@@ -93,7 +93,6 @@ h1 {
   top: 10px;
   font-size: 1.2rem;
   font-weight: 700;
-  // letter-spacing: 0.1rem;
 }
 
 .en__component--contactblock .en__contactDetails__rows:after{
@@ -101,7 +100,6 @@ h1 {
   top: 6px;
   font-size: 1.2rem;
   font-weight: 700;
-  // letter-spacing: 0.1rem;
 }
 
 input.en__field__input--checkbox:checked + label,
@@ -163,16 +161,13 @@ select {
 
 .en__component--formblock {
   label {
-    letter-spacing: 0.06rem;
     font-weight: 700;
-    // letter-spacing: 0.1rem;
   }
 }
 
 .en__submit button {
   font-family: var(--theme-font-stack-aiusa-bold-condensed);
   font-weight: 700;
-  // letter-spacing: 0.1rem;
 }
 
 // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
@@ -267,7 +262,6 @@ figure.media-with-attribution figattribution a{
   ul[role="menubar"] {
     text-transform: uppercase;
     font-weight: 700;
-    // letter-spacing: 0.1rem;
     // margin: 10px;
     // padding: 1rem;
     padding-right: 20px;
@@ -343,7 +337,7 @@ figure.media-with-attribution figattribution a{
   ul[role="menubar"] ul[role="menu"] {
     display: none;
     position: absolute;
-    top: -2px;
+    top: 50px;
     left: -33px;
     margin: 0;
     padding: 0;
@@ -482,8 +476,14 @@ figure.media-with-attribution figattribution a{
     }
 
     #menu-wrapper ul[role=menubar] ul[role=menu]{
-      left: 0;
-      padding: 0 33px 35px 35px;
+      padding: 10px 33px 35px 35px;
+      top: 40px !important;
+      right: -40vw !important;
+      left: -35vw !important;
+
+      li {
+        text-align: center;
+      }
     }
   }
 }
@@ -672,7 +672,6 @@ button:focus{
     margin-top: 10px;
     text-align: center;
     font-weight: 700;
-    // letter-spacing: 0.1rem;
 
     p{
       margin: 0;
@@ -726,7 +725,6 @@ button:focus{
     font-size: 1rem;
     line-height: 1.25rem;
     font-weight: 700;
-    // letter-spacing: 0.1rem;
     font-family: var(--theme-font-stack-aiusa-bold-condensed);
   }
   &::before {
@@ -781,7 +779,6 @@ button:focus{
   font-family: inherit;
   font-size: 1rem;
   font-weight: 700;
-  // letter-spacing: 0.1rem;
   line-height: 0;
   height: 0;
   left: 1rem;
@@ -927,7 +924,6 @@ button:focus{
       .en__pg__detail {
         .en__pg__name {
           font-weight: 700;
-          // letter-spacing: 0.1rem;
           text-transform: none;
         }
       }
@@ -944,7 +940,6 @@ button:focus{
 .en__component--ecardblock {
   h2 {
     font-weight: 700;
-    // letter-spacing: 0.1rem;
   }
   .en__ecardrecipients__email input, .en__ecardrecipients__name input {
     width: 100%;
@@ -972,6 +967,13 @@ button:focus{
     .desktop-only{
       display: none;
     }
+    .mobile-only {
+      display: inline-block;
+    }
+
+    header {
+      background-color: yellow;
+    }
 
     // Hide the arrow on mobile
     .inline-monthly-upsell:before{
@@ -989,15 +991,20 @@ button:focus{
     }
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"]{
-      left: -162px;
       padding-right: 28px;
       text-align: right;
+      top: 50px;
+      left: -80vw;
+      right: -5vw;
     }
   }
 
   @mixin on-desktop {
     .mobile-only{
       display: none;
+    }
+    .desktop-only{
+      display: inline-block;
     }
   }  
 
@@ -1407,7 +1414,7 @@ body#en__pagebuilder .content-footerSpacer{
     
     .body-footer {
       margin-bottom: 80px;
-    } 
+    }
   }
 
 }
