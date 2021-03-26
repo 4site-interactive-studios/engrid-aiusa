@@ -506,10 +506,24 @@ figure.media-with-attribution figattribution a{
 * ##########################################################
 */
 
-.body-title {
-  :last-child{
+
+.body-title:not(:empty) {
+  padding-top: 36px;
+  padding-bottom: 1rem;
+
+  // Let it butt right up against the top of the section
+  & > div:first-of-type > :first-child{
+    margin-top: 0px;
+    padding-top: 0px;
+  }
+
+  // Let the second to last element determine the spacing between it and the last element
+  // Let the parent section determin the spacing between the last element and the next section
+  & > div:last-of-type > :last-child{
+    margin-top:0;
+    padding-top: 0;
     padding-bottom: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 }
 
@@ -541,7 +555,22 @@ figure.media-with-attribution figattribution a{
 
 // Sometimes there is not form on the page and this section is empty (e.g Thank You Page).
 .body-main:not(:empty) {
-  padding-top: 40px;
+  padding-top: 36px;
+
+  // Let it butt right up against the top of the section
+  & > div:first-of-type > :first-child{
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  // Let the second to last element determine the spacing between it and the last element
+  // Let the parent section determin the spacing between the last element and the next section
+  & > div:last-of-type > :last-child{
+    margin-top:0;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
 }
 
 
