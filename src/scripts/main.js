@@ -55,7 +55,7 @@ document.onreadystatechange = () => {
             titleLabel.appendChild(el);
             tippy("#title-tooltip", {
               content:
-                "The U.S. Senate is now requiring that all letters include one of the following titles: Mr., Mrs., Miss, Ms., Dr. We understand that not everyone identifies with one of these titles, and we have provided additional options. However, in order to sure that your action lands in the inbox of your Senator, you may need to select one of these options.",
+                "The U.S. Senate is now requiring that all letters include one of the following titles: Mr., Mrs., Miss, Ms., Dr. We understand that not everyone identifies with one of these titles, and we have provided additional options. However, in order to ensure that your action lands in the inbox of your Senator, you may need to select one of these options.",
             });
         }        
 
