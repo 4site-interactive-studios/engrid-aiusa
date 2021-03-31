@@ -27,16 +27,6 @@ module.exports = {
         collapseWhitespace: false,
       },
     }),
-    new HtmlWebpackPlugin({
-      title: "Engaging Networks Email - eCard",
-      filename: "email-ecard.html",
-      template: "./src/templates/email-ecard.html",
-      inject: true,
-      minify: {
-        removeComments: false,
-        collapseWhitespace: false,
-      },
-    }),
   ],
   module: {
     rules: [
