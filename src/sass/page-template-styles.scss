@@ -178,8 +178,7 @@
     color: #252525;
   }
 
-  input::placeholder,
-  select {
+  input::placeholder {
     color: var(--theme-typography-input-placeholder-color);
   }
 
@@ -561,7 +560,7 @@
 
   // Sometimes there is not form on the page and this section is empty (e.g Thank You Page).
   .body-main:not(:empty) {
-    padding-top: 36px;
+    padding-top: 24px;
 
     // Let it butt right up against the top of the section
     & > div:first-of-type > :first-child {
@@ -1435,6 +1434,10 @@ body#en__pagebuilder .content-footerSpacer {
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   --theme-body-padding: 0px 50px;
+
+  .body-main:not(:empty) {
+    padding-top: 36px;
+  }
 
   // Remove the box body based shadow, otherwise it will overlap with the side-by-side content
   .body-header:before,
