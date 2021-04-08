@@ -72,7 +72,7 @@
   .en__field__input--checkbox + .en__field__label:before {
     height: 2rem;
     width: 2rem;
-    top: 3px;
+    top: 0;
     left: 0;
   }
 
@@ -90,7 +90,7 @@
 
   .en__field__input--checkbox:checked + .en__field__label::after {
     left: 7px;
-    top: 10px;
+    top: 8px;
     font-size: 1.2rem;
     font-weight: 700;
   }
