@@ -103,7 +103,10 @@
     font-size: 1.2rem;
     font-weight: 700;
   }
-  .en__contact.en__contact--open .en__contact__toggle {
+  .en__contactDetail {
+    font-size: 14px;
+  }
+  .en__contact .en__contact__toggle {
     display: none;
   }
 
@@ -1157,6 +1160,49 @@
       @include simplified-content-header;
       @include simplified-content-footer;
       @include simplified-page-backgroundImage;
+    }
+  }
+  .en__contact--closed .en__contactSubject,
+  .en__contact--closed .en__contactMessage {
+    display: block;
+    height: auto;
+    padding-top: 10px;
+  }
+  .en__contact {
+    margin-bottom: 25px;
+  }
+  .en__contact__detail {
+    .en__contactSubject::before,
+    .en__contactMessage::before {
+      word-break: break-word;
+      box-sizing: border-box;
+      touch-action: manipulation;
+      font-family: var(--theme-typography-label-font-family);
+      color: var(--theme-typography-label-color);
+      font-size: var(--theme-typography-label-font-size);
+      line-height: var(--theme-typography-label-line-height);
+      vertical-align: middle;
+      display: inline-block;
+      width: auto;
+      padding: 0.375rem 0;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .en__contactSubject {
+      font-weight: 700;
+      &::before {
+        content: "Subject Line";
+      }
+    }
+    .en__contactMessage {
+      .en__contactMessage__plainText {
+        font-size: 16px;
+        height: 250px;
+        padding: 12px;
+      }
+      &::before {
+        content: "Your Message";
+      }
     }
   }
 } // END AIUSA ENGRID CUSTOM THEME
