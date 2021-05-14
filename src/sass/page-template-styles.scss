@@ -60,10 +60,6 @@
     display: none;
   }
 
-  .en__field.en__field--checkbox label {
-    color: var(--theme-typography-p-color);
-  }
-
   .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
     margin-left: 41px;
     width: 100%;
@@ -1243,6 +1239,9 @@
     margin-left: 15px;
   }
   .en__field--survey {
+    &.en__field.en__field--checkbox > label {
+      display: block;
+    }
     .en__field__element--checkbox,
     .en__field--checkbox,
     .en__field__element--radio {
