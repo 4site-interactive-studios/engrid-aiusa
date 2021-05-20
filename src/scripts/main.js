@@ -55,7 +55,7 @@ document.onreadystatechange = () => {
             titleLabel.appendChild(el);
             tippy("#title-tooltip", {
               content:
-                "The U.S. Senate is now requiring that all letters include a title. Please select one in order to sure that your action lands in the inbox of your Senator.",
+                "The U.S. Senate is now requiring that all letters include a title. Please select one in order to ensure that your action lands in the inbox of your Senator.",
             });
         }        
 
