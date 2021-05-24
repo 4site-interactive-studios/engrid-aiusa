@@ -1024,6 +1024,15 @@
   line-height: var(--theme-typography-h3-line-height);
 }
 
+/* Style survey question options labels like <p> tags */
+.en__component--svblock > .en__field__item > .en__field__label{
+  font-family: var(--theme-typography-p-font-family);
+  color: var(--theme-typography-p-color);
+  font-size: var(--theme-typography-p-font-size);
+  font-weight: var(--theme-typography-p-font-weight);
+  line-height: var(--theme-typography-p-line-height);
+}
+
   /*
 * ##########################################################
 * # LAYOUT MOBILE STYLINGS
