@@ -21,7 +21,7 @@ document.onreadystatechange = () => {
         // Add placeholder to the Mobile Phone Field
         let enFieldMobilePhone = document.querySelectorAll('input#en__field_supporter_NOT_TAGGED_13')[0];
         if(enFieldMobilePhone){
-            enFieldMobilePhone.placeholder = "Phone Number (Optional)";
+            enFieldMobilePhone.placeholder = "Phone Number";
         }
 
         let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
@@ -36,7 +36,7 @@ document.onreadystatechange = () => {
         
         let enFieldPhoneNumber = document.querySelectorAll('input#en__field_supporter_phoneNumber')[0];
         if(enFieldPhoneNumber){
-          enFieldPhoneNumber.placeholder = "Phone Number (Optional)";
+          enFieldPhoneNumber.placeholder = "Phone Number";
         }
 
         // Add "Why is this required?" markup to the Title field
