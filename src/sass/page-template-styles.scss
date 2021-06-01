@@ -1007,32 +1007,6 @@
     }
   }
 
-/*
-* ##########################################################
-* # Survey
-* ##########################################################
-*/
-
-/* Style survey question field labels like <h4> tags */
-.en__component--svblock > .en__field > .en__field__label{
-  font-size: calc(var(--theme-typography-h3-font-size)*var(--scale-down-20pct));
-  margin-top: calc(2rem*var(--scale-down-80pct));
-  margin-bottom: calc(1rem*var(--scale-down-80pct));
-  font-family: var(--theme-typography-h3-font-family);
-  color: var(--theme-typography-h3-color);
-  font-weight: var(--theme-typography-h3-font-weight);
-  line-height: var(--theme-typography-h3-line-height);
-}
-
-/* Style survey question options labels like <p> tags */
-.en__component--svblock > .en__field__item > .en__field__label{
-  font-family: var(--theme-typography-p-font-family);
-  color: var(--theme-typography-p-color);
-  font-size: var(--theme-typography-p-font-size);
-  font-weight: var(--theme-typography-p-font-weight);
-  line-height: var(--theme-typography-p-line-height);
-}
-
   /*
 * ##########################################################
 * # LAYOUT MOBILE STYLINGS
@@ -1261,13 +1235,34 @@
     }
   }
 
+
+/*
+* ##########################################################
+* # Survey
+* ##########################################################
+*/
+
   .en__field--withOther.en__field--survey .en__field__item--other {
     margin-left: 15px;
   }
+
   .en__field--survey {
+
+    /* Style survey question field labels like <h4> tags */
+    &.en__field > label{
+      font-size: calc(var(--theme-typography-h3-font-size)*var(--scale-down-20pct));
+      margin-top: calc(2rem*var(--scale-down-80pct));
+      margin-bottom: calc(1rem*var(--scale-down-80pct));
+      font-family: var(--theme-typography-h3-font-family);
+      color: var(--theme-typography-h3-color);
+      font-weight: var(--theme-typography-h3-font-weight);
+      line-height: var(--theme-typography-h3-line-height);
+    }
+
     &.en__field.en__field--checkbox > label {
       display: block;
     }
+
     .en__field__element--checkbox,
     .en__field--checkbox,
     .en__field__element--radio {
@@ -1284,12 +1279,12 @@
           vertical-align: top;
           position: relative;
           cursor: pointer;
-          font-weight: 500;
-          font-family: var(--theme-typography-default-font-family);
+          // font-weight: 500;
+          // font-family: var(--theme-typography-default-font-family);
           text-transform: none;
           border: 0;
-          font-size: 0.75rem;
-          line-height: 1rem;
+          // font-size: 0.75rem;
+          // line-height: 1rem;
           text-align: left;
           justify-content: flex-start;
           display: inline-flex;
@@ -1297,11 +1292,28 @@
           min-height: 1.75rem;
           padding: 0 0 0 42px;
           margin-left: 0;
-          color: var(--theme-typography-p-color);
+          // color: var(--theme-typography-p-color);
         }
       }
     }
+    /* Style survey question options labels like <p> tags */
+    .en__field__item > label,
+    .en__field__item > input.en__field__input--checkbox:checked+label{
+      font-family: var(--theme-typography-p-font-family) !important;
+      color: var(--theme-typography-p-color);
+      font-size: var(--theme-typography-p-font-size);
+      font-weight: var(--theme-typography-p-font-weight);
+      line-height: var(--theme-typography-p-line-height);
+    }
+
+    /* Adjusts the relative position of the checkbox checkmark now that the label is differently sized */
+    .en__field__item > input.en__field__input--checkbox:checked+.en__field__label:after{
+      top: 0px !important;
+    }
   }
+
+
+  
 } // END AIUSA ENGRID CUSTOM THEME
 
 /*
