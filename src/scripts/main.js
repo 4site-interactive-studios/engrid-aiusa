@@ -78,6 +78,76 @@ document.onreadystatechange = () => {
             });
         }
 
+        // Conversion Tracking if this is a thank you page
+        if(typeof pageJson !== 'undefined' && pageJson.giftProcess && typeof dataLayer !== 'undefined') {
+          // In the upsell portion of the engrid-scripts/packages/common, we are setting 'original' to the one-time donation amount if the donor was upsold
+          let upsell = (window.sessionStorage.getItem('original')) ? window.sessionStorage.getItem('original') : 'No value';
+          let quantity = 1;
+          let total = pageJson.amount;
+          // Defaulting to 'Recurring' for recurring donations in case the transactionExtra object isn't defined
+          // That way those looking at the analytics data will understand that the total isn't necessarily correct because we don't know the quantity
+          let frequency = (pageJson.recurring) ? 'Recurring' : 'One Time';
+
+          // Fallbacks in case the transactionExtra object isn't defined
+          let te_exists = (typeof transactionExtra !== 'undefined');
+          let te_frequency = (te_exists && transactionExtra.frequency) ? transactionExtra.frequency : 'Unknown';
+          let te_city = (te_exists && transactionExtra.city) ? transactionExtra.city : 'Unknown';
+          let te_state = (te_exists && transactionExtra.state) ? transactionExtra.state : 'Unknown';
+
+          switch(te_frequency) {
+            case 'MONTHLY':
+              frequency = 'Monthly';
+              quantity = 12;
+              total = 12 * pageJson.amount;
+              let monthlyReceipt = document.getElementById('monthlyReceipt');
+              if(monthlyReceipt) {
+                monthlyReceipt.style.display = 'block';
+              }
+              break;
+            case 'ANNUAL':
+              frequency = 'Annual';
+              let annualReceipt = document.getElementById('annualReceipt');
+              if(annualReceipt) {
+                annualReceipt.style.display = 'block';
+              }
+              break;
+            default:
+              break;
+          }
+
+          // Push analytics data and other custom GTM variables
+          dataLayer.push({
+            'en_transaction_amount' : total, // custom variable in GTM
+            'en_payment_amount'     : pageJson.amount, // original payment amount not *12 for monthly gifts
+            'en_transaction_id'     : pageJson.donationLogId, // custom variable in GTM
+            'en_campaign_id'        : pageJson.campaignId,
+            'transactionId'         : pageJson.donationLogId, 
+            'transactionAffiliation': 'Donation Form',
+            'transactionTotal'      : total,
+            'transactionTax'        : 0,
+            'transactionShipping'   : 0,
+            'transactionCity'       : te_city,
+            'transactionState'      : te_state,
+            'transactionCountry'    : pageJson.country,
+            'transactionProducts'   : [{
+                id: pageJson.donationLogId,
+                quantity: quantity,
+                name: pageJson.pageName,
+                price: pageJson.amount,
+                sku: pageJson.campaignId,
+                category: frequency
+              }],
+            'transactionPromoCode'  : upsell,
+            'successful_donation'   : 'main form (EN)', // custom variable/event for GA
+            'event'                 : frequency, // event used to determine transaction frequency for tag placement
+            'donation_type'         : frequency
+          });
+
+          dataLayer.push({
+            'event': 'en_donation' // used to signal that we're on the thank you page instead of url/parameters
+          });
+        }
+
         // Close's the menu when tapping the close button on mobile
         const menuBtn = document.querySelector('a[role="menuitem"]');
         
