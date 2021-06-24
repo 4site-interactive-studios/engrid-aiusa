@@ -143,6 +143,10 @@
     width: 50px;
   }
 
+  .en__contacts--singleTweetMode .en__twitterTarget__select{
+    flex-basis: 2rem;
+  }
+
   .en__tweetButton__send a {
     background-color: #ffff00;
     padding: 12px 15px;
