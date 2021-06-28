@@ -107,59 +107,64 @@
 
   // TYPOGRAPHY INPUT:FOCUS
   // TYPOGRAPHY INPUT:HOVER
-  --input_color_checked: var(--input_color);
-  --input_background-color_checked: var(
+  --input_color_hover: var(--input_color);
+  --input_background-color_hover: var(
     --input_background-color
   );
-  --input_border-color_checked: var(
-    --input_border-color
-  );
-  --input_checked-border-bottom-color: var(--color_black);
-  --input_checked-box-shadow: none;
+  --input_border-color_hover: var(--input_background-color);
+  --input_border-bottom-color_hover: #525252;
+  --input_box-shadow_hover: none;
 
   // TYPOGRAPHY RADIO
-  --radio_content: initial;
+  --radio_content: "";
   --radio_color: var(--color_cta);
   --radio_background-color: var(--color_white);
   --radio_border-width: 1px;
-  --radio_border-color: #f5f5f5;
-  --radio_border-radius: 0px;
+  --radio_border-color: var(--color_black);
+  --radio_border-radius: 50%;
+  --radio_height: 1.4rem;
+  --radio_width: 1.4rem;
+  --radio_box-shadow: none;
 
   // TYPOGRAPHY RADIO INPUT:FOCUS
   // TYPOGRAPHY RADIO INPUT:HOVER
-  --radio_color_checked: var(--radio_color);
-  --radio_background-color_checked: var(
+  --radio_color_hover: var(--radio_color);
+  --radio_background-color_hover: var(
     --radio_background-color
   );
-  --radio_border-color_checked: var(
+  --radio_border-color_hover: var(
     --radio_border-color
   );
+  --radio_box-shadow_hover: none;
 
   // TYPOGRAPHY RADIO INPUT:CHECKED
-  --radio_selected-color: var(
+  --radio_color_selected_selected: var(
     --radio_background-color
   );
-  --radio_selected-background-color: var(--color_cta);
-  --radio_selected-border-color: var(
+  --radio_background-color_selected: var(--color_white);
+  --radio_border-color_selected: var(
     --radio_border-color
   );
+  --radio_box-shadow_selected: inset 0 0 0 6px var(--color_black);
 
   // TYPOGRAPHY CHECKBOX
   --checkbox_color: var(--color_white);
   --checkbox_background-color: var(--color_white);
   --checkbox_border-width: 1px;
-  --checkbox_border-color: #f5f5f5;
+  --checkbox_border-color: var(--color_black);
   --checkbox_border-radius: 0px;
+  --checkbox_height: 1.75rem;
+  --checkbox_width: 1.75rem;
 
   // TYPOGRAPHY CHECKBOX INPUT:FOCUS
   // TYPOGRAPHY CHECKBOX INPUT:HOVER
-  --checkbox_color_checked: var(
+  --checkbox_color_hover: var(
     --checkbox_color
   );
-  --checkbox_background-color_checked: var(
+  --checkbox_background-color_hover: var(
     --checkbox_background-color
   );
-  --checkbox_border-color_checked: var(
+  --checkbox_border-color_hover: var(
     --checkbox_border-color
   );
 
@@ -191,16 +196,16 @@
 
   // TYPOGRAPHY SELECT:FOCUS
   // TYPOGRAPHY SELECT:HOVER
-  --select_color_checked: var(--select_color);
-  --select_background-color_checked: var(
+  --select_color_hover: var(--select_color);
+  --select_background-color_hover: var(
     --select_background-color
   );
-  --select_border-color_checked: var(
+  --select_border-color_hover: var(
     --select_border-color
   );
-  --select_checked-border-bottom-color: var(--color_black);
-  --select_checked-box-shadow: var(
-    --input_checked-box-shadow
+  --select_border-bottom-color_hover: var(--color_black);
+  --select_box-shadow_hover: var(
+    --input_box-shadow_hover
   );
 
   // TYPOGRAPHY TEXTAREA
@@ -212,8 +217,8 @@
   --textarea_font-weight: initial;
   --textarea_line-height: initial;
   --textarea_background-color: #f5f5f5;
-  --textarea_border-width: 0px;
-  --textarea_border-color: var(--color_black);
+  --textarea_border-width: 2px;
+  --textarea_border-color: var(--textarea_background-color);
   --textarea_border-radius: initial;
   --textarea_placeholder-color: var(--color_light-gray);
   --textarea_box-shadow: var(
@@ -222,16 +227,11 @@
 
   // TYPOGRAPHY TEXTAREA:FOCUS
   // TYPOGRAPHY TEXTAREA:HOVER
-  --textarea_color_checked: var(
-    --textarea_color
-  );
-  --textarea_background-color_checked: var(
-    --textarea_background-color
-  );
-  --textarea_border-color_checked: var(--color_cta);
-  --textarea_checked-box-shadow: var(
-    --input_checked-box-shadow
-  );
+  --textarea_color_hover: var(--textarea_color);
+  --textarea_background-color_hover: var(--textarea_background-color);
+  --textarea_border-color_hover: var(--textarea_background-color);
+  --textarea_border-bottom-color_hover: var(--input_border-bottom-color_hover);
+  --textarea_box-shadow_hover: var(--input_box-shadow_hover);
 
   // TYPOGRAPHY BUTTON
   --button_font-family: var(
@@ -290,17 +290,14 @@
   --recurring-frequency__button_border-radius: var(
     --button_border-radius
   );
+  --recurring-frequency__button_padding: 1.5ch 1.75ch;
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:HOVER
   --recurring-frequency__button_color_hover: var(
     --button_color_hover
   );
-  --recurring-frequency__button_border-color_hover: var(
-    --button_background-color_hover
-  );
-  --recurring-frequency__button_background-color_hover: var(
-    --button_border-color_hover
-  );
+  --recurring-frequency__button_border-color_hover: var(--color_black);
+  --recurring-frequency__button_background-color_hover: var(--color_white);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:CHECKED
   --recurring-frequency__button_color_checked: var(
@@ -411,6 +408,11 @@
     --button_color
   );
 
+  // TYPOGRAPHY SUBMIT BUTTON
+  --submit__button_font-size: 22px;
+  --submit__button_padding-top: 1.5ch;
+  --submit__button_padding-bottom: 1.5ch;
+
   // TYPOGRAPHY A
   --a_font-family: var(
     --headline-font-family
@@ -421,7 +423,7 @@
   // TYPOGRAPHY A:FOCUS
   // TYPOGRAPHY A:HOVER
   --a_color_checked: var(--a_color);
-  --a_checked-text-decoration: initial;
+  --a_text-decoration_checked: initial;
 
   // CTA COLORS
   --color_cta: #ffff00;

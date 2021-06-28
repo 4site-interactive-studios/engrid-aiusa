@@ -18,9 +18,29 @@ module.exports = {
       },
     }),
     new HtmlWebpackPlugin({
-      title: "AIUSA - Engaging Networks Page - Donation",
-      filename: "page-donation-aiusa.html",
-      template: "./src/templates/page-donation.html",
+      title: "AIUSA - Engaging Networks Page - Donation 1 Column",
+      filename: "page-donation-1col-aiusa.html",
+      template: "./src/templates/page-donation-1col.html",
+      inject: true,
+      minify: {
+        removeComments: false,
+        collapseWhitespace: false,
+      },
+    }),
+    new HtmlWebpackPlugin({
+      title: "AIUSA - Engaging Networks Page - Donation 2 Column",
+      filename: "page-donation-2col-aiusa.html",
+      template: "./src/templates/page-donation-2col.html",
+      inject: true,
+      minify: {
+        removeComments: false,
+        collapseWhitespace: false,
+      },
+    }),    
+    new HtmlWebpackPlugin({
+      title: "AIUSA - Engaging Networks Page - Brand Guide",
+      filename: "brand-guide-aiusa.html",
+      template: "./src/templates/brand-guide.html",
       inject: true,
       minify: {
         removeComments: false,

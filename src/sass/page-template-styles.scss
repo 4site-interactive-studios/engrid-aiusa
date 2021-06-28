@@ -60,23 +60,23 @@
     display: none;
   }
 
-  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
-    margin-left: 41px;
-    width: 100%;
-  }
+  // .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
+  //   margin-left: 41px;
+  //   width: 100%;
+  // }
+
+  // .en__contactDetails__rows {
+  //   margin-left: calc(var(--checkbox_width) + 0.5rem);
+  // }
+  
 
   .en__field__input--checkbox + .en__field__label:before {
-    height: 1.75rem;
-    width: 1.75rem;
-    top: 0;
-    left: 0;
+    font-size: .99936rem;
   }
 
   .en__component--contactblock
     .en__contacts:not(.en__contacts--hideCheck)
     .en__contactDetails__rows:before {
-    height: 1.75rem;
-    width: 1.75rem;
     top: 5px;
     left: 0px;
   }
@@ -93,12 +93,11 @@
     font-weight: 700;
   }
 
-  .en__component--contactblock .en__contactDetails__rows:after {
-    left: 5px;
-    top: 6px;
-    font-size: 1.2rem;
-    font-weight: 700;
+  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after {
+    left: 7px;
+    top: 7px;
   }
+
   .en__contactDetail {
     font-size: 14px;
   }
@@ -119,8 +118,8 @@
     justify-content: flex-start;
     display: inline-flex;
     align-items: center;
-    min-height: 1.75rem;
-    padding: 0 0 0 42px;
+    min-height: var(--checkbox_height);
+    // padding: 0 0 0 42px;
     margin-left: 0px;
   }
   input[name="en__pg"] {
@@ -139,9 +138,9 @@
     }
   }
 
-  .en__twitterTarget__image {
-    width: 50px;
-  }
+  // .en__twitterTarget__image {
+  //   width: 50px;
+  // }
 
   .en__tweetButton__send a {
     background-color: #ffff00;
@@ -159,15 +158,15 @@
     text-transform: uppercase;
   }
 
-  .en__field--radio label.en__field__label.en__field__label--item {
-    padding: 12px 5px;
-    width: 100%;
-    text-transform: uppercase;
-    font-family: var(--font-stack-aiusa-bold-condensed);
-    justify-content: center;
-    display: inline-block;
-    text-align: center;
-  }
+  // .en__field--radio label.en__field__label.en__field__label--item {
+  //   padding: 12px 5px;
+  //   width: 100%;
+  //   text-transform: uppercase;
+  //   font-family: var(--font-stack-aiusa-bold-condensed);
+  //   justify-content: center;
+  //   display: inline-block;
+  //   text-align: center;
+  // }
   .en__field--radio.en__field--survey
     label.en__field__label.en__field__label--item {
     text-align: left;
@@ -182,15 +181,16 @@
     min-height: 41.78px;
   }
 
-  .en__component--formblock {
-    label {
-      font-weight: 700;
-    }
-  }
+  // .en__component--formblock {
+  //   label {
+  //     font-weight: 700;
+  //   }
+  // }
 
   .en__submit button {
     font-family: var(--font-stack-aiusa-bold-condensed);
     font-weight: 700;
+    line-height: 1;
   }
 
   // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
@@ -267,6 +267,14 @@
 
   figure.media-with-attribution figattribution a {
     font-family: var(--font-stack-aiusa-bold-condensed);
+  }
+  
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) label{
+      flex-direction: column;
+  }
+
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) .en__field__label--item:after{
+    margin-left: 0;
   }
 
   /*
@@ -744,6 +752,11 @@
 */
 
   .en__field--recurrfreq {
+
+    .en__field__item{
+      flex-grow: 1;
+    }
+
     .en__field__item input:checked + label {
       background-color: var(--button_background-color);
       color: var(--button_color);
@@ -754,8 +767,8 @@
     }
   }
 
-  .en__field--donationAmt .en__field__element--radio {
-    width: 100%;
+  .en__field--donationAmt .en__field__item--other{
+    flex-grow: 1;
   }
 
   .en__field--donationAmt h2 {
@@ -792,37 +805,46 @@
     }
   }
 
-  .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
-    flex-basis: calc((100% / 3) - 1rem);
-    max-width: calc(100% / 3);
-    .en__field__label--item {
-      width: 100%;
-      &::after {
-        text-transform: uppercase;
-        font-size: 100%;
-        opacity: 1;
-        line-height: inherit;
-      }
-    }
+  // .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
+  //   flex-basis: calc((100% / 3) - 1rem);
+  //   max-width: calc(100% / 3);
+  //   .en__field__label--item {
+  //     width: 100%;
+  //     &::after {
+  //       text-transform: uppercase;
+  //       font-size: 100%;
+  //       opacity: 1;
+  //       line-height: inherit;
+  //     }
+  //   }
+  // }
+
+  // .en__field--donationAmt div.en__field__item.en__field__item--other {
+  //   flex-basis: calc((100% * (2 / 3)) - 1rem);
+  //   max-width: calc(100% * (2 / 3));
+  //   input {
+  //     padding-left: 1.75rem;
+  //     border-color: var(--input_background-color);
+  //     padding-top: 12px;
+  //     padding-bottom: 12px;
+  //     outline-width: 0;
+
+  //     &:hover,
+  //     &:focus::after {
+  //       border-bottom-color: var(
+  //         --input_border-bottom-color_checked
+  //       );
+  //     }
+  //   }
+  // }
+
+  .en__field--donationAmt .en__field__item--other{
+    position: relative;
+
   }
 
-  .en__field--donationAmt div.en__field__item.en__field__item--other {
-    flex-basis: calc((100% * (2 / 3)) - 1rem);
-    max-width: calc(100% * (2 / 3));
-    input {
-      padding-left: 1.75rem;
-      border-color: var(--input_background-color);
-      padding-top: 12px;
-      padding-bottom: 12px;
-      outline-width: 0;
-
-      &:hover,
-      &:focus::after {
-        border-bottom-color: var(
-          --input_checked-border-bottom-color
-        );
-      }
-    }
+  .en__field--donationAmt .en__field__item--other input{
+    padding-left: 2.5ch;
   }
 
   .en__field--donationAmt .en__field__item--other::before {
@@ -834,18 +856,18 @@
     font-weight: 700;
     line-height: 0;
     height: 0;
-    left: 1rem;
+    left: 2.25ch;
     top: 50%;
   }
 
-  .en__field--recurrfreq {
-    padding-right: 0;
-    .en__field__item {
-      flex-basis: calc(100% / 3);
-      min-width: 12ch;
-      // margin-right: 0px;
-    }
-  }
+  // .en__field--recurrfreq {
+  //   padding-right: 0;
+  //   .en__field__item {
+  //     flex-basis: calc(100% / 3);
+  //     min-width: 12ch;
+  //     // margin-right: 0px;
+  //   }
+  // }
 
   /*
 * ##########################################################
@@ -1040,10 +1062,18 @@
       padding-left: 0px;
       padding-right: 0px;
     }
+    
     textarea.en__field {
       padding-left: 1ch;
       padding-right: 1ch;
     }
+
+    .en__field--ccexpire{
+      // left: -0.5rem;
+      // right: -0.5rem;
+      min-width: calc(100% + 1rem);
+    }
+
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"] {
       padding-right: 28px;
@@ -1073,8 +1103,9 @@
   @mixin simplified-content-footer {
     // Adjust donation amount fields to display two to a Row
     .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
-      flex-basis: calc((100% * (1 / 2)) - 1rem);
-      max-width: calc(100% * (1 / 2));
+      // flex-basis: calc((100% * (1 / 2)) - 1rem);
+      // max-width: calc(100% * (1 / 2));
+      --donation-amount__button_count: 2;
     }
 
     .content-footer {
@@ -1205,35 +1236,6 @@
       }
     }
   }
-  .en__field--radio:not(.en__field--donationAmt):not(.en__field--recurrfreq):not(.give-by-select) {
-    .en__field__input--radio + .en__field__label:before {
-      top: calc(50% - 1.4rem / 2);
-      border-radius: 50%;
-      left: 0;
-    }
-    .en__field__input--radio:checked + .en__field__label:after {
-      content: "";
-      position: absolute;
-      height: 1.4rem;
-      width: 1.4rem;
-      left: 0;
-      display: inline-block;
-      vertical-align: middle;
-      border: 1px solid var(--color_black);
-      box-shadow: inset 0 0 0 5px var(--color_white);
-      background-color: var(--color_white);
-      cursor: pointer;
-      transition-duration: 0.25s;
-      transition-property: border-color, background-color;
-      top: 5px;
-      background: var(--color_black);
-      top: calc(50% - 1.4rem / 2);
-      border-radius: 50%;
-    }
-    .en__field__input--radio:checked + .en__field__label:before {
-      content: none;
-    }
-  }
 
 
 /*
@@ -1289,8 +1291,8 @@
           justify-content: flex-start;
           display: inline-flex;
           align-items: center;
-          min-height: 1.75rem;
-          padding: 0 0 0 42px;
+          min-height: calc(max(var(--checkbox_height), var(--radio_height)));
+          // padding: 0 0 0 42px;
           margin-left: 0;
           // color: var(--p_color);
         }
