@@ -196,8 +196,8 @@
   // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
   .en__submit button,
   .en__submit button:hover {
-    background-color: var(--color_cta);
-    border-color: var(--color_cta);
+    background-color: var(--color_primary);
+    border-color: var(--color_primary);
     color: #252525;
   }
 
@@ -236,7 +236,7 @@
   }
 
   .en__ecarditems__button {
-    background: var(--color_cta);
+    background: var(--color_primary);
     color: var(--color_black);
   }
 
@@ -316,7 +316,7 @@
 
     //       &:hover {
     //         text-decoration: underline solid black 2px;
-    //         background-color: var(--color_cta);
+    //         background-color: var(--color_primary);
 
     ul[role="menubar"] [role="menu"] [role="menuitem"]:focus,
     ul[role="menubar"] [role="menu"] [role="menuitem"]:hover,
@@ -325,7 +325,7 @@
       // background-color: black;
       // color: white;
       text-decoration: underline solid black 2px;
-      background-color: var(--color_cta);
+      background-color: var(--color_primary);
       display: inline-block;
       // outline-offset: 3px;
     }
@@ -701,7 +701,7 @@
       overflow: inherit;
 
       .enWidget__fill {
-        background-color: var(--color_cta) !important; // !important required
+        background-color: var(--color_primary) !important; // !important required
         box-shadow: inset -13px 0px 0px 0px rgba(255, 255, 255, 1);
         &::before {
           content: " ";

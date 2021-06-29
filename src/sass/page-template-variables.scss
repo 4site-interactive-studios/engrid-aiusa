@@ -20,6 +20,10 @@
   --warning: #fcac00;
   --error: #f12222;
 
+  // PRIMARY COLORS
+  --color_primary: #ffff00;
+  --color_primary_overlay: #000000;
+
   // SEMANTIC GEOMETRIC SCALING
   --scale-up_20pct: 1.2;
   --scale-up_40pct: 1.4;
@@ -117,7 +121,7 @@
 
   // TYPOGRAPHY RADIO
   --radio_content: "";
-  --radio_color: var(--color_cta);
+  --radio_color: var(--color_primary);
   --radio_background-color: var(--color_white);
   --radio_border-width: 1px;
   --radio_border-color: var(--color_black);
@@ -439,7 +443,7 @@
   --engrid__page-alert_background-color: var(--engrid__page_background-color);
   --engrid__content-header_background-color: var(--color_white);
   --engrid__body-headerOutside_background-color: var(--color_transparent);
-  --engrid__body-header_background-color: var(--color_cta);
+  --engrid__body-header_background-color: var(--color_primary);
   --engrid__body-title_background-color: var(--engrid__body_background-color);
   --engrid__body-banner_background-color: var(--engrid__body_background-color);
   --engrid__body-bannerOverlay_background-color: var(--color_transparent);
@@ -547,7 +551,7 @@
   --error__border-width: var(--input_border-width);
 
   // HIGHLIGHTS
-  --highlight__background-color: var(--color_cta);
+  --highlight__background-color: var(--color_primary);
   --highlight__color: #252525;
 
   // CLICK TO EXPAND

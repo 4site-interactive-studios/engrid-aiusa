@@ -1,7 +1,6 @@
 const path = require("path");
 var HtmlWebpackPlugin = require("html-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
-
 module.exports = {
   entry: {
     engrid: "./src/index.ts",
@@ -60,7 +59,6 @@ module.exports = {
           },
         },
       },
-      { test: /\.css$/, loader: "style-loader!css-loader" },
       {
         test: /\.(ts|js)x?$/,
         exclude: /(node_modules|bower_components)/,
@@ -78,13 +76,28 @@ module.exports = {
       },
       {
         test: /\.(html)$/,
-        use: {
-          loader: "html-loader",
-        },
+        use: [
+          {
+            loader: "html-loader",
+            options: {
+              minimize: false,
+              sources: false,
+            },
+          },
+          {
+            loader: "posthtml-loader",
+            options: {
+              ident: "posthtml",
+              // skipParse: true,
+              // parser: "PostHTML Parser",
+              plugins: [require("posthtml-include")({ encoding: "utf8" })],
+            },
+          },
+        ],
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js", ".css"],
+    extensions: [".tsx", ".ts", ".js"],
   },
 };
