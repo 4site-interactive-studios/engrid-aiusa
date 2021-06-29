@@ -298,9 +298,7 @@
   --recurring-frequency__button_padding: 1.5ch 1.75ch;
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:HOVER
-  --recurring-frequency__button_color_hover: var(
-    --button_color_hover
-  );
+  --recurring-frequency__button_color_hover: var(--button_color_hover);
   --recurring-frequency__button_border-color_hover: var(--color_black);
   --recurring-frequency__button_background-color_hover: var(--color_white);
 

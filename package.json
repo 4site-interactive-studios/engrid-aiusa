@@ -1,5 +1,5 @@
 {
-  "name": "@4site/engrid",
+  "name": "@4site/engrid-aiusa",
   "version": "2.0.0",
   "private": false,
   "description": "Page Template Framework for Engaging Networks",
@@ -20,7 +20,7 @@
   ],
   "author": "4Site Studios",
   "license": "Unlicense",
-  "url": "https://github.com/4site-interactive-studios/engrid",
+  "url": "https://github.com/4site-interactive-studios/engrid-aiusa",
   "devDependencies": {
     "@4site/engrid-common": "*",
     "@4site/engrid-styles": "*",
