@@ -4129,7 +4129,7 @@ figure.media-with-attribution figattribution.attribution-topleft{
   height:100%;
   justify-content:center;
   left:0;
-  overflow-x:hide;
+  overflow-x:hidden;
   overflow-y:scroll;
   position:fixed;
   top:0;
