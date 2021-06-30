@@ -53,30 +53,30 @@
     font-style: italic;
     font-size: 0.75rem;
     line-height: 1rem;
-    font-family: var(--theme-font-stack-browser-fonts);
+    font-family: var(--native-fonts__sans-serif);
   }
 
   .en__field.en__field--checkbox > label {
     display: none;
   }
 
-  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
-    margin-left: 41px;
-    width: 100%;
-  }
+  // .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
+  //   margin-left: 41px;
+  //   width: 100%;
+  // }
+
+  // .en__contactDetails__rows {
+  //   margin-left: calc(var(--checkbox_width) + 0.5rem);
+  // }
+  
 
   .en__field__input--checkbox + .en__field__label:before {
-    height: 1.75rem;
-    width: 1.75rem;
-    top: 0;
-    left: 0;
+    font-size: .99936rem;
   }
 
   .en__component--contactblock
     .en__contacts:not(.en__contacts--hideCheck)
     .en__contactDetails__rows:before {
-    height: 1.75rem;
-    width: 1.75rem;
     top: 5px;
     left: 0px;
   }
@@ -93,12 +93,11 @@
     font-weight: 700;
   }
 
-  .en__component--contactblock .en__contactDetails__rows:after {
-    left: 5px;
-    top: 6px;
-    font-size: 1.2rem;
-    font-weight: 700;
+  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after {
+    left: 7px;
+    top: 7px;
   }
+
   .en__contactDetail {
     font-size: 14px;
   }
@@ -109,7 +108,7 @@
   input.en__field__input--checkbox:checked + label,
   input.en__field__input--checkbox + label {
     font-weight: 500;
-    font-family: var(--theme-typography-default-font-family);
+    font-family: var(--default_font-family);
     text-transform: none;
     border: 0px;
     // padding: 3px 10px 0;
@@ -119,29 +118,29 @@
     justify-content: flex-start;
     display: inline-flex;
     align-items: center;
-    min-height: 1.75rem;
-    padding: 0 0 0 42px;
+    min-height: var(--checkbox_height);
+    // padding: 0 0 0 42px;
     margin-left: 0px;
   }
   input[name="en__pg"] {
     appearance: none;
-    border: 2px solid var(--color-black);
+    border: 2px solid var(--color_black);
     width: 15px;
     height: 15px;
     border-radius: 15px;
-    background: var(--color-white);
+    background: var(--color_white);
     &:checked {
-      border: 4px double var(--color-white);
-      background: var(--color-black);
+      border: 4px double var(--color_white);
+      background: var(--color_black);
     }
     &:hover {
-      border-color: var(--theme-dark-gray);
+      border-color: var(--color_dark-gray);
     }
   }
 
-  .en__twitterTarget__image {
-    width: 50px;
-  }
+  // .en__twitterTarget__image {
+  //   width: 50px;
+  // }
 
   .en__contacts--singleTweetMode .en__twitterTarget__select{
     flex-basis: 2rem;
@@ -163,15 +162,15 @@
     text-transform: uppercase;
   }
 
-  .en__field--radio label.en__field__label.en__field__label--item {
-    padding: 12px 5px;
-    width: 100%;
-    text-transform: uppercase;
-    font-family: var(--theme-font-stack-aiusa-bold-condensed);
-    justify-content: center;
-    display: inline-block;
-    text-align: center;
-  }
+  // .en__field--radio label.en__field__label.en__field__label--item {
+  //   padding: 12px 5px;
+  //   width: 100%;
+  //   text-transform: uppercase;
+  //   font-family: var(--font-stack-aiusa-bold-condensed);
+  //   justify-content: center;
+  //   display: inline-block;
+  //   text-align: center;
+  // }
   .en__field--radio.en__field--survey
     label.en__field__label.en__field__label--item {
     text-align: left;
@@ -186,33 +185,34 @@
     min-height: 41.78px;
   }
 
-  .en__component--formblock {
-    label {
-      font-weight: 700;
-    }
-  }
+  // .en__component--formblock {
+  //   label {
+  //     font-weight: 700;
+  //   }
+  // }
 
   .en__submit button {
-    font-family: var(--theme-font-stack-aiusa-bold-condensed);
+    font-family: var(--font-stack-aiusa-bold-condensed);
     font-weight: 700;
+    line-height: 1;
   }
 
   // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
   .en__submit button,
   .en__submit button:hover {
-    background-color: var(--theme-cta);
-    border-color: var(--theme-cta);
+    background-color: var(--color_primary);
+    border-color: var(--color_primary);
     color: #252525;
   }
 
   input::placeholder {
-    color: var(--theme-typography-input-placeholder-color);
+    color: var(--input_placeholder-color);
   }
 
   h2.section-header {
     width: 100%;
     text-align: center;
-    font-family: var(--theme-font-stack-aiusa-bold-condensed);
+    font-family: var(--font-stack-aiusa-bold-condensed);
     font-weight: 700;
     position: relative;
     letter-spacing: 1.25px;
@@ -240,21 +240,21 @@
   }
 
   .en__ecarditems__button {
-    background: var(--theme-cta);
-    color: var(--color-black);
+    background: var(--color_primary);
+    color: var(--color_black);
   }
 
   .en__ecardrecipients__email input.invalid,
   .en__ecardrecipients__name input.invalid {
-    border-color: var(--theme-error-red);
-    background-color: var(--theme-error-red-faded);
-    font-family: var(--theme-typography-input-font-family);
-    color: var(--theme-typography-input-color);
-    font-size: var(--theme-typography-input-font-size);
-    font-weight: var(--theme-typography-input-font-weight);
-    line-height: var(--theme-typography-input-line-height);
-    background-color: var(--theme-typography-input-background-color);
-    border-radius: var(--theme-typography-input-border-radius);
+    border-color: var(--error__color);
+    background-color: var(--error__color-faded);
+    font-family: var(--input_font-family);
+    color: var(--input_color);
+    font-size: var(--input_font-size);
+    font-weight: var(--input_font-weight);
+    line-height: var(--input_line-height);
+    background-color: var(--input_background-color);
+    border-radius: var(--input_border-radius);
     height: auto;
     max-width: 100%;
     width: 100%;
@@ -263,14 +263,22 @@
     box-sizing: border-box;
     margin: 0;
     padding: 1ch;
-    box-shadow: var(--theme-typography-input-box-shadow);
+    box-shadow: var(--input_box-shadow);
     transition: box-shadow 0.25s, border-color 0.25s ease-in-out;
-    border: var(--theme-typography-input-border-width) solid
-      var(--theme-typography-input-border-color);
+    border: var(--input_border-width) solid
+      var(--input_border-color);
   }
 
   figure.media-with-attribution figattribution a {
-    font-family: var(--theme-font-stack-aiusa-bold-condensed);
+    font-family: var(--font-stack-aiusa-bold-condensed);
+  }
+  
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) label{
+      flex-direction: column;
+  }
+
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) .en__field__label--item:after{
+    margin-left: 0;
   }
 
   /*
@@ -312,7 +320,7 @@
 
     //       &:hover {
     //         text-decoration: underline solid black 2px;
-    //         background-color: var(--theme-cta);
+    //         background-color: var(--color_primary);
 
     ul[role="menubar"] [role="menu"] [role="menuitem"]:focus,
     ul[role="menubar"] [role="menu"] [role="menuitem"]:hover,
@@ -321,7 +329,7 @@
       // background-color: black;
       // color: white;
       text-decoration: underline solid black 2px;
-      background-color: var(--theme-cta);
+      background-color: var(--color_primary);
       display: inline-block;
       // outline-offset: 3px;
     }
@@ -329,7 +337,7 @@
     ul[role="menubar"] a[role="menuitem"] {
       text-decoration: none;
       color: black;
-      font-family: var(--theme-font-stack-aiusa-bold-condensed);
+      font-family: var(--font-stack-aiusa-bold-condensed);
     }
 
     ul[role="menubar"] li {
@@ -364,7 +372,7 @@
       left: -33px;
       margin: 0;
       padding: 0;
-      background-color: var(--color-white);
+      background-color: var(--color_white);
       box-shadow: -3px 8px 8px rgba(0, 0, 0, 0.04%);
       padding-right: 21px;
       padding-bottom: 56px;
@@ -467,10 +475,10 @@
           margin-bottom: 5px;
         }
         strong {
-          font-family: var(--theme-typography-default-font-family);
+          font-family: var(--default_font-family);
           font-weight: 700;
           font-size: 1rem;
-          // font-family: var(--theme-typography-donation-amount-button-font-family);
+          // font-family: var(--donation-amount__button_font-family);
           // letter-spacing: 0.01rem;
         }
       }
@@ -631,7 +639,7 @@
         }
         a {
           font-weight: 400;
-          font-family: var(--theme-typography-default-font-family);
+          font-family: var(--default_font-family);
         }
       }
     }
@@ -697,7 +705,7 @@
       overflow: inherit;
 
       .enWidget__fill {
-        background-color: var(--theme-cta) !important; // !important required
+        background-color: var(--color_primary) !important; // !important required
         box-shadow: inset -13px 0px 0px 0px rgba(255, 255, 255, 1);
         &::before {
           content: " ";
@@ -748,18 +756,23 @@
 */
 
   .en__field--recurrfreq {
+
+    .en__field__item{
+      flex-grow: 1;
+    }
+
     .en__field__item input:checked + label {
-      background-color: var(--theme-typography-button-background-color);
-      color: var(--theme-typography-button-color);
-      border-color: var(--theme-typography-button-border-color);
+      background-color: var(--button_background-color);
+      color: var(--button_color);
+      border-color: var(--button_border-color);
       &:hover {
-        color: var(--theme-typography-button-color);
+        color: var(--button_color);
       }
     }
   }
 
-  .en__field--donationAmt .en__field__element--radio {
-    width: 100%;
+  .en__field--donationAmt .en__field__item--other{
+    flex-grow: 1;
   }
 
   .en__field--donationAmt h2 {
@@ -781,7 +794,7 @@
       font-size: 1rem;
       line-height: 1.25rem;
       font-weight: 700;
-      font-family: var(--theme-font-stack-aiusa-bold-condensed);
+      font-family: var(--font-stack-aiusa-bold-condensed);
     }
     &::before {
       content: "";
@@ -796,37 +809,46 @@
     }
   }
 
-  .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
-    flex-basis: calc((100% / 3) - 1rem);
-    max-width: calc(100% / 3);
-    .en__field__label--item {
-      width: 100%;
-      &::after {
-        text-transform: uppercase;
-        font-size: 100%;
-        opacity: 1;
-        line-height: inherit;
-      }
-    }
+  // .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
+  //   flex-basis: calc((100% / 3) - 1rem);
+  //   max-width: calc(100% / 3);
+  //   .en__field__label--item {
+  //     width: 100%;
+  //     &::after {
+  //       text-transform: uppercase;
+  //       font-size: 100%;
+  //       opacity: 1;
+  //       line-height: inherit;
+  //     }
+  //   }
+  // }
+
+  // .en__field--donationAmt div.en__field__item.en__field__item--other {
+  //   flex-basis: calc((100% * (2 / 3)) - 1rem);
+  //   max-width: calc(100% * (2 / 3));
+  //   input {
+  //     padding-left: 1.75rem;
+  //     border-color: var(--input_background-color);
+  //     padding-top: 12px;
+  //     padding-bottom: 12px;
+  //     outline-width: 0;
+
+  //     &:hover,
+  //     &:focus::after {
+  //       border-bottom-color: var(
+  //         --input_border-bottom-color_checked
+  //       );
+  //     }
+  //   }
+  // }
+
+  .en__field--donationAmt .en__field__item--other{
+    position: relative;
+
   }
 
-  .en__field--donationAmt div.en__field__item.en__field__item--other {
-    flex-basis: calc((100% * (2 / 3)) - 1rem);
-    max-width: calc(100% * (2 / 3));
-    input {
-      padding-left: 1.75rem;
-      border-color: var(--theme-typography-input-background-color);
-      padding-top: 12px;
-      padding-bottom: 12px;
-      outline-width: 0;
-
-      &:hover,
-      &:focus::after {
-        border-bottom-color: var(
-          --theme-typography-input-checked-border-bottom-color
-        );
-      }
-    }
+  .en__field--donationAmt .en__field__item--other input{
+    padding-left: 2.5ch;
   }
 
   .en__field--donationAmt .en__field__item--other::before {
@@ -838,18 +860,18 @@
     font-weight: 700;
     line-height: 0;
     height: 0;
-    left: 1rem;
+    left: 2.25ch;
     top: 50%;
   }
 
-  .en__field--recurrfreq {
-    padding-right: 0;
-    .en__field__item {
-      flex-basis: calc(100% / 3);
-      min-width: 12ch;
-      // margin-right: 0px;
-    }
-  }
+  // .en__field--recurrfreq {
+  //   padding-right: 0;
+  //   .en__field__item {
+  //     flex-basis: calc(100% / 3);
+  //     min-width: 12ch;
+  //     // margin-right: 0px;
+  //   }
+  // }
 
   /*
 * ##########################################################
@@ -1007,7 +1029,7 @@
       width: 100%;
     }
     textarea:hover {
-      border-color: var(--theme-highlight-font-color);
+      border-color: var(--highlight__color);
     }
   }
 
@@ -1044,10 +1066,20 @@
       padding-left: 0px;
       padding-right: 0px;
     }
+    
     textarea.en__field {
       padding-left: 1ch;
       padding-right: 1ch;
     }
+
+    .en__field--ccexpire{
+      // left: -0.5rem;
+      // right: -0.5rem;
+      // min-width: calc(100% + 1rem);
+      left: 0;
+      right: 0;
+    }
+
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"] {
       padding-right: 28px;
@@ -1077,12 +1109,13 @@
   @mixin simplified-content-footer {
     // Adjust donation amount fields to display two to a Row
     .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
-      flex-basis: calc((100% * (1 / 2)) - 1rem);
-      max-width: calc(100% * (1 / 2));
+      // flex-basis: calc((100% * (1 / 2)) - 1rem);
+      // max-width: calc(100% * (1 / 2));
+      --donation-amount__button_count: 2;
     }
 
     .content-footer {
-      --theme-content-footer-background-color: #e4e4e4;
+      --engrid__content-footer_background-color: #e4e4e4;
 
       footer {
         flex-direction: column;
@@ -1181,10 +1214,10 @@
       word-break: break-word;
       box-sizing: border-box;
       touch-action: manipulation;
-      font-family: var(--theme-typography-label-font-family);
-      color: var(--theme-typography-label-color);
-      font-size: var(--theme-typography-label-font-size);
-      line-height: var(--theme-typography-label-line-height);
+      font-family: var(--label-font-family);
+      color: var(--label-color);
+      font-size: var(--label-font-size);
+      line-height: var(--label-line-height);
       vertical-align: middle;
       display: inline-block;
       width: auto;
@@ -1209,35 +1242,6 @@
       }
     }
   }
-  .en__field--radio:not(.en__field--donationAmt):not(.en__field--recurrfreq):not(.give-by-select) {
-    .en__field__input--radio + .en__field__label:before {
-      top: calc(50% - 1.4rem / 2);
-      border-radius: 50%;
-      left: 0;
-    }
-    .en__field__input--radio:checked + .en__field__label:after {
-      content: "";
-      position: absolute;
-      height: 1.4rem;
-      width: 1.4rem;
-      left: 0;
-      display: inline-block;
-      vertical-align: middle;
-      border: 1px solid var(--color-black);
-      box-shadow: inset 0 0 0 5px var(--color-white);
-      background-color: var(--color-white);
-      cursor: pointer;
-      transition-duration: 0.25s;
-      transition-property: border-color, background-color;
-      top: 5px;
-      background: var(--color-black);
-      top: calc(50% - 1.4rem / 2);
-      border-radius: 50%;
-    }
-    .en__field__input--radio:checked + .en__field__label:before {
-      content: none;
-    }
-  }
 
 
 /*
@@ -1254,13 +1258,13 @@
 
     /* Style survey question field labels like <h4> tags */
     &.en__field > label{
-      font-size: calc(var(--theme-typography-h3-font-size)*var(--scale-down-20pct));
-      margin-top: calc(2rem*var(--scale-down-80pct));
-      margin-bottom: calc(1rem*var(--scale-down-80pct));
-      font-family: var(--theme-typography-h3-font-family);
-      color: var(--theme-typography-h3-color);
-      font-weight: var(--theme-typography-h3-font-weight);
-      line-height: var(--theme-typography-h3-line-height);
+      font-size: calc(var(--h3_font-size)*var(--scale-down_20pct));
+      margin-top: calc(2rem*var(--scale-down_80pct));
+      margin-bottom: calc(1rem*var(--scale-down_80pct));
+      font-family: var(--h3_font-family);
+      color: var(--h3_color);
+      font-weight: var(--h3_font-weight);
+      line-height: var(--h3_line-height);
     }
 
     &.en__field.en__field--checkbox > label {
@@ -1284,7 +1288,7 @@
           position: relative;
           cursor: pointer;
           // font-weight: 500;
-          // font-family: var(--theme-typography-default-font-family);
+          // font-family: var(--default_font-family);
           text-transform: none;
           border: 0;
           // font-size: 0.75rem;
@@ -1293,21 +1297,21 @@
           justify-content: flex-start;
           display: inline-flex;
           align-items: center;
-          min-height: 1.75rem;
-          padding: 0 0 0 42px;
+          min-height: calc(max(var(--checkbox_height), var(--radio_height)));
+          // padding: 0 0 0 42px;
           margin-left: 0;
-          // color: var(--theme-typography-p-color);
+          // color: var(--p_color);
         }
       }
     }
     /* Style survey question options labels like <p> tags */
     .en__field__item > label,
     .en__field__item > input.en__field__input--checkbox:checked+label{
-      font-family: var(--theme-typography-p-font-family) !important;
-      color: var(--theme-typography-p-color);
-      font-size: var(--theme-typography-p-font-size);
-      font-weight: var(--theme-typography-p-font-weight);
-      line-height: var(--theme-typography-p-line-height);
+      font-family: var(--p_font-family) !important;
+      color: var(--p_color);
+      font-size: var(--p_font-size);
+      font-weight: var(--p_font-weight);
+      line-height: var(--p_line-height);
     }
 
     /* Adjusts the relative position of the checkbox checkmark now that the label is differently sized */
@@ -1533,7 +1537,7 @@
   }
 
   @media screen and (max-width: 999px) {
-    --theme-body-padding: 0px 24px;
+    --engrid__body_padding: 0px 24px;
     /* prettier-ignore */
     .en__component--advrow,
     .en__component--advrow .pseudo-subgrid {
@@ -1586,14 +1590,14 @@ body#en__pagebuilder .content-footerSpacer {
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="rightright1col"] {
-  --theme-body-padding: 0px 60px;
+  --engrid__body_padding: 0px 60px;
 
   .body-bottom:not(:empty) {
     padding-bottom: 60px;
   }
 
   @media screen and (max-width: 774px) {
-    --theme-body-padding: 0px 24px;
+    --engrid__body_padding: 0px 24px;
   }
 }
 
@@ -1612,7 +1616,7 @@ body#en__pagebuilder .content-footerSpacer {
 }
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
-  --theme-body-padding: 0px 50px;
+  --engrid__body_padding: 0px 50px;
 
   .body-main:not(:empty) {
     padding-top: 36px;
@@ -1645,7 +1649,7 @@ body#en__pagebuilder .content-footerSpacer {
   }
 
   @media screen and (max-width: 999px) {
-    --theme-body-padding: 0px 24px;
+    --engrid__body_padding: 0px 24px;
   }
 }
 
@@ -1662,9 +1666,9 @@ body#en__pagebuilder .content-footerSpacer {
     .body-banner,
     .body-bannerOverlay,
     .body-top {
-      --theme-body-title-background-color: #f5f5f5;
-      --theme-body-banner-background-color: #f5f5f5;
-      --theme-body-top-background-color: #f5f5f5;
+      --engrid__body-title_background-color: #f5f5f5;
+      --engrid__body-banner_background-color: #f5f5f5;
+      --engrid__body-top_background-color: #f5f5f5;
     }
   }
 }
