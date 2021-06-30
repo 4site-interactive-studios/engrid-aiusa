@@ -1039,6 +1039,7 @@
     .en__field--recurrfreq .en__field__element--radio,
     .give-by-select .en__field__element--radio {
       flex-direction: column;
+      flex-wrap: nowrap;
     }
 
     .desktop-only {
