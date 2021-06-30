@@ -7194,6 +7194,7 @@ span{
 @media screen and (max-width:439px){
   [data-engrid-theme=aiusa][data-engrid-layout] .en__field--recurrfreq .en__field__element--radio,[data-engrid-theme=aiusa][data-engrid-layout] .give-by-select .en__field__element--radio{
     flex-direction:column;
+    flex-wrap:nowrap;
   }
   [data-engrid-theme=aiusa][data-engrid-layout] .desktop-only{
     display:none;
