@@ -25,7 +25,8 @@ module.exports = merge(common, {
           ],
         },
         minify: [CssMinimizerPlugin.cssnanoMinify],
-      }),
+      })
+    , new TerserPlugin()
     ],
   },
   plugins: [new MiniCssExtractPlugin({ filename: "[name].css" })],

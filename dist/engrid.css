@@ -6561,6 +6561,10 @@ body:not(#en__pagebuilder)[data-engrid-layout=centerright1col] .page-backgroundI
   border-color:var(--color_dark-gray);
 }
 
+[data-engrid-theme=aiusa] .en__contacts--singleTweetMode .en__twitterTarget__select{
+  flex-basis:2rem;
+}
+
 [data-engrid-theme=aiusa] .en__tweetButton__send a{
   background-color:#ff0;
   color:#252525;
