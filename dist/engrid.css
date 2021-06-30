@@ -2852,7 +2852,7 @@ body:not(#en__pagebuilder) .click-to-expand.expanded .click-to-expand-text-wrapp
   outline:none;
 }
 
-:root{
+[data-engrid-theme]{
   --color_transparent:#0000;
   --color_white:#fff;
   --color_off-white:#d4d4d4;
@@ -3185,7 +3185,7 @@ body:not(#en__pagebuilder) .i1-hide-label .en__field:first-of-type>label,body:no
 }
 
 .radio-to-buttons_recurrfreq>.en__field>.en__field__element .en__field__input--other{
-  border-radius:Tvar(--recurring-frequency__button_border-radius);
+  border-radius:var(--recurring-frequency__button_border-radius);
 }
 .radio-to-buttons .en__field--radio input[type=radio]+label{
   background-color:var(--button_background-color);
@@ -4024,7 +4024,6 @@ img:not([width]){
 
 [data-engrid-theme]{
   --media-attribution__font-family:var(--default_font-family);
-  --media-attribution__color:#ffffffe6;
   --media-attribution__font-size:75%;
   --media-attribution__font-style:normal;
   --media-attribution__font-weight:bold;
@@ -4130,7 +4129,8 @@ figure.media-with-attribution figattribution.attribution-topleft{
   height:100%;
   justify-content:center;
   left:0;
-  overflow:hidden;
+  overflow-x:hide;
+  overflow-y:scroll;
   position:fixed;
   top:0;
   transition:top .4s ease-in-out;
