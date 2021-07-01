@@ -151,7 +151,6 @@ document.onreadystatechange = () => {
         // Close's the menu when tapping the close button on mobile
         const menuBtn = document.querySelector('a[role="menuitem"]');
         
-        // @TODO Make this a passive event listener to improce scrolling performance: https://web.dev/uses-passive-event-listeners/?utm_source=lighthouse&utm_medium=unknown
         menuBtn.addEventListener('touchstart', function(event){
           const menu = document.querySelector('ul#main-menu ul[role="menu"]');
           if(menu.style.display==="block"){
