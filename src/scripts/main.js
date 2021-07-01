@@ -158,7 +158,7 @@ document.onreadystatechange = () => {
             menu.style.display="none";
             menuBtn.setAttribute('aria-expanded','false');
           }
-        });
+        }, {passive: true});
 
         // Menu copied from: https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/menubar-1.html#
         // @TODO Move to this package https://github.com/NickDJM/accessible-menu/blob/HEAD/docs/basics/two-level-menu-with-toggle.md
