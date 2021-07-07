@@ -684,6 +684,19 @@
     outline-color: black;
   }
 
+/*
+* ##########################################################
+* # DONATION UPSELL LIGHTBOX
+* ##########################################################
+*/
+
+// Remove bottom margin and fixed height (this reduces 32px in total height)
+#goMonthly #upsellNoButton button{
+  margin-bottom: 0;
+  height: auto;
+}
+
+
   /*
 * ##########################################################
 * # EN WIDGET: PROGRESS BAR (AKA THERMOMETER)
