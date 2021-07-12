@@ -386,7 +386,7 @@
     }
 
     ul[role="menubar"] ul[role="menu"] li a {
-      display: block;
+      display: inline-block;
       word-break: normal;
       white-space: nowrap;
       margin: 0;
