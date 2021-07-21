@@ -1,3 +1,592 @@
+/* All CSS Custom Properties should be scoped to the theme using CSS Data Attributes. */
+[data-engrid-theme="aiusa"] {
+
+  // FIXED COLOR PALETTE
+  --color_transparent: transparent;
+  --color_white: rgba(255, 255, 255, 1);
+  --color_black: rgba(37, 37, 37, 1);
+  --pagebuilder__background-color: #c1c0c0;
+
+  // GRAYSCALE COLOR PALETTE
+  --color_off-white: #dfdfdf;
+  --color_light-gray: #bfbfbf;
+  --color_gray: #b3b3b3;
+  --color_dark-gray: #808080;
+  --color_off-black: #404040;
+
+  // SEMANTIC COLOR PALETTE
+  --success: #33cc33;
+  --warning: #fcac00;
+  --error: #f12222;
+
+  // PRIMARY COLORS
+  --color_primary: #ffff00;
+  --color_primary_overlay: #000000;
+
+  // SEMANTIC GEOMETRIC SCALING
+  --scale-up_20pct: 1.2;
+  --scale-up_40pct: 1.4;
+  --scale-up_80pct: 1.8;
+  --scale-up_160pct: 2.6;
+  --scale-down_20pct: 0.8;
+  --scale-down_40pct: 0.6;
+  --scale-down_80pct: 0.2;
+
+  // FONT STACKS
+  --native-fonts__sans-serif: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+
+  // TYPOGRAPHY DEFAULT
+  --default_font-family: var(--font-stack-aiusa);
+  --default_color: var(--color_black);
+  --default_font-size: var(--root_font-size);
+  --default_font-weight: initial;
+  --default_line-height: initial;
+
+  // TYPOGRAPHY H1
+  --h1_font-family: var(
+    --font-stack-aiusa-bold-condensed
+  );
+  --h1_color: initial;
+  --h1_font-size: calc(
+    var(--root_font-size) * var(--scale-up_160pct)
+  );
+  --h1_font-weight: var(
+    --headline-font-weight
+  );
+  --h1_line-height: var(--h1_font-size);
+
+  // TYPOGRAPHY H2
+  --h2_font-family: var(--h1_font-family);
+  --h2_color: initial;
+  --h2_font-size: calc(
+    var(--root_font-size) * var(--scale-up_80pct)
+  );
+  --h2_font-weight: initial;
+  --h2_line-height: var(--h2_font-size);
+
+  // TYPOGRAPHY H3
+  --h3_font-family: var(--h1_font-family);
+  --h3_color: initial;
+  --h3_font-size: calc(
+    var(--root_font-size) * var(--scale-up_40pct)
+  );
+  --h3_font-weight: initial;
+  --h3_line-height: var(--h3_font-size);
+
+  // TYPOGRAPHY P
+  --p_font-family: var(--default_font-family);
+  --p_color: initial;
+  --p_font-size: var(--root_font-size);
+  --p_font-weight: initial;
+  --p_line-height: initial;
+
+  // TYPOGRAPHY LABEL
+  --label-font-family: var(
+    --font-stack-aiusa-bold-condensed
+  );
+  --label-color: #525252;
+  --label-font-size: 12px;
+  --label-font-weight: initial;
+  --label-line-height: initial;
+
+  // TYPOGRAPHY INPUT
+  --input_font-family: var(
+    --default_font-family
+  );
+  --input_color: initial;
+  --input_font-size: var(--root_font-size);
+  --input_font-weight: initial;
+  --input_line-height: initial;
+  --input_background-color: #f5f5f5;
+  --input_border-width: 2px;
+  --input_border-color: var(
+    --input_background-color
+  );
+  --input_border-radius: initial;
+  --input_placeholder-color: #767676;
+  --input_box-shadow: none;
+
+  // TYPOGRAPHY INPUT:FOCUS
+  // TYPOGRAPHY INPUT:HOVER
+  --input_color_hover: var(--input_color);
+  --input_background-color_hover: var(
+    --input_background-color
+  );
+  --input_border-color_hover: var(--input_background-color);
+  --input_border-bottom-color_hover: #525252;
+  --input_box-shadow_hover: none;
+
+  // TYPOGRAPHY RADIO
+  --radio_content: "";
+  --radio_color: var(--color_primary);
+  --radio_background-color: var(--color_white);
+  --radio_border-width: 1px;
+  --radio_border-color: var(--color_black);
+  --radio_border-radius: 50%;
+  --radio_height: 1.4rem;
+  --radio_width: 1.4rem;
+  --radio_box-shadow: none;
+
+  // TYPOGRAPHY RADIO INPUT:FOCUS
+  // TYPOGRAPHY RADIO INPUT:HOVER
+  --radio_color_hover: var(--radio_color);
+  --radio_background-color_hover: var(
+    --radio_background-color
+  );
+  --radio_border-color_hover: var(
+    --radio_border-color
+  );
+  --radio_box-shadow_hover: none;
+
+  // TYPOGRAPHY RADIO INPUT:CHECKED
+  --radio_color_selected_selected: var(
+    --radio_background-color
+  );
+  --radio_background-color_selected: var(--color_white);
+  --radio_border-color_selected: var(
+    --radio_border-color
+  );
+  --radio_box-shadow_selected: inset 0 0 0 6px var(--color_black);
+
+  // TYPOGRAPHY CHECKBOX
+  --checkbox_color: var(--color_white);
+  --checkbox_background-color: var(--color_white);
+  --checkbox_border-width: 1px;
+  --checkbox_border-color: var(--color_black);
+  --checkbox_border-radius: 0px;
+  --checkbox_height: 1.75rem;
+  --checkbox_width: 1.75rem;
+
+  // TYPOGRAPHY CHECKBOX INPUT:FOCUS
+  // TYPOGRAPHY CHECKBOX INPUT:HOVER
+  --checkbox_color_hover: var(
+    --checkbox_color
+  );
+  --checkbox_background-color_hover: var(
+    --checkbox_background-color
+  );
+  --checkbox_border-color_hover: var(
+    --checkbox_border-color
+  );
+
+  // TYPOGRAPHY CHECKBOX INPUT:CHECKED
+  --checkbox_content_checked: "✓";
+  --checkbox_color_checked: var(
+    --checkbox_background-color
+  );
+  --checkbox_background-color_checked: var(--color_black);
+  --checkbox_border-color_checked: var(
+    --checkbox_border-color
+  );
+
+  // TYPOGRAPHY SELECT
+  --select_font-family: var(
+    --default_font-family
+  );
+  --select_color: var(--color_black);
+  --select_font-size: var(--root_font-size);
+  --select_font-weight: initial;
+  --select_line-height: initial;
+  --select_background-color: #f5f5f5;
+  --select_border-width: 2px;
+  --select_border-color: #f5f5f5;
+  --select_border-radius: initial;
+  --select_box-shadow: var(
+    --input_box-shadow
+  );
+
+  // TYPOGRAPHY SELECT:FOCUS
+  // TYPOGRAPHY SELECT:HOVER
+  --select_color_hover: var(--select_color);
+  --select_background-color_hover: var(
+    --select_background-color
+  );
+  --select_border-color_hover: var(
+    --select_border-color
+  );
+  --select_border-bottom-color_hover: var(--color_black);
+  --select_box-shadow_hover: var(
+    --input_box-shadow_hover
+  );
+
+  // TYPOGRAPHY TEXTAREA
+  --textarea_font-family: var(
+    --default_font-family
+  );
+  --textarea_color: initial;
+  --textarea_font-size: var(--root_font-size);
+  --textarea_font-weight: initial;
+  --textarea_line-height: initial;
+  --textarea_background-color: #f5f5f5;
+  --textarea_border-width: 2px;
+  --textarea_border-color: var(--textarea_background-color);
+  --textarea_border-radius: initial;
+  --textarea_placeholder-color: var(--color_light-gray);
+  --textarea_box-shadow: var(
+    --input_box-shadow
+  );
+
+  // TYPOGRAPHY TEXTAREA:FOCUS
+  // TYPOGRAPHY TEXTAREA:HOVER
+  --textarea_color_hover: var(--textarea_color);
+  --textarea_background-color_hover: var(--textarea_background-color);
+  --textarea_border-color_hover: var(--textarea_background-color);
+  --textarea_border-bottom-color_hover: var(--input_border-bottom-color_hover);
+  --textarea_box-shadow_hover: var(--input_box-shadow_hover);
+
+  // TYPOGRAPHY BUTTON
+  --button_font-family: var(
+    --font-stack-aiusa-bold-condensed
+  );
+  --button_color: var(--color_black);
+  --button_font-size: 18px;
+  --button_font-weight: bold;
+  --button_line-height: initial;
+  --button_background-color: var(--color_white);
+  --button_border-width: 2px;
+  --button_border-color: #e4e4e4;
+  --button_border-radius: initial;
+  --button_padding: 1.5ch 0.75ch;
+
+  // TYPOGRAPHY BUTTON:HOVER
+  --button_color_hover: var(--button_color);
+  --button_background-color_hover: var(
+    --button_background-color
+  );
+  --button_border-color_hover: var(
+    --button_color
+  );
+  --button_focus-hover-background-color: #fff;
+  --button_focus-hover-color: var(--color_black);
+
+  // TYPOGRAPHY BUTTON:CHECKED
+  --button_color_checked: var(--color_white);
+  --button_background-color_checked: var(--color_black);
+  --button_border-color_checked: var(--color_black);
+
+  // TYPOGRAPHY GIVING FREQUENCY BUTTON
+  --recurring-frequency__button_font-family: var(
+    --button_font-family
+  );
+  --recurring-frequency__button_color: var(
+    --button_color
+  );
+  --recurring-frequency__button_font-size: var(
+    --button_font-size
+  );
+  --recurring-frequency__button_font-weight: var(
+    --button_font-weight
+  );
+  --recurring-frequency__button_line-height: var(
+    --button_line-height
+  );
+  --recurring-frequency__button_background-color: var(
+    --button_background-color
+  );
+  --recurring-frequency__button_border-width: var(
+    --button_border-width
+  );
+  --recurring-frequency__button_border-color: var(
+    --button_border-color
+  );
+  --recurring-frequency__button_border-radius: var(
+    --button_border-radius
+  );
+  --recurring-frequency__button_padding: 1.5ch 1.75ch;
+
+  // TYPOGRAPHY GIVING FREQUENCY BUTTON:HOVER
+  --recurring-frequency__button_color_hover: var(--button_color_hover);
+  --recurring-frequency__button_border-color_hover: var(--color_black);
+  --recurring-frequency__button_background-color_hover: var(--color_white);
+
+  // TYPOGRAPHY GIVING FREQUENCY BUTTON:CHECKED
+  --recurring-frequency__button_color_checked: var(
+    --button_color_hover
+  );
+  --recurring-frequency__button_background-color_checked: var(
+    --color_cta
+  );
+  --recurring-frequency__button_border-color_checked: var(
+    --color_cta
+  );
+
+  // TYPOGRAPHY GIVING AMOUNT BUTTON
+  --donation-amount__button_font-family: var(
+    --button_font-family
+  );
+  --donation-amount__button_color: var(
+    --button_color
+  );
+  --donation-amount__button_font-size: var(
+    --button_font-size
+  );
+  --donation-amount__button_font-weight: var(
+    --button_font-weight
+  );
+  --donation-amount__button_line-height: var(
+    --button_line-height
+  );
+  --donation-amount__button_background-color: var(
+    --button_background-color
+  );
+  --donation-amount__button_border-width: var(
+    --button_border-width
+  );
+  --donation-amount__button_border-color: var(
+    --button_border-color
+  );
+  --donation-amount__button_border-radius: var(
+    --button_border-radius
+  );
+
+  // TYPOGRAPHY GIVING AMOUNT BUTTON:HOVER
+  --donation-amount__button_color_hover: var(
+    --button_color_hover
+  );
+  --donation-amount__button_background-color_hover: var(
+    --button_background-color_hover
+  );
+  --donation-amount__button_border-color_hover: var(
+    --button_border-color_hover
+  );
+
+  // TYPOGRAPHY GIVING AMOUNT BUTTON:CHECKED
+  --donation-amount__button_color_checked: var(--color_white);
+  --donation-amount__button_background-color_checked: var(
+    --button_color
+  );
+  --donation-amount__button_border-color_checked: var(
+    --button_color
+  );
+
+  // TYPOGRAPHY GIVE BY SELECT BUTTON
+  --give-by-select__button_font-family: var(
+    --button_font-family
+  );
+  --give-by-select__button_color: var(
+    --button_color
+  );
+  --give-by-select__button_font-size: var(
+    --button_font-size
+  );
+  --give-by-select__button_font-weight: var(
+    --button_font-weight
+  );
+  --give-by-select__button_line-height: var(
+    --button_line-height
+  );
+  --give-by-select__button_background-color: var(
+    --button_background-color
+  );
+  --give-by-select__button_border-width: var(
+    --button_border-width
+  );
+  --give-by-select__button_border-color: var(
+    --button_border-color
+  );
+  --give-by-select__button_border-radius: var(
+    --button_border-radius
+  );
+
+  // TYPOGRAPHY GIVE BY SELECT BUTTON:HOVER
+  --give-by-select__button_color_hover: var(
+    --button_color_hover
+  );
+  --give-by-select__button_background-color_hover: var(
+    --button_background-color_hover
+  );
+  --give-by-select__button_border-color_hover: var(
+    --button_border-color_hover
+  );
+
+  // TYPOGRAPHY GIVE BY SELECT BUTTON:CHECKED
+  --give-by-select__button_color_checked: var(--color_white);
+  --give-by-select__button_background-color_checked: var(
+    --button_color
+  );
+  --give-by-select__button_border-color_checked: var(
+    --button_color
+  );
+
+  // TYPOGRAPHY SUBMIT BUTTON
+  --submit__button_font-size: 22px;
+  --submit__button_padding-top: 1.5ch;
+  --submit__button_padding-bottom: 1.5ch;
+
+  // TYPOGRAPHY A
+  --a_font-family: var(
+    --headline-font-family
+  );
+  --a_color: initial;
+  --a_text-decoration: initial;
+
+  // TYPOGRAPHY A:FOCUS
+  // TYPOGRAPHY A:HOVER
+  --a_color_checked: var(--a_color);
+  --a_text-decoration_checked: initial;
+
+  // CTA COLORS
+  --color_cta: #ffff00;
+  --color_cta_hover: #ffff00;
+
+  // ENGRID SECTIONS BACKGROUND COLOR
+  // QUICK SETTINGS
+  --engrid__page_background-color: var(--color_transparent);
+  --engrid__content_background-color: var(--color_transparent);
+  --engrid__body_background-color: var(--color_white);
+  // DETAIL SETTINGS
+  --engrid__page-alert_background-color: var(--engrid__page_background-color);
+  --engrid__content-header_background-color: var(--color_white);
+  --engrid__body-headerOutside_background-color: var(--color_transparent);
+  --engrid__body-header_background-color: var(--color_primary);
+  --engrid__body-title_background-color: var(--engrid__body_background-color);
+  --engrid__body-banner_background-color: var(--engrid__body_background-color);
+  --engrid__body-bannerOverlay_background-color: var(--color_transparent);
+  --engrid__body-top_background-color: var(--engrid__body_background-color);
+  --engrid__body-side_background-color: var(--engrid__body_background-color);
+  --engrid__body-main_background-color: var(--engrid__body_background-color);
+  --engrid__body-bottom_background-color: var(--engrid__body_background-color);
+  --engrid__body-footer_background-color: var(--engrid__body_background-color);
+  --engrid__body-footerOutside_background-color: var(--color_transparent);
+  --engrid__content-footerSpacer_background-color: var(
+    --engrid__content_background-color
+  );
+  --engrid__content-preFooter_background-color: var(
+    --engrid__content_background-color
+  );
+  --engrid__content-footer_background-color: var(--color_white);
+  --engrid__page-backgroundImage_background-color: --color_light-gray;
+  --engrid__page-backgroundImageOverlay_background-color: var(
+    --color_transparent
+  );
+  --engrid__page-customCode_background-color: var(--engrid__page_background-color);
+
+  // ENGRID SECTIONS PADDING
+  // QUICK SETTINGS
+  --engrid__page_padding: 0px;
+  --engrid__content_padding: 0px;
+  --engrid__body_padding: 0px 60px;
+  // DETAIL SETTINGS
+  --engrid__page-alert_padding: var(--engrid__page_padding);
+  --engrid__content-header_padding: var(--engrid__content_padding);
+  --engrid__body-headerOutside_padding: var(--engrid__body_padding);
+  --engrid__body-header_padding: var(--engrid__body_padding);
+  --engrid__body-title_padding: var(--engrid__body_padding);
+  --engrid__body-banner_padding: 0px;
+  --engrid__body-bannerOverlay_padding: var(--engrid__body_padding);
+  --engrid__body-top_padding: var(--engrid__body_padding);
+  --engrid__body-side_padding: var(--engrid__body_padding);
+  --engrid__body-main_padding: var(--engrid__body_padding);
+  --engrid__body-bottom_padding: var(--engrid__body_padding);
+  --engrid__body-footer_padding: var(--engrid__body_padding);
+  --engrid__body-footerOutside_padding: var(--engrid__body_padding);
+  --engrid__content-footerSpacer_padding: var(--engrid__content_padding);
+  --engrid__content-preFooter_padding: var(--engrid__content_padding);
+  --engrid__content-footer_padding: var(--engrid__content_padding);
+  --engrid__page-backgroundImage_padding: 0px;
+  --engrid__page-backgroundImageOverlay_padding: var(--engrid__page_padding);
+  --engrid__page-customCode_padding: var(--engrid__page_padding);
+
+  // ENGRID SECTIONS MARGIN
+  // QUICK SETTINGS
+  --engrid__page_margin: 0px;
+  --engrid__content_margin: 0px;
+  --engrid__body_margin: 0px;
+  // DETAIL SETTINGS
+  --engrid__page-alert_margin: var(--engrid__page_margin);
+  --engrid__content-header_margin: var(--engrid__content_margin);
+  --engrid__body-headerOutside_margin: var(--engrid__body_margin);
+  --engrid__body-header_margin: var(--engrid__body_margin);
+  --engrid__body-title_margin: var(--engrid__body_margin);
+  --engrid__body-banner_margin: var(--engrid__body_margin);
+  --engrid__body-bannerOverlay_margin: var(--engrid__body_margin);
+  --engrid__body-top_margin: var(--engrid__body_margin);
+  --engrid__body-side_margin: var(--engrid__body_margin);
+  --engrid__body-main_margin: var(--engrid__body_margin);
+  --engrid__body-bottom_margin: var(--engrid__body_margin);
+  --engrid__body-footer_margin: var(--engrid__body_margin);
+  --engrid__body-footerOutside_margin: var(--engrid__body_margin);
+  --engrid__content-footerSpacer_margin: var(--engrid__content_margin);
+  --engrid__content-preFooter_margin: var(--engrid__content_margin);
+  --engrid__content-footer_margin: var(--engrid__content_margin);
+  --engrid__page-backgroundImage_margin: var(--engrid__page_margin);
+  --engrid__page-backgroundImageOverlay_margin: var(--engrid__page_margin);
+  --engrid__page-customCode_margin: var(--engrid__page_margin);
+
+  // LAZY LOADED BANNER IMAGE PLACEHOLDER COLOR
+  --engrid__body-banner_image-background-color: --color_light-gray;
+
+  // BODY BORDER RADIUS
+  // @TODO This doesn't do anything at the moment
+  --engrid__body_border-radius: 0px;
+
+  // ENGRID BACKGROUND IMAGE SECTION'S BACKGROUND PATTERN
+  // This is a background pattern that is shown before the hi-resolution background image is lazy loaded in, if at all
+  // It's background color "--engrid__page-backgroundImage_background-color" should be the average color of the image
+  // REF: (https://doodad.dev/pattern-generator/)
+  --engrid__page-backgroundImage_background-pattern: "url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)"; // Invisible GIF
+
+  // REF: http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/
+  --root_font-size: 18px; // Sets a baseline font size for all other REM based font-sizes to relatively build off of
+
+  --engrid__page-backgroundImage_url: "url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7)"; // Invisible GIF
+
+  // @TODO Revisit these spacing values and calculations
+  // @BODY Look into replicating "Teach a System of Space Visually" as a Development page that shows all styling decisions for the brand https://medium.com/eightshapes-llc/space-in-design-systems-188bcbae0d62#.fwng4aef7
+  --spacing_sm: 0.8652rem;
+  --spacing: calc(0.8652rem * 0.75);
+  --spacing_lg: calc(0.8652rem * 2.5);
+  --spacing_xlg: calc(0.8652rem * 5);
+
+  // ERRORS
+  --error__color: var(--error);
+  --error__color-grayscale: #949494;
+  --error__color-faded: #ffeae9;
+  --error__background-color: #ffeae9;
+  --error__border-width: var(--input_border-width);
+
+  // HIGHLIGHTS
+  --highlight__background-color: var(--color_primary);
+  --highlight__color: #252525;
+
+  // CLICK TO EXPAND
+  --click-to-expand__copy-area_height: 400px;
+  --click-to-expand__cta-image_url: url("https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/more-btn.png?v=1614773932000");
+  --click-to-expand__cta-image_width: 56px;
+  --click-to-expand__cta-image_height: 15px;
+
+  // LABEL APPENDED TO DONTIONAL GIVING AMOUNTS BASED ON GIVING FREQUENCY
+  --give-monthly-donation-amount-appended-label: " Monthly";
+  --give-annual-donation-amount-appended-label: " Annually";
+
+  // IMAGE ATTRIBUTION OVERLAY
+  --media-attribution__font-family: var(
+    --default_font-family
+  );
+  --media-attribution__color: #ffffff;
+  --media-attribution__text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
+  --media-attribution__font-size: 12px;
+  --media-attribution__font-style: normal;
+  --media-attribution__font-weight: 700;
+  --media-attribution__text-transform: uppercase;
+  --media-attribution__margin: 1.25ch 0 0 1.5ch;
+  --media-attribution__padding: 1ch 1.25ch 0.5ch 1.25ch;
+  --media-attribution__background-color: rgba(0, 0, 0, 0.25);
+
+  // ADD THEME CUSTOM CSS PROPERTIES HERE
+  // TYPOGRAPHY HEADLINE
+  --font-stack-aiusa: "AmnestyTradeGothic",
+    var(--native-fonts__sans-serif);
+  --font-stack-aiusa-bold-condensed: "AmnestyTradeGothicBdCn",
+    var(--native-fonts__sans-serif);
+  --headline-font-family: var(--font-stack-aiusa);
+  --headline-font-weight: 700;
+}
+
+
+
 /* Add your custom theme styles here */
 
 /*
@@ -486,7 +1075,7 @@
   }
 
   // On small screens we need to stack the header and menu
-  @media screen and (max-width: 319px) {
+  @mixin on-mobile-s {
     .content-header {
       header {
         flex-direction: column;
@@ -961,34 +1550,7 @@
     img.verisign-logo {
       margin-right: 0px;
     }
-
-    // @media screen and (max-width: 774px) {
-    //   a {
-    //     flex: 1 1 20%;
-    //     max-width: 20%;
-    //     margin-right: 10px;
-    //   }
-    //   img.verisign-logo {
-    //       max-width: 50%;
-    //   }
-    // }
   }
-
-  //   @media screen and (max-width: 400px) {
-  //     .trust-logos{
-  //       flex-direction: column;
-
-  //       > * {
-  //         margin-left: 0;
-  //         margin-right: 0;
-  //       }
-
-  //       > :not(:last-child){
-  //         padding-bottom: 0.5rem;
-  //       }
-  //     }
-
-  // }
 
   /*
 * ##########################################################
@@ -1057,6 +1619,10 @@
     .give-by-select .en__field__element--radio {
       flex-direction: column;
       flex-wrap: nowrap;
+
+      > * {
+        width: 100%;
+      }
     }
 
     .desktop-only {
@@ -1075,7 +1641,8 @@
       display: none;
     }
 
-    .en__field {
+    .en__field,
+    .en__submit {
       flex-basis: 100%;
       padding-left: 0px;
       padding-right: 0px;
@@ -1178,6 +1745,10 @@
 
   // Universal stylings
   &[data-engrid-layout] {
+    @media screen and (max-width: 339px) {
+      @include on-mobile-s;
+    }
+
     @media screen and (max-width: 439px) {
       @include on-mobile;
     }
@@ -1187,19 +1758,40 @@
     }
   }
 
-  &[data-engrid-layout="centerleft1col"],
-  &[data-engrid-layout="centercenter1col"],
-  &[data-engrid-layout="centerright1col"] {
-    @media screen and (max-width: 774px) {
+  &[data-engrid-layout="centerleft1col"]{
+    @media screen and (max-width: $centerleft1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
       @include simplified-page-backgroundImage;
     }
   }
 
-  &[data-engrid-layout="leftleft1col"],
-  &[data-engrid-layout="rightright1col"] {
-    @media screen and (max-width: 774px) {
+  &[data-engrid-layout="centercenter1col"]{
+    @media screen and (max-width: $centercenter1col_content-column_min-width) {
+      @include simplified-content-header;
+      @include simplified-content-footer;
+      @include simplified-page-backgroundImage;
+    }
+  }
+
+  &[data-engrid-layout="centerright1col"]{
+    @media screen and (max-width: $centerright1col_content-column_min-width) {
+      @include simplified-content-header;
+      @include simplified-content-footer;
+      @include simplified-page-backgroundImage;
+    }
+  }
+
+  &[data-engrid-layout="leftleft1col"]{
+    @media screen and (max-width: $leftleft1col_content-column_min-width) {
+      @include simplified-content-header;
+      @include simplified-content-footer;
+      @include simplified-page-backgroundImage;
+    }
+  }
+
+  &[data-engrid-layout="rightright1col"]{
+    @media screen and (max-width: $rightright1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
       @include simplified-page-backgroundImage;
@@ -1207,7 +1799,7 @@
   }
 
   &[data-engrid-layout="centercenter2col"] {
-    @media screen and (max-width: 999px) {
+    @media screen and (max-width: $centercenter2col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
       @include simplified-page-backgroundImage;
@@ -1352,22 +1944,7 @@
 */
 
 [data-engrid-theme="aiusa"][data-engrid-layout="leftleft1col"] {
-  @media screen and (min-width: 775px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-              pc-start lpc-start]  minmax(0px, 0px)        [lpc-end
-              cc-start lcc-start]  minmax(0px, 0px)        [lcc-end
-              bc-start lbc-start]  minmax(260px, 260px)    [lbc-end
-              rbc-start]           minmax(260px, 260px)    [rbc-end bc-end
-              rcc-start]           minmax(0px, 0px)        [rcc-end cc-end
-              rpc-start]           minmax(0px, 1fr)        [rpc-end pc-end               
-              ];
-          }
-
+  @media screen and (min-width: $leftleft1col_content-column_min-width) {
     .content-header,
     .content-footer {
       grid-column: bc;
@@ -1377,83 +1954,11 @@
     .body-backgroundImageOverlay {
       grid-row: page;
     }
-  }
-}
-
-[data-engrid-theme="aiusa"][data-engrid-layout="centerleft1col"] {
-  @media screen and (min-width: 775px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-                pc-start lpc-start]  minmax(0px, 1fr)        [lpc-end
-                cc-start lcc-start]  minmax(0px, 128px)      [lcc-end
-                bc-start lbc-start]  minmax(260px, 260px)    [lbc-end
-                rbc-start]           minmax(260px, 260px)    [rbc-end bc-end
-                rcc-start]           minmax(0px, 800px)      [rcc-end cc-end
-                rpc-start]           minmax(0px, 1fr)        [rpc-end pc-end               
-              ];
-          }
-  }
-}
-
-[data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"] {
-  @media screen and (min-width: 775px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-              pc-start lpc-start]  minmax(0px, 0px)        [lpc-end
-              cc-start lcc-start]  minmax(0px, 1fr)        [lcc-end
-              bc-start lbc-start]  minmax(260px, 260px)    [lbc-end
-              rbc-start]           minmax(260px, 260px)    [rbc-end bc-end
-              rcc-start]           minmax(0px, 1fr)        [rcc-end cc-end
-              rpc-start]           minmax(0px, 0px)        [rpc-end pc-end               
-              ];
-          }
-  }
-}
-
-[data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"] {
-  @media screen and (min-width: 775px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-              pc-start lpc-start]  minmax(0px, 0px)        [lpc-end
-              cc-start lcc-start]  minmax(0px, 1fr)        [lcc-end
-              bc-start lbc-start]  minmax(260px, 260px)    [lbc-end
-              rbc-start]           minmax(260px, 260px)    [rbc-end bc-end
-              rcc-start]           minmax(0px, 128px)      [rcc-end cc-end
-              rpc-start]           minmax(0px, 0px)        [rpc-end pc-end               
-              ];
-          }
   }
 }
 
 [data-engrid-theme="aiusa"][data-engrid-layout="rightright1col"] {
-  @media screen and (min-width: 775px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-              pc-start lpc-start]  minmax(0px, 1fr)        [lpc-end
-              cc-start lcc-start]  minmax(0px, 0px)        [lcc-end
-              bc-start lbc-start]  minmax(260px, 260px)    [lbc-end
-              rbc-start]           minmax(260px, 260px)    [rbc-end bc-end
-              rcc-start]           minmax(0px, 0px)        [rcc-end cc-end
-              rpc-start]           minmax(0px, 0px)        [rpc-end pc-end               
-              ];
-          }
-
+  @media screen and (min-width: $rightright1col_content-column_min-width) {
     .content-header,
     .content-footer {
       grid-column: bc;
@@ -1466,67 +1971,8 @@
   }
 }
 
-[data-engrid-theme="aiusa"][data-engrid-layout="leftleft1col"],
-[data-engrid-theme="aiusa"][data-engrid-layout="centerleft1col"],
-[data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"],
-[data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"] {
-  @media screen and (max-width: 774px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-    .en__component--advrow .pseudo-subgrid {
-        /* autoprefixer grid: off */
-        grid-template-columns:
-        [
-            pc-start lpc-start]  minmax(0px, 0px)    [lpc-end
-            cc-start lcc-start]  minmax(0px, 0px)    [lcc-end
-            bc-start lbc-start]  minmax(0px, 50vw)   [lbc-end
-            rbc-start]           minmax(0px, 50vw)   [rbc-end bc-end
-            rcc-start]           minmax(0px, 0px)    [rcc-end cc-end
-            rpc-start]           minmax(0px, 0px)    [rpc-end pc-end             
-        ];
-      }
-  }
-}
-
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
-  @media screen and (min-width: 1000px) {
-    /* prettier-ignore */
-    .en__component--advrow,
-          .en__component--advrow .pseudo-subgrid {
-              /* autoprefixer grid: off */
-              grid-template-columns:
-              [
-                  pc-start lpc-start]  minmax(0px, 0px)     [lpc-end
-                  cc-start lcc-start]  minmax(0px, 1fr)     [lcc-end
-                  bc-start lbc-start]  minmax(0px, 485px)   [lbc-end
-                  rbc-start]           minmax(0px, 485px)   [rbc-end bc-end
-                  rcc-start]           minmax(0px, 1fr)     [rcc-end cc-end
-                  rpc-start]           minmax(0px, 0px)     [rpc-end pc-end             
-              ];
-
-              grid-template-rows:
-              [
-                page-start page-alert-start]        min-content        [page-alert-end
-                content-header-start]               min-content        [content-header-end
-                body-headerOutside-start]           min-content        [body-headerOutside-end
-                body-header-start]                  min-content        [body-header-end
-                body-title-start]                   min-content        [body-title-end
-                body-banner-start]                  min-content        [body-banner-end
-                body-bannerOverlay-start]           min-content        [body-bannerOverlay-end
-                body-top-start]                     minmax(0px, 1fr)   [body-top-end
-                body-side-start]                    min-content        [body-side-end  
-                body-main-start]                    min-content        [body-main-end  
-                body-bottom-start]                  min-content        [body-bottom-end  
-                body-footer-start]                  min-content        [body-footer-end
-                body-footerOutside-start]           min-content        [body-footerOutside-end  
-                content-footerSpacer-start]         max-content        [content-footerSpacer-end
-                content-preFooter-start]            min-content        [content-preFooter-end
-                content-footer-start]               min-content        [content-footer-end
-                page-backgroundImage-start]         min-content        [page-backgroundImage-end
-                page-backgroundImageOverlay-start]  min-content        [page-backgroundImageOverlay-end page-end
-                page-customCode-start]              min-content        [page-customCode-end        
-              ];  
-          }
+  @media screen and (min-width: $centercenter2col_content-column_min-width) {
 
     .body-title {
       grid-row: body-header-end / body-title-end;
@@ -1550,26 +1996,8 @@
     }
   }
 
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: $centercenter2col_content-column_min-width - 1px) {
     --engrid__body_padding: 0px 24px;
-    /* prettier-ignore */
-    .en__component--advrow,
-    .en__component--advrow .pseudo-subgrid {
-        /* autoprefixer grid: off */
-        grid-template-columns:
-        [
-            pc-start lpc-start]  minmax(0px, 0px)    [lpc-end
-            cc-start lcc-start]  minmax(0px, 0px)    [lcc-end
-            bc-start lbc-start]  minmax(0px, 50vw)   [lbc-end
-            rbc-start]           minmax(0px, 50vw)   [rbc-end bc-end
-            rcc-start]           minmax(0px, 0px)    [rcc-end cc-end
-            rpc-start]           minmax(0px, 0px)    [rpc-end pc-end             
-        ];
-    }
-
-    .en__component--advrow > div {
-      grid-column: pc;
-    }
   }
 }
 
@@ -1610,7 +2038,7 @@ body#en__pagebuilder .content-footerSpacer {
     padding-bottom: 60px;
   }
 
-  @media screen and (max-width: 774px) {
+  @media screen and (max-width: $one_col_content-column_min-width) {
     --engrid__body_padding: 0px 24px;
   }
 }
@@ -1618,7 +2046,7 @@ body#en__pagebuilder .content-footerSpacer {
 [data-engrid-theme="aiusa"][data-engrid-layout="centerleft1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"] {
-  @media screen and (min-width: 775px) {
+  @media screen and (min-width: $one_col_content-column_min-width) {
     .body-header {
       margin-top: 80px;
     }
@@ -1652,7 +2080,7 @@ body#en__pagebuilder .content-footerSpacer {
     padding-bottom: 60px;
   }
 
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: $centercenter2col_content-column_min-width) {
     .body-header {
       margin-top: 80px;
     }
@@ -1662,7 +2090,7 @@ body#en__pagebuilder .content-footerSpacer {
     }
   }
 
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: $centercenter2col_content-column_min-width - 1px) {
     --engrid__body_padding: 0px 24px;
   }
 }
@@ -1675,7 +2103,7 @@ body#en__pagebuilder .content-footerSpacer {
 */
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
-  @media screen and (min-width: 1000px) {
+  @media screen and (min-width: $centercenter2col_content-column_min-width) {
     .body-title,
     .body-banner,
     .body-bannerOverlay,
