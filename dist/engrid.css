@@ -4962,7 +4962,7 @@ body:not(#en__pagebuilder) .body-banner:empty,body:not(#en__pagebuilder) .body-b
 }
 @media screen and (min-width:700px){
   [data-engrid-layout=centercenter1col] .en__component--advrow,[data-engrid-layout=centercenter1col] .en__component--advrow .pseudo-subgrid{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 464px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 464px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 460px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 460px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
     grid-template-rows:[page-start page-alert-start] min-content [page-alert-end content-header-start] min-content [content-header-end body-headerOutside-start] min-content [body-headerOutside-end body-header-start] min-content [body-header-end body-banner-start] min-content [body-banner-end body-bannerOverlay-start] min-content [body-bannerOverlay-end body-title-start] min-content [body-title-end body-top-start] min-content [body-top-end body-side-start] min-content [body-side-end body-main-start] min-content [body-main-end body-bottom-start] min-content [body-bottom-end body-footer-start] min-content [body-footer-end body-footerOutside-start] min-content [body-footerOutside-end content-footerSpacer-start] minmax(0, 1fr) [content-footerSpacer-end content-preFooter-start] min-content [content-preFooter-end content-footer-start] min-content [content-footer-end page-backgroundImage-start] min-content [page-backgroundImage-end page-backgroundImageOverlay-start] min-content [page-backgroundImageOverlay-end page-end page-customCode-start] min-content [page-customCode-end];
   }
   [data-engrid-layout=centercenter1col]body:not(#en__pagebuilder) .page-backgroundImage{
@@ -4996,7 +4996,7 @@ body:not(#en__pagebuilder) .body-banner:empty,body:not(#en__pagebuilder) .body-b
 }
 @media screen and (min-width:1150px){
   [data-engrid-layout=centercenter2col] .en__component--advrow,[data-engrid-layout=centercenter2col] .en__component--advrow .pseudo-subgrid{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 239px) [lcc-end bc-start lbc-start] 485px [lbc-end rbc-start] 485px [rbc-end bc-end rcc-start] minmax(0, 239px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 235px) [lcc-end bc-start lbc-start] 485px [lbc-end rbc-start] 485px [rbc-end bc-end rcc-start] minmax(0, 235px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
     grid-template-rows:[page-start page-alert-start] min-content [page-alert-end content-header-start] min-content [content-header-end body-headerOutside-start] min-content [body-headerOutside-end body-header-start] min-content [body-header-end body-title-start] min-content [body-title-end body-banner-start] min-content [body-banner-end body-bannerOverlay-start] min-content [body-bannerOverlay-end body-top-start] minmax(0, 1fr) [body-top-end body-side-start] min-content [body-side-end body-main-start] min-content [body-main-end body-bottom-start] min-content [body-bottom-end body-footer-start] min-content [body-footer-end body-footerOutside-start] min-content [body-footerOutside-end content-footerSpacer-start] max-content [content-footerSpacer-end content-preFooter-start] min-content [content-preFooter-end content-footer-start] min-content [content-footer-end page-backgroundImage-start] min-content [page-backgroundImage-end page-backgroundImageOverlay-start] min-content [page-backgroundImageOverlay-end page-end page-customCode-start] min-content [page-customCode-end];
   }
   [data-engrid-layout=centercenter2col]body:not(#en__pagebuilder) .page-backgroundImage{
@@ -5039,7 +5039,7 @@ body:not(#en__pagebuilder) .body-banner:empty,body:not(#en__pagebuilder) .body-b
 }
 @media screen and (min-width:700px){
   [data-engrid-layout=centerleft1col] .en__component--advrow,[data-engrid-layout=centerleft1col] .en__component--advrow .pseudo-subgrid{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 128px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 800px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 128px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 792px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
   }
   [data-engrid-layout=centerleft1col]body:not(#en__pagebuilder) .page-backgroundImage{
     grid-row:page-start /  content-footerSpacer-end;
@@ -5072,7 +5072,7 @@ body:not(#en__pagebuilder) .body-banner:empty,body:not(#en__pagebuilder) .body-b
 }
 @media screen and (min-width:700px){
   [data-engrid-layout=centerright1col] .en__component--advrow,[data-engrid-layout=centerright1col] .en__component--advrow .pseudo-subgrid{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 800px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 128px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 1fr) [lpc-end cc-start lcc-start] minmax(0, 792px) [lcc-end bc-start lbc-start] 260px [lbc-end rbc-start] 260px [rbc-end bc-end rcc-start] minmax(0, 128px) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
   }
   [data-engrid-layout=centerright1col]body:not(#en__pagebuilder) .page-backgroundImage{
     grid-row:page-start /  content-footerSpacer-end;
@@ -6917,6 +6917,10 @@ label.en__field__label.en__field__label--item{
   transform:rotate(135deg);
 }
 
+[data-engrid-theme=aiusa] .content-header.pseudo-subgrid>div{
+  grid-column:pc;
+}
+
 [data-engrid-theme=aiusa] .content-header header{
   align-items:center;
   display:flex;
@@ -6943,6 +6947,10 @@ label.en__field__label.en__field__label--item{
   font-family:var(--default_font-family);
   font-size:1rem;
   font-weight:700;
+}
+
+[data-engrid-theme=aiusa] .content-footer.pseudo-subgrid>div{
+  grid-column:pc;
 }
 
 [data-engrid-theme=aiusa] .body-header{

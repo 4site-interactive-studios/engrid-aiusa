@@ -1039,13 +1039,18 @@
     // }
   }
 
-  /*
+/*
 * ##########################################################
 * # CONTENT HEADER
 * ##########################################################
 */
 
   .content-header {
+
+    &.pseudo-subgrid > div{
+      grid-column: pc;
+    }
+
     header {
       display: flex;
       align-items: center;
@@ -1074,35 +1079,55 @@
     }
   }
 
-  // On small screens we need to stack the header and menu
-  @mixin on-mobile-s {
-    .content-header {
-      header {
-        flex-direction: column;
-      }
+/*
+* ##########################################################
+* # CONTENT FOOTER
+* ##########################################################
+*/
 
-      #header-logo {
-        width: 100vw;
-        display: block;
-        background: #ffff00;
-      }
+.content-footer {
 
-      #main-menu {
-        padding-right: 0;
-      }
+  &.pseudo-subgrid > div{
+    grid-column: pc;
+  }
 
-      #menu-wrapper ul[role="menubar"] ul[role="menu"] {
-        padding: 10px 33px 35px 35px;
-        top: 40px !important;
-        right: -40vw !important;
-        left: -35vw !important;
+}
 
-        li {
-          text-align: center;
-        }
+/*
+* ##########################################################
+* # MIXING: MOBILE SMALL
+* ##########################################################
+*/
+
+// On small screens we need to stack the header and menu
+@mixin on-mobile-s {
+  .content-header {
+    header {
+      flex-direction: column;
+    }
+
+    #header-logo {
+      width: 100vw;
+      display: block;
+      background: #ffff00;
+    }
+
+    #main-menu {
+      padding-right: 0;
+    }
+
+    #menu-wrapper ul[role="menubar"] ul[role="menu"] {
+      padding: 10px 33px 35px 35px;
+      top: 40px !important;
+      right: -40vw !important;
+      left: -35vw !important;
+
+      li {
+        text-align: center;
       }
     }
   }
+}
 
   /*
 * ##########################################################
