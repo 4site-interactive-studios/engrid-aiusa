@@ -1100,7 +1100,7 @@
 */
 
 // On small screens we need to stack the header and menu
-@mixin on-mobile-s {
+@mixin until-mobile {
   .content-header {
     header {
       flex-direction: column;
@@ -1638,7 +1638,7 @@
 * # LAYOUT MOBILE STYLINGS
 * ##########################################################
 */
-  @mixin on-mobile {
+  @mixin until-mobile-l {
     // Let the radio buttons expand to take up their full row
     .en__field--recurrfreq .en__field__element--radio,
     .give-by-select .en__field__element--radio {
@@ -1696,7 +1696,7 @@
     }
   }
 
-  @mixin on-desktop {
+  @mixin from-mobile-l {
     .mobile-only {
       display: none;
     }
@@ -1770,16 +1770,19 @@
 
   // Universal stylings
   &[data-engrid-layout] {
-    @media screen and (max-width: 339px) {
-      @include on-mobile-s;
+    // @media screen and (max-width: 339px) {
+    @include mq($until: mobile){
+      @include until-mobile;
     }
 
-    @media screen and (max-width: 439px) {
-      @include on-mobile;
+    // @media screen and (max-width: 439px) {
+    @include mq($until: mobile-l){
+      @include until-mobile-l;
     }
 
-    @media screen and (min-width: 440px) {
-      @include on-desktop;
+    // @media screen and (min-width: 440px) {
+    @include mq($from: mobile-l){
+      @include from-mobile-l;
     }
   }
 
