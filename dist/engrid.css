@@ -2111,7 +2111,7 @@ a:focus,a:hover{
 }
 
 .en__component--formblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--withOther .en__field__item{
-  padding:var(--fields_spacing-block) var(--fields_spacing-inline);
+  padding:calc(var(--fields_spacing-block)*.5) var(--fields_spacing-inline) var(--fields_spacing-block);
 }
 
 .en__component--formblock .en__field .en__field__element>input,.en__component--formblock .en__field .en__field__element>select,.en__component--formblock .en__field .en__field__element>textarea,.en__component--svblock .en__field .en__field__element>input,.en__component--svblock .en__field .en__field__element>select,.en__component--svblock .en__field .en__field__element>textarea{
@@ -4303,6 +4303,11 @@ div[id^=nb-field-].nb-error input .nb-feedback .nb-icon-cancel{
 
 div[id^=nb-field-].nb-success input{
   border-color:initial !important;
+}
+
+#nb-wrapper>input[type=email]{
+  margin-bottom:var(--fields_spacing-block);
+  margin-top:calc(var(--fields_spacing-inline)*.5);
 }
 
 .en__pg .en__pg__body{
