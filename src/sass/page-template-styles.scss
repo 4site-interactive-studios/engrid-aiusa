@@ -1583,36 +1583,16 @@
 * ##########################################################
 */
 
-  .en__component.en__component--premiumgiftblock {
+  .en__component--premiumgiftblock {
     background-color: #f6f4f5;
     border: 0px;
+
     .en__pgHeader {
       display: none;
     }
-    .en__pgList {
-      margin-top: var(--fields_spacing-block);
-      margin-bottom: var(--fields_spacing-block);
 
-      // .en__pg:nth-child(2) {
-      //   display: none;
-      // }
-      // .en__pg_select {
-      //   input {
-      //     display: none;
-      //   }
-      // }
-      .en__pg--selected {
-        border-bottom: 0px;
-        .en__pg__image--selected {
-          outline-color: transparent;
-        }
-        .en__pg__detail {
-          .en__pg__name {
-            font-weight: 700;
-            text-transform: none;
-          }
-        }
-      }
+    .en__pg{
+      border: none;
     }
   }
 

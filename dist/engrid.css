@@ -4367,7 +4367,7 @@ div[id^=nb-field-].nb-success input{
 }
 
 .en__pg--selected .en__pg__image--selected{
-  outline-color:var(--color_primary_overlay);
+  outline-color:#0000;
 }
 
 .en__pgList[data-nogift] .en__pg:last-of-type .en__pg__display{
@@ -7474,31 +7474,17 @@ span{
   margin-right:0;
 }
 
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock{
+[data-engrid-theme=aiusa] .en__component--premiumgiftblock{
   background-color:#f6f4f5;
   border:0;
 }
 
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock .en__pgHeader{
+[data-engrid-theme=aiusa] .en__component--premiumgiftblock .en__pgHeader{
   display:none;
 }
 
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock .en__pgList{
-  margin-bottom:var(--fields_spacing-block);
-  margin-top:var(--fields_spacing-block);
-}
-
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock .en__pgList .en__pg--selected{
-  border-bottom:0;
-}
-
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock .en__pgList .en__pg--selected .en__pg__image--selected{
-  outline-color:#0000;
-}
-
-[data-engrid-theme=aiusa] .en__component.en__component--premiumgiftblock .en__pgList .en__pg--selected .en__pg__detail .en__pg__name{
-  font-weight:700;
-  text-transform:none;
+[data-engrid-theme=aiusa] .en__component--premiumgiftblock .en__pg{
+  border:none;
 }
 
 [data-engrid-theme=aiusa] .en__component--ecardblock h2{
