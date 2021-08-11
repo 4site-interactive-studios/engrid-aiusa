@@ -83,13 +83,13 @@
   --p_line-height: initial;
 
   // TYPOGRAPHY LABEL
-  --label-font-family: var(
+  --label_font-family: var(
     --font-stack-aiusa-bold-condensed
   );
-  --label-color: #525252;
-  --label-font-size: 12px;
-  --label-font-weight: initial;
-  --label-line-height: initial;
+  --label_color: #525252;
+  --label_font-size: 12px;
+  --label_font-weight: initial;
+  --label_line-height: initial;
 
   // TYPOGRAPHY INPUT
   --input_font-family: var(
@@ -237,34 +237,47 @@
   --textarea_box-shadow_hover: var(--input_box-shadow_hover);
 
   // TYPOGRAPHY BUTTON
-  --button_font-family: var(
-    --font-stack-aiusa-bold-condensed
-  );
+  --button_font-family: var(--font-stack-aiusa-bold-condensed);
   --button_color: var(--color_black);
   --button_font-size: 18px;
-  --button_font-weight: bold;
+  --button_font-weight: 700;
   --button_line-height: initial;
   --button_background-color: var(--color_white);
   --button_border-width: 2px;
   --button_border-color: #e4e4e4;
   --button_border-radius: initial;
   --button_padding: 1.5ch 0.75ch;
+  --button_text-transform: uppercase;
 
   // TYPOGRAPHY BUTTON:HOVER
   --button_color_hover: var(--button_color);
-  --button_background-color_hover: var(
-    --button_background-color
-  );
-  --button_border-color_hover: var(
-    --button_color
-  );
-  --button_focus-hover-background-color: #fff;
+  --button_background-color_hover: var(--button_background-color);
+  --button_border-color_hover: var(--button_color);
+  --button_focus-hover-background-color: #ffffff;
   --button_focus-hover-color: var(--color_black);
 
   // TYPOGRAPHY BUTTON:CHECKED
   --button_color_checked: var(--color_white);
   --button_background-color_checked: var(--color_black);
   --button_border-color_checked: var(--color_black);
+
+  // TYPOGRAPHY SUBMIT BUTTON
+  --submit__button_font-family: var(--font-stack-aiusa-bold-condensed);
+  --submit__button_color: #252525;
+  --submit__button_font-size: 22px;
+  --submit__button_line-height: 22px;
+  --submit__button_background-color: var(--color_primary);
+  --submit__button_border-color: var(--color_primary);
+
+  // TYPOGRAPHY BUTTON:HOVER
+  --submit__button_color_hover: #252525;
+  --submit__button_background-color_hover: var(--color_primary);
+  --submit__button_border-color_hover: var(--color_primary);
+  
+  // TYPOGRAPHY BUTTON:SELECTED
+  --submit__button_color_checked: #252525;
+  --submit__button_background-color_checked: var(--color_primary);
+  --submit__button_border-color_checked: var(--color_primary);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON
   --recurring-frequency__button_font-family: var(
@@ -409,11 +422,6 @@
   --give-by-select__button_border-color_checked: var(
     --button_color
   );
-
-  // TYPOGRAPHY SUBMIT BUTTON
-  --submit__button_font-size: 22px;
-  --submit__button_padding-top: 1.5ch;
-  --submit__button_padding-bottom: 1.5ch;
 
   // TYPOGRAPHY A
   --a_font-family: var(
@@ -779,20 +787,6 @@
   //     font-weight: 700;
   //   }
   // }
-
-  .en__submit button {
-    font-family: var(--font-stack-aiusa-bold-condensed);
-    font-weight: 700;
-    line-height: 1;
-  }
-
-  // @TODO These button styles should be handled more holistically upstream in ENGRID-SCRIPTS with Custom CSS Properties
-  .en__submit button,
-  .en__submit button:hover {
-    background-color: var(--color_primary);
-    border-color: var(--color_primary);
-    color: #252525;
-  }
 
   input::placeholder {
     color: var(--input_placeholder-color);
@@ -1304,12 +1298,26 @@
 * ##########################################################
 */
 
-// Remove bottom margin and fixed height (this reduces 32px in total height)
-#goMonthly #upsellNoButton button{
-  margin-bottom: 0;
-  height: auto;
-}
+#goMonthly{
+  #upsellYesButton{
+    margin-bottom: var(--fields_spacing-block);
 
+    .pseduo__en__submit_button{
+      --submit__button_padding-top: 1.5rem;
+      --submit__button_padding-bottom: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      --submit__button_font-size: calc(var(--button_font-size) * 1.1);
+    } 
+  }
+
+  #upsellNoButton button{
+    --button_border-color: transparent;
+    --button_border-color_hover: transparent;
+    --button_border-color_checked: transparent;
+    --button_text-transform: initial;
+  }
+}
 
   /*
 * ##########################################################
@@ -1747,17 +1755,14 @@
 
   // Universal stylings
   &[data-engrid-layout] {
-    // @media screen and (max-width: 339px) {
     @include mq($until: mobile){
       @include until-mobile;
     }
 
-    // @media screen and (max-width: 439px) {
     @include mq($until: mobile-l){
       @include until-mobile-l;
     }
 
-    // @media screen and (min-width: 440px) {
     @include mq($from: mobile-l){
       @include from-mobile-l;
     }
@@ -1825,10 +1830,10 @@
       word-break: break-word;
       box-sizing: border-box;
       touch-action: manipulation;
-      font-family: var(--label-font-family);
-      color: var(--label-color);
-      font-size: var(--label-font-size);
-      line-height: var(--label-line-height);
+      font-family: var(--label_font-family);
+      color: var(--label_color);
+      font-size: var(--label_font-size);
+      line-height: var(--label_line-height);
       vertical-align: middle;
       display: inline-block;
       width: auto;
@@ -1991,39 +1996,16 @@
     }
   }
 }
-// [data-engrid-layout=centercenter2col] #engrid>.en__component--advrow .body-top
-// [data-engrid-layout=centercenter2col] form>.en__component--advrow .body-top
-// [data-engrid-theme=aiusa][data-engrid-layout=centercenter2col] .body-top
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   @media screen and (min-width: $centercenter2col_content-column_min-width) {
-
-    // .body-title {
-    //   grid-row: body-header-end / body-title-end;
-    // }
-
-    // .body-banner,
-    // .body-bannerOverlay {
-    //   grid-row: body-title-end / body-banner-end;
-    // }
-    
     form > .en__component--advrow{
+
       .body-top {
         grid-row: body-banner-end / body-bottom-end;
       }
+
     }
-
-    // .body-main {
-    //   grid-row: body-header-end / body-bottom-start;
-    // }
-
-    // .body-bottom {
-    //   grid-row: body-main-end / body-bottom-end;
-    // }
-
-    // .body-main{
-    //   grid-row: body-header-end / body-main-end;
-    // }
   }
 
   @media screen and (max-width: $centercenter2col_content-column_min-width) {
@@ -2077,12 +2059,12 @@ body#en__pagebuilder .content-footerSpacer {
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"] {
   @media screen and (min-width: $one_col_content-column_min-width) {
-    .body-header {
-      margin-top: 80px;
+    .content-header {
+      margin-bottom: 80px;
     }
 
-    .body-footer {
-      margin-bottom: 80px;
+    .content-footer {
+      margin-top: 80px;
     }
   }
 }
@@ -2110,17 +2092,17 @@ body#en__pagebuilder .content-footerSpacer {
     padding-bottom: 60px;
   }
 
-  @media screen and (min-width: $centercenter2col_content-column_min-width) {
-    .body-header {
-      margin-top: 80px;
+  @media screen and (min-width: $two_col_content-column_min-width) {
+    .content-header {
+      margin-bottom: 80px;
     }
 
-    .body-footer {
-      margin-bottom: 80px;
+    .content-footer {
+      margin-top: 80px;
     }
   }
 
-  @media screen and (max-width: $centercenter2col_content-column_min-width) {
+  @media screen and (max-width: $two_col_content-column_min-width) {
     --engrid__body_padding: 0px 24px;
   }
 }
