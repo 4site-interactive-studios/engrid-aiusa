@@ -2059,12 +2059,12 @@ body#en__pagebuilder .content-footerSpacer {
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter1col"],
 [data-engrid-theme="aiusa"][data-engrid-layout="centerright1col"] {
   @media screen and (min-width: $one_col_content-column_min-width) {
-    .content-header {
-      margin-bottom: 80px;
+    .body-header {
+      margin-top: 80px;
     }
 
-    .content-footer {
-      margin-top: 80px;
+    .body-footer {
+      margin-bottom: 80px;
     }
   }
 }
@@ -2093,12 +2093,12 @@ body#en__pagebuilder .content-footerSpacer {
   }
 
   @media screen and (min-width: $two_col_content-column_min-width) {
-    .content-header {
-      margin-bottom: 80px;
+    .body-header {
+      margin-top: 80px;
     }
 
-    .content-footer {
-      margin-top: 80px;
+    .body-footer {
+      margin-bottom: 80px;
     }
   }
 
