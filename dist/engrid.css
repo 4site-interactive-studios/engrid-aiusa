@@ -3487,6 +3487,10 @@ button.en__ecarditems__prevclose{
     right:17px;
   }
 }
+
+body:not[data-engrid-show-ecard-options] .show-if-ecard{
+  display:none;
+}
 .ellipsis-loader:after{
   animation:ellipsis .25s steps(4) infinite;
   content:"\2026";
