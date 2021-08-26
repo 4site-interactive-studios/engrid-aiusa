@@ -24,9 +24,23 @@ document.onreadystatechange = () => {
             enFieldMobilePhone.placeholder = "Phone Number";
         }
 
+        // Limit the Address Field to 35 Characters which is the limit set by the Vantiv Payment Processor
+        // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
+        let enFieldAddressLine1 = document.querySelectorAll('input#en__field_supporter_address1')[0];
+        if(enFieldAddressLine1){
+          // enFieldAddressLine1.setAttribute('maxlength','35');
+        }
+
         let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
         if(enFieldAddressLine2){
           enFieldAddressLine2.placeholder = "#000";
+        }
+
+        // Limit the City Field to 35 Characters which is the limit set by the Vantiv Payment Processor
+        // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
+        let enFieldCity = document.querySelectorAll('input#en__field_supporter_city')[0];
+        if(enFieldCity){
+          // enFieldCity.setAttribute('maxlength','35');
         }
         
         let enFieldPostalCode = document.querySelectorAll('input#en__field_supporter_postcode')[0];

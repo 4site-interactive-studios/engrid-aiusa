@@ -864,6 +864,19 @@
     margin-left: 0;
   }
 
+  &[data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after{
+    font-size: 100%;
+    opacity: 1;
+    margin-left: 0.5ch;
+  }
+
+  .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
+    --donation-amount__flex-grow: 1;
+    --donation-amount__button_background-color_checked: var(--input_background-color);
+    --donation-amount__button_border-color_checked: var(--input_background-color_hover);
+    --donation-amount__button_color_checked: var(--input_color);
+  }
+
   /*
 * ##########################################################
 * # MAIN MENU WITH FLYOUT
@@ -1496,7 +1509,7 @@
     line-height: 0;
     height: 0;
     left: 2.25ch;
-    top: 50%;
+    top: calc(50% - 2px);
   }
 
   // .en__field--recurrfreq {
