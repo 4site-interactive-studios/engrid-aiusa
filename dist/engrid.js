@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, September 16, 2021 @ 17:20:13 ET
+ *  Date: Saturday, September 25, 2021 @ 22:50:52 ET
  *  By: fe
- *  ENGrid styles: v0.3.34
- *  ENGrid scripts: v0.3.34
+ *  ENGrid styles: v0.3.38
+ *  ENGrid scripts: v0.3.38
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -39,22 +39,22 @@ document.onreadystatechange = () => {
   if (document.readyState === "interactive" || document.readyState === "complete") {
     // Render Critical because it moves DOM elements that can be above the fold
     // Has also been added to the Page Template after main.js in a <script> tag that fires after DomContentLoaded
-    let inlineMonthlyUpsell = document.querySelectorAll('.move-after-transaction-recurrfreq')[0];
-    let recurrFrequencyField = document.querySelectorAll('.en__field--recurrfreq')[0];
+    let inlineMonthlyUpsell = document.querySelectorAll(".move-after-transaction-recurrfreq")[0];
+    let recurrFrequencyField = document.querySelectorAll(".en__field--recurrfreq")[0];
 
     if (inlineMonthlyUpsell && recurrFrequencyField) {
       recurrFrequencyField.insertAdjacentElement("beforeend", inlineMonthlyUpsell); // inlineMonthlyUpsell.style.visibility='visible';
     }
 
-    let inlineDonationAmountHeader = document.querySelectorAll('.move-before-transaction-donationamt')[0];
-    let donationAmtField = document.querySelectorAll('.en__field--donationAmt')[0];
+    let inlineDonationAmountHeader = document.querySelectorAll(".move-before-transaction-donationamt")[0];
+    let donationAmtField = document.querySelectorAll(".en__field--donationAmt")[0];
 
     if (inlineDonationAmountHeader && donationAmtField) {
       donationAmtField.insertAdjacentElement("afterbegin", inlineDonationAmountHeader); // inlineGiftAmountHeader.style.visibility='visible';
     } // Add placeholder to the Mobile Phone Field
 
 
-    let enFieldMobilePhone = document.querySelectorAll('input#en__field_supporter_NOT_TAGGED_13')[0];
+    let enFieldMobilePhone = document.querySelectorAll("input#en__field_supporter_NOT_TAGGED_13")[0];
 
     if (enFieldMobilePhone) {
       enFieldMobilePhone.placeholder = "Phone Number";
@@ -62,12 +62,12 @@ document.onreadystatechange = () => {
     // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
 
 
-    let enFieldAddressLine1 = document.querySelectorAll('input#en__field_supporter_address1')[0];
+    let enFieldAddressLine1 = document.querySelectorAll("input#en__field_supporter_address1")[0];
 
     if (enFieldAddressLine1) {// enFieldAddressLine1.setAttribute('maxlength','35');
     }
 
-    let enFieldAddressLine2 = document.querySelectorAll('input#en__field_supporter_address2')[0];
+    let enFieldAddressLine2 = document.querySelectorAll("input#en__field_supporter_address2")[0];
 
     if (enFieldAddressLine2) {
       enFieldAddressLine2.placeholder = "#000";
@@ -75,18 +75,18 @@ document.onreadystatechange = () => {
     // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
 
 
-    let enFieldCity = document.querySelectorAll('input#en__field_supporter_city')[0];
+    let enFieldCity = document.querySelectorAll("input#en__field_supporter_city")[0];
 
     if (enFieldCity) {// enFieldCity.setAttribute('maxlength','35');
     }
 
-    let enFieldPostalCode = document.querySelectorAll('input#en__field_supporter_postcode')[0];
+    let enFieldPostalCode = document.querySelectorAll("input#en__field_supporter_postcode")[0];
 
     if (enFieldPostalCode) {
       enFieldPostalCode.placeholder = "00000";
     }
 
-    let enFieldPhoneNumber = document.querySelectorAll('input#en__field_supporter_phoneNumber')[0];
+    let enFieldPhoneNumber = document.querySelectorAll("input#en__field_supporter_phoneNumber")[0];
 
     if (enFieldPhoneNumber) {
       enFieldPhoneNumber.placeholder = "Phone Number";
@@ -94,17 +94,17 @@ document.onreadystatechange = () => {
     // Only show it if the Title field is marked as required
 
 
-    let titleLabel = document.querySelectorAll('.en__field--title.en__mandatory > label')[0];
+    let titleLabel = document.querySelectorAll(".en__field--title.en__mandatory > label")[0];
 
     if (titleLabel) {
-      let el = document.createElement('span');
-      let childEl = document.createElement('a');
-      childEl.href = '#';
-      childEl.id = 'title-tooltip';
+      let el = document.createElement("span");
+      let childEl = document.createElement("a");
+      childEl.href = "#";
+      childEl.id = "title-tooltip";
       childEl.className = "label-tooltip";
       childEl.tabIndex = "-1";
       childEl.innerText = "Why is this required?";
-      childEl.addEventListener('click', e => e.preventDefault());
+      childEl.addEventListener("click", e => e.preventDefault());
       el.appendChild(childEl);
       titleLabel.appendChild(el);
       tippy("#title-tooltip", {
@@ -113,17 +113,17 @@ document.onreadystatechange = () => {
     } // Add "what's this" markup to the CVV field
 
 
-    let ccvvLabel = document.querySelectorAll('.en__field--ccvv > label')[0];
+    let ccvvLabel = document.querySelectorAll(".en__field--ccvv > label")[0];
 
     if (ccvvLabel) {
-      let el = document.createElement('span');
-      let childEl = document.createElement('a');
-      childEl.href = '#';
-      childEl.id = 'ccv-tooltip';
+      let el = document.createElement("span");
+      let childEl = document.createElement("a");
+      childEl.href = "#";
+      childEl.id = "ccv-tooltip";
       childEl.className = "label-tooltip";
       childEl.tabIndex = "-1";
       childEl.innerText = "What's this?";
-      childEl.addEventListener('click', e => e.preventDefault());
+      childEl.addEventListener("click", e => e.preventDefault());
       el.appendChild(childEl);
       ccvvLabel.appendChild(el);
       tippy("#ccv-tooltip", {
@@ -132,39 +132,39 @@ document.onreadystatechange = () => {
     } // Conversion Tracking if this is a thank you page
 
 
-    if (typeof pageJson !== 'undefined' && pageJson.giftProcess && typeof dataLayer !== 'undefined') {
+    if (typeof pageJson !== "undefined" && pageJson.giftProcess && typeof dataLayer !== "undefined") {
       // In the upsell portion of the engrid-scripts/packages/common, we are setting 'original' to the one-time donation amount if the donor was upsold
-      let upsell = window.sessionStorage.getItem('original') ? window.sessionStorage.getItem('original') : 'No value';
+      let upsell = window.sessionStorage.getItem("original") ? window.sessionStorage.getItem("original") : "No value";
       let quantity = 1;
       let total = pageJson.amount; // Defaulting to 'Recurring' for recurring donations in case the transactionExtra object isn't defined
       // That way those looking at the analytics data will understand that the total isn't necessarily correct because we don't know the quantity
 
-      let frequency = pageJson.recurring ? 'Recurring' : 'One Time'; // Fallbacks in case the transactionExtra object isn't defined
+      let frequency = pageJson.recurring ? "Recurring" : "One Time"; // Fallbacks in case the transactionExtra object isn't defined
 
-      let te_exists = typeof transactionExtra !== 'undefined';
-      let te_frequency = te_exists && transactionExtra.frequency ? transactionExtra.frequency : 'Unknown';
-      let te_city = te_exists && transactionExtra.city ? transactionExtra.city : 'Unknown';
-      let te_state = te_exists && transactionExtra.state ? transactionExtra.state : 'Unknown';
+      let te_exists = typeof transactionExtra !== "undefined";
+      let te_frequency = te_exists && transactionExtra.frequency ? transactionExtra.frequency : "Unknown";
+      let te_city = te_exists && transactionExtra.city ? transactionExtra.city : "Unknown";
+      let te_state = te_exists && transactionExtra.state ? transactionExtra.state : "Unknown";
 
       switch (te_frequency) {
-        case 'MONTHLY':
-          frequency = 'Monthly';
+        case "MONTHLY":
+          frequency = "Monthly";
           quantity = 12;
           total = 12 * pageJson.amount;
-          let monthlyReceipt = document.getElementById('monthlyReceipt');
+          let monthlyReceipt = document.getElementById("monthlyReceipt");
 
           if (monthlyReceipt) {
-            monthlyReceipt.style.display = 'block';
+            monthlyReceipt.style.display = "block";
           }
 
           break;
 
-        case 'ANNUAL':
-          frequency = 'Annual';
-          let annualReceipt = document.getElementById('annualReceipt');
+        case "ANNUAL":
+          frequency = "Annual";
+          let annualReceipt = document.getElementById("annualReceipt");
 
           if (annualReceipt) {
-            annualReceipt.style.display = 'block';
+            annualReceipt.style.display = "block";
           }
 
           break;
@@ -175,22 +175,22 @@ document.onreadystatechange = () => {
 
 
       dataLayer.push({
-        'en_transaction_amount': total,
+        en_transaction_amount: total,
         // custom variable in GTM
-        'en_payment_amount': pageJson.amount,
+        en_payment_amount: pageJson.amount,
         // original payment amount not *12 for monthly gifts
-        'en_transaction_id': pageJson.donationLogId,
+        en_transaction_id: pageJson.donationLogId,
         // custom variable in GTM
-        'en_campaign_id': pageJson.campaignId,
-        'transactionId': pageJson.donationLogId,
-        'transactionAffiliation': 'Donation Form',
-        'transactionTotal': total,
-        'transactionTax': 0,
-        'transactionShipping': 0,
-        'transactionCity': te_city,
-        'transactionState': te_state,
-        'transactionCountry': pageJson.country,
-        'transactionProducts': [{
+        en_campaign_id: pageJson.campaignId,
+        transactionId: pageJson.donationLogId,
+        transactionAffiliation: "Donation Form",
+        transactionTotal: total,
+        transactionTax: 0,
+        transactionShipping: 0,
+        transactionCity: te_city,
+        transactionState: te_state,
+        transactionCountry: pageJson.country,
+        transactionProducts: [{
           id: pageJson.donationLogId,
           quantity: quantity,
           name: pageJson.pageName,
@@ -198,27 +198,27 @@ document.onreadystatechange = () => {
           sku: pageJson.campaignId,
           category: frequency
         }],
-        'transactionPromoCode': upsell,
-        'successful_donation': 'main form (EN)',
+        transactionPromoCode: upsell,
+        successful_donation: "main form (EN)",
         // custom variable/event for GA
-        'event': frequency,
+        event: frequency,
         // event used to determine transaction frequency for tag placement
-        'donation_type': frequency
+        donation_type: frequency
       });
       dataLayer.push({
-        'event': 'en_donation' // used to signal that we're on the thank you page instead of url/parameters
+        event: "en_donation" // used to signal that we're on the thank you page instead of url/parameters
 
       });
     } // Close's the menu when tapping the close button on mobile
 
 
     const menuBtn = document.querySelector('a[role="menuitem"]');
-    menuBtn.addEventListener('touchstart', function (event) {
+    menuBtn.addEventListener("touchstart", function (event) {
       const menu = document.querySelector('ul#main-menu ul[role="menu"]');
 
       if (menu.style.display === "block") {
         menu.style.display = "none";
-        menuBtn.setAttribute('aria-expanded', 'false');
+        menuBtn.setAttribute("aria-expanded", "false");
       }
     }, {
       passive: true
@@ -227,9 +227,9 @@ document.onreadystatechange = () => {
     // MenubarItemLinks.js
 
     /*
-    *   This content is licensed according to the W3C Software License at
-    *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
-    */
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
 
     var MenubarItem = function (domNode, menuObj) {
       this.menu = menuObj;
@@ -239,32 +239,32 @@ document.onreadystatechange = () => {
       this.hasHover = false;
       this.isMenubarItem = true;
       this.keyCode = Object.freeze({
-        'TAB': 9,
-        'RETURN': 13,
-        'ESC': 27,
-        'SPACE': 32,
-        'PAGEUP': 33,
-        'PAGEDOWN': 34,
-        'END': 35,
-        'HOME': 36,
-        'LEFT': 37,
-        'UP': 38,
-        'RIGHT': 39,
-        'DOWN': 40
+        TAB: 9,
+        RETURN: 13,
+        ESC: 27,
+        SPACE: 32,
+        PAGEUP: 33,
+        PAGEDOWN: 34,
+        END: 35,
+        HOME: 36,
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40
       });
     };
 
     MenubarItem.prototype.init = function () {
       this.domNode.tabIndex = -1;
-      this.domNode.addEventListener('keydown', this.handleKeydown.bind(this));
-      this.domNode.addEventListener('focus', this.handleFocus.bind(this));
-      this.domNode.addEventListener('blur', this.handleBlur.bind(this));
-      this.domNode.addEventListener('mouseover', this.handleMouseover.bind(this));
-      this.domNode.addEventListener('mouseout', this.handleMouseout.bind(this)); // Initialize pop up menus
+      this.domNode.addEventListener("keydown", this.handleKeydown.bind(this));
+      this.domNode.addEventListener("focus", this.handleFocus.bind(this));
+      this.domNode.addEventListener("blur", this.handleBlur.bind(this));
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Initialize pop up menus
 
       var nextElement = this.domNode.nextElementSibling;
 
-      if (nextElement && nextElement.tagName === 'UL') {
+      if (nextElement && nextElement.tagName === "UL") {
         this.popupMenu = new PopupMenu(nextElement, this);
         this.popupMenu.init();
       }
@@ -348,9 +348,9 @@ document.onreadystatechange = () => {
 
     MenubarItem.prototype.setExpanded = function (value) {
       if (value) {
-        this.domNode.setAttribute('aria-expanded', 'true');
+        this.domNode.setAttribute("aria-expanded", "true");
       } else {
-        this.domNode.setAttribute('aria-expanded', 'false');
+        this.domNode.setAttribute("aria-expanded", "false");
       }
     };
 
@@ -373,22 +373,22 @@ document.onreadystatechange = () => {
     }; // MenubarLinks.js
 
     /*
-    *   This content is licensed according to the W3C Software License at
-    *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
-    */
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
 
 
     var Menubar = function (domNode) {
       var elementChildren,
-          msgPrefix = 'Menubar constructor argument menubarNode '; // Check whether menubarNode is a DOM element
+          msgPrefix = "Menubar constructor argument menubarNode "; // Check whether menubarNode is a DOM element
 
       if (!(domNode instanceof Element)) {
-        throw new TypeError(msgPrefix + 'is not a DOM Element.');
+        throw new TypeError(msgPrefix + "is not a DOM Element.");
       } // Check whether menubarNode has descendant elements
 
 
       if (domNode.childElementCount === 0) {
-        throw new Error(msgPrefix + 'has no element children.');
+        throw new Error(msgPrefix + "has no element children.");
       } // Check whether menubarNode has A elements
 
 
@@ -397,8 +397,8 @@ document.onreadystatechange = () => {
       while (e) {
         var menubarItem = e.firstElementChild;
 
-        if (e && menubarItem && menubarItem.tagName !== 'A') {
-          throw new Error(msgPrefix + 'has child elements are not A elements.');
+        if (e && menubarItem && menubarItem.tagName !== "A") {
+          throw new Error(msgPrefix + "has child elements are not A elements.");
         }
 
         e = e.nextElementSibling;
@@ -419,13 +419,13 @@ document.onreadystatechange = () => {
       this.hasHover = false; // See Menubar handleMouseover, handleMouseout
     };
     /*
-    *   @method Menubar.prototype.init
-    *
-    *   @desc
-    *       Adds ARIA role to the menubar node
-    *       Traverse menubar children for A elements to configure each A element as a ARIA menuitem
-    *       and populate menuitems array. Initialize firstItem and lastItem properties.
-    */
+     *   @method Menubar.prototype.init
+     *
+     *   @desc
+     *       Adds ARIA role to the menubar node
+     *       Traverse menubar children for A elements to configure each A element as a ARIA menuitem
+     *       and populate menuitems array. Initialize firstItem and lastItem properties.
+     */
 
 
     Menubar.prototype.init = function () {
@@ -437,7 +437,7 @@ document.onreadystatechange = () => {
       while (elem) {
         menuElement = elem.firstElementChild;
 
-        if (elem && menuElement && menuElement.tagName === 'A') {
+        if (elem && menuElement && menuElement.tagName === "A") {
           menubarItem = new MenubarItem(menuElement, this);
           menubarItem.init();
           this.menubarItems.push(menubarItem);
@@ -468,7 +468,7 @@ document.onreadystatechange = () => {
         var mbi = this.menubarItems[i];
 
         if (mbi.domNode.tabIndex == 0) {
-          flag = mbi.domNode.getAttribute('aria-expanded') === 'true';
+          flag = mbi.domNode.getAttribute("aria-expanded") === "true";
         }
 
         mbi.domNode.tabIndex = -1;
@@ -522,7 +522,7 @@ document.onreadystatechange = () => {
 
     Menubar.prototype.setFocusByFirstCharacter = function (currentItem, char) {
       var start, index;
-      var flag = currentItem.domNode.getAttribute('aria-expanded') === 'true';
+      var flag = currentItem.domNode.getAttribute("aria-expanded") === "true";
       char = char.toLowerCase(); // Get start index for search based on position of currentItem
 
       start = this.menubarItems.indexOf(currentItem) + 1;
@@ -555,13 +555,13 @@ document.onreadystatechange = () => {
     }; // PopupMenuItemLinks.js
 
     /*
-    *   This content is licensed according to the W3C Software License at
-    *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
-    */
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
 
 
     var MenuItem = function (domNode, menuObj) {
-      if (typeof popupObj !== 'object') {
+      if (typeof popupObj !== "object") {
         var popupObj = false;
       }
 
@@ -570,40 +570,40 @@ document.onreadystatechange = () => {
       this.popupMenu = false;
       this.isMenubarItem = false;
       this.keyCode = Object.freeze({
-        'TAB': 9,
-        'RETURN': 13,
-        'ESC': 27,
-        'SPACE': 32,
-        'PAGEUP': 33,
-        'PAGEDOWN': 34,
-        'END': 35,
-        'HOME': 36,
-        'LEFT': 37,
-        'UP': 38,
-        'RIGHT': 39,
-        'DOWN': 40
+        TAB: 9,
+        RETURN: 13,
+        ESC: 27,
+        SPACE: 32,
+        PAGEUP: 33,
+        PAGEDOWN: 34,
+        END: 35,
+        HOME: 36,
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40
       });
     };
 
     MenuItem.prototype.init = function () {
       this.domNode.tabIndex = -1;
-      this.domNode.addEventListener('keydown', this.handleKeydown.bind(this));
-      this.domNode.addEventListener('click', this.handleClick.bind(this));
-      this.domNode.addEventListener('focus', this.handleFocus.bind(this));
-      this.domNode.addEventListener('blur', this.handleBlur.bind(this));
-      this.domNode.addEventListener('mouseover', this.handleMouseover.bind(this));
-      this.domNode.addEventListener('mouseout', this.handleMouseout.bind(this)); // Initialize flyout menu
+      this.domNode.addEventListener("keydown", this.handleKeydown.bind(this));
+      this.domNode.addEventListener("click", this.handleClick.bind(this));
+      this.domNode.addEventListener("focus", this.handleFocus.bind(this));
+      this.domNode.addEventListener("blur", this.handleBlur.bind(this));
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Initialize flyout menu
 
       var nextElement = this.domNode.nextElementSibling;
 
-      if (nextElement && nextElement.tagName === 'UL') {
+      if (nextElement && nextElement.tagName === "UL") {
         this.popupMenu = new PopupMenu(nextElement, this);
         this.popupMenu.init();
       }
     };
 
     MenuItem.prototype.isExpanded = function () {
-      return this.domNode.getAttribute('aria-expanded') === 'true';
+      return this.domNode.getAttribute("aria-expanded") === "true";
     };
     /* EVENT HANDLERS */
 
@@ -628,16 +628,16 @@ document.onreadystatechange = () => {
             // Create simulated mouse event to mimic the behavior of ATs
             // and let the event handler handleClick do the housekeeping.
             try {
-              clickEvent = new MouseEvent('click', {
-                'view': window,
-                'bubbles': true,
-                'cancelable': true
+              clickEvent = new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: true
               });
             } catch (err) {
               if (document.createEvent) {
                 // DOM Level 3 for IE 9+
-                clickEvent = document.createEvent('MouseEvents');
-                clickEvent.initEvent('click', true, true);
+                clickEvent = document.createEvent("MouseEvents");
+                clickEvent.initEvent("click", true, true);
               }
             }
 
@@ -658,7 +658,7 @@ document.onreadystatechange = () => {
           break;
 
         case this.keyCode.LEFT:
-          this.menu.setFocusToController('previous', true);
+          this.menu.setFocusToController("previous", true);
           this.menu.close(true);
           flag = true;
           break;
@@ -668,7 +668,7 @@ document.onreadystatechange = () => {
             this.popupMenu.open();
             this.popupMenu.setFocusToFirstItem();
           } else {
-            this.menu.setFocusToController('next', true);
+            this.menu.setFocusToController("next", true);
             this.menu.close(true);
           }
 
@@ -714,9 +714,9 @@ document.onreadystatechange = () => {
 
     MenuItem.prototype.setExpanded = function (value) {
       if (value) {
-        this.domNode.setAttribute('aria-expanded', 'true');
+        this.domNode.setAttribute("aria-expanded", "true");
       } else {
-        this.domNode.setAttribute('aria-expanded', 'false');
+        this.domNode.setAttribute("aria-expanded", "false");
       }
     };
 
@@ -755,22 +755,22 @@ document.onreadystatechange = () => {
     }; // PopupMenuLinks.js
 
     /*
-    *   This content is licensed according to the W3C Software License at
-    *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
-    */
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
 
 
     var PopupMenu = function (domNode, controllerObj) {
       var elementChildren,
-          msgPrefix = 'PopupMenu constructor argument domNode '; // Check whether domNode is a DOM element
+          msgPrefix = "PopupMenu constructor argument domNode "; // Check whether domNode is a DOM element
 
       if (!(domNode instanceof Element)) {
-        throw new TypeError(msgPrefix + 'is not a DOM Element.');
+        throw new TypeError(msgPrefix + "is not a DOM Element.");
       } // Check whether domNode has child elements
 
 
       if (domNode.childElementCount === 0) {
-        throw new Error(msgPrefix + 'has no element children.');
+        throw new Error(msgPrefix + "has no element children.");
       } // Check whether domNode descendant elements have A elements
 
 
@@ -779,8 +779,8 @@ document.onreadystatechange = () => {
       while (childElement) {
         var menuitem = childElement.firstElementChild;
 
-        if (menuitem && menuitem === 'A') {
-          throw new Error(msgPrefix + 'has descendant elements that are not A elements.');
+        if (menuitem && menuitem === "A") {
+          throw new Error(msgPrefix + "has descendant elements that are not A elements.");
         }
 
         childElement = childElement.nextElementSibling;
@@ -802,20 +802,20 @@ document.onreadystatechange = () => {
       this.hasHover = false; // See PopupMenu handleMouseover, handleMouseout
     };
     /*
-    *   @method PopupMenu.prototype.init
-    *
-    *   @desc
-    *       Add domNode event listeners for mouseover and mouseout. Traverse
-    *       domNode children to configure each menuitem and populate menuitems
-    *       array. Initialize firstItem and lastItem properties.
-    */
+     *   @method PopupMenu.prototype.init
+     *
+     *   @desc
+     *       Add domNode event listeners for mouseover and mouseout. Traverse
+     *       domNode children to configure each menuitem and populate menuitems
+     *       array. Initialize firstItem and lastItem properties.
+     */
 
 
     PopupMenu.prototype.init = function () {
       var childElement, menuElement, menuItem, textContent, numItems, label; // Configure the domNode itself
 
-      this.domNode.addEventListener('mouseover', this.handleMouseover.bind(this));
-      this.domNode.addEventListener('mouseout', this.handleMouseout.bind(this)); // Traverse the element children of domNode: configure each with
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Traverse the element children of domNode: configure each with
       // menuitem role behavior and store reference in menuitems array.
 
       childElement = this.domNode.firstElementChild;
@@ -823,7 +823,7 @@ document.onreadystatechange = () => {
       while (childElement) {
         menuElement = childElement.firstElementChild;
 
-        if (menuElement && menuElement.tagName === 'A') {
+        if (menuElement && menuElement.tagName === "A") {
           menuItem = new MenuItem(menuElement, this);
           menuItem.init();
           this.menuitems.push(menuItem);
@@ -857,8 +857,8 @@ document.onreadystatechange = () => {
 
 
     PopupMenu.prototype.setFocusToController = function (command, flag) {
-      if (typeof command !== 'string') {
-        command = '';
+      if (typeof command !== "string") {
+        command = "";
       }
 
       function setFocusToMenubarItem(controller, close) {
@@ -880,7 +880,7 @@ document.onreadystatechange = () => {
         return false;
       }
 
-      if (command === '') {
+      if (command === "") {
         if (this.controller && this.controller.domNode) {
           this.controller.domNode.focus();
         }
@@ -892,7 +892,7 @@ document.onreadystatechange = () => {
         this.controller.domNode.focus();
         this.close();
 
-        if (command === 'next') {
+        if (command === "next") {
           var menubarItem = setFocusToMenubarItem(this.controller, false);
 
           if (menubarItem) {
@@ -900,9 +900,9 @@ document.onreadystatechange = () => {
           }
         }
       } else {
-        if (command === 'previous') {
+        if (command === "previous") {
           this.controller.menu.setFocusToPreviousItem(this.controller, flag);
-        } else if (command === 'next') {
+        } else if (command === "next") {
           this.controller.menu.setFocusToNextItem(this.controller, flag);
         }
       }
@@ -978,14 +978,14 @@ document.onreadystatechange = () => {
       var rect = this.controller.domNode.getBoundingClientRect(); // Set CSS properties
 
       if (!this.controller.isMenubarItem) {
-        this.domNode.parentNode.style.position = 'relative';
-        this.domNode.style.display = 'block';
-        this.domNode.style.position = 'absolute';
-        this.domNode.style.left = rect.width + 'px';
+        this.domNode.parentNode.style.position = "relative";
+        this.domNode.style.display = "block";
+        this.domNode.style.position = "absolute";
+        this.domNode.style.left = rect.width + "px";
         this.domNode.style.zIndex = 100;
       } else {
-        this.domNode.style.display = 'block';
-        this.domNode.style.position = 'absolute'; //this.domNode.style.top = (rect.height - 1) + 'px';
+        this.domNode.style.display = "block";
+        this.domNode.style.position = "absolute"; //this.domNode.style.top = (rect.height - 1) + 'px';
 
         this.domNode.style.zIndex = 100;
       }
@@ -1010,16 +1010,47 @@ document.onreadystatechange = () => {
       }
 
       if (force || !hasFocus && !this.hasHover && !controllerHasHover) {
-        this.domNode.style.display = 'none';
+        this.domNode.style.display = "none";
         this.domNode.style.zIndex = 0;
         this.controller.setExpanded(false);
       }
     };
 
-    var menubar = new Menubar(document.getElementById('main-menu'));
+    var menubar = new Menubar(document.getElementById("main-menu"));
 
     if (menubar) {
       menubar.init();
+    }
+
+    var monthlyLabel = document.querySelector(".en__field__input[value='MONTHLY']+label");
+
+    if (monthlyLabel) {
+      var candleNode = document.createElement("div");
+      candleNode.className = "candle";
+      candleNode.innerHTML = `
+      <div class="candle-flame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.5 24.978"><g data-name="Layer 2"><g data-name="flame b"><path d="M0 15.157c0 6.897 6.25 9.821 6.25 9.821s6.25-2.924 6.25-9.821S6.25 0 6.25 0 0 8.26 0 15.157z" style="fill:#ff4700"/><path d="M3.375 18.383a6.768 6.768 0 0 0 2.875 5.763 6.768 6.768 0 0 0 2.875-5.763c0-4.047-2.875-8.893-2.875-8.893s-2.875 4.846-2.875 8.893z" style="fill:#ffbf00"/></g></g></svg>
+      </div>
+      <div class="candle-base">
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <img src="https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/aiusa-candle.svg" alt="Candle">
+      </div>
+      `;
+      monthlyLabel.appendChild(candleNode);
     }
   }
 };
@@ -7479,7 +7510,7 @@ const UpsellOptionsDefaults = {
   noLabel: "No, thanks. Continue with my <br> {old-amount} one-time gift",
   otherAmount: true,
   otherLabel: "Or enter a different monthly amount:",
-  upsellOriginalGiftAmountFieldName: '',
+  upsellOriginalGiftAmountFieldName: "",
   amountRange: [{
     max: 10,
     suggestion: 5
@@ -7517,6 +7548,7 @@ const UpsellOptionsDefaults = {
     max: 500,
     suggestion: "Math.ceil((amount / 12)/5)*5"
   }],
+  minAmount: 0,
   canClose: true,
   submitOnClose: false
 };
@@ -7698,14 +7730,14 @@ class DonationAmount {
 
   removeCommas(v) {
     // replace 5,00 with 5.00
-    if (v.length > 3 && v.charAt(v.length - 3) == ',') {
+    if (v.length > 3 && v.charAt(v.length - 3) == ",") {
       v = v.substr(0, v.length - 3) + "." + v.substr(v.length - 2, 2);
-    } else if (v.length > 2 && v.charAt(v.length - 2) == ',') {
+    } else if (v.length > 2 && v.charAt(v.length - 2) == ",") {
       v = v.substr(0, v.length - 2) + "." + v.substr(v.length - 1, 1);
     } // replace any remaining commas
 
 
-    return v.replace(/,/g, '');
+    return v.replace(/,/g, "");
   }
 
 }
@@ -7841,8 +7873,14 @@ class engrid_ENGrid {
 
 
   static setBodyData(dataName, value) {
-    const body = document.querySelector("body");
-    body.setAttribute(`data-engrid-${dataName}`, value);
+    const body = document.querySelector("body"); // If value is boolean
+
+    if (typeof value === "boolean" && value === false) {
+      body.removeAttribute(`data-engrid-${dataName}`);
+      return;
+    }
+
+    body.setAttribute(`data-engrid-${dataName}`, value.toString());
   } // Get body engrid data attributes
 
 
@@ -7945,10 +7983,10 @@ class DonationFrequency {
       if (element && element.name == "transaction.recurrpay") {
         this.recurring = element.value; // When this element is a radio, that means you're between onetime and monthly only
 
-        if (element.type == 'radio') {
-          this.frequency = element.value.toLowerCase() == 'n' ? 'onetime' : 'monthly'; // This field is hidden when transaction.recurrpay is radio
+        if (element.type == "radio") {
+          this.frequency = element.value.toLowerCase() == "n" ? "onetime" : "monthly"; // This field is hidden when transaction.recurrpay is radio
 
-          engrid_ENGrid.setFieldValue('transaction.recurrfreq', this.frequency.toUpperCase());
+          engrid_ENGrid.setFieldValue("transaction.recurrfreq", this.frequency.toUpperCase());
         }
       }
 
@@ -7972,9 +8010,9 @@ class DonationFrequency {
 
 
   set frequency(value) {
-    this._frequency = value.toLowerCase() || 'onetime';
+    this._frequency = value.toLowerCase() || "onetime";
     if (this._dispatch) this._onFrequencyChange.dispatch(this._frequency);
-    engrid_ENGrid.setBodyData('transaction-recurring-frequency', this._frequency);
+    engrid_ENGrid.setBodyData("transaction-recurring-frequency", this._frequency);
   }
 
   get recurring() {
@@ -7982,8 +8020,8 @@ class DonationFrequency {
   }
 
   set recurring(value) {
-    this._recurring = value.toLowerCase() || 'n';
-    engrid_ENGrid.setBodyData('transaction-recurring', this._recurring);
+    this._recurring = value.toLowerCase() || "n";
+    engrid_ENGrid.setBodyData("transaction-recurring", this._recurring);
   }
 
   get onFrequencyChange() {
@@ -7992,8 +8030,8 @@ class DonationFrequency {
 
 
   load() {
-    this.frequency = engrid_ENGrid.getFieldValue('transaction.recurrfreq');
-    this.recurring = engrid_ENGrid.getFieldValue('transaction.recurrpay'); // ENGrid.enParseDependencies();
+    this.frequency = engrid_ENGrid.getFieldValue("transaction.recurrfreq");
+    this.recurring = engrid_ENGrid.getFieldValue("transaction.recurrpay"); // ENGrid.enParseDependencies();
   } // Force a new recurrency
 
 
@@ -8027,7 +8065,7 @@ class DonationFrequency {
       freqField.checked = true;
       this.frequency = freq.toLowerCase();
 
-      if (this.frequency === 'onetime') {
+      if (this.frequency === "onetime") {
         this.setRecurrency("N", dispatch);
       } else {
         this.setRecurrency("Y", dispatch);
@@ -8095,19 +8133,20 @@ class ProcessingFees {
     this._onFeeChange.dispatch(this._fee);
   }
 
-  calculateFees() {
+  calculateFees(amount = 0) {
     var _a;
 
     if (this._field instanceof HTMLInputElement && this._field.checked) {
       if (this.isENfeeCover()) {
-        return window.EngagingNetworks.require._defined.enjs.getDonationFee();
+        return amount > 0 ? window.EngagingNetworks.require._defined.enjs.feeCover.fee(amount) : window.EngagingNetworks.require._defined.enjs.getDonationFee();
       }
 
       const fees = Object.assign({
         processingfeepercentadded: "0",
         processingfeefixedamountadded: "0"
       }, (_a = this._field) === null || _a === void 0 ? void 0 : _a.dataset);
-      const processing_fee = parseFloat(fees.processingfeepercentadded) / 100 * this._amount.amount + parseFloat(fees.processingfeefixedamountadded);
+      const amountToFee = amount > 0 ? amount : this._amount.amount;
+      const processing_fee = parseFloat(fees.processingfeepercentadded) / 100 * amountToFee + parseFloat(fees.processingfeefixedamountadded);
       return Math.round(processing_fee * 100) / 100;
     }
 
@@ -8676,7 +8715,7 @@ class CapitalizeFields {
   constructor() {
     this._form = EnForm.getInstance();
 
-    this._form.onSubmit.subscribe(() => this.capitalizeFields('en__field_supporter_firstName', 'en__field_supporter_lastName', 'en__field_supporter_address1', 'en__field_supporter_city'));
+    this._form.onSubmit.subscribe(() => this.capitalizeFields("en__field_supporter_firstName", "en__field_supporter_lastName", "en__field_supporter_address1", "en__field_supporter_city"));
   }
 
   capitalizeFields(...fields) {
@@ -8688,7 +8727,7 @@ class CapitalizeFields {
 
     if (field) {
       field.value = field.value.replace(/\w\S*/g, w => w.replace(/^\w/, c => c.toUpperCase()));
-      if (engrid_ENGrid.debug) console.log('Capitalized', field.value);
+      if (engrid_ENGrid.debug) console.log("Capitalized", field.value);
     }
 
     return true;
@@ -8793,12 +8832,12 @@ class Ecard {
 
 class ClickToExpand {
   constructor() {
-    this.clickToExpandWrapper = document.querySelectorAll('div.click-to-expand');
+    this.clickToExpandWrapper = document.querySelectorAll("div.click-to-expand");
 
     if (this.clickToExpandWrapper.length) {
       this.clickToExpandWrapper.forEach(element => {
         const content = element.innerHTML;
-        const wrapper_html = '<div class="click-to-expand-cta"></div><div class="click-to-expand-text-wrapper" tabindex="0">' + content + '</div>';
+        const wrapper_html = '<div class="click-to-expand-cta"></div><div class="click-to-expand-text-wrapper" tabindex="0">' + content + "</div>";
         element.innerHTML = wrapper_html;
         element.addEventListener("click", event => {
           if (event) {
@@ -8807,10 +8846,10 @@ class ClickToExpand {
           }
         });
         element.addEventListener("keydown", event => {
-          if (event.key === 'Enter') {
+          if (event.key === "Enter") {
             if (engrid_ENGrid.debug) console.log("A click-to-expand div had the 'Enter' key pressed on it");
             element.classList.add("expanded");
-          } else if (event.key === ' ') {
+          } else if (event.key === " ") {
             if (engrid_ENGrid.debug) console.log("A click-to-expand div had the 'Spacebar' key pressed on it");
             element.classList.add("expanded");
             event.preventDefault(); // Prevents the page from scrolling
@@ -9451,10 +9490,10 @@ const getCardType = cc_partial => {
 const handleCCUpdate = () => {
   const card_type = getCardType(field_credit_card.value);
   const card_values = {
-    amex: ['amex', 'american express', 'americanexpress', 'amx', 'ax'],
-    visa: ['visa', 'vi'],
-    mastercard: ['mastercard', 'master card', 'mc'],
-    discover: ['discover', 'di']
+    amex: ["amex", "american express", "americanexpress", "amx", "ax"],
+    visa: ["visa", "vi"],
+    mastercard: ["mastercard", "master card", "mc"],
+    discover: ["discover", "di"]
   };
   const payment_text = field_payment_type.options[field_payment_type.selectedIndex].text;
 
@@ -9726,7 +9765,7 @@ class IE {
     this.overlay = document.createElement("div");
 
     const isIE = () => {
-      return navigator.userAgent.indexOf('MSIE') !== -1 || navigator.appVersion.indexOf('Trident/') > -1;
+      return navigator.userAgent.indexOf("MSIE") !== -1 || navigator.appVersion.indexOf("Trident/") > -1;
     }; // If it's not IE, get out!
 
 
@@ -9821,7 +9860,7 @@ class MediaAttribution {
     this.mediaWithAttribution.forEach(element => {
       if (engrid_ENGrid.debug) console.log("The following image was found with data attribution fields on it. It's markup will be changed to add caption support.", element); // Creates the wapping <figure> element
 
-      let figure = document.createElement('figure');
+      let figure = document.createElement("figure");
       figure.classList.add("media-with-attribution"); // Moves the <img> inside its <figure> element
 
       let mediaWithAttributionParent = element.parentNode;
@@ -9837,9 +9876,9 @@ class MediaAttribution {
           let attributionSourceLink = mediaWithAttributionElement.dataset.attributionSourceLink;
 
           if (attributionSourceLink) {
-            mediaWithAttributionElement.insertAdjacentHTML('afterend', '<figattribution><a href="' + decodeURIComponent(attributionSourceLink) + '" target="_blank" tabindex="-1">' + attributionSource + '</a></figure>');
+            mediaWithAttributionElement.insertAdjacentHTML("afterend", '<figattribution><a href="' + decodeURIComponent(attributionSourceLink) + '" target="_blank" tabindex="-1">' + attributionSource + "</a></figure>");
           } else {
-            mediaWithAttributionElement.insertAdjacentHTML('afterend', '<figattribution>' + attributionSource + '</figure>');
+            mediaWithAttributionElement.insertAdjacentHTML("afterend", "<figattribution>" + attributionSource + "</figure>");
           }
         }
       }
@@ -10066,6 +10105,7 @@ class UpsellLightbox {
     this.overlay = document.createElement("div");
     this._form = EnForm.getInstance();
     this._amount = DonationAmount.getInstance();
+    this._fees = ProcessingFees.getInstance();
     this._frequency = DonationFrequency.getInstance();
     let options = "EngridUpsell" in window ? window.EngridUpsell : {};
     this.options = Object.assign(Object.assign({}, UpsellOptionsDefaults), options);
@@ -10099,10 +10139,17 @@ class UpsellLightbox {
                   ${title}
                 </h1>
                 ${this.options.otherAmount ? `
-                <p>
-                  <span>${this.options.otherLabel}</span>
-                  <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="">
-                </p>
+                <div class="upsellOtherAmount">
+                  <div class="upsellOtherAmountLabel">
+                    <p>
+                      ${this.options.otherLabel}
+                    </p>
+                  </div>
+                  <div class="upsellOtherAmountInput">
+                    <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="" autocomplete="off">
+                    <small>Minimum ${this.getAmountTxt(this.options.minAmount)}</small>
+                  </div>
+                </div>
                 ` : ``}
 
                 <p>
@@ -10161,7 +10208,7 @@ class UpsellLightbox {
     // const hideModal = cookie.get("hideUpsell"); // Get cookie
     // if it's a first page of a Donation page
     return (// !hideModal &&
-      'EngridUpsell' in window && !!window.pageJson && window.pageJson.pageNumber == 1 && ['donation', 'premiumgift'].includes(window.pageJson.pageType)
+      "EngridUpsell" in window && !!window.pageJson && window.pageJson.pageNumber == 1 && ["donation", "premiumgift"].includes(window.pageJson.pageType)
     );
   }
 
@@ -10170,20 +10217,26 @@ class UpsellLightbox {
 
     const value = parseFloat((_b = (_a = this.overlay.querySelector("#secondOtherField")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "");
     const live_upsell_amount = document.querySelectorAll("#upsellYesButton .upsell_suggestion");
+    const upsellAmount = this.getUpsellAmount();
 
     if (!isNaN(value) && value > 0) {
-      live_upsell_amount.forEach(elem => elem.innerHTML = "$" + value.toFixed(2));
+      this.checkOtherAmount(value);
     } else {
-      live_upsell_amount.forEach(elem => elem.innerHTML = "$" + this.getUpsellAmount().toFixed(2));
+      this.checkOtherAmount(upsellAmount);
     }
+
+    live_upsell_amount.forEach(elem => elem.innerHTML = this.getAmountTxt(upsellAmount + this._fees.calculateFees(upsellAmount)));
   }
 
   liveAmounts() {
     const live_upsell_amount = document.querySelectorAll(".upsell_suggestion");
     const live_amount = document.querySelectorAll(".upsell_amount");
-    const suggestedAmount = this.getUpsellAmount();
-    live_upsell_amount.forEach(elem => elem.innerHTML = "$" + suggestedAmount.toFixed(2));
-    live_amount.forEach(elem => elem.innerHTML = "$" + this._amount.amount.toFixed(2));
+    const upsellAmount = this.getUpsellAmount();
+
+    const suggestedAmount = upsellAmount + this._fees.calculateFees(upsellAmount);
+
+    live_upsell_amount.forEach(elem => elem.innerHTML = this.getAmountTxt(suggestedAmount));
+    live_amount.forEach(elem => elem.innerHTML = this.getAmountTxt(this._amount.amount + this._fees.fee));
   } // Return the Suggested Upsell Amount
 
 
@@ -10194,7 +10247,7 @@ class UpsellLightbox {
     const otherAmount = parseFloat((_b = (_a = this.overlay.querySelector("#secondOtherField")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "");
 
     if (otherAmount > 0) {
-      return otherAmount;
+      return otherAmount > this.options.minAmount ? otherAmount : this.options.minAmount;
     }
 
     let upsellAmount = 0;
@@ -10205,16 +10258,16 @@ class UpsellLightbox {
       if (upsellAmount == 0 && amount <= val.max) {
         upsellAmount = val.suggestion;
 
-        if (typeof upsellAmount !== 'number') {
+        if (typeof upsellAmount !== "number") {
           const suggestionMath = upsellAmount.replace("amount", amount.toFixed(2));
-          upsellAmount = parseFloat(Function('"use strict";return (' + suggestionMath + ')')());
+          upsellAmount = parseFloat(Function('"use strict";return (' + suggestionMath + ")")());
         }
 
         break;
       }
     }
 
-    return upsellAmount;
+    return upsellAmount > this.options.minAmount ? upsellAmount : this.options.minAmount;
   }
 
   shouldOpen() {
@@ -10243,9 +10296,9 @@ class UpsellLightbox {
     if (!this.shouldOpen()) {
       // In the circumstance when the form fails to validate via server-side validation, the page will reload
       // When that happens, we should place the original amount saved in sessionStorage into the upsell original amount field
-      let original = window.sessionStorage.getItem('original');
+      let original = window.sessionStorage.getItem("original");
 
-      if (original && document.querySelectorAll('.en__errorList .en__error').length > 0) {
+      if (original && document.querySelectorAll(".en__errorList .en__error").length > 0) {
         this.setOriginalAmount(original);
       } // Returning true will give the "go ahead" to submit the form
 
@@ -10257,6 +10310,7 @@ class UpsellLightbox {
     this.liveAmounts();
     this.overlay.classList.remove("is-hidden");
     this._form.submit = false;
+    engrid_ENGrid.setBodyData("has-lightbox", "");
     return false;
   } // Set the original amount into a hidden field using the upsellOriginalGiftAmountFieldName, if provided
 
@@ -10272,7 +10326,7 @@ class UpsellLightbox {
           let input = document.createElement("input");
           input.setAttribute("type", "hidden");
           input.setAttribute("name", this.options.upsellOriginalGiftAmountFieldName);
-          input.classList.add('en__field__input', 'en__field__input--hidden');
+          input.classList.add("en__field__input", "en__field__input--hidden");
           pageform.appendChild(input);
           enFieldUpsellOriginalAmount = document.querySelector('.en__field__input.en__field__input--hidden[name="' + this.options.upsellOriginalGiftAmountFieldName + '"]');
         }
@@ -10280,7 +10334,7 @@ class UpsellLightbox {
 
       if (enFieldUpsellOriginalAmount) {
         // save it to a session variable just in case this page reloaded due to server-side validation error
-        window.sessionStorage.setItem('original', original);
+        window.sessionStorage.setItem("original", original);
         enFieldUpsellOriginalAmount.setAttribute("value", original);
       }
     }
@@ -10301,8 +10355,8 @@ class UpsellLightbox {
 
       this._amount.setAmount(upsoldAmount);
     } else {
-      this.setOriginalAmount('');
-      window.sessionStorage.removeItem('original');
+      this.setOriginalAmount("");
+      window.sessionStorage.removeItem("original");
     }
 
     this._form.submitForm();
@@ -10313,11 +10367,35 @@ class UpsellLightbox {
     e.preventDefault(); // cookie.set("hideUpsell", "1", { expires: 1 }); // Create one day cookie
 
     this.overlay.classList.add("is-hidden");
+    engrid_ENGrid.setBodyData("has-lightbox", false);
 
     if (this.options.submitOnClose) {
       this._form.submitForm();
     } else {
       this._form.dispatchError();
+    }
+  }
+
+  getAmountTxt(amount = 0) {
+    var _a, _b, _c, _d;
+
+    const symbol = (_a = engrid_ENGrid.getOption("CurrencySymbol")) !== null && _a !== void 0 ? _a : "$";
+    const dec_separator = (_b = engrid_ENGrid.getOption("DecimalSeparator")) !== null && _b !== void 0 ? _b : ".";
+    const thousands_separator = (_c = engrid_ENGrid.getOption("ThousandsSeparator")) !== null && _c !== void 0 ? _c : "";
+    const dec_places = amount % 1 == 0 ? 0 : (_d = engrid_ENGrid.getOption("DecimalPlaces")) !== null && _d !== void 0 ? _d : 2;
+    const amountTxt = engrid_ENGrid.formatNumber(amount, dec_places, dec_separator, thousands_separator);
+    return amount > 0 ? symbol + amountTxt : "";
+  }
+
+  checkOtherAmount(value) {
+    const otherInput = document.querySelector(".upsellOtherAmountInput");
+
+    if (otherInput) {
+      if (value >= this.options.minAmount) {
+        otherInput.classList.remove("is-invalid");
+      } else {
+        otherInput.classList.add("is-invalid");
+      }
     }
   }
 
@@ -10459,16 +10537,16 @@ class SkipToMainContentLink {
     const firstH1 = document.querySelector("h1");
 
     if (firstTitleInEngridBody && firstTitleInEngridBody.parentElement) {
-      firstTitleInEngridBody.parentElement.insertAdjacentHTML('beforebegin', '<span id="skip-link"></span>');
+      firstTitleInEngridBody.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
       this.insertSkipLinkSpan();
     } else if (firstH1InEngridBody && firstH1InEngridBody.parentElement) {
-      firstH1InEngridBody.parentElement.insertAdjacentHTML('beforebegin', '<span id="skip-link"></span>');
+      firstH1InEngridBody.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
       this.insertSkipLinkSpan();
     } else if (firstTitle && firstTitle.parentElement) {
-      firstTitle.parentElement.insertAdjacentHTML('beforebegin', '<span id="skip-link"></span>');
+      firstTitle.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
       this.insertSkipLinkSpan();
     } else if (firstH1 && firstH1.parentElement) {
-      firstH1.parentElement.insertAdjacentHTML('beforebegin', '<span id="skip-link"></span>');
+      firstH1.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
       this.insertSkipLinkSpan();
     } else {
       if (engrid_ENGrid.debug) console.log("This page contains no <title> or <h1> and a 'Skip to main content' link was not added");
@@ -10476,7 +10554,7 @@ class SkipToMainContentLink {
   }
 
   insertSkipLinkSpan() {
-    document.body.insertAdjacentHTML('afterbegin', '<a class="skip-link" href="#skip-link">Skip to main content</a>');
+    document.body.insertAdjacentHTML("afterbegin", '<a class="skip-link" href="#skip-link">Skip to main content</a>');
   }
 
 }
@@ -10577,28 +10655,46 @@ class SrcDefer {
 class setRecurrFreq {
   constructor() {
     this._frequency = DonationFrequency.getInstance();
-    this.linkClass = 'setRecurrFreq-';
-    this.checkboxName = 'engrid.recurrfreq'; // Watch the links that starts with linkClass
+    this.linkClass = "setRecurrFreq-";
+    this.checkboxName = "engrid.recurrfreq"; // Watch the links that starts with linkClass
 
     document.querySelectorAll(`a[class^="${this.linkClass}"]`).forEach(element => {
       element.addEventListener("click", e => {
         // Get the right class
-        const setRecurrFreqClass = element.className.split(' ').filter(linkClass => linkClass.startsWith(this.linkClass));
+        const setRecurrFreqClass = element.className.split(" ").filter(linkClass => linkClass.startsWith(this.linkClass));
         if (engrid_ENGrid.debug) console.log(setRecurrFreqClass);
 
         if (setRecurrFreqClass.length) {
           e.preventDefault();
-          engrid_ENGrid.setFieldValue('transaction.recurrfreq', setRecurrFreqClass[0].substring(this.linkClass.length).toUpperCase());
+          engrid_ENGrid.setFieldValue("transaction.recurrfreq", setRecurrFreqClass[0].substring(this.linkClass.length).toUpperCase());
 
           this._frequency.load();
         }
       });
-    }); // Watch checkboxes with the name checkboxName
+    });
+    const currentFrequency = engrid_ENGrid.getFieldValue("transaction.recurrfreq").toUpperCase(); // Watch checkboxes with the name checkboxName
 
     document.getElementsByName(this.checkboxName).forEach(element => {
+      // Set checked status per currently-set frequency
+      const frequency = element.value.toUpperCase();
+
+      if (frequency === currentFrequency) {
+        element.checked = true;
+      } else {
+        element.checked = false;
+      }
+
       element.addEventListener("change", () => {
+        const frequency = element.value.toUpperCase();
+
         if (element.checked) {
-          engrid_ENGrid.setFieldValue('transaction.recurrfreq', element.value.toUpperCase());
+          engrid_ENGrid.setFieldValue("transaction.recurrfreq", frequency);
+          engrid_ENGrid.setFieldValue("transaction.recurrpay", "Y");
+
+          this._frequency.load();
+        } else if (frequency !== "ONETIME") {
+          engrid_ENGrid.setFieldValue("transaction.recurrfreq", "ONETIME");
+          engrid_ENGrid.setFieldValue("transaction.recurrpay", "N");
 
           this._frequency.load();
         }
@@ -10606,11 +10702,15 @@ class setRecurrFreq {
     }); // Uncheck the checkbox when frequency != checkbox value
 
     this._frequency.onFrequencyChange.subscribe(() => {
-      const freq = this._frequency.frequency.toUpperCase();
+      const currentFrequency = this._frequency.frequency.toUpperCase();
 
       document.getElementsByName(this.checkboxName).forEach(element => {
-        if (element.checked && element.value != freq) {
+        const elementFrequency = element.value.toUpperCase();
+
+        if (element.checked && elementFrequency !== currentFrequency) {
           element.checked = false;
+        } else if (!element.checked && elementFrequency === currentFrequency) {
+          element.checked = true;
         }
       });
     });
@@ -10632,11 +10732,11 @@ class PageBackground {
       if (this.pageBackground && pageBackgroundImgDataSrc) {
         if (engrid_ENGrid.debug) console.log("A background image set in the page was found with a data-src value, setting it as --engrid__page-backgroundImage_url", pageBackgroundImgDataSrc);
         pageBackgroundImgDataSrc = "url('" + pageBackgroundImgDataSrc + "')";
-        this.pageBackground.style.setProperty('--engrid__page-backgroundImage_url', pageBackgroundImgDataSrc);
+        this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url", pageBackgroundImgDataSrc);
       } else if (this.pageBackground && pageBackgroundImgSrc) {
         if (engrid_ENGrid.debug) console.log("A background image set in the page was found with a src value, setting it as --engrid__page-backgroundImage_url", pageBackgroundImgSrc);
         pageBackgroundImgSrc = "url('" + pageBackgroundImgSrc + "')";
-        this.pageBackground.style.setProperty('--engrid__page-backgroundImage_url', pageBackgroundImgSrc);
+        this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url", pageBackgroundImgSrc);
       } else if (pageBackgroundImg) {
         if (engrid_ENGrid.debug) console.log("A background image set in the page was found but without a data-src or src value, no action taken", pageBackgroundImg);
       } else {
@@ -10650,20 +10750,20 @@ class PageBackground {
   }
 
   setDataAttributes() {
-    if (this.hasVideoBackground()) return engrid_ENGrid.setBodyData('page-background', 'video');
-    if (this.hasImageBackground()) return engrid_ENGrid.setBodyData('page-background', 'image');
-    return engrid_ENGrid.setBodyData('page-background', 'empty');
+    if (this.hasVideoBackground()) return engrid_ENGrid.setBodyData("page-background", "video");
+    if (this.hasImageBackground()) return engrid_ENGrid.setBodyData("page-background", "image");
+    return engrid_ENGrid.setBodyData("page-background", "empty");
   }
 
   hasVideoBackground() {
     if (this.pageBackground) {
-      return !!this.pageBackground.querySelector('video');
+      return !!this.pageBackground.querySelector("video");
     }
   }
 
   hasImageBackground() {
     if (this.pageBackground) {
-      return !this.hasVideoBackground() && !!this.pageBackground.querySelector('img');
+      return !this.hasVideoBackground() && !!this.pageBackground.querySelector("img");
     }
   }
 
@@ -10922,9 +11022,9 @@ class ProgressBar {
     }
 
     let maxValue = (_a = progressIndicator.getAttribute("max")) !== null && _a !== void 0 ? _a : 100;
-    if (typeof maxValue === 'string') maxValue = parseInt(maxValue);
+    if (typeof maxValue === "string") maxValue = parseInt(maxValue);
     let amountValue = (_b = progressIndicator.getAttribute("amount")) !== null && _b !== void 0 ? _b : 0;
-    if (typeof amountValue === 'string') amountValue = parseInt(amountValue);
+    if (typeof amountValue === "string") amountValue = parseInt(amountValue);
     const prevPercentage = pageNumber === 1 ? 0 : Math.ceil((pageNumber - 1) / pageCount * maxValue);
     let percentage = pageNumber === 1 ? 0 : Math.ceil(pageNumber / pageCount * maxValue);
     const scalePrev = prevPercentage / 100;

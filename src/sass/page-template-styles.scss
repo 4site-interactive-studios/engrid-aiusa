@@ -1,6 +1,123 @@
 /* All CSS Custom Properties should be scoped to the theme using CSS Data Attributes. */
-[data-engrid-theme="aiusa"] {
+@keyframes firebig {
+  0% {
+    transform: rotate(-2deg);
+    transform-origin: bottom center;
+  }
+  20% {
+    transform: rotate(3deg);
+    transform-origin: bottom center;
+  }
+  40% {
+    transform: rotate(-2deg);
+    transform-origin: bottom center;
+  }
+  60% {
+    transform: rotate(2deg);
+    transform-origin: bottom center;
+  }
+  80% {
+    transform: rotate(-2deg) scaleY(0.8);
+    transform-origin: bottom center;
+  }
+  100% {
+    transform: rotate(2deg);
+    transform-origin: bottom center;
+  }
+}
+@keyframes flicker {
+  0% {
+    transform: rotate(-4deg);
+    transform-origin: bottom center;
+  }
+  20% {
+    transform: rotate(4deg);
+    transform-origin: bottom center;
+  }
+  40% {
+    transform-origin: bottom center;
+    transform: rotate(-4deg);
+  }
+  60% {
+    transform: rotate(4deg);
+    transform-origin: bottom center;
+  }
+  80% {
+    transform: rotate(-4deg);
+    transform-origin: bottom center;
+  }
+  to {
+    transform: rotate(4deg);
+  }
+}
+@keyframes firesmall {
+  0% {
+    transform: rotate(1deg);
+    transform-origin: bottom center;
+  }
+  20% {
+    transform: rotate(-2deg) scaleY(0.9);
+    transform-origin: bottom center;
+  }
+  40% {
+    transform: rotate(1deg);
+    transform-origin: bottom center;
+  }
+  60% {
+    transform: rotate(-1deg);
+    transform-origin: bottom center;
+  }
+  80% {
+    transform: rotate(1deg) scaleY(0.8);
+    transform-origin: bottom center;
+  }
+  100% {
+    transform: rotate(-1deg);
+    transform-origin: bottom center;
+  }
+}
+@keyframes burnout-up-1 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
 
+  33% {
+    transform: translate(12px, -70px);
+  }
+
+  66% {
+    transform: translate(0, -140px);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(6px, -200px);
+    opacity: 0;
+  }
+}
+
+@keyframes burnout-up-2 {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translate(-10px, -80px);
+  }
+
+  80% {
+    transform: translate(-4px, -140px);
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translate(-6px, -160px);
+    opacity: 0;
+  }
+}
+[data-engrid-theme="aiusa"] {
   // FIXED COLOR PALETTE
   --color_transparent: transparent;
   --color_white: rgba(255, 255, 255, 1);
@@ -33,9 +150,8 @@
   --scale-down_80pct: 0.2;
 
   // FONT STACKS
-  --native-fonts__sans-serif: -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
-    sans-serif;
+  --native-fonts__sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
   // TYPOGRAPHY DEFAULT
   --default_font-family: var(--font-stack-aiusa);
@@ -45,33 +161,23 @@
   --default_line-height: initial;
 
   // TYPOGRAPHY H1
-  --h1_font-family: var(
-    --font-stack-aiusa-bold-condensed
-  );
+  --h1_font-family: var(--font-stack-aiusa-bold-condensed);
   --h1_color: initial;
-  --h1_font-size: calc(
-    var(--root_font-size) * var(--scale-up_160pct)
-  );
-  --h1_font-weight: var(
-    --headline-font-weight
-  );
+  --h1_font-size: calc(var(--root_font-size) * var(--scale-up_160pct));
+  --h1_font-weight: var(--headline-font-weight);
   --h1_line-height: var(--h1_font-size);
 
   // TYPOGRAPHY H2
   --h2_font-family: var(--h1_font-family);
   --h2_color: initial;
-  --h2_font-size: calc(
-    var(--root_font-size) * var(--scale-up_80pct)
-  );
+  --h2_font-size: calc(var(--root_font-size) * var(--scale-up_80pct));
   --h2_font-weight: initial;
   --h2_line-height: var(--h2_font-size);
 
   // TYPOGRAPHY H3
   --h3_font-family: var(--h1_font-family);
   --h3_color: initial;
-  --h3_font-size: calc(
-    var(--root_font-size) * var(--scale-up_40pct)
-  );
+  --h3_font-size: calc(var(--root_font-size) * var(--scale-up_40pct));
   --h3_font-weight: initial;
   --h3_line-height: var(--h3_font-size);
 
@@ -83,27 +189,21 @@
   --p_line-height: initial;
 
   // TYPOGRAPHY LABEL
-  --label_font-family: var(
-    --font-stack-aiusa-bold-condensed
-  );
+  --label_font-family: var(--font-stack-aiusa-bold-condensed);
   --label_color: #525252;
   --label_font-size: 12px;
   --label_font-weight: initial;
   --label_line-height: initial;
 
   // TYPOGRAPHY INPUT
-  --input_font-family: var(
-    --default_font-family
-  );
+  --input_font-family: var(--default_font-family);
   --input_color: initial;
   --input_font-size: var(--root_font-size);
   --input_font-weight: initial;
   --input_line-height: initial;
   --input_background-color: #f5f5f5;
   --input_border-width: 2px;
-  --input_border-color: var(
-    --input_background-color
-  );
+  --input_border-color: var(--input_background-color);
   --input_border-radius: initial;
   --input_placeholder-color: #767676;
   --input_box-shadow: none;
@@ -111,9 +211,7 @@
   // TYPOGRAPHY INPUT:FOCUS
   // TYPOGRAPHY INPUT:HOVER
   --input_color_hover: var(--input_color);
-  --input_background-color_hover: var(
-    --input_background-color
-  );
+  --input_background-color_hover: var(--input_background-color);
   --input_border-color_hover: var(--input_background-color);
   --input_border-bottom-color_hover: #525252;
   --input_box-shadow_hover: none;
@@ -132,22 +230,14 @@
   // TYPOGRAPHY RADIO INPUT:FOCUS
   // TYPOGRAPHY RADIO INPUT:HOVER
   --radio_color_hover: var(--radio_color);
-  --radio_background-color_hover: var(
-    --radio_background-color
-  );
-  --radio_border-color_hover: var(
-    --radio_border-color
-  );
+  --radio_background-color_hover: var(--radio_background-color);
+  --radio_border-color_hover: var(--radio_border-color);
   --radio_box-shadow_hover: none;
 
   // TYPOGRAPHY RADIO INPUT:CHECKED
-  --radio_color_selected_selected: var(
-    --radio_background-color
-  );
+  --radio_color_selected_selected: var(--radio_background-color);
   --radio_background-color_selected: var(--color_white);
-  --radio_border-color_selected: var(
-    --radio_border-color
-  );
+  --radio_border-color_selected: var(--radio_border-color);
   --radio_box-shadow_selected: inset 0 0 0 6px var(--color_black);
 
   // TYPOGRAPHY CHECKBOX
@@ -161,30 +251,18 @@
 
   // TYPOGRAPHY CHECKBOX INPUT:FOCUS
   // TYPOGRAPHY CHECKBOX INPUT:HOVER
-  --checkbox_color_hover: var(
-    --checkbox_color
-  );
-  --checkbox_background-color_hover: var(
-    --checkbox_background-color
-  );
-  --checkbox_border-color_hover: var(
-    --checkbox_border-color
-  );
+  --checkbox_color_hover: var(--checkbox_color);
+  --checkbox_background-color_hover: var(--checkbox_background-color);
+  --checkbox_border-color_hover: var(--checkbox_border-color);
 
   // TYPOGRAPHY CHECKBOX INPUT:CHECKED
   --checkbox_content_checked: "✓";
-  --checkbox_color_checked: var(
-    --checkbox_background-color
-  );
+  --checkbox_color_checked: var(--checkbox_background-color);
   --checkbox_background-color_checked: var(--color_black);
-  --checkbox_border-color_checked: var(
-    --checkbox_border-color
-  );
+  --checkbox_border-color_checked: var(--checkbox_border-color);
 
   // TYPOGRAPHY SELECT
-  --select_font-family: var(
-    --default_font-family
-  );
+  --select_font-family: var(--default_font-family);
   --select_color: var(--color_black);
   --select_font-size: var(--root_font-size);
   --select_font-weight: initial;
@@ -193,28 +271,18 @@
   --select_border-width: 2px;
   --select_border-color: #f5f5f5;
   --select_border-radius: initial;
-  --select_box-shadow: var(
-    --input_box-shadow
-  );
+  --select_box-shadow: var(--input_box-shadow);
 
   // TYPOGRAPHY SELECT:FOCUS
   // TYPOGRAPHY SELECT:HOVER
   --select_color_hover: var(--select_color);
-  --select_background-color_hover: var(
-    --select_background-color
-  );
-  --select_border-color_hover: var(
-    --select_border-color
-  );
+  --select_background-color_hover: var(--select_background-color);
+  --select_border-color_hover: var(--select_border-color);
   --select_border-bottom-color_hover: var(--color_black);
-  --select_box-shadow_hover: var(
-    --input_box-shadow_hover
-  );
+  --select_box-shadow_hover: var(--input_box-shadow_hover);
 
   // TYPOGRAPHY TEXTAREA
-  --textarea_font-family: var(
-    --default_font-family
-  );
+  --textarea_font-family: var(--default_font-family);
   --textarea_color: initial;
   --textarea_font-size: var(--root_font-size);
   --textarea_font-weight: initial;
@@ -224,9 +292,7 @@
   --textarea_border-color: var(--textarea_background-color);
   --textarea_border-radius: initial;
   --textarea_placeholder-color: var(--color_light-gray);
-  --textarea_box-shadow: var(
-    --input_box-shadow
-  );
+  --textarea_box-shadow: var(--input_box-shadow);
 
   // TYPOGRAPHY TEXTAREA:FOCUS
   // TYPOGRAPHY TEXTAREA:HOVER
@@ -273,40 +339,24 @@
   --submit__button_color_hover: #252525;
   --submit__button_background-color_hover: var(--color_primary);
   --submit__button_border-color_hover: var(--color_primary);
-  
+
   // TYPOGRAPHY BUTTON:SELECTED
   --submit__button_color_checked: #252525;
   --submit__button_background-color_checked: var(--color_primary);
   --submit__button_border-color_checked: var(--color_primary);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON
-  --recurring-frequency__button_font-family: var(
-    --button_font-family
-  );
-  --recurring-frequency__button_color: var(
-    --button_color
-  );
-  --recurring-frequency__button_font-size: var(
-    --button_font-size
-  );
-  --recurring-frequency__button_font-weight: var(
-    --button_font-weight
-  );
-  --recurring-frequency__button_line-height: var(
-    --button_line-height
-  );
+  --recurring-frequency__button_font-family: var(--button_font-family);
+  --recurring-frequency__button_color: var(--button_color);
+  --recurring-frequency__button_font-size: var(--button_font-size);
+  --recurring-frequency__button_font-weight: var(--button_font-weight);
+  --recurring-frequency__button_line-height: var(--button_line-height);
   --recurring-frequency__button_background-color: var(
     --button_background-color
   );
-  --recurring-frequency__button_border-width: var(
-    --button_border-width
-  );
-  --recurring-frequency__button_border-color: var(
-    --button_border-color
-  );
-  --recurring-frequency__button_border-radius: var(
-    --button_border-radius
-  );
+  --recurring-frequency__button_border-width: var(--button_border-width);
+  --recurring-frequency__button_border-color: var(--button_border-color);
+  --recurring-frequency__button_border-radius: var(--button_border-radius);
   --recurring-frequency__button_padding: 1.5ch 1.75ch;
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:HOVER
@@ -315,49 +365,23 @@
   --recurring-frequency__button_background-color_hover: var(--color_white);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:CHECKED
-  --recurring-frequency__button_color_checked: var(
-    --button_color_hover
-  );
-  --recurring-frequency__button_background-color_checked: var(
-    --color_cta
-  );
-  --recurring-frequency__button_border-color_checked: var(
-    --color_cta
-  );
+  --recurring-frequency__button_color_checked: var(--button_color_hover);
+  --recurring-frequency__button_background-color_checked: var(--color_cta);
+  --recurring-frequency__button_border-color_checked: var(--color_cta);
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON
-  --donation-amount__button_font-family: var(
-    --button_font-family
-  );
-  --donation-amount__button_color: var(
-    --button_color
-  );
-  --donation-amount__button_font-size: var(
-    --button_font-size
-  );
-  --donation-amount__button_font-weight: var(
-    --button_font-weight
-  );
-  --donation-amount__button_line-height: var(
-    --button_line-height
-  );
-  --donation-amount__button_background-color: var(
-    --button_background-color
-  );
-  --donation-amount__button_border-width: var(
-    --button_border-width
-  );
-  --donation-amount__button_border-color: var(
-    --button_border-color
-  );
-  --donation-amount__button_border-radius: var(
-    --button_border-radius
-  );
+  --donation-amount__button_font-family: var(--button_font-family);
+  --donation-amount__button_color: var(--button_color);
+  --donation-amount__button_font-size: var(--button_font-size);
+  --donation-amount__button_font-weight: var(--button_font-weight);
+  --donation-amount__button_line-height: var(--button_line-height);
+  --donation-amount__button_background-color: var(--button_background-color);
+  --donation-amount__button_border-width: var(--button_border-width);
+  --donation-amount__button_border-color: var(--button_border-color);
+  --donation-amount__button_border-radius: var(--button_border-radius);
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:HOVER
-  --donation-amount__button_color_hover: var(
-    --button_color_hover
-  );
+  --donation-amount__button_color_hover: var(--button_color_hover);
   --donation-amount__button_background-color_hover: var(
     --button_background-color_hover
   );
@@ -367,66 +391,34 @@
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:CHECKED
   --donation-amount__button_color_checked: var(--color_white);
-  --donation-amount__button_background-color_checked: var(
-    --button_color
-  );
-  --donation-amount__button_border-color_checked: var(
-    --button_color
-  );
+  --donation-amount__button_background-color_checked: var(--button_color);
+  --donation-amount__button_border-color_checked: var(--button_color);
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON
-  --give-by-select__button_font-family: var(
-    --button_font-family
-  );
-  --give-by-select__button_color: var(
-    --button_color
-  );
-  --give-by-select__button_font-size: var(
-    --button_font-size
-  );
-  --give-by-select__button_font-weight: var(
-    --button_font-weight
-  );
-  --give-by-select__button_line-height: var(
-    --button_line-height
-  );
-  --give-by-select__button_background-color: var(
-    --button_background-color
-  );
-  --give-by-select__button_border-width: var(
-    --button_border-width
-  );
-  --give-by-select__button_border-color: var(
-    --button_border-color
-  );
-  --give-by-select__button_border-radius: var(
-    --button_border-radius
-  );
+  --give-by-select__button_font-family: var(--button_font-family);
+  --give-by-select__button_color: var(--button_color);
+  --give-by-select__button_font-size: var(--button_font-size);
+  --give-by-select__button_font-weight: var(--button_font-weight);
+  --give-by-select__button_line-height: var(--button_line-height);
+  --give-by-select__button_background-color: var(--button_background-color);
+  --give-by-select__button_border-width: var(--button_border-width);
+  --give-by-select__button_border-color: var(--button_border-color);
+  --give-by-select__button_border-radius: var(--button_border-radius);
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:HOVER
-  --give-by-select__button_color_hover: var(
-    --button_color_hover
-  );
+  --give-by-select__button_color_hover: var(--button_color_hover);
   --give-by-select__button_background-color_hover: var(
     --button_background-color_hover
   );
-  --give-by-select__button_border-color_hover: var(
-    --button_border-color_hover
-  );
+  --give-by-select__button_border-color_hover: var(--button_border-color_hover);
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:CHECKED
   --give-by-select__button_color_checked: var(--color_white);
-  --give-by-select__button_background-color_checked: var(
-    --button_color
-  );
-  --give-by-select__button_border-color_checked: var(
-    --button_color
-  );
+  --give-by-select__button_background-color_checked: var(--button_color);
+  --give-by-select__button_border-color_checked: var(--button_color);
 
   // TYPOGRAPHY A
-  --a_font-family: var(
-    --headline-font-family
-  );
+  --a_font-family: var(--headline-font-family);
   --a_color: initial;
   --a_text-decoration: initial;
 
@@ -469,7 +461,9 @@
   --engrid__page-backgroundImageOverlay_background-color: var(
     --color_transparent
   );
-  --engrid__page-customCode_background-color: var(--engrid__page_background-color);
+  --engrid__page-customCode_background-color: var(
+    --engrid__page_background-color
+  );
 
   // ENGRID SECTIONS PADDING
   // QUICK SETTINGS
@@ -570,9 +564,7 @@
   --give-annual-donation-amount-appended-label: " Annually";
 
   // IMAGE ATTRIBUTION OVERLAY
-  --media-attribution__font-family: var(
-    --default_font-family
-  );
+  --media-attribution__font-family: var(--default_font-family);
   --media-attribution__color: #ffffff;
   --media-attribution__text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
   --media-attribution__font-size: 12px;
@@ -585,15 +577,14 @@
 
   // ADD THEME CUSTOM CSS PROPERTIES HERE
   // TYPOGRAPHY HEADLINE
-  --font-stack-aiusa: "AmnestyTradeGothic",
-    var(--native-fonts__sans-serif);
+  --font-stack-aiusa: "AmnestyTradeGothic", var(--native-fonts__sans-serif);
   --font-stack-aiusa-bold-condensed: "AmnestyTradeGothicBdCn",
     var(--native-fonts__sans-serif);
   --headline-font-family: var(--font-stack-aiusa);
   --headline-font-weight: 700;
+
+  --recurring-frequency__flex-grow: 1;
 }
-
-
 
 /* Add your custom theme styles here */
 
@@ -665,10 +656,9 @@
   // .en__contactDetails__rows {
   //   margin-left: calc(var(--checkbox_width) + 0.5rem);
   // }
-  
 
   .en__field__input--checkbox + .en__field__label:before {
-    font-size: .99936rem;
+    font-size: 0.99936rem;
   }
 
   .en__component--contactblock
@@ -690,7 +680,9 @@
     font-weight: 700;
   }
 
-  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after {
+  .en__contacts:not(.en__contacts--hideCheck)
+    .en__contactDetails__select:checked
+    + .en__contactDetails__rows:after {
     left: 7px;
     top: 7px;
   }
@@ -739,7 +731,7 @@
   //   width: 50px;
   // }
 
-  .en__contacts--singleTweetMode .en__twitterTarget__select{
+  .en__contacts--singleTweetMode .en__twitterTarget__select {
     flex-basis: 2rem;
   }
 
@@ -848,32 +840,52 @@
     padding: 1ch;
     box-shadow: var(--input_box-shadow);
     transition: box-shadow 0.25s, border-color 0.25s ease-in-out;
-    border: var(--input_border-width) solid
-      var(--input_border-color);
+    border: var(--input_border-width) solid var(--input_border-color);
   }
 
   figure.media-with-attribution figattribution a {
     font-family: var(--font-stack-aiusa-bold-condensed);
   }
-  
-  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) label{
-      flex-direction: column;
+
+  &[data-engrid-transaction-recurring-frequency="annual"]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    > .en__field__element
+    > .en__field__item:not(.en__field__item--other)
+    label {
+    flex-direction: column;
   }
 
-  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) .en__field__label--item:after{
+  &[data-engrid-transaction-recurring-frequency="annual"]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    > .en__field__element
+    > .en__field__item:not(.en__field__item--other)
+    .en__field__label--item:after {
     margin-left: 0;
   }
 
-  &[data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after{
+  &[data-engrid-transaction-recurring-frequency]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    div:not(.en__field__item--other)
+    .en__field__label--item:after {
     font-size: 100%;
     opacity: 1;
     margin-left: 0.5ch;
   }
 
-  .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
+  .radio-to-buttons_donationAmt
+    .en__field--donationAmt.en__field--radio
+    > .en__field__element
+    .en__field__item.en__field__item--other {
     --donation-amount__flex-grow: 1;
-    --donation-amount__button_background-color_checked: var(--input_background-color);
-    --donation-amount__button_border-color_checked: var(--input_background-color_hover);
+    --donation-amount__button_background-color_checked: var(
+      --input_background-color
+    );
+    --donation-amount__button_border-color_checked: var(
+      --input_background-color_hover
+    );
     --donation-amount__button_color_checked: var(--input_color);
   }
 
@@ -1046,14 +1058,13 @@
     // }
   }
 
-/*
+  /*
 * ##########################################################
 * # CONTENT HEADER
 * ##########################################################
 */
 
   .content-header {
-
     // &.pseudo-subgrid > div{
     //   grid-column: pc;
     // }
@@ -1086,55 +1097,53 @@
     }
   }
 
-/*
+  /*
 * ##########################################################
 * # CONTENT FOOTER
 * ##########################################################
 */
 
-.content-footer {
+  .content-footer {
+    // &.pseudo-subgrid > div{
+    //   grid-column: pc;
+    // }
+  }
 
-  // &.pseudo-subgrid > div{
-  //   grid-column: pc;
-  // }
-
-}
-
-/*
+  /*
 * ##########################################################
 * # MIXING: MOBILE SMALL
 * ##########################################################
 */
 
-// On small screens we need to stack the header and menu
-@mixin until-mobile {
-  .content-header {
-    header {
-      flex-direction: column;
-    }
+  // On small screens we need to stack the header and menu
+  @mixin until-mobile {
+    .content-header {
+      header {
+        flex-direction: column;
+      }
 
-    #header-logo {
-      width: 100vw;
-      display: block;
-      background: #ffff00;
-    }
+      #header-logo {
+        width: 100vw;
+        display: block;
+        background: #ffff00;
+      }
 
-    #main-menu {
-      padding-right: 0;
-    }
+      #main-menu {
+        padding-right: 0;
+      }
 
-    #menu-wrapper ul[role="menubar"] ul[role="menu"] {
-      padding: 10px 33px 35px 35px;
-      top: 40px !important;
-      right: -40vw !important;
-      left: -35vw !important;
+      #menu-wrapper ul[role="menubar"] ul[role="menu"] {
+        padding: 10px 33px 35px 35px;
+        top: 40px !important;
+        right: -40vw !important;
+        left: -35vw !important;
 
-      li {
-        text-align: center;
+        li {
+          text-align: center;
+        }
       }
     }
   }
-}
 
   /*
 * ##########################################################
@@ -1305,32 +1314,32 @@
     outline-color: black;
   }
 
-/*
+  /*
 * ##########################################################
 * # DONATION UPSELL LIGHTBOX
 * ##########################################################
 */
 
-#goMonthly{
-  #upsellYesButton{
-    margin-bottom: var(--fields_spacing-block);
+  #goMonthly {
+    #upsellYesButton {
+      margin-bottom: var(--fields_spacing-block);
 
-    .pseduo__en__submit_button{
-      --submit__button_padding-top: 1.5rem;
-      --submit__button_padding-bottom: 1.5rem;
-      padding-left: 2rem;
-      padding-right: 2rem;
-      --submit__button_font-size: calc(var(--button_font-size) * 1.1);
-    } 
-  }
+      .pseduo__en__submit_button {
+        --submit__button_padding-top: 1.5rem;
+        --submit__button_padding-bottom: 1.5rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+        --submit__button_font-size: calc(var(--button_font-size) * 1.1);
+      }
+    }
 
-  #upsellNoButton button{
-    --button_border-color: transparent;
-    --button_border-color_hover: transparent;
-    --button_border-color_checked: transparent;
-    --button_text-transform: initial;
+    #upsellNoButton button {
+      --button_border-color: transparent;
+      --button_border-color_hover: transparent;
+      --button_border-color_checked: transparent;
+      --button_text-transform: initial;
+    }
   }
-}
 
   /*
 * ##########################################################
@@ -1353,7 +1362,9 @@
       overflow: inherit;
 
       .enWidget__fill {
-        background-color: var(--color_primary) !important; // !important required
+        background-color: var(
+          --color_primary
+        ) !important; // !important required
         box-shadow: inset -13px 0px 0px 0px rgba(255, 255, 255, 1);
         &::before {
           content: " ";
@@ -1404,8 +1415,7 @@
 */
 
   .en__field--recurrfreq {
-
-    .en__field__item{
+    .en__field__item {
       flex-grow: 1;
     }
 
@@ -1419,7 +1429,7 @@
     }
   }
 
-  .en__field--donationAmt .en__field__item--other{
+  .en__field--donationAmt .en__field__item--other {
     flex-grow: 1;
   }
 
@@ -1490,12 +1500,11 @@
   //   }
   // }
 
-  .en__field--donationAmt .en__field__item--other{
+  .en__field--donationAmt .en__field__item--other {
     position: relative;
-
   }
 
-  .en__field--donationAmt .en__field__item--other input{
+  .en__field--donationAmt .en__field__item--other input {
     padding-left: 2.5ch;
   }
 
@@ -1607,12 +1616,12 @@
       display: none;
     }
 
-    .en__pg{
+    .en__pg {
       border: none;
     }
   }
 
-/*
+  /*
 * ##########################################################
 * # E-Card
 * ##########################################################
@@ -1670,20 +1679,19 @@
       padding-left: 0px;
       padding-right: 0px;
     }
-    
+
     textarea.en__field {
       padding-left: 1ch;
       padding-right: 1ch;
     }
 
-    .en__field--ccexpire{
+    .en__field--ccexpire {
       // left: -0.5rem;
       // right: -0.5rem;
       // min-width: calc(100% + 1rem);
       left: 0;
       right: 0;
     }
-
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"] {
       padding-right: 28px;
@@ -1768,20 +1776,20 @@
 
   // Universal stylings
   &[data-engrid-layout] {
-    @include mq($until: mobile){
+    @include mq($until: mobile) {
       @include until-mobile;
     }
 
-    @include mq($until: mobile-l){
+    @include mq($until: mobile-l) {
       @include until-mobile-l;
     }
 
-    @include mq($from: mobile-l){
+    @include mq($from: mobile-l) {
       @include from-mobile-l;
     }
   }
 
-  &[data-engrid-layout="centerleft1col"]{
+  &[data-engrid-layout="centerleft1col"] {
     @media screen and (max-width: $centerleft1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1789,7 +1797,7 @@
     }
   }
 
-  &[data-engrid-layout="centercenter1col"]{
+  &[data-engrid-layout="centercenter1col"] {
     @media screen and (max-width: $centercenter1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1797,7 +1805,7 @@
     }
   }
 
-  &[data-engrid-layout="centerright1col"]{
+  &[data-engrid-layout="centerright1col"] {
     @media screen and (max-width: $centerright1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1805,7 +1813,7 @@
     }
   }
 
-  &[data-engrid-layout="leftleft1col"]{
+  &[data-engrid-layout="leftleft1col"] {
     @media screen and (max-width: $leftleft1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1813,7 +1821,7 @@
     }
   }
 
-  &[data-engrid-layout="rightright1col"]{
+  &[data-engrid-layout="rightright1col"] {
     @media screen and (max-width: $rightright1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1872,8 +1880,7 @@
     }
   }
 
-
-/*
+  /*
 * ##########################################################
 * # Survey
 * ##########################################################
@@ -1884,12 +1891,11 @@
   }
 
   .en__field--survey {
-
     /* Style survey question field labels like <h4> tags */
-    &.en__field > label{
-      font-size: calc(var(--h3_font-size)*var(--scale-down_20pct));
-      margin-top: calc(2rem*var(--scale-down_80pct));
-      margin-bottom: calc(1rem*var(--scale-down_80pct));
+    &.en__field > label {
+      font-size: calc(var(--h3_font-size) * var(--scale-down_20pct));
+      margin-top: calc(2rem * var(--scale-down_80pct));
+      margin-bottom: calc(1rem * var(--scale-down_80pct));
       font-family: var(--h3_font-family);
       color: var(--h3_color);
       font-weight: var(--h3_font-weight);
@@ -1935,7 +1941,7 @@
     }
     /* Style survey question options labels like <p> tags */
     .en__field__item > label,
-    .en__field__item > input.en__field__input--checkbox:checked+label{
+    .en__field__item > input.en__field__input--checkbox:checked + label {
       font-family: var(--p_font-family) !important;
       color: var(--p_color);
       font-size: var(--p_font-size);
@@ -1944,13 +1950,129 @@
     }
 
     /* Adjusts the relative position of the checkbox checkmark now that the label is differently sized */
-    .en__field__item > input.en__field__input--checkbox:checked+.en__field__label:after{
+    .en__field__item
+      > input.en__field__input--checkbox:checked
+      + .en__field__label:after {
       top: 0px !important;
     }
   }
-
-
-  
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]
+    + label {
+    position: relative;
+    .candle {
+      position: absolute;
+      right: 30px;
+      top: 100%;
+      transform: translateY(-30%);
+      opacity: 0;
+      z-index: 0;
+      transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+      .candle-flame {
+        animation: flicker 30ms ease-in infinite;
+        position: absolute;
+        top: -26px;
+        left: 4px;
+        width: 12px;
+        height: 24px;
+        svg {
+          width: 12px;
+          height: 24px;
+          path:first-child {
+            animation: firebig 5s ease-in infinite;
+          }
+          path:last-child {
+            animation: firesmall 2s ease-in infinite;
+          }
+        }
+      }
+      .candle-base {
+        .spark {
+          position: absolute;
+          bottom: 30px;
+          left: 15%;
+          width: 2px;
+          height: 2px;
+          border-radius: 50%;
+          background-color: fade-out(#ff4700, 0.5);
+          animation-name: burnout-up-1;
+          animation-duration: 6s;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite;
+          animation-delay: 0.4s;
+          &:nth-of-type(2n) {
+            width: 1px;
+            height: 1px;
+            animation-name: burnout-up-2;
+            animation-duration: 8.4s;
+            animation-delay: 1s;
+          }
+          &:nth-of-type(3n) {
+            width: 3px;
+            height: 3px;
+            animation-delay: 1.9s;
+            animation-duration: 8s;
+            left: 55%;
+          }
+          &:nth-of-type(4n) {
+            animation-delay: 2.6s;
+            animation-duration: 7s;
+            left: 88%;
+          }
+          &:nth-of-type(5n) {
+            animation-delay: 1.4s;
+            animation-duration: 7s;
+            left: 22%;
+          }
+          &:nth-of-type(6n) {
+            animation-delay: 3.2s;
+            left: 61%;
+          }
+          &:nth-of-type(7n) {
+            animation-delay: 0.8s;
+            animation-duration: 5s;
+            left: 64%;
+          }
+          &:nth-of-type(8n) {
+            animation-delay: 5s;
+            left: 19%;
+          }
+          &:nth-of-type(9n) {
+            animation-delay: 4s;
+            animation-duration: 6.8s;
+            left: 22%;
+          }
+          &:nth-of-type(10n) {
+            animation-delay: 5.2s;
+            left: 61%;
+          }
+          &:nth-of-type(11n) {
+            animation-delay: 3.5s;
+            animation-duration: 8s;
+            left: 81%;
+          }
+          &:nth-of-type(12n) {
+            animation-delay: 2s;
+            left: 85%;
+          }
+        }
+        img {
+          width: 20px;
+          height: auto;
+        }
+      }
+    }
+  }
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]:checked
+    + label {
+    .candle {
+      opacity: 1;
+      top: 50%;
+    }
+  }
 } // END AIUSA ENGRID CUSTOM THEME
 
 /*
@@ -1973,11 +2095,11 @@
       grid-column: pc;
     }
 
-    .content-header{
+    .content-header {
       margin-bottom: 1rem;
     }
 
-    .content-footer{
+    .content-footer {
       margin-top: 1rem;
     }
 
@@ -1995,11 +2117,11 @@
       grid-column: pc;
     }
 
-    .content-header{
+    .content-header {
       margin-bottom: 1rem;
     }
 
-    .content-footer{
+    .content-footer {
       margin-top: 1rem;
     }
 
@@ -2012,12 +2134,10 @@
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   @media screen and (min-width: $centercenter2col_content-column_min-width) {
-    form > .en__component--advrow{
-
+    form > .en__component--advrow {
       .body-top {
         grid-row: body-banner-end / body-bottom-end;
       }
-
     }
   }
 
