@@ -14,11 +14,10 @@ const options: Options = {
   SrcDefer: true,
   ProgressBar: true,
   RememberMe: {
-    //remoteUrl: 'https://apps.4sitestudios.com/michaelw/engrid-aiusa-rememberme/iframe.html',
     //remoteUrl: 'https://donate.amnestyusa.org/page/90391/action/1?mode=DEMO',
     fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81',
     fieldOptInSelectorTargetLocation: 'after',
-    fieldClearSelectorTarget: '.body-main > .en__component--copyblock .section-header',
+    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"]',
     fieldClearSelectorTargetLocation: 'after',
     fieldNames: [
       'supporter.firstName',
