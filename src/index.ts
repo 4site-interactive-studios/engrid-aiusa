@@ -14,7 +14,7 @@ const options: Options = {
   SrcDefer: true,
   ProgressBar: true,
   RememberMe: {
-    //remoteUrl: 'https://donate.amnestyusa.org/page/90391/action/1?mode=DEMO',
+    remoteUrl: 'https://amnestyusa.org/en_cookies_4676876234786091256.html',
     fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81',
     fieldOptInSelectorTargetLocation: 'after',
     fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"]',
