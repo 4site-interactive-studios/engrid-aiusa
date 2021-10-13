@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Sunday, October 10, 2021 @ 14:42:30 ET
+ *  Date: Tuesday, October 12, 2021 @ 22:05:43 ET
  *  By: fe
- *  ENGrid styles: v0.4.0
- *  ENGrid scripts: v0.4.1
+ *  ENGrid styles: v0.4.4
+ *  ENGrid scripts: v0.4.4
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -1022,12 +1022,17 @@ document.onreadystatechange = () => {
       menubar.init();
     }
 
-    var monthlyLabel = document.querySelector(".en__field__input[value='MONTHLY']+label");
+    var candleContainer = document.querySelector(".has-candle");
 
-    if (monthlyLabel) {
-      var candleNode = document.createElement("div");
-      candleNode.className = "candle";
-      candleNode.innerHTML = `
+    if (candleContainer) {
+      var monthlyLabel = candleContainer.querySelector(".en__field__input[value='MONTHLY']+label");
+      var candlePosition = candleContainer.classList.contains("left") ? "left" : "right";
+
+      if (monthlyLabel) {
+        var candleNode = document.createElement("div");
+        candleNode.classList.add("candle");
+        candleNode.classList.add(candlePosition);
+        candleNode.innerHTML = `
       <div class="candle-flame">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.5 24.978"><g data-name="Layer 2"><g data-name="flame b"><path d="M0 15.157c0 6.897 6.25 9.821 6.25 9.821s6.25-2.924 6.25-9.821S6.25 0 6.25 0 0 8.26 0 15.157z" style="fill:#ff4700"/><path d="M3.375 18.383a6.768 6.768 0 0 0 2.875 5.763 6.768 6.768 0 0 0 2.875-5.763c0-4.047-2.875-8.893-2.875-8.893s-2.875 4.846-2.875 8.893z" style="fill:#ffbf00"/></g></g></svg>
       </div>
@@ -1047,10 +1052,10 @@ document.onreadystatechange = () => {
         <span class="spark"></span>
         <span class="spark"></span>
         <span class="spark"></span>
-        <img src="https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/aiusa-candle.svg" alt="Candle">
       </div>
       `;
-      monthlyLabel.appendChild(candleNode);
+        monthlyLabel.appendChild(candleNode);
+      }
     }
   }
 };
@@ -8671,6 +8676,8 @@ class ApplePay {
       const pageform = document.querySelector("form.en__component--page");
 
       if (!this.applePay || !window.hasOwnProperty("ApplePaySession")) {
+        const applePayContainer = document.querySelector(".en__field__item.applepay");
+        if (applePayContainer) applePayContainer.remove();
         if (engrid_ENGrid.debug) console.log("Apple Pay DISABLED");
         return false;
       }
