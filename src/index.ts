@@ -14,10 +14,11 @@ const options: Options = {
   SrcDefer: true,
   ProgressBar: true,
   RememberMe: {
+    checked: true,
     remoteUrl: 'https://amnestyusa.org/en_cookies_4676876234786091256.html',
-    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81',
+    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
     fieldOptInSelectorTargetLocation: 'after',
-    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"]',
+    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
     fieldClearSelectorTargetLocation: 'after',
     fieldNames: [
       'supporter.firstName',
