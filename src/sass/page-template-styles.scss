@@ -1,123 +1,6 @@
 /* All CSS Custom Properties should be scoped to the theme using CSS Data Attributes. */
-@keyframes firebig {
-  0% {
-    transform: rotate(-2deg);
-    transform-origin: bottom center;
-  }
-  20% {
-    transform: rotate(2deg);
-    transform-origin: bottom center;
-  }
-  40% {
-    transform: rotate(-2deg);
-    transform-origin: bottom center;
-  }
-  60% {
-    transform: rotate(2deg) scale(0.8);
-    transform-origin: bottom center;
-  }
-  80% {
-    transform: rotate(-2deg);
-    transform-origin: bottom center;
-  }
-  to {
-    transform: rotate(2deg);
-    transform-origin: bottom center;
-  }
-}
-@keyframes flicker {
-  0% {
-    transform: rotate(3deg);
-    transform-origin: bottom center;
-  }
-  20% {
-    transform: rotate(-3deg);
-    transform-origin: bottom center;
-  }
-  40% {
-    transform: rotate(3deg);
-    transform-origin: bottom center;
-  }
-  60% {
-    transform: rotate(-3deg);
-    transform-origin: bottom center;
-  }
-  80% {
-    transform: rotate(3deg);
-    transform-origin: bottom center;
-  }
-  to {
-    transform: rotate(-3deg);
-  }
-}
-@keyframes firesmall {
-  0% {
-    transform: rotate(1deg);
-    transform-origin: bottom center;
-  }
-  20% {
-    transform: rotate(-2deg) scale(0.9);
-    transform-origin: bottom center;
-  }
-  40% {
-    transform: rotate(1deg);
-    transform-origin: bottom center;
-  }
-  60% {
-    transform: rotate(-1deg);
-    transform-origin: bottom center;
-  }
-  80% {
-    transform: rotate(1deg) scaleY(0.75);
-    transform-origin: bottom center;
-  }
-  100% {
-    transform: rotate(-1deg);
-    transform-origin: bottom center;
-  }
-}
-@keyframes burnout-up-1 {
-  0% {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-
-  33% {
-    transform: translate(12px, -70px);
-  }
-
-  66% {
-    transform: translate(0, -140px);
-    opacity: 0.6;
-  }
-
-  100% {
-    transform: translate(6px, -200px);
-    opacity: 0;
-  }
-}
-
-@keyframes burnout-up-2 {
-  0% {
-    transform: translate(0, 0);
-    opacity: 1;
-  }
-
-  50% {
-    transform: translate(-10px, -80px);
-  }
-
-  80% {
-    transform: translate(-4px, -140px);
-    opacity: 0.6;
-  }
-
-  100% {
-    transform: translate(-6px, -160px);
-    opacity: 0;
-  }
-}
 [data-engrid-theme="aiusa"] {
+
   // FIXED COLOR PALETTE
   --color_transparent: transparent;
   --color_white: rgba(255, 255, 255, 1);
@@ -150,8 +33,9 @@
   --scale-down_80pct: 0.2;
 
   // FONT STACKS
-  --native-fonts__sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --native-fonts__sans-serif: -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
 
   // TYPOGRAPHY DEFAULT
   --default_font-family: var(--font-stack-aiusa);
@@ -161,23 +45,33 @@
   --default_line-height: initial;
 
   // TYPOGRAPHY H1
-  --h1_font-family: var(--font-stack-aiusa-bold-condensed);
+  --h1_font-family: var(
+    --font-stack-aiusa-bold-condensed
+  );
   --h1_color: initial;
-  --h1_font-size: calc(var(--root_font-size) * var(--scale-up_160pct));
-  --h1_font-weight: var(--headline-font-weight);
+  --h1_font-size: calc(
+    var(--root_font-size) * var(--scale-up_160pct)
+  );
+  --h1_font-weight: var(
+    --headline-font-weight
+  );
   --h1_line-height: var(--h1_font-size);
 
   // TYPOGRAPHY H2
   --h2_font-family: var(--h1_font-family);
   --h2_color: initial;
-  --h2_font-size: calc(var(--root_font-size) * var(--scale-up_80pct));
+  --h2_font-size: calc(
+    var(--root_font-size) * var(--scale-up_80pct)
+  );
   --h2_font-weight: initial;
   --h2_line-height: var(--h2_font-size);
 
   // TYPOGRAPHY H3
   --h3_font-family: var(--h1_font-family);
   --h3_color: initial;
-  --h3_font-size: calc(var(--root_font-size) * var(--scale-up_40pct));
+  --h3_font-size: calc(
+    var(--root_font-size) * var(--scale-up_40pct)
+  );
   --h3_font-weight: initial;
   --h3_line-height: var(--h3_font-size);
 
@@ -189,21 +83,27 @@
   --p_line-height: initial;
 
   // TYPOGRAPHY LABEL
-  --label_font-family: var(--font-stack-aiusa-bold-condensed);
+  --label_font-family: var(
+    --font-stack-aiusa-bold-condensed
+  );
   --label_color: #525252;
   --label_font-size: 12px;
   --label_font-weight: initial;
   --label_line-height: initial;
 
   // TYPOGRAPHY INPUT
-  --input_font-family: var(--default_font-family);
+  --input_font-family: var(
+    --default_font-family
+  );
   --input_color: initial;
   --input_font-size: var(--root_font-size);
   --input_font-weight: initial;
   --input_line-height: initial;
   --input_background-color: #f5f5f5;
   --input_border-width: 2px;
-  --input_border-color: var(--input_background-color);
+  --input_border-color: var(
+    --input_background-color
+  );
   --input_border-radius: initial;
   --input_placeholder-color: #767676;
   --input_box-shadow: none;
@@ -211,7 +111,9 @@
   // TYPOGRAPHY INPUT:FOCUS
   // TYPOGRAPHY INPUT:HOVER
   --input_color_hover: var(--input_color);
-  --input_background-color_hover: var(--input_background-color);
+  --input_background-color_hover: var(
+    --input_background-color
+  );
   --input_border-color_hover: var(--input_background-color);
   --input_border-bottom-color_hover: #525252;
   --input_box-shadow_hover: none;
@@ -230,14 +132,22 @@
   // TYPOGRAPHY RADIO INPUT:FOCUS
   // TYPOGRAPHY RADIO INPUT:HOVER
   --radio_color_hover: var(--radio_color);
-  --radio_background-color_hover: var(--radio_background-color);
-  --radio_border-color_hover: var(--radio_border-color);
+  --radio_background-color_hover: var(
+    --radio_background-color
+  );
+  --radio_border-color_hover: var(
+    --radio_border-color
+  );
   --radio_box-shadow_hover: none;
 
   // TYPOGRAPHY RADIO INPUT:CHECKED
-  --radio_color_selected_selected: var(--radio_background-color);
+  --radio_color_selected_selected: var(
+    --radio_background-color
+  );
   --radio_background-color_selected: var(--color_white);
-  --radio_border-color_selected: var(--radio_border-color);
+  --radio_border-color_selected: var(
+    --radio_border-color
+  );
   --radio_box-shadow_selected: inset 0 0 0 6px var(--color_black);
 
   // TYPOGRAPHY CHECKBOX
@@ -251,18 +161,30 @@
 
   // TYPOGRAPHY CHECKBOX INPUT:FOCUS
   // TYPOGRAPHY CHECKBOX INPUT:HOVER
-  --checkbox_color_hover: var(--checkbox_color);
-  --checkbox_background-color_hover: var(--checkbox_background-color);
-  --checkbox_border-color_hover: var(--checkbox_border-color);
+  --checkbox_color_hover: var(
+    --checkbox_color
+  );
+  --checkbox_background-color_hover: var(
+    --checkbox_background-color
+  );
+  --checkbox_border-color_hover: var(
+    --checkbox_border-color
+  );
 
   // TYPOGRAPHY CHECKBOX INPUT:CHECKED
   --checkbox_content_checked: "✓";
-  --checkbox_color_checked: var(--checkbox_background-color);
+  --checkbox_color_checked: var(
+    --checkbox_background-color
+  );
   --checkbox_background-color_checked: var(--color_black);
-  --checkbox_border-color_checked: var(--checkbox_border-color);
+  --checkbox_border-color_checked: var(
+    --checkbox_border-color
+  );
 
   // TYPOGRAPHY SELECT
-  --select_font-family: var(--default_font-family);
+  --select_font-family: var(
+    --default_font-family
+  );
   --select_color: var(--color_black);
   --select_font-size: var(--root_font-size);
   --select_font-weight: initial;
@@ -271,18 +193,28 @@
   --select_border-width: 2px;
   --select_border-color: #f5f5f5;
   --select_border-radius: initial;
-  --select_box-shadow: var(--input_box-shadow);
+  --select_box-shadow: var(
+    --input_box-shadow
+  );
 
   // TYPOGRAPHY SELECT:FOCUS
   // TYPOGRAPHY SELECT:HOVER
   --select_color_hover: var(--select_color);
-  --select_background-color_hover: var(--select_background-color);
-  --select_border-color_hover: var(--select_border-color);
+  --select_background-color_hover: var(
+    --select_background-color
+  );
+  --select_border-color_hover: var(
+    --select_border-color
+  );
   --select_border-bottom-color_hover: var(--color_black);
-  --select_box-shadow_hover: var(--input_box-shadow_hover);
+  --select_box-shadow_hover: var(
+    --input_box-shadow_hover
+  );
 
   // TYPOGRAPHY TEXTAREA
-  --textarea_font-family: var(--default_font-family);
+  --textarea_font-family: var(
+    --default_font-family
+  );
   --textarea_color: initial;
   --textarea_font-size: var(--root_font-size);
   --textarea_font-weight: initial;
@@ -292,7 +224,9 @@
   --textarea_border-color: var(--textarea_background-color);
   --textarea_border-radius: initial;
   --textarea_placeholder-color: var(--color_light-gray);
-  --textarea_box-shadow: var(--input_box-shadow);
+  --textarea_box-shadow: var(
+    --input_box-shadow
+  );
 
   // TYPOGRAPHY TEXTAREA:FOCUS
   // TYPOGRAPHY TEXTAREA:HOVER
@@ -339,24 +273,40 @@
   --submit__button_color_hover: #252525;
   --submit__button_background-color_hover: var(--color_primary);
   --submit__button_border-color_hover: var(--color_primary);
-
+  
   // TYPOGRAPHY BUTTON:SELECTED
   --submit__button_color_checked: #252525;
   --submit__button_background-color_checked: var(--color_primary);
   --submit__button_border-color_checked: var(--color_primary);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON
-  --recurring-frequency__button_font-family: var(--button_font-family);
-  --recurring-frequency__button_color: var(--button_color);
-  --recurring-frequency__button_font-size: var(--button_font-size);
-  --recurring-frequency__button_font-weight: var(--button_font-weight);
-  --recurring-frequency__button_line-height: var(--button_line-height);
+  --recurring-frequency__button_font-family: var(
+    --button_font-family
+  );
+  --recurring-frequency__button_color: var(
+    --button_color
+  );
+  --recurring-frequency__button_font-size: var(
+    --button_font-size
+  );
+  --recurring-frequency__button_font-weight: var(
+    --button_font-weight
+  );
+  --recurring-frequency__button_line-height: var(
+    --button_line-height
+  );
   --recurring-frequency__button_background-color: var(
     --button_background-color
   );
-  --recurring-frequency__button_border-width: var(--button_border-width);
-  --recurring-frequency__button_border-color: var(--button_border-color);
-  --recurring-frequency__button_border-radius: var(--button_border-radius);
+  --recurring-frequency__button_border-width: var(
+    --button_border-width
+  );
+  --recurring-frequency__button_border-color: var(
+    --button_border-color
+  );
+  --recurring-frequency__button_border-radius: var(
+    --button_border-radius
+  );
   --recurring-frequency__button_padding: 1.5ch 1.75ch;
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:HOVER
@@ -365,23 +315,49 @@
   --recurring-frequency__button_background-color_hover: var(--color_white);
 
   // TYPOGRAPHY GIVING FREQUENCY BUTTON:CHECKED
-  --recurring-frequency__button_color_checked: var(--button_color_hover);
-  --recurring-frequency__button_background-color_checked: var(--color_cta);
-  --recurring-frequency__button_border-color_checked: var(--color_cta);
+  --recurring-frequency__button_color_checked: var(
+    --button_color_hover
+  );
+  --recurring-frequency__button_background-color_checked: var(
+    --color_cta
+  );
+  --recurring-frequency__button_border-color_checked: var(
+    --color_cta
+  );
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON
-  --donation-amount__button_font-family: var(--button_font-family);
-  --donation-amount__button_color: var(--button_color);
-  --donation-amount__button_font-size: var(--button_font-size);
-  --donation-amount__button_font-weight: var(--button_font-weight);
-  --donation-amount__button_line-height: var(--button_line-height);
-  --donation-amount__button_background-color: var(--button_background-color);
-  --donation-amount__button_border-width: var(--button_border-width);
-  --donation-amount__button_border-color: var(--button_border-color);
-  --donation-amount__button_border-radius: var(--button_border-radius);
+  --donation-amount__button_font-family: var(
+    --button_font-family
+  );
+  --donation-amount__button_color: var(
+    --button_color
+  );
+  --donation-amount__button_font-size: var(
+    --button_font-size
+  );
+  --donation-amount__button_font-weight: var(
+    --button_font-weight
+  );
+  --donation-amount__button_line-height: var(
+    --button_line-height
+  );
+  --donation-amount__button_background-color: var(
+    --button_background-color
+  );
+  --donation-amount__button_border-width: var(
+    --button_border-width
+  );
+  --donation-amount__button_border-color: var(
+    --button_border-color
+  );
+  --donation-amount__button_border-radius: var(
+    --button_border-radius
+  );
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:HOVER
-  --donation-amount__button_color_hover: var(--button_color_hover);
+  --donation-amount__button_color_hover: var(
+    --button_color_hover
+  );
   --donation-amount__button_background-color_hover: var(
     --button_background-color_hover
   );
@@ -391,34 +367,66 @@
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:CHECKED
   --donation-amount__button_color_checked: var(--color_white);
-  --donation-amount__button_background-color_checked: var(--button_color);
-  --donation-amount__button_border-color_checked: var(--button_color);
+  --donation-amount__button_background-color_checked: var(
+    --button_color
+  );
+  --donation-amount__button_border-color_checked: var(
+    --button_color
+  );
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON
-  --give-by-select__button_font-family: var(--button_font-family);
-  --give-by-select__button_color: var(--button_color);
-  --give-by-select__button_font-size: var(--button_font-size);
-  --give-by-select__button_font-weight: var(--button_font-weight);
-  --give-by-select__button_line-height: var(--button_line-height);
-  --give-by-select__button_background-color: var(--button_background-color);
-  --give-by-select__button_border-width: var(--button_border-width);
-  --give-by-select__button_border-color: var(--button_border-color);
-  --give-by-select__button_border-radius: var(--button_border-radius);
+  --give-by-select__button_font-family: var(
+    --button_font-family
+  );
+  --give-by-select__button_color: var(
+    --button_color
+  );
+  --give-by-select__button_font-size: var(
+    --button_font-size
+  );
+  --give-by-select__button_font-weight: var(
+    --button_font-weight
+  );
+  --give-by-select__button_line-height: var(
+    --button_line-height
+  );
+  --give-by-select__button_background-color: var(
+    --button_background-color
+  );
+  --give-by-select__button_border-width: var(
+    --button_border-width
+  );
+  --give-by-select__button_border-color: var(
+    --button_border-color
+  );
+  --give-by-select__button_border-radius: var(
+    --button_border-radius
+  );
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:HOVER
-  --give-by-select__button_color_hover: var(--button_color_hover);
+  --give-by-select__button_color_hover: var(
+    --button_color_hover
+  );
   --give-by-select__button_background-color_hover: var(
     --button_background-color_hover
   );
-  --give-by-select__button_border-color_hover: var(--button_border-color_hover);
+  --give-by-select__button_border-color_hover: var(
+    --button_border-color_hover
+  );
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:CHECKED
   --give-by-select__button_color_checked: var(--color_white);
-  --give-by-select__button_background-color_checked: var(--button_color);
-  --give-by-select__button_border-color_checked: var(--button_color);
+  --give-by-select__button_background-color_checked: var(
+    --button_color
+  );
+  --give-by-select__button_border-color_checked: var(
+    --button_color
+  );
 
   // TYPOGRAPHY A
-  --a_font-family: var(--headline-font-family);
+  --a_font-family: var(
+    --headline-font-family
+  );
   --a_color: initial;
   --a_text-decoration: initial;
 
@@ -461,9 +469,7 @@
   --engrid__page-backgroundImageOverlay_background-color: var(
     --color_transparent
   );
-  --engrid__page-customCode_background-color: var(
-    --engrid__page_background-color
-  );
+  --engrid__page-customCode_background-color: var(--engrid__page_background-color);
 
   // ENGRID SECTIONS PADDING
   // QUICK SETTINGS
@@ -564,7 +570,9 @@
   --give-annual-donation-amount-appended-label: " Annually";
 
   // IMAGE ATTRIBUTION OVERLAY
-  --media-attribution__font-family: var(--default_font-family);
+  --media-attribution__font-family: var(
+    --default_font-family
+  );
   --media-attribution__color: #ffffff;
   --media-attribution__text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.15);
   --media-attribution__font-size: 12px;
@@ -577,14 +585,15 @@
 
   // ADD THEME CUSTOM CSS PROPERTIES HERE
   // TYPOGRAPHY HEADLINE
-  --font-stack-aiusa: "AmnestyTradeGothic", var(--native-fonts__sans-serif);
+  --font-stack-aiusa: "AmnestyTradeGothic",
+    var(--native-fonts__sans-serif);
   --font-stack-aiusa-bold-condensed: "AmnestyTradeGothicBdCn",
     var(--native-fonts__sans-serif);
   --headline-font-family: var(--font-stack-aiusa);
   --headline-font-weight: 700;
-
-  --recurring-frequency__flex-grow: 1;
 }
+
+
 
 /* Add your custom theme styles here */
 
@@ -656,9 +665,10 @@
   // .en__contactDetails__rows {
   //   margin-left: calc(var(--checkbox_width) + 0.5rem);
   // }
+  
 
   .en__field__input--checkbox + .en__field__label:before {
-    font-size: 0.99936rem;
+    font-size: .99936rem;
   }
 
   .en__component--contactblock
@@ -680,9 +690,7 @@
     font-weight: 700;
   }
 
-  .en__contacts:not(.en__contacts--hideCheck)
-    .en__contactDetails__select:checked
-    + .en__contactDetails__rows:after {
+  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after {
     left: 7px;
     top: 7px;
   }
@@ -731,7 +739,7 @@
   //   width: 50px;
   // }
 
-  .en__contacts--singleTweetMode .en__twitterTarget__select {
+  .en__contacts--singleTweetMode .en__twitterTarget__select{
     flex-basis: 2rem;
   }
 
@@ -840,52 +848,32 @@
     padding: 1ch;
     box-shadow: var(--input_box-shadow);
     transition: box-shadow 0.25s, border-color 0.25s ease-in-out;
-    border: var(--input_border-width) solid var(--input_border-color);
+    border: var(--input_border-width) solid
+      var(--input_border-color);
   }
 
   figure.media-with-attribution figattribution a {
     font-family: var(--font-stack-aiusa-bold-condensed);
   }
-
-  &[data-engrid-transaction-recurring-frequency="annual"]
-    .radio-to-buttons_donationAmt
-    .en__field--donationAmt
-    > .en__field__element
-    > .en__field__item:not(.en__field__item--other)
-    label {
-    flex-direction: column;
+  
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) label{
+      flex-direction: column;
   }
 
-  &[data-engrid-transaction-recurring-frequency="annual"]
-    .radio-to-buttons_donationAmt
-    .en__field--donationAmt
-    > .en__field__element
-    > .en__field__item:not(.en__field__item--other)
-    .en__field__label--item:after {
+  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt > .en__field__element > .en__field__item:not(.en__field__item--other) .en__field__label--item:after{
     margin-left: 0;
   }
 
-  &[data-engrid-transaction-recurring-frequency]
-    .radio-to-buttons_donationAmt
-    .en__field--donationAmt
-    div:not(.en__field__item--other)
-    .en__field__label--item:after {
+  &[data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after{
     font-size: 100%;
     opacity: 1;
     margin-left: 0.5ch;
   }
 
-  .radio-to-buttons_donationAmt
-    .en__field--donationAmt.en__field--radio
-    > .en__field__element
-    .en__field__item.en__field__item--other {
+  .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
     --donation-amount__flex-grow: 1;
-    --donation-amount__button_background-color_checked: var(
-      --input_background-color
-    );
-    --donation-amount__button_border-color_checked: var(
-      --input_background-color_hover
-    );
+    --donation-amount__button_background-color_checked: var(--input_background-color);
+    --donation-amount__button_border-color_checked: var(--input_background-color_hover);
     --donation-amount__button_color_checked: var(--input_color);
   }
 
@@ -1058,13 +1046,14 @@
     // }
   }
 
-  /*
+/*
 * ##########################################################
 * # CONTENT HEADER
 * ##########################################################
 */
 
   .content-header {
+
     // &.pseudo-subgrid > div{
     //   grid-column: pc;
     // }
@@ -1097,53 +1086,55 @@
     }
   }
 
-  /*
+/*
 * ##########################################################
 * # CONTENT FOOTER
 * ##########################################################
 */
 
-  .content-footer {
-    // &.pseudo-subgrid > div{
-    //   grid-column: pc;
-    // }
-  }
+.content-footer {
 
-  /*
+  // &.pseudo-subgrid > div{
+  //   grid-column: pc;
+  // }
+
+}
+
+/*
 * ##########################################################
 * # MIXING: MOBILE SMALL
 * ##########################################################
 */
 
-  // On small screens we need to stack the header and menu
-  @mixin until-mobile {
-    .content-header {
-      header {
-        flex-direction: column;
-      }
+// On small screens we need to stack the header and menu
+@mixin until-mobile {
+  .content-header {
+    header {
+      flex-direction: column;
+    }
 
-      #header-logo {
-        width: 100vw;
-        display: block;
-        background: #ffff00;
-      }
+    #header-logo {
+      width: 100vw;
+      display: block;
+      background: #ffff00;
+    }
 
-      #main-menu {
-        padding-right: 0;
-      }
+    #main-menu {
+      padding-right: 0;
+    }
 
-      #menu-wrapper ul[role="menubar"] ul[role="menu"] {
-        padding: 10px 33px 35px 35px;
-        top: 40px !important;
-        right: -40vw !important;
-        left: -35vw !important;
+    #menu-wrapper ul[role="menubar"] ul[role="menu"] {
+      padding: 10px 33px 35px 35px;
+      top: 40px !important;
+      right: -40vw !important;
+      left: -35vw !important;
 
-        li {
-          text-align: center;
-        }
+      li {
+        text-align: center;
       }
     }
   }
+}
 
   /*
 * ##########################################################
@@ -1314,32 +1305,32 @@
     outline-color: black;
   }
 
-  /*
+/*
 * ##########################################################
 * # DONATION UPSELL LIGHTBOX
 * ##########################################################
 */
 
-  #goMonthly {
-    #upsellYesButton {
-      margin-bottom: var(--fields_spacing-block);
+#goMonthly{
+  #upsellYesButton{
+    margin-bottom: var(--fields_spacing-block);
 
-      .pseduo__en__submit_button {
-        --submit__button_padding-top: 1.5rem;
-        --submit__button_padding-bottom: 1.5rem;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        --submit__button_font-size: calc(var(--button_font-size) * 1.1);
-      }
-    }
-
-    #upsellNoButton button {
-      --button_border-color: transparent;
-      --button_border-color_hover: transparent;
-      --button_border-color_checked: transparent;
-      --button_text-transform: initial;
-    }
+    .pseduo__en__submit_button{
+      --submit__button_padding-top: 1.5rem;
+      --submit__button_padding-bottom: 1.5rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+      --submit__button_font-size: calc(var(--button_font-size) * 1.1);
+    } 
   }
+
+  #upsellNoButton button{
+    --button_border-color: transparent;
+    --button_border-color_hover: transparent;
+    --button_border-color_checked: transparent;
+    --button_text-transform: initial;
+  }
+}
 
   /*
 * ##########################################################
@@ -1362,9 +1353,7 @@
       overflow: inherit;
 
       .enWidget__fill {
-        background-color: var(
-          --color_primary
-        ) !important; // !important required
+        background-color: var(--color_primary) !important; // !important required
         box-shadow: inset -13px 0px 0px 0px rgba(255, 255, 255, 1);
         &::before {
           content: " ";
@@ -1415,7 +1404,8 @@
 */
 
   .en__field--recurrfreq {
-    .en__field__item {
+
+    .en__field__item{
       flex-grow: 1;
     }
 
@@ -1429,7 +1419,7 @@
     }
   }
 
-  .en__field--donationAmt .en__field__item--other {
+  .en__field--donationAmt .en__field__item--other{
     flex-grow: 1;
   }
 
@@ -1500,11 +1490,12 @@
   //   }
   // }
 
-  .en__field--donationAmt .en__field__item--other {
+  .en__field--donationAmt .en__field__item--other{
     position: relative;
+
   }
 
-  .en__field--donationAmt .en__field__item--other input {
+  .en__field--donationAmt .en__field__item--other input{
     padding-left: 2.5ch;
   }
 
@@ -1616,12 +1607,12 @@
       display: none;
     }
 
-    .en__pg {
+    .en__pg{
       border: none;
     }
   }
 
-  /*
+/*
 * ##########################################################
 * # E-Card
 * ##########################################################
@@ -1676,22 +1667,21 @@
     .en__field,
     .en__submit {
       flex-basis: 100%;
-      padding-left: 0px;
-      padding-right: 0px;
     }
-
+    
     textarea.en__field {
       padding-left: 1ch;
       padding-right: 1ch;
     }
 
-    .en__field--ccexpire {
+    .en__field--ccexpire{
       // left: -0.5rem;
       // right: -0.5rem;
       // min-width: calc(100% + 1rem);
       left: 0;
       right: 0;
     }
+
 
     #menu-wrapper ul[role="menubar"] ul[role="menu"] {
       padding-right: 28px;
@@ -1776,20 +1766,20 @@
 
   // Universal stylings
   &[data-engrid-layout] {
-    @include mq($until: mobile) {
+    @include mq($until: mobile){
       @include until-mobile;
     }
 
-    @include mq($until: mobile-l) {
+    @include mq($until: mobile-l){
       @include until-mobile-l;
     }
 
-    @include mq($from: mobile-l) {
+    @include mq($from: mobile-l){
       @include from-mobile-l;
     }
   }
 
-  &[data-engrid-layout="centerleft1col"] {
+  &[data-engrid-layout="centerleft1col"]{
     @media screen and (max-width: $centerleft1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1797,7 +1787,7 @@
     }
   }
 
-  &[data-engrid-layout="centercenter1col"] {
+  &[data-engrid-layout="centercenter1col"]{
     @media screen and (max-width: $centercenter1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1805,7 +1795,7 @@
     }
   }
 
-  &[data-engrid-layout="centerright1col"] {
+  &[data-engrid-layout="centerright1col"]{
     @media screen and (max-width: $centerright1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1813,7 +1803,7 @@
     }
   }
 
-  &[data-engrid-layout="leftleft1col"] {
+  &[data-engrid-layout="leftleft1col"]{
     @media screen and (max-width: $leftleft1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1821,7 +1811,7 @@
     }
   }
 
-  &[data-engrid-layout="rightright1col"] {
+  &[data-engrid-layout="rightright1col"]{
     @media screen and (max-width: $rightright1col_content-column_min-width) {
       @include simplified-content-header;
       @include simplified-content-footer;
@@ -1880,7 +1870,8 @@
     }
   }
 
-  /*
+
+/*
 * ##########################################################
 * # Survey
 * ##########################################################
@@ -1891,11 +1882,12 @@
   }
 
   .en__field--survey {
+
     /* Style survey question field labels like <h4> tags */
-    &.en__field > label {
-      font-size: calc(var(--h3_font-size) * var(--scale-down_20pct));
-      margin-top: calc(2rem * var(--scale-down_80pct));
-      margin-bottom: calc(1rem * var(--scale-down_80pct));
+    &.en__field > label{
+      font-size: calc(var(--h3_font-size)*var(--scale-down_20pct));
+      margin-top: calc(2rem*var(--scale-down_80pct));
+      margin-bottom: calc(1rem*var(--scale-down_80pct));
       font-family: var(--h3_font-family);
       color: var(--h3_color);
       font-weight: var(--h3_font-weight);
@@ -1941,7 +1933,7 @@
     }
     /* Style survey question options labels like <p> tags */
     .en__field__item > label,
-    .en__field__item > input.en__field__input--checkbox:checked + label {
+    .en__field__item > input.en__field__input--checkbox:checked+label{
       font-family: var(--p_font-family) !important;
       color: var(--p_color);
       font-size: var(--p_font-size);
@@ -1950,149 +1942,13 @@
     }
 
     /* Adjusts the relative position of the checkbox checkmark now that the label is differently sized */
-    .en__field__item
-      > input.en__field__input--checkbox:checked
-      + .en__field__label:after {
+    .en__field__item > input.en__field__input--checkbox:checked+.en__field__label:after{
       top: 0px !important;
     }
   }
-  .radio-to-buttons_recurrfreq
-    .en__field--recurrfreq.en__field--radio
-    input[type="radio"]
-    + label {
-    position: relative;
-    .candle {
-      position: absolute;
-      &.right {
-        right: 30px;
-      }
-      &.left {
-        left: 30px;
-      }
-      opacity: 1;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 0;
-      transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
-      .candle-flame {
-        animation: flicker 1s ease-in infinite alternate;
-        position: absolute;
-        bottom: 18px;
-        left: 2px;
-        width: 12px;
-        height: 26px;
-        max-height: 0;
-        overflow: hidden;
-        transition: 0.3s max-height ease-in-out;
-        svg {
-          width: 12px;
-          height: 24px;
-          path:first-child {
-            animation: firebig 4s ease-in infinite alternate-reverse;
-          }
-          path:last-child {
-            animation: firesmall 2s ease-in infinite;
-          }
-        }
-      }
-      .candle-base {
-        width: 20px;
-        height: 27px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="none"><path xmlns="http://www.w3.org/2000/svg" transform="translate(-18,-12)" d="M38.843 35.815c-.202-.085-.224-.702-.336-.702-.171 0-.258.561-.588.644-.33.082-.845-.365-.99-.254-.145.11.318.913-.44.913-.226 0-.342-.257-.342-.454v-6.137c.123.012.245.037.364.074.225.059.45.17.45.481 0 .165-.06.503.055.562.114.058.2-.059.253-.087 1.038-.756 1.292.59 1.517.59.226 0 .17-.926.451-.926.225-.086 2.388.954 2.388 1.63 0 .14-.281.167-.306.31-.028.201.506.28.419.648-.03.225-.533.507-.402.644.13.136.819-.137.875-.137.139 0 .165.221.165.306 0 1.239-2.893 2.169-3.541 1.885l.008.01zm-7.713.97c-.169-.276-.084-.757-.251-.757-.085 0-.533.676-.789.676-.255 0-.672-.479-.84-.479-.114 0 .112.676-.114.954-.142.201-1.49.344-1.49.173v-9.561a.604.604 0 01.645-.618h5.03c.616 0 .872.201.872.843v8.58c0 .28-2.956.392-3.069.19l.006-.001zm3.075 12.119c0 .593-.201.73-.702.62l-5.37-1.07a.537.537 0 01-.48-.589V38.14c0-.254.872-.282 1.007-.17.253.226.169 1.041.336 1.041.227 0 .817-.986 1.07-.986.535 0 .897.31 1.006.254.109-.057.115-.507.254-.62.2-.135.786-.135 1.096-.169.507-.028 1.435-.113 1.435-.113.366 0 .338.258.338.791l.01 10.736zM28.412 20.68c0-3.881 5.736-6.102 6.129-8.07.422.402.479 1.04.479 1.61 0 2.36-4.105 6.323-4.105 9.193 0 .31.028.402.028.59 0 .279-.112.337-.167.337-.678 0-2.364-1.322-2.364-3.654v-.006zm-3.177 24.262c-.449 0-.73-.902-.843-.871-.113.03.03.758-.139.87-.169.113-3.12-1.237-3.346-1.458-.225-.221.085-.479 0-.676-.084-.197-.509-.115-.646-.201-.137-.087.137-.62-.028-.729-.165-.108-.45.507-.648.222a.964.964 0 01-.11-.56c0-1.716 1.824-2.414 3.064-2.839.503-.17.332.477.503.505.17.028.225-.308.45-.308.172 0 .817.308.956.202.113-.083-.336-.505-.2-.674.134-.17 1.474-.387 1.462-.05v6.005c0 .63-.483.568-.483.568l.008-.006zM42.885 34.6c.31-.532.31-1.18.422-1.433.165-.28.785-.225.785-.422 0-.083-.448-.202-.62-.308-.334-.201-.22-1.208-.39-1.208-.255 0-.507.7-.763.403-.446-.564-2.303-1.632-3.146-1.942-.31-.113.225-1.04.086-1.127-.139-.086-.507.566-1.042.453-.42-.086-.225-.845-.45-.845-.114 0-.536 1.069-.846.984-.31-.085-.783-.201-.783-.201v-2.821c0-.477-.322-.847-.734-.845h-3.028c-.843 0-.787-.618-.787-.759 0-3.738 5.433-4.356 5.433-9.255 0-2.14-1.348-3.572-2.924-4.84-.086-.054 0 .313 0 .451 0 2.278-8.463 3.46-8.463 8.717 0 4.581 4.556 4.778 4.556 5.482 0 .14-.28.202-.308.202H26.39c-.366 0-.682.225-.678.839v2.817c-.34.112-.787-.403-1.006-.403-.113 0-.055.873-.254.986-.169.083-3.344 1.207-3.621 1.238-.445.082-.332-.705-.586-.705-.253 0-.227.787-.789.787-.338 0-.617-.31-.869-.31-.169 0 .362.648.362.843 0 .535-1.036.73-1.036 1.099 0 .201.98-.085 1.123-.085.505 0 .45.592.644.592.193 0 .338-.678.509-.789.334-.201.73.141.9.141.279 0-.226-.676.027-.789 0 0 3.42-1.458 3.654-1.348.201.115.171.45.403.564.231.112.563-.787.563-.228v6.89c-.402.25-1.24.402-1.69.402-.223 0-.113-.732-.254-.732-.225 0-.45.617-.786.617s-.759-.756-1.065-.756c-.201 0 .362.953.024 1.122-1.295.648-3.346 1.268-3.346 3.316 0 .425.228.934.14 1.069-.081.201-.53.591-.504.76.026.17.843.111 1.006.369.083.136.139.756.31.756.137 0 .503-.477.815-.31.982.592 2.696 1.236 3.487 1.662.201.113.08.73.201.787.227.113.676-.592 1.382-.201a.604.604 0 01.282.537v2.3c0 .42.201.531.423.587l8.382 1.668c.328.077.66.133.996.167.292.012.654 0 .634-.706v-5.231a.201.201 0 01.179-.181c.493 0 .245 1.408.356 1.408.223 0 .364-.956.648-.956.402 0 .65.367.805.282.154-.084-.08-.535-.08-.817 0-.251.727-.364 1.629-.702.787-.278 1.432-.59 1.688-.59.201 0 .332.534.505.534.139 0 .167-.7.477-.7.251 0 .805.39.958.277.11-.08-.282-.618.024-.845.227-.139.76-.473.76-.616 0-.082-1.04-.114-1.096-.114-.201-.055-.42-.672-.566-.672-.145 0-.16.617-.418.814-.226.167-.787-.591-1.036-.591-.145 0 .165.563.165 1.006 0 .443-2.725 1.32-3.09 1.32-.564 0-.593-.704-.705-.704-.17 0-.165.859-.787.859a.403.403 0 01-.42-.403V37.5a.402.402 0 01.42-.47c.463-.023.475 1.023.644 1.023.31 0 .48-1.038 1.07-1.038.45 0 .815.62 1.097.62.201 0-.336-.648-.336-.958 0-.31 2.783-.201 3.851-2.082" fill="%23000000"/></svg>');
-        opacity: 0.25;
-        transition: 0.3s opacity;
-        .spark {
-          transition: 0.3s background-color ease-in-out;
-          position: absolute;
-          bottom: 30px;
-          left: 15%;
-          width: 2px;
-          height: 2px;
-          border-radius: 50%;
-          background-color: transparent;
-          animation-name: burnout-up-1;
-          animation-duration: 6s;
-          animation-timing-function: linear;
-          animation-iteration-count: infinite;
-          animation-delay: 0.4s;
-          z-index: -1;
-          &:nth-of-type(2n) {
-            width: 1px;
-            height: 1px;
-            animation-name: burnout-up-2;
-            animation-duration: 8.4s;
-            animation-delay: 1s;
-          }
-          &:nth-of-type(3n) {
-            width: 3px;
-            height: 3px;
-            animation-delay: 1.9s;
-            animation-duration: 8s;
-            left: 55%;
-          }
-          &:nth-of-type(4n) {
-            animation-delay: 2.6s;
-            animation-duration: 7s;
-            left: 88%;
-          }
-          &:nth-of-type(5n) {
-            animation-delay: 1.4s;
-            animation-duration: 7s;
-            left: 22%;
-          }
-          &:nth-of-type(6n) {
-            animation-delay: 3.2s;
-            left: 61%;
-          }
-          &:nth-of-type(7n) {
-            animation-delay: 0.8s;
-            animation-duration: 5s;
-            left: 64%;
-          }
-          &:nth-of-type(8n) {
-            animation-delay: 5s;
-            left: 19%;
-          }
-          &:nth-of-type(9n) {
-            animation-delay: 4s;
-            animation-duration: 6.8s;
-            left: 22%;
-          }
-          &:nth-of-type(10n) {
-            animation-delay: 5.2s;
-            left: 61%;
-          }
-          &:nth-of-type(11n) {
-            animation-delay: 3.5s;
-            animation-duration: 8s;
-            left: 81%;
-          }
-          &:nth-of-type(12n) {
-            animation-delay: 2s;
-            left: 85%;
-          }
-        }
-      }
-    }
-  }
-  .radio-to-buttons_recurrfreq
-    .en__field--recurrfreq.en__field--radio
-    input[type="radio"]:checked
-    + label {
-    .candle {
-      .candle-flame {
-        max-height: 26px;
-      }
-      .candle-base {
-        opacity: 1;
-        .spark {
-          background-color: fade-out(#ff4700, 0.5);
-        }
-      }
-    }
-  }
+
+
+  
 } // END AIUSA ENGRID CUSTOM THEME
 
 /*
@@ -2115,11 +1971,11 @@
       grid-column: pc;
     }
 
-    .content-header {
+    .content-header{
       margin-bottom: 1rem;
     }
 
-    .content-footer {
+    .content-footer{
       margin-top: 1rem;
     }
 
@@ -2137,11 +1993,11 @@
       grid-column: pc;
     }
 
-    .content-header {
+    .content-header{
       margin-bottom: 1rem;
     }
 
-    .content-footer {
+    .content-footer{
       margin-top: 1rem;
     }
 
@@ -2154,10 +2010,12 @@
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   @media screen and (min-width: $centercenter2col_content-column_min-width) {
-    form > .en__component--advrow {
+    form > .en__component--advrow{
+
       .body-top {
         grid-row: body-banner-end / body-bottom-end;
       }
+
     }
   }
 

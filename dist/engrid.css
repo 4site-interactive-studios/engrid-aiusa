@@ -21,8 +21,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, October 13, 2021 @ 15:39:06 ET
- *  By: fe
+ *  Date: Thursday, October 14, 2021 @ 19:28:20 ET
+ *  By: bryancasler
  *  ENGrid styles: v0.4.6
  *  ENGrid scripts: v0.4.4
  *
@@ -7084,122 +7084,6 @@ body:not([data-engrid-debug]) #debug-bar{
   font-weight:700;
   src:local("AmnestyTradeGothic-BdCn20.woff"), url(https://c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/AmnestyTradeGothic-BdCn20.woff) format("woff");
 }
-@keyframes firebig{
-  0%{
-    transform:rotate(-2deg);
-    transform-origin:bottom center;
-  }
-  20%{
-    transform:rotate(2deg);
-    transform-origin:bottom center;
-  }
-  40%{
-    transform:rotate(-2deg);
-    transform-origin:bottom center;
-  }
-  60%{
-    transform:rotate(2deg) scale(.8);
-    transform-origin:bottom center;
-  }
-  80%{
-    transform:rotate(-2deg);
-    transform-origin:bottom center;
-  }
-  to{
-    transform:rotate(2deg);
-    transform-origin:bottom center;
-  }
-}
-
-@keyframes flicker{
-  0%{
-    transform:rotate(3deg);
-    transform-origin:bottom center;
-  }
-  20%{
-    transform:rotate(-3deg);
-    transform-origin:bottom center;
-  }
-  40%{
-    transform:rotate(3deg);
-    transform-origin:bottom center;
-  }
-  60%{
-    transform:rotate(-3deg);
-    transform-origin:bottom center;
-  }
-  80%{
-    transform:rotate(3deg);
-    transform-origin:bottom center;
-  }
-  to{
-    transform:rotate(-3deg);
-  }
-}
-
-@keyframes firesmall{
-  0%{
-    transform:rotate(1deg);
-    transform-origin:bottom center;
-  }
-  20%{
-    transform:rotate(-2deg) scale(.9);
-    transform-origin:bottom center;
-  }
-  40%{
-    transform:rotate(1deg);
-    transform-origin:bottom center;
-  }
-  60%{
-    transform:rotate(-1deg);
-    transform-origin:bottom center;
-  }
-  80%{
-    transform:rotate(1deg) scaleY(.75);
-    transform-origin:bottom center;
-  }
-  to{
-    transform:rotate(-1deg);
-    transform-origin:bottom center;
-  }
-}
-
-@keyframes burnout-up-1{
-  0%{
-    opacity:1;
-    transform:translate(0);
-  }
-  33%{
-    transform:translate(12px, -70px);
-  }
-  66%{
-    opacity:.6;
-    transform:translateY(-140px);
-  }
-  to{
-    opacity:0;
-    transform:translate(6px, -200px);
-  }
-}
-
-@keyframes burnout-up-2{
-  0%{
-    opacity:1;
-    transform:translate(0);
-  }
-  50%{
-    transform:translate(-10px, -80px);
-  }
-  80%{
-    opacity:.6;
-    transform:translate(-4px, -140px);
-  }
-  to{
-    opacity:0;
-    transform:translate(-6px, -160px);
-  }
-}
-
 [data-engrid-theme=aiusa]{
   --color_transparent:#0000;
   --color_white:#fff;
@@ -7222,17 +7106,22 @@ body:not([data-engrid-debug]) #debug-bar{
   --scale-down_20pct:0.8;
   --scale-down_40pct:0.6;
   --scale-down_80pct:0.2;
-  --native-fonts__sans-serif:-apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  --native-fonts__sans-serif:-apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
   --default_font-family:var(--font-stack-aiusa);
   --default_color:var(--color_black);
   --default_font-size:var(--root_font-size);
   --default_font-weight:initial;
   --default_line-height:initial;
-  --h1_font-family:var(--font-stack-aiusa-bold-condensed);
+  --h1_font-family:var(
+    --font-stack-aiusa-bold-condensed
+  );
   --h1_color:initial;
   --h1_font-size:calc(var(--root_font-size)*var(--scale-up_160pct));
-  --h1_font-weight:var(--headline-font-weight);
+  --h1_font-weight:var(
+    --headline-font-weight
+  );
   --h1_line-height:var(--h1_font-size);
   --h2_font-family:var(--h1_font-family);
   --h2_color:initial;
@@ -7249,24 +7138,32 @@ body:not([data-engrid-debug]) #debug-bar{
   --p_font-size:var(--root_font-size);
   --p_font-weight:initial;
   --p_line-height:initial;
-  --label_font-family:var(--font-stack-aiusa-bold-condensed);
+  --label_font-family:var(
+    --font-stack-aiusa-bold-condensed
+  );
   --label_color:#525252;
   --label_font-size:12px;
   --label_font-weight:initial;
   --label_line-height:initial;
-  --input_font-family:var(--default_font-family);
+  --input_font-family:var(
+    --default_font-family
+  );
   --input_color:initial;
   --input_font-size:var(--root_font-size);
   --input_font-weight:initial;
   --input_line-height:initial;
   --input_background-color:#f5f5f5;
   --input_border-width:2px;
-  --input_border-color:var(--input_background-color);
+  --input_border-color:var(
+    --input_background-color
+  );
   --input_border-radius:initial;
   --input_placeholder-color:#767676;
   --input_box-shadow:none;
   --input_color_hover:var(--input_color);
-  --input_background-color_hover:var(--input_background-color);
+  --input_background-color_hover:var(
+    --input_background-color
+  );
   --input_border-color_hover:var(--input_background-color);
   --input_border-bottom-color_hover:#525252;
   --input_box-shadow_hover:none;
@@ -7280,12 +7177,20 @@ body:not([data-engrid-debug]) #debug-bar{
   --radio_width:1.4rem;
   --radio_box-shadow:none;
   --radio_color_hover:var(--radio_color);
-  --radio_background-color_hover:var(--radio_background-color);
-  --radio_border-color_hover:var(--radio_border-color);
+  --radio_background-color_hover:var(
+    --radio_background-color
+  );
+  --radio_border-color_hover:var(
+    --radio_border-color
+  );
   --radio_box-shadow_hover:none;
-  --radio_color_selected_selected:var(--radio_background-color);
+  --radio_color_selected_selected:var(
+    --radio_background-color
+  );
   --radio_background-color_selected:var(--color_white);
-  --radio_border-color_selected:var(--radio_border-color);
+  --radio_border-color_selected:var(
+    --radio_border-color
+  );
   --radio_box-shadow_selected:inset 0 0 0 6px var(--color_black);
   --checkbox_color:var(--color_white);
   --checkbox_background-color:var(--color_white);
@@ -7294,14 +7199,26 @@ body:not([data-engrid-debug]) #debug-bar{
   --checkbox_border-radius:0px;
   --checkbox_height:1.75rem;
   --checkbox_width:1.75rem;
-  --checkbox_color_hover:var(--checkbox_color);
-  --checkbox_background-color_hover:var(--checkbox_background-color);
-  --checkbox_border-color_hover:var(--checkbox_border-color);
+  --checkbox_color_hover:var(
+    --checkbox_color
+  );
+  --checkbox_background-color_hover:var(
+    --checkbox_background-color
+  );
+  --checkbox_border-color_hover:var(
+    --checkbox_border-color
+  );
   --checkbox_content_checked:"✓";
-  --checkbox_color_checked:var(--checkbox_background-color);
+  --checkbox_color_checked:var(
+    --checkbox_background-color
+  );
   --checkbox_background-color_checked:var(--color_black);
-  --checkbox_border-color_checked:var(--checkbox_border-color);
-  --select_font-family:var(--default_font-family);
+  --checkbox_border-color_checked:var(
+    --checkbox_border-color
+  );
+  --select_font-family:var(
+    --default_font-family
+  );
   --select_color:var(--color_black);
   --select_font-size:var(--root_font-size);
   --select_font-weight:initial;
@@ -7310,13 +7227,23 @@ body:not([data-engrid-debug]) #debug-bar{
   --select_border-width:2px;
   --select_border-color:#f5f5f5;
   --select_border-radius:initial;
-  --select_box-shadow:var(--input_box-shadow);
+  --select_box-shadow:var(
+    --input_box-shadow
+  );
   --select_color_hover:var(--select_color);
-  --select_background-color_hover:var(--select_background-color);
-  --select_border-color_hover:var(--select_border-color);
+  --select_background-color_hover:var(
+    --select_background-color
+  );
+  --select_border-color_hover:var(
+    --select_border-color
+  );
   --select_border-bottom-color_hover:var(--color_black);
-  --select_box-shadow_hover:var(--input_box-shadow_hover);
-  --textarea_font-family:var(--default_font-family);
+  --select_box-shadow_hover:var(
+    --input_box-shadow_hover
+  );
+  --textarea_font-family:var(
+    --default_font-family
+  );
   --textarea_color:initial;
   --textarea_font-size:var(--root_font-size);
   --textarea_font-weight:initial;
@@ -7326,7 +7253,9 @@ body:not([data-engrid-debug]) #debug-bar{
   --textarea_border-color:var(--textarea_background-color);
   --textarea_border-radius:initial;
   --textarea_placeholder-color:var(--color_light-gray);
-  --textarea_box-shadow:var(--input_box-shadow);
+  --textarea_box-shadow:var(
+    --input_box-shadow
+  );
   --textarea_color_hover:var(--textarea_color);
   --textarea_background-color_hover:var(--textarea_background-color);
   --textarea_border-color_hover:var(--textarea_background-color);
@@ -7363,34 +7292,76 @@ body:not([data-engrid-debug]) #debug-bar{
   --submit__button_color_checked:#252525;
   --submit__button_background-color_checked:var(--color_primary);
   --submit__button_border-color_checked:var(--color_primary);
-  --recurring-frequency__button_font-family:var(--button_font-family);
-  --recurring-frequency__button_color:var(--button_color);
-  --recurring-frequency__button_font-size:var(--button_font-size);
-  --recurring-frequency__button_font-weight:var(--button_font-weight);
-  --recurring-frequency__button_line-height:var(--button_line-height);
+  --recurring-frequency__button_font-family:var(
+    --button_font-family
+  );
+  --recurring-frequency__button_color:var(
+    --button_color
+  );
+  --recurring-frequency__button_font-size:var(
+    --button_font-size
+  );
+  --recurring-frequency__button_font-weight:var(
+    --button_font-weight
+  );
+  --recurring-frequency__button_line-height:var(
+    --button_line-height
+  );
   --recurring-frequency__button_background-color:var(
     --button_background-color
   );
-  --recurring-frequency__button_border-width:var(--button_border-width);
-  --recurring-frequency__button_border-color:var(--button_border-color);
-  --recurring-frequency__button_border-radius:var(--button_border-radius);
+  --recurring-frequency__button_border-width:var(
+    --button_border-width
+  );
+  --recurring-frequency__button_border-color:var(
+    --button_border-color
+  );
+  --recurring-frequency__button_border-radius:var(
+    --button_border-radius
+  );
   --recurring-frequency__button_padding:1.5ch 1.75ch;
   --recurring-frequency__button_color_hover:var(--button_color_hover);
   --recurring-frequency__button_border-color_hover:var(--color_black);
   --recurring-frequency__button_background-color_hover:var(--color_white);
-  --recurring-frequency__button_color_checked:var(--button_color_hover);
-  --recurring-frequency__button_background-color_checked:var(--color_cta);
-  --recurring-frequency__button_border-color_checked:var(--color_cta);
-  --donation-amount__button_font-family:var(--button_font-family);
-  --donation-amount__button_color:var(--button_color);
-  --donation-amount__button_font-size:var(--button_font-size);
-  --donation-amount__button_font-weight:var(--button_font-weight);
-  --donation-amount__button_line-height:var(--button_line-height);
-  --donation-amount__button_background-color:var(--button_background-color);
-  --donation-amount__button_border-width:var(--button_border-width);
-  --donation-amount__button_border-color:var(--button_border-color);
-  --donation-amount__button_border-radius:var(--button_border-radius);
-  --donation-amount__button_color_hover:var(--button_color_hover);
+  --recurring-frequency__button_color_checked:var(
+    --button_color_hover
+  );
+  --recurring-frequency__button_background-color_checked:var(
+    --color_cta
+  );
+  --recurring-frequency__button_border-color_checked:var(
+    --color_cta
+  );
+  --donation-amount__button_font-family:var(
+    --button_font-family
+  );
+  --donation-amount__button_color:var(
+    --button_color
+  );
+  --donation-amount__button_font-size:var(
+    --button_font-size
+  );
+  --donation-amount__button_font-weight:var(
+    --button_font-weight
+  );
+  --donation-amount__button_line-height:var(
+    --button_line-height
+  );
+  --donation-amount__button_background-color:var(
+    --button_background-color
+  );
+  --donation-amount__button_border-width:var(
+    --button_border-width
+  );
+  --donation-amount__button_border-color:var(
+    --button_border-color
+  );
+  --donation-amount__button_border-radius:var(
+    --button_border-radius
+  );
+  --donation-amount__button_color_hover:var(
+    --button_color_hover
+  );
   --donation-amount__button_background-color_hover:var(
     --button_background-color_hover
   );
@@ -7398,26 +7369,58 @@ body:not([data-engrid-debug]) #debug-bar{
     --button_border-color_hover
   );
   --donation-amount__button_color_checked:var(--color_white);
-  --donation-amount__button_background-color_checked:var(--button_color);
-  --donation-amount__button_border-color_checked:var(--button_color);
-  --give-by-select__button_font-family:var(--button_font-family);
-  --give-by-select__button_color:var(--button_color);
-  --give-by-select__button_font-size:var(--button_font-size);
-  --give-by-select__button_font-weight:var(--button_font-weight);
-  --give-by-select__button_line-height:var(--button_line-height);
-  --give-by-select__button_background-color:var(--button_background-color);
-  --give-by-select__button_border-width:var(--button_border-width);
-  --give-by-select__button_border-color:var(--button_border-color);
-  --give-by-select__button_border-radius:var(--button_border-radius);
-  --give-by-select__button_color_hover:var(--button_color_hover);
+  --donation-amount__button_background-color_checked:var(
+    --button_color
+  );
+  --donation-amount__button_border-color_checked:var(
+    --button_color
+  );
+  --give-by-select__button_font-family:var(
+    --button_font-family
+  );
+  --give-by-select__button_color:var(
+    --button_color
+  );
+  --give-by-select__button_font-size:var(
+    --button_font-size
+  );
+  --give-by-select__button_font-weight:var(
+    --button_font-weight
+  );
+  --give-by-select__button_line-height:var(
+    --button_line-height
+  );
+  --give-by-select__button_background-color:var(
+    --button_background-color
+  );
+  --give-by-select__button_border-width:var(
+    --button_border-width
+  );
+  --give-by-select__button_border-color:var(
+    --button_border-color
+  );
+  --give-by-select__button_border-radius:var(
+    --button_border-radius
+  );
+  --give-by-select__button_color_hover:var(
+    --button_color_hover
+  );
   --give-by-select__button_background-color_hover:var(
     --button_background-color_hover
   );
-  --give-by-select__button_border-color_hover:var(--button_border-color_hover);
+  --give-by-select__button_border-color_hover:var(
+    --button_border-color_hover
+  );
   --give-by-select__button_color_checked:var(--color_white);
-  --give-by-select__button_background-color_checked:var(--button_color);
-  --give-by-select__button_border-color_checked:var(--button_color);
-  --a_font-family:var(--headline-font-family);
+  --give-by-select__button_background-color_checked:var(
+    --button_color
+  );
+  --give-by-select__button_border-color_checked:var(
+    --button_color
+  );
+  --a_font-family:var(
+    --headline-font-family
+  );
   --a_color:initial;
   --a_text-decoration:initial;
   --a_color_checked:var(--a_color);
@@ -7451,9 +7454,7 @@ body:not([data-engrid-debug]) #debug-bar{
   --engrid__page-backgroundImageOverlay_background-color:var(
     --color_transparent
   );
-  --engrid__page-customCode_background-color:var(
-    --engrid__page_background-color
-  );
+  --engrid__page-customCode_background-color:var(--engrid__page_background-color);
   --engrid__page_padding:0px;
   --engrid__content_padding:0px;
   --engrid__body_padding:0px 60px;
@@ -7520,7 +7521,9 @@ body:not([data-engrid-debug]) #debug-bar{
   --click-to-expand__cta-image_height:15px;
   --give-monthly-donation-amount-appended-label:" Monthly";
   --give-annual-donation-amount-appended-label:" Annually";
-  --media-attribution__font-family:var(--default_font-family);
+  --media-attribution__font-family:var(
+    --default_font-family
+  );
   --media-attribution__color:#fff;
   --media-attribution__text-shadow:0px 0px 5px #00000026;
   --media-attribution__font-size:12px;
@@ -7530,12 +7533,12 @@ body:not([data-engrid-debug]) #debug-bar{
   --media-attribution__margin:1.25ch 0 0 1.5ch;
   --media-attribution__padding:1ch 1.25ch 0.5ch 1.25ch;
   --media-attribution__background-color:#00000040;
-  --font-stack-aiusa:"AmnestyTradeGothic", var(--native-fonts__sans-serif);
+  --font-stack-aiusa:"AmnestyTradeGothic",
+    var(--native-fonts__sans-serif);
   --font-stack-aiusa-bold-condensed:"AmnestyTradeGothicBdCn",
     var(--native-fonts__sans-serif);
   --headline-font-family:var(--font-stack-aiusa);
   --headline-font-weight:700;
-  --recurring-frequency__flex-grow:1;
   min-width:100%;
 }
 
@@ -7594,8 +7597,7 @@ body:not([data-engrid-debug]) #debug-bar{
   top:6px !important;
 }
 
-[data-engrid-theme=aiusa] .en__contacts:not(.en__contacts--hideCheck)
-.en__contactDetails__select:checked+.en__contactDetails__rows:after{
+[data-engrid-theme=aiusa] .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after{
   left:7px;
   top:7px;
 }
@@ -7725,37 +7727,24 @@ label.en__field__label.en__field__label--item{
   font-family:var(--font-stack-aiusa-bold-condensed);
 }
 
-[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency=annual] .radio-to-buttons_donationAmt
-.en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other)
-label{
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency=annual] .radio-to-buttons_donationAmt .en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other) label{
   flex-direction:column;
 }
 
-[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency=annual] .radio-to-buttons_donationAmt
-.en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other)
-.en__field__label--item:after{
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency=annual] .radio-to-buttons_donationAmt .en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other) .en__field__label--item:after{
   margin-left:0;
 }
 
-[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt
-.en__field--donationAmt
-div:not(.en__field__item--other)
-.en__field__label--item:after{
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after{
   font-size:100%;
   margin-left:.5ch;
   opacity:1;
 }
 
-[data-engrid-theme=aiusa] .radio-to-buttons_donationAmt
-.en__field--donationAmt.en__field--radio>.en__field__element
-.en__field__item.en__field__item--other{
+[data-engrid-theme=aiusa] .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
   --donation-amount__flex-grow:1;
-  --donation-amount__button_background-color_checked:var(
-      --input_background-color
-    );
-  --donation-amount__button_border-color_checked:var(
-      --input_background-color_hover
-    );
+  --donation-amount__button_background-color_checked:var(--input_background-color);
+  --donation-amount__button_border-color_checked:var(--input_background-color_hover);
   --donation-amount__button_color_checked:var(--input_color);
 }
 
@@ -8300,8 +8289,6 @@ span{
   }
   [data-engrid-theme=aiusa][data-engrid-layout] .en__field,[data-engrid-theme=aiusa][data-engrid-layout] .en__submit{
     flex-basis:100%;
-    padding-left:0;
-    padding-right:0;
   }
   [data-engrid-theme=aiusa][data-engrid-layout] textarea.en__field{
     padding-left:1ch;
@@ -8670,205 +8657,6 @@ span{
 
 [data-engrid-theme=aiusa] .en__field--survey .en__field__item>input.en__field__input--checkbox:checked+.en__field__label:after{
   top:0 !important;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label{
-  position:relative;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle{
-  opacity:1;
-  position:absolute;
-  top:50%;
-  transform:translateY(-50%);
-  transition:opacity .3s ease-in-out,top .3s ease-in-out;
-  z-index:0;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle.right{
-  right:30px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle.left{
-  left:30px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-flame{
-  animation:flicker 1s ease-in infinite alternate;
-  bottom:18px;
-  height:26px;
-  left:2px;
-  max-height:0;
-  overflow:hidden;
-  position:absolute;
-  transition:max-height .3s ease-in-out;
-  width:12px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-flame svg{
-  height:24px;
-  width:12px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-flame svg path:first-child{
-  animation:firebig 4s ease-in infinite alternate-reverse;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-flame svg path:last-child{
-  animation:firesmall 2s ease-in infinite;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base{
-  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="none"><path xmlns="http://www.w3.org/2000/svg" transform="translate(-18,-12)" d="M38.843 35.815c-.202-.085-.224-.702-.336-.702-.171 0-.258.561-.588.644-.33.082-.845-.365-.99-.254-.145.11.318.913-.44.913-.226 0-.342-.257-.342-.454v-6.137c.123.012.245.037.364.074.225.059.45.17.45.481 0 .165-.06.503.055.562.114.058.2-.059.253-.087 1.038-.756 1.292.59 1.517.59.226 0 .17-.926.451-.926.225-.086 2.388.954 2.388 1.63 0 .14-.281.167-.306.31-.028.201.506.28.419.648-.03.225-.533.507-.402.644.13.136.819-.137.875-.137.139 0 .165.221.165.306 0 1.239-2.893 2.169-3.541 1.885l.008.01zm-7.713.97c-.169-.276-.084-.757-.251-.757-.085 0-.533.676-.789.676-.255 0-.672-.479-.84-.479-.114 0 .112.676-.114.954-.142.201-1.49.344-1.49.173v-9.561a.604.604 0 01.645-.618h5.03c.616 0 .872.201.872.843v8.58c0 .28-2.956.392-3.069.19l.006-.001zm3.075 12.119c0 .593-.201.73-.702.62l-5.37-1.07a.537.537 0 01-.48-.589V38.14c0-.254.872-.282 1.007-.17.253.226.169 1.041.336 1.041.227 0 .817-.986 1.07-.986.535 0 .897.31 1.006.254.109-.057.115-.507.254-.62.2-.135.786-.135 1.096-.169.507-.028 1.435-.113 1.435-.113.366 0 .338.258.338.791l.01 10.736zM28.412 20.68c0-3.881 5.736-6.102 6.129-8.07.422.402.479 1.04.479 1.61 0 2.36-4.105 6.323-4.105 9.193 0 .31.028.402.028.59 0 .279-.112.337-.167.337-.678 0-2.364-1.322-2.364-3.654v-.006zm-3.177 24.262c-.449 0-.73-.902-.843-.871-.113.03.03.758-.139.87-.169.113-3.12-1.237-3.346-1.458-.225-.221.085-.479 0-.676-.084-.197-.509-.115-.646-.201-.137-.087.137-.62-.028-.729-.165-.108-.45.507-.648.222a.964.964 0 01-.11-.56c0-1.716 1.824-2.414 3.064-2.839.503-.17.332.477.503.505.17.028.225-.308.45-.308.172 0 .817.308.956.202.113-.083-.336-.505-.2-.674.134-.17 1.474-.387 1.462-.05v6.005c0 .63-.483.568-.483.568l.008-.006zM42.885 34.6c.31-.532.31-1.18.422-1.433.165-.28.785-.225.785-.422 0-.083-.448-.202-.62-.308-.334-.201-.22-1.208-.39-1.208-.255 0-.507.7-.763.403-.446-.564-2.303-1.632-3.146-1.942-.31-.113.225-1.04.086-1.127-.139-.086-.507.566-1.042.453-.42-.086-.225-.845-.45-.845-.114 0-.536 1.069-.846.984-.31-.085-.783-.201-.783-.201v-2.821c0-.477-.322-.847-.734-.845h-3.028c-.843 0-.787-.618-.787-.759 0-3.738 5.433-4.356 5.433-9.255 0-2.14-1.348-3.572-2.924-4.84-.086-.054 0 .313 0 .451 0 2.278-8.463 3.46-8.463 8.717 0 4.581 4.556 4.778 4.556 5.482 0 .14-.28.202-.308.202H26.39c-.366 0-.682.225-.678.839v2.817c-.34.112-.787-.403-1.006-.403-.113 0-.055.873-.254.986-.169.083-3.344 1.207-3.621 1.238-.445.082-.332-.705-.586-.705-.253 0-.227.787-.789.787-.338 0-.617-.31-.869-.31-.169 0 .362.648.362.843 0 .535-1.036.73-1.036 1.099 0 .201.98-.085 1.123-.085.505 0 .45.592.644.592.193 0 .338-.678.509-.789.334-.201.73.141.9.141.279 0-.226-.676.027-.789 0 0 3.42-1.458 3.654-1.348.201.115.171.45.403.564.231.112.563-.787.563-.228v6.89c-.402.25-1.24.402-1.69.402-.223 0-.113-.732-.254-.732-.225 0-.45.617-.786.617s-.759-.756-1.065-.756c-.201 0 .362.953.024 1.122-1.295.648-3.346 1.268-3.346 3.316 0 .425.228.934.14 1.069-.081.201-.53.591-.504.76.026.17.843.111 1.006.369.083.136.139.756.31.756.137 0 .503-.477.815-.31.982.592 2.696 1.236 3.487 1.662.201.113.08.73.201.787.227.113.676-.592 1.382-.201a.604.604 0 01.282.537v2.3c0 .42.201.531.423.587l8.382 1.668c.328.077.66.133.996.167.292.012.654 0 .634-.706v-5.231a.201.201 0 01.179-.181c.493 0 .245 1.408.356 1.408.223 0 .364-.956.648-.956.402 0 .65.367.805.282.154-.084-.08-.535-.08-.817 0-.251.727-.364 1.629-.702.787-.278 1.432-.59 1.688-.59.201 0 .332.534.505.534.139 0 .167-.7.477-.7.251 0 .805.39.958.277.11-.08-.282-.618.024-.845.227-.139.76-.473.76-.616 0-.082-1.04-.114-1.096-.114-.201-.055-.42-.672-.566-.672-.145 0-.16.617-.418.814-.226.167-.787-.591-1.036-.591-.145 0 .165.563.165 1.006 0 .443-2.725 1.32-3.09 1.32-.564 0-.593-.704-.705-.704-.17 0-.165.859-.787.859a.403.403 0 01-.42-.403V37.5a.402.402 0 01.42-.47c.463-.023.475 1.023.644 1.023.31 0 .48-1.038 1.07-1.038.45 0 .815.62 1.097.62.201 0-.336-.648-.336-.958 0-.31 2.783-.201 3.851-2.082" fill="%23000000"/></svg>');
-  background-repeat:no-repeat;
-  background-size:contain;
-  height:27px;
-  opacity:.25;
-  transition:opacity .3s;
-  width:20px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark{
-  animation-delay:.4s;
-  animation-duration:6s;
-  animation-iteration-count:infinite;
-  animation-name:burnout-up-1;
-  animation-timing-function:linear;
-  background-color:initial;
-  border-radius:50%;
-  bottom:30px;
-  height:2px;
-  left:15%;
-  position:absolute;
-  transition:background-color .3s ease-in-out;
-  width:2px;
-  z-index:-1;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(2n){
-  animation-delay:1s;
-  animation-duration:8.4s;
-  animation-name:burnout-up-2;
-  height:1px;
-  width:1px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(3n){
-  animation-delay:1.9s;
-  animation-duration:8s;
-  height:3px;
-  left:55%;
-  width:3px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(4n){
-  animation-delay:2.6s;
-  animation-duration:7s;
-  left:88%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(5n){
-  animation-delay:1.4s;
-  animation-duration:7s;
-  left:22%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(6n){
-  animation-delay:3.2s;
-  left:61%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(7n){
-  animation-delay:.8s;
-  animation-duration:5s;
-  left:64%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(8n){
-  animation-delay:5s;
-  left:19%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(9n){
-  animation-delay:4s;
-  animation-duration:6.8s;
-  left:22%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(10n){
-  animation-delay:5.2s;
-  left:61%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(11n){
-  animation-delay:3.5s;
-  animation-duration:8s;
-  left:81%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]+label .candle .candle-base .spark:nth-of-type(12n){
-  animation-delay:2s;
-  left:85%;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]:checked+label .candle .candle-flame{
-  max-height:26px;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]:checked+label .candle .candle-base{
-  opacity:1;
-}
-
-[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
-.en__field--recurrfreq.en__field--radio
-input[type=radio]:checked+label .candle .candle-base .spark{
-  background-color:#ff470080;
 }
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
