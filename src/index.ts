@@ -30,7 +30,7 @@ const options: Options = {
       'supporter.region',
       'supporter.postcode',
       'supporter.emailAddress'
-    ]
+    ]    
   },
   Debug: App.getUrlParameter('debug') == 'true' ? true : false,
   onLoad: () => console.log("Starter Theme Loaded"),
