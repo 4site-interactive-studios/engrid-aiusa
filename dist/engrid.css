@@ -21,7 +21,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, October 19, 2021 @ 21:48:23 ET
+ *  Date: Tuesday, October 19, 2021 @ 22:09:48 ET
  *  By: fe
  *  ENGrid styles: v0.4.6
  *  ENGrid scripts: v0.4.4
@@ -8717,6 +8717,7 @@ input[type=radio]+label .candle .candle-flame{
   position:absolute;
   transition:max-height .3s ease-in-out;
   width:12px;
+  z-index:100;
 }
 
 [data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq
@@ -8746,6 +8747,7 @@ input[type=radio]+label .candle .candle-base{
   background-size:contain;
   height:27px;
   opacity:.25;
+  position:relative;
   transition:opacity .3s;
   width:20px;
 }

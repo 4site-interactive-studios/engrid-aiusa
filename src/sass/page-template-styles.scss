@@ -1988,6 +1988,7 @@
         max-height: 0;
         overflow: hidden;
         transition: 0.3s max-height ease-in-out;
+        z-index: 100;
         svg {
           width: 12px;
           height: 24px;
@@ -2000,6 +2001,7 @@
         }
       }
       .candle-base {
+        position: relative;
         width: 20px;
         height: 27px;
         background-size: contain;
