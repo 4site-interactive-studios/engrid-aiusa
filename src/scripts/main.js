@@ -137,7 +137,7 @@ document.onreadystatechange = () => {
       let total = pageJson.amount;
       // Defaulting to 'Recurring' for recurring donations in case the transactionExtra object isn't defined
       // That way those looking at the analytics data will understand that the total isn't necessarily correct because we don't know the quantity
-      let frequency = pageJson.recurring ? "Recurring" : "One Time";
+      let frequency = pageJson.recurring ? "Recurring" : "One time";
 
       // Fallbacks in case the transactionExtra object isn't defined
       let te_exists = typeof transactionExtra !== "undefined";
@@ -1057,7 +1057,17 @@ document.onreadystatechange = () => {
         <span class="spark"></span>
       </div>
       `;
-        monthlyLabel.appendChild(candleNode);
+        const labelText = monthlyLabel.innerText;
+        const labelSpan = document.createElement("span");
+        labelSpan.innerText = labelText;
+        monthlyLabel.innerHTML = "";
+        if (candlePosition === "left") {
+          monthlyLabel.appendChild(candleNode);
+          monthlyLabel.appendChild(labelSpan);
+        } else {
+          monthlyLabel.appendChild(labelSpan);
+          monthlyLabel.appendChild(candleNode);
+        }
       }
     }
   }

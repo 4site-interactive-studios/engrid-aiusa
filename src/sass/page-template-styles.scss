@@ -1961,19 +1961,23 @@
     input[type="radio"]
     + label {
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     .candle {
-      position: absolute;
       &.right {
-        right: 30px;
+        margin-left: 10px;
+        margin-right: -10px;
       }
       &.left {
-        left: 30px;
+        margin-left: -25px;
+        margin-right: 25px;
       }
       opacity: 1;
-      top: 50%;
-      transform: translateY(-50%);
       z-index: 0;
       transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
+      width: 0;
+      position: relative;
       .candle-flame {
         animation: flicker 1s ease-in infinite alternate;
         position: absolute;
