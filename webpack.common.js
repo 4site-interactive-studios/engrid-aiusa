@@ -1,60 +1,86 @@
-const path = require("path");
-var HtmlWebpackPlugin = require("html-webpack-plugin");
+const exec = require("child_process").execSync;
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
+const webpack = require("webpack");
+const author = require("os").userInfo().username;
+let engridScriptStylesVersion = exec("npm list @4site/engrid-styles")
+  .toString("utf8")
+  .split("@4site/engrid-styles@")[1]
+  .split("\n")[0];
+const engridScriptScriptsVersion = exec("npm list @4site/engrid-common")
+  .toString("utf8")
+  .split("@4site/engrid-common@")[1]
+  .split("\n")[0];
+const localeStringDateOptions = {
+  weekday: "long",
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+};
+const localeStringTimeOptions = {
+  hour12: false,
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  timeZone: "America/New_York",
+};
+
 module.exports = {
   entry: {
     engrid: "./src/index.ts",
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      title: "Engaging Networks - Page Type Selection",
-      template: "./src/index.html",
-      inject: true,
-      minify: {
-        removeComments: false,
-        collapseWhitespace: false,
-      },
-    }),
-    new HtmlWebpackPlugin({
-      title: "AIUSA - Engaging Networks Page - Donation 1 Column",
-      filename: "page-donation-1col-aiusa.html",
-      template: "./src/templates/page-donation-1col.html",
-      inject: true,
-      minify: {
-        removeComments: false,
-        collapseWhitespace: false,
-      },
-    }),
-    new HtmlWebpackPlugin({
-      title: "AIUSA - Engaging Networks Page - Donation 2 Column",
-      filename: "page-donation-2col-aiusa.html",
-      template: "./src/templates/page-donation-2col.html",
-      inject: true,
-      minify: {
-        removeComments: false,
-        collapseWhitespace: false,
-      },
-    }),    
-    new HtmlWebpackPlugin({
-      title: "AIUSA - Engaging Networks Page - Brand Guide",
-      filename: "brand-guide-aiusa.html",
-      template: "./src/templates/brand-guide.html",
-      inject: true,
-      minify: {
-        removeComments: false,
-        collapseWhitespace: false,
-      },
+    new webpack.BannerPlugin({
+      banner: `
+               ((((                                                        
+         ((((((((                                                          
+      (((((((                                                              
+    (((((((           ****                                                 
+  (((((((          *******                                                 
+ ((((((((       **********     *********       ****    ***                 
+ ((((((((    ************   **************     ***    ****                 
+ ((((((   *******  *****   *****        *     **    ******        *****    
+ (((   *******    ******   ******            ****  ********   ************ 
+     *******      *****     **********      ****    ****     ****      ****
+   *********************         *******   *****   ****     ***************
+    ********************            ****   ****    ****    ****            
+                *****    *****   *******  *****   *****     *****     **   
+               *****     *************    ****    *******     **********   
+ 
+ ENGRID PAGE TEMPLATE ASSETS
+ 
+ Date: ${new Date().toLocaleString(
+   "en-US",
+   localeStringDateOptions
+ )} @ ${new Date().toLocaleString("en-US", localeStringTimeOptions)} ET
+ By: ${author}
+ ENGrid styles: v${engridScriptStylesVersion}
+ ENGrid scripts: v${engridScriptScriptsVersion}
+ 
+ Created by 4Site Studios
+ Come work with us or join our team, we would love to hear from you
+ https://www.4sitestudios.com/en
+`,
     }),
   ],
   module: {
     rules: [
       {
+        test: /\.(ttf,oft,woff,woff2)$/,
+        use: {
+          loader: "file-loader",
+          options: {
+            name: "[name].[ext]",
+            outputPath: "fonts",
+          },
+        },
+      },
+      {
         test: /\.(svg|png|jpg|gif)$/,
         use: {
           loader: "file-loader",
           options: {
-            name: "[name].[hash].[ext]",
+            name: "[name].[ext]",
             outputPath: "imgs",
           },
         },
@@ -73,27 +99,6 @@ module.exports = {
             ],
           },
         },
-      },
-      {
-        test: /\.(html)$/,
-        use: [
-          {
-            loader: "html-loader",
-            options: {
-              minimize: false,
-              sources: false,
-            },
-          },
-          {
-            loader: "posthtml-loader",
-            options: {
-              ident: "posthtml",
-              // skipParse: true,
-              // parser: "PostHTML Parser",
-              plugins: [require("posthtml-include")({ encoding: "utf8" })],
-            },
-          },
-        ],
       },
     ],
   },

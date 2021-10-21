@@ -1,2 +1,13868 @@
-/*! For license information please see engrid.js.LICENSE.txt */
-(()=>{var e={237:(e,t,n)=>{const i=n(861).ZP;var o;o=function(){let e=document.querySelectorAll(".move-after-transaction-recurrfreq")[0],t=document.querySelectorAll(".en__field--recurrfreq")[0];e&&t&&t.insertAdjacentElement("beforeend",e);let n=document.querySelectorAll(".move-before-transaction-donationamt")[0],o=document.querySelectorAll(".en__field--donationAmt")[0];n&&o&&o.insertAdjacentElement("afterbegin",n);let r=document.querySelectorAll("input#en__field_supporter_NOT_TAGGED_13")[0];r&&(r.placeholder="Phone Number"),document.querySelectorAll("input#en__field_supporter_address1")[0];let s=document.querySelectorAll("input#en__field_supporter_address2")[0];s&&(s.placeholder="#000"),document.querySelectorAll("input#en__field_supporter_city")[0];let a=document.querySelectorAll("input#en__field_supporter_postcode")[0];a&&(a.placeholder="00000");let c=document.querySelectorAll("input#en__field_supporter_phoneNumber")[0];c&&(c.placeholder="Phone Number");let u=document.querySelectorAll(".en__field--title.en__mandatory > label")[0];if(u){let e=document.createElement("span"),t=document.createElement("a");t.href="#",t.id="title-tooltip",t.className="label-tooltip",t.tabIndex="-1",t.innerText="Why is this required?",t.addEventListener("click",(e=>e.preventDefault())),e.appendChild(t),u.appendChild(e),i("#title-tooltip",{content:"The U.S. Senate is now requiring that all letters include a title. Please select one in order to ensure that your action lands in the inbox of your Senator."})}let l=document.querySelectorAll(".en__field--ccvv > label")[0];if(l){let e=document.createElement("span"),t=document.createElement("a");t.href="#",t.id="ccv-tooltip",t.className="label-tooltip",t.tabIndex="-1",t.innerText="What's this?",t.addEventListener("click",(e=>e.preventDefault())),e.appendChild(t),l.appendChild(e),i("#ccv-tooltip",{content:"The three or four digit security code on your debit or credit card"})}if("undefined"!=typeof pageJson&&pageJson.giftProcess&&"undefined"!=typeof dataLayer){let e=window.sessionStorage.getItem("original")?window.sessionStorage.getItem("original"):"No value",t=1,n=pageJson.amount,i=pageJson.recurring?"Recurring":"One Time",o="undefined"!=typeof transactionExtra,r=o&&transactionExtra.frequency?transactionExtra.frequency:"Unknown",s=o&&transactionExtra.city?transactionExtra.city:"Unknown",a=o&&transactionExtra.state?transactionExtra.state:"Unknown";switch(r){case"MONTHLY":i="Monthly",t=12,n=12*pageJson.amount;let e=document.getElementById("monthlyReceipt");e&&(e.style.display="block");break;case"ANNUAL":i="Annual";let o=document.getElementById("annualReceipt");o&&(o.style.display="block")}dataLayer.push({en_transaction_amount:n,en_payment_amount:pageJson.amount,en_transaction_id:pageJson.donationLogId,en_campaign_id:pageJson.campaignId,transactionId:pageJson.donationLogId,transactionAffiliation:"Donation Form",transactionTotal:n,transactionTax:0,transactionShipping:0,transactionCity:s,transactionState:a,transactionCountry:pageJson.country,transactionProducts:[{id:pageJson.donationLogId,quantity:t,name:pageJson.pageName,price:pageJson.amount,sku:pageJson.campaignId,category:i}],transactionPromoCode:e,successful_donation:"main form (EN)",event:i,donation_type:i}),dataLayer.push({event:"en_donation"})}const d=document.querySelector('a[role="menuitem"]');d.addEventListener("touchstart",(function(e){const t=document.querySelector('ul#main-menu ul[role="menu"]');"block"===t.style.display&&(t.style.display="none",d.setAttribute("aria-expanded","false"))}),{passive:!0});var p=function(e,t){this.menu=t,this.domNode=e,this.popupMenu=!1,this.hasFocus=!1,this.hasHover=!1,this.isMenubarItem=!0,this.keyCode=Object.freeze({TAB:9,RETURN:13,ESC:27,SPACE:32,PAGEUP:33,PAGEDOWN:34,END:35,HOME:36,LEFT:37,UP:38,RIGHT:39,DOWN:40})};p.prototype.init=function(){this.domNode.tabIndex=-1,this.domNode.addEventListener("keydown",this.handleKeydown.bind(this)),this.domNode.addEventListener("focus",this.handleFocus.bind(this)),this.domNode.addEventListener("blur",this.handleBlur.bind(this)),this.domNode.addEventListener("mouseover",this.handleMouseover.bind(this)),this.domNode.addEventListener("mouseout",this.handleMouseout.bind(this));var e=this.domNode.nextElementSibling;e&&"UL"===e.tagName&&(this.popupMenu=new m(e,this),this.popupMenu.init())},p.prototype.handleKeydown=function(e){e.currentTarget;var t,n=e.key,i=!1;switch(e.keyCode){case this.keyCode.SPACE:case this.keyCode.RETURN:case this.keyCode.DOWN:this.popupMenu&&(this.popupMenu.open(),this.popupMenu.setFocusToFirstItem(),i=!0);break;case this.keyCode.LEFT:this.menu.setFocusToPreviousItem(this),i=!0;break;case this.keyCode.RIGHT:this.menu.setFocusToNextItem(this),i=!0;break;case this.keyCode.UP:this.popupMenu&&(this.popupMenu.open(),this.popupMenu.setFocusToLastItem(),i=!0);break;case this.keyCode.HOME:case this.keyCode.PAGEUP:this.menu.setFocusToFirstItem(),i=!0;break;case this.keyCode.END:case this.keyCode.PAGEDOWN:this.menu.setFocusToLastItem(),i=!0;break;case this.keyCode.TAB:case this.keyCode.ESC:this.popupMenu.close(!0);break;default:1===(t=n).length&&t.match(/\S/)&&(this.menu.setFocusByFirstCharacter(this,n),i=!0)}i&&(e.stopPropagation(),e.preventDefault())},p.prototype.setExpanded=function(e){e?this.domNode.setAttribute("aria-expanded","true"):this.domNode.setAttribute("aria-expanded","false")},p.prototype.handleFocus=function(e){this.menu.hasFocus=!0},p.prototype.handleBlur=function(e){this.menu.hasFocus=!1},p.prototype.handleMouseover=function(e){this.hasHover=!0,this.popupMenu.open()},p.prototype.handleMouseout=function(e){this.hasHover=!1,setTimeout(this.popupMenu.close.bind(this.popupMenu,!1),300)};var h=function(e){var t="Menubar constructor argument menubarNode ";if(!(e instanceof Element))throw new TypeError(t+"is not a DOM Element.");if(0===e.childElementCount)throw new Error(t+"has no element children.");for(var n=e.firstElementChild;n;){var i=n.firstElementChild;if(n&&i&&"A"!==i.tagName)throw new Error(t+"has child elements are not A elements.");n=n.nextElementSibling}this.isMenubar=!0,this.domNode=e,this.menubarItems=[],this.firstChars=[],this.firstItem=null,this.lastItem=null,this.hasFocus=!1,this.hasHover=!1};h.prototype.init=function(){for(var e,t,n,i,o=this.domNode.firstElementChild;o;)t=o.firstElementChild,o&&t&&"A"===t.tagName&&((e=new p(t,this)).init(),this.menubarItems.push(e),n=t.textContent.trim(),this.firstChars.push(n.substring(0,1).toLowerCase())),o=o.nextElementSibling;(i=this.menubarItems.length)>0&&(this.firstItem=this.menubarItems[0],this.lastItem=this.menubarItems[i-1]),this.firstItem.domNode.tabIndex=0},h.prototype.setFocusToItem=function(e){for(var t=!1,n=0;n<this.menubarItems.length;n++){var i=this.menubarItems[n];0==i.domNode.tabIndex&&(t="true"===i.domNode.getAttribute("aria-expanded")),i.domNode.tabIndex=-1,i.popupMenu&&i.popupMenu.close()}e.domNode.focus(),e.domNode.tabIndex=0,t&&e.popupMenu&&e.popupMenu.open()},h.prototype.setFocusToFirstItem=function(e){this.setFocusToItem(this.firstItem)},h.prototype.setFocusToLastItem=function(e){this.setFocusToItem(this.lastItem)},h.prototype.setFocusToPreviousItem=function(e){var t;e===this.firstItem?newItem=this.lastItem:(t=this.menubarItems.indexOf(e),newItem=this.menubarItems[t-1]),this.setFocusToItem(newItem)},h.prototype.setFocusToNextItem=function(e){var t;e===this.lastItem?newItem=this.firstItem:(t=this.menubarItems.indexOf(e),newItem=this.menubarItems[t+1]),this.setFocusToItem(newItem)},h.prototype.setFocusByFirstCharacter=function(e,t){var n,i;e.domNode.getAttribute("aria-expanded"),t=t.toLowerCase(),(n=this.menubarItems.indexOf(e)+1)===this.menubarItems.length&&(n=0),-1===(i=this.getIndexFirstChars(n,t))&&(i=this.getIndexFirstChars(0,t)),i>-1&&this.setFocusToItem(this.menubarItems[i])},h.prototype.getIndexFirstChars=function(e,t){for(var n=e;n<this.firstChars.length;n++)if(t===this.firstChars[n])return n;return-1};var f=function(e,t){if("object"!=typeof n)var n=!1;this.domNode=e,this.menu=t,this.popupMenu=!1,this.isMenubarItem=!1,this.keyCode=Object.freeze({TAB:9,RETURN:13,ESC:27,SPACE:32,PAGEUP:33,PAGEDOWN:34,END:35,HOME:36,LEFT:37,UP:38,RIGHT:39,DOWN:40})};f.prototype.init=function(){this.domNode.tabIndex=-1,this.domNode.addEventListener("keydown",this.handleKeydown.bind(this)),this.domNode.addEventListener("click",this.handleClick.bind(this)),this.domNode.addEventListener("focus",this.handleFocus.bind(this)),this.domNode.addEventListener("blur",this.handleBlur.bind(this)),this.domNode.addEventListener("mouseover",this.handleMouseover.bind(this)),this.domNode.addEventListener("mouseout",this.handleMouseout.bind(this));var e=this.domNode.nextElementSibling;e&&"UL"===e.tagName&&(this.popupMenu=new m(e,this),this.popupMenu.init())},f.prototype.isExpanded=function(){return"true"===this.domNode.getAttribute("aria-expanded")},f.prototype.handleKeydown=function(e){var t,n,i=e.currentTarget,o=e.key,r=!1;switch(e.keyCode){case this.keyCode.SPACE:case this.keyCode.RETURN:if(this.popupMenu)this.popupMenu.open(),this.popupMenu.setFocusToFirstItem();else{try{t=new MouseEvent("click",{view:window,bubbles:!0,cancelable:!0})}catch(e){document.createEvent&&(t=document.createEvent("MouseEvents")).initEvent("click",!0,!0)}i.dispatchEvent(t)}r=!0;break;case this.keyCode.UP:this.menu.setFocusToPreviousItem(this),r=!0;break;case this.keyCode.DOWN:this.menu.setFocusToNextItem(this),r=!0;break;case this.keyCode.LEFT:this.menu.setFocusToController("previous",!0),this.menu.close(!0),r=!0;break;case this.keyCode.RIGHT:this.popupMenu?(this.popupMenu.open(),this.popupMenu.setFocusToFirstItem()):(this.menu.setFocusToController("next",!0),this.menu.close(!0)),r=!0;break;case this.keyCode.HOME:case this.keyCode.PAGEUP:this.menu.setFocusToFirstItem(),r=!0;break;case this.keyCode.END:case this.keyCode.PAGEDOWN:this.menu.setFocusToLastItem(),r=!0;break;case this.keyCode.ESC:this.menu.setFocusToController(),this.menu.close(!0),r=!0;break;case this.keyCode.TAB:this.menu.setFocusToController();break;default:1===(n=o).length&&n.match(/\S/)&&(this.menu.setFocusByFirstCharacter(this,o),r=!0)}r&&(e.stopPropagation(),e.preventDefault())},f.prototype.setExpanded=function(e){e?this.domNode.setAttribute("aria-expanded","true"):this.domNode.setAttribute("aria-expanded","false")},f.prototype.handleClick=function(e){this.menu.setFocusToController(),this.menu.close(!0)},f.prototype.handleFocus=function(e){this.menu.hasFocus=!0},f.prototype.handleBlur=function(e){this.menu.hasFocus=!1,setTimeout(this.menu.close.bind(this.menu,!1),300)},f.prototype.handleMouseover=function(e){this.menu.hasHover=!0,this.menu.open(),this.popupMenu&&(this.popupMenu.hasHover=!0,this.popupMenu.open())},f.prototype.handleMouseout=function(e){this.popupMenu&&(this.popupMenu.hasHover=!1,this.popupMenu.close(!0)),this.menu.hasHover=!1,setTimeout(this.menu.close.bind(this.menu,!1),300)};var m=function(e,t){var n="PopupMenu constructor argument domNode ";if(!(e instanceof Element))throw new TypeError(n+"is not a DOM Element.");if(0===e.childElementCount)throw new Error(n+"has no element children.");for(var i=e.firstElementChild;i;){var o=i.firstElementChild;if(o&&"A"===o)throw new Error(n+"has descendant elements that are not A elements.");i=i.nextElementSibling}this.isMenubar=!1,this.domNode=e,this.controller=t,this.menuitems=[],this.firstChars=[],this.firstItem=null,this.lastItem=null,this.hasFocus=!1,this.hasHover=!1};m.prototype.init=function(){var e,t,n,i,o;for(this.domNode.addEventListener("mouseover",this.handleMouseover.bind(this)),this.domNode.addEventListener("mouseout",this.handleMouseout.bind(this)),e=this.domNode.firstElementChild;e;)(t=e.firstElementChild)&&"A"===t.tagName&&((n=new f(t,this)).init(),this.menuitems.push(n),i=t.textContent.trim(),this.firstChars.push(i.substring(0,1).toLowerCase())),e=e.nextElementSibling;(o=this.menuitems.length)>0&&(this.firstItem=this.menuitems[0],this.lastItem=this.menuitems[o-1])},m.prototype.handleMouseover=function(e){this.hasHover=!0},m.prototype.handleMouseout=function(e){this.hasHover=!1,setTimeout(this.close.bind(this,!1),1)},m.prototype.setFocusToController=function(e,t){if("string"!=typeof e&&(e=""),""!==e){if(this.controller.isMenubarItem)"previous"===e?this.controller.menu.setFocusToPreviousItem(this.controller,t):"next"===e&&this.controller.menu.setFocusToNextItem(this.controller,t);else if(this.controller.domNode.focus(),this.close(),"next"===e){var n=function(e,t){for(;e;){if(e.isMenubarItem)return e.domNode.focus(),e;t&&e.menu.close(!0),e.hasFocus=!1,e=e.menu.controller}return!1}(this.controller,!1);n&&n.menu.setFocusToNextItem(n,t)}}else this.controller&&this.controller.domNode&&this.controller.domNode.focus()},m.prototype.setFocusToFirstItem=function(){this.firstItem.domNode.focus()},m.prototype.setFocusToLastItem=function(){this.lastItem.domNode.focus()},m.prototype.setFocusToPreviousItem=function(e){var t;e===this.firstItem?this.lastItem.domNode.focus():(t=this.menuitems.indexOf(e),this.menuitems[t-1].domNode.focus())},m.prototype.setFocusToNextItem=function(e){var t;e===this.lastItem?this.firstItem.domNode.focus():(t=this.menuitems.indexOf(e),this.menuitems[t+1].domNode.focus())},m.prototype.setFocusByFirstCharacter=function(e,t){var n,i;t=t.toLowerCase(),(n=this.menuitems.indexOf(e)+1)===this.menuitems.length&&(n=0),-1===(i=this.getIndexFirstChars(n,t))&&(i=this.getIndexFirstChars(0,t)),i>-1&&this.menuitems[i].domNode.focus()},m.prototype.getIndexFirstChars=function(e,t){for(var n=e;n<this.firstChars.length;n++)if(t===this.firstChars[n])return n;return-1},m.prototype.open=function(){var e=this.controller.domNode.getBoundingClientRect();this.controller.isMenubarItem?(this.domNode.style.display="block",this.domNode.style.position="absolute",this.domNode.style.zIndex=100):(this.domNode.parentNode.style.position="relative",this.domNode.style.display="block",this.domNode.style.position="absolute",this.domNode.style.left=e.width+"px",this.domNode.style.zIndex=100),this.controller.setExpanded(!0)},m.prototype.close=function(e){for(var t=this.controller.hasHover,n=this.hasFocus,i=0;i<this.menuitems.length;i++){var o=this.menuitems[i];o.popupMenu&&(n|=o.popupMenu.hasFocus)}this.controller.isMenubarItem||(t=!1),!e&&(n||this.hasHover||t)||(this.domNode.style.display="none",this.domNode.style.zIndex=0,this.controller.setExpanded(!1))};var g=new h(document.getElementById("main-menu"));g&&g.init()},"interactive"===document.readyState||"complete"===document.readyState?o():document.addEventListener("DOMContentLoaded",o)},861:(e,t,n)=>{"use strict";function i(e){if(null==e)return window;if("[object Window]"!==e.toString()){var t=e.ownerDocument;return t&&t.defaultView||window}return e}function o(e){return e instanceof i(e).Element||e instanceof Element}function r(e){return e instanceof i(e).HTMLElement||e instanceof HTMLElement}function s(e){return"undefined"!=typeof ShadowRoot&&(e instanceof i(e).ShadowRoot||e instanceof ShadowRoot)}n.d(t,{ZP:()=>at});var a=Math.round;function c(e,t){void 0===t&&(t=!1);var n=e.getBoundingClientRect(),i=1,o=1;if(r(e)&&t){var s=e.offsetHeight,c=e.offsetWidth;c>0&&(i=n.width/c||1),s>0&&(o=n.height/s||1)}return{width:a(n.width/i),height:a(n.height/o),top:a(n.top/o),right:a(n.right/i),bottom:a(n.bottom/o),left:a(n.left/i),x:a(n.left/i),y:a(n.top/o)}}function u(e){var t=i(e);return{scrollLeft:t.pageXOffset,scrollTop:t.pageYOffset}}function l(e){return e?(e.nodeName||"").toLowerCase():null}function d(e){return((o(e)?e.ownerDocument:e.document)||window.document).documentElement}function p(e){return c(d(e)).left+u(e).scrollLeft}function h(e){return i(e).getComputedStyle(e)}function f(e){var t=h(e),n=t.overflow,i=t.overflowX,o=t.overflowY;return/auto|scroll|overlay|hidden/.test(n+o+i)}function m(e,t,n){void 0===n&&(n=!1);var o,s,a=r(t),h=r(t)&&function(e){var t=e.getBoundingClientRect(),n=t.width/e.offsetWidth||1,i=t.height/e.offsetHeight||1;return 1!==n||1!==i}(t),m=d(t),g=c(e,h),v={scrollLeft:0,scrollTop:0},b={x:0,y:0};return(a||!a&&!n)&&(("body"!==l(t)||f(m))&&(v=(o=t)!==i(o)&&r(o)?{scrollLeft:(s=o).scrollLeft,scrollTop:s.scrollTop}:u(o)),r(t)?((b=c(t,!0)).x+=t.clientLeft,b.y+=t.clientTop):m&&(b.x=p(m))),{x:g.left+v.scrollLeft-b.x,y:g.top+v.scrollTop-b.y,width:g.width,height:g.height}}function g(e){var t=c(e),n=e.offsetWidth,i=e.offsetHeight;return Math.abs(t.width-n)<=1&&(n=t.width),Math.abs(t.height-i)<=1&&(i=t.height),{x:e.offsetLeft,y:e.offsetTop,width:n,height:i}}function v(e){return"html"===l(e)?e:e.assignedSlot||e.parentNode||(s(e)?e.host:null)||d(e)}function b(e){return["html","body","#document"].indexOf(l(e))>=0?e.ownerDocument.body:r(e)&&f(e)?e:b(v(e))}function y(e,t){var n;void 0===t&&(t=[]);var o=b(e),r=o===(null==(n=e.ownerDocument)?void 0:n.body),s=i(o),a=r?[s].concat(s.visualViewport||[],f(o)?o:[]):o,c=t.concat(a);return r?c:c.concat(y(v(a)))}function _(e){return["table","td","th"].indexOf(l(e))>=0}function w(e){return r(e)&&"fixed"!==h(e).position?e.offsetParent:null}function E(e){for(var t=i(e),n=w(e);n&&_(n)&&"static"===h(n).position;)n=w(n);return n&&("html"===l(n)||"body"===l(n)&&"static"===h(n).position)?t:n||function(e){var t=-1!==navigator.userAgent.toLowerCase().indexOf("firefox");if(-1!==navigator.userAgent.indexOf("Trident")&&r(e)&&"fixed"===h(e).position)return null;for(var n=v(e);r(n)&&["html","body"].indexOf(l(n))<0;){var i=h(n);if("none"!==i.transform||"none"!==i.perspective||"paint"===i.contain||-1!==["transform","perspective"].indexOf(i.willChange)||t&&"filter"===i.willChange||t&&i.filter&&"none"!==i.filter)return n;n=n.parentNode}return null}(e)||t}var S="top",x="bottom",O="right",L="left",A="auto",k=[S,x,O,L],C="start",N="end",D="viewport",T="popper",P=k.reduce((function(e,t){return e.concat([t+"-"+C,t+"-"+N])}),[]),M=[].concat(k,[A]).reduce((function(e,t){return e.concat([t,t+"-"+C,t+"-"+N])}),[]),F=["beforeRead","read","afterRead","beforeMain","main","afterMain","beforeWrite","write","afterWrite"];function q(e){var t=new Map,n=new Set,i=[];function o(e){n.add(e.name),[].concat(e.requires||[],e.requiresIfExists||[]).forEach((function(e){if(!n.has(e)){var i=t.get(e);i&&o(i)}})),i.push(e)}return e.forEach((function(e){t.set(e.name,e)})),e.forEach((function(e){n.has(e.name)||o(e)})),i}var I={placement:"bottom",modifiers:[],strategy:"absolute"};function B(){for(var e=arguments.length,t=new Array(e),n=0;n<e;n++)t[n]=arguments[n];return!t.some((function(e){return!(e&&"function"==typeof e.getBoundingClientRect)}))}function j(e){void 0===e&&(e={});var t=e,n=t.defaultModifiers,i=void 0===n?[]:n,r=t.defaultOptions,s=void 0===r?I:r;return function(e,t,n){void 0===n&&(n=s);var r,a,c={placement:"bottom",orderedModifiers:[],options:Object.assign({},I,s),modifiersData:{},elements:{reference:e,popper:t},attributes:{},styles:{}},u=[],l=!1,d={state:c,setOptions:function(n){var r="function"==typeof n?n(c.options):n;p(),c.options=Object.assign({},s,c.options,r),c.scrollParents={reference:o(e)?y(e):e.contextElement?y(e.contextElement):[],popper:y(t)};var a=function(e){var t=q(e);return F.reduce((function(e,n){return e.concat(t.filter((function(e){return e.phase===n})))}),[])}(function(e){var t=e.reduce((function(e,t){var n=e[t.name];return e[t.name]=n?Object.assign({},n,t,{options:Object.assign({},n.options,t.options),data:Object.assign({},n.data,t.data)}):t,e}),{});return Object.keys(t).map((function(e){return t[e]}))}([].concat(i,c.options.modifiers)));return c.orderedModifiers=a.filter((function(e){return e.enabled})),c.orderedModifiers.forEach((function(e){var t=e.name,n=e.options,i=void 0===n?{}:n,o=e.effect;if("function"==typeof o){var r=o({state:c,name:t,instance:d,options:i}),s=function(){};u.push(r||s)}})),d.update()},forceUpdate:function(){if(!l){var e=c.elements,t=e.reference,n=e.popper;if(B(t,n)){c.rects={reference:m(t,E(n),"fixed"===c.options.strategy),popper:g(n)},c.reset=!1,c.placement=c.options.placement,c.orderedModifiers.forEach((function(e){return c.modifiersData[e.name]=Object.assign({},e.data)}));for(var i=0;i<c.orderedModifiers.length;i++)if(!0!==c.reset){var o=c.orderedModifiers[i],r=o.fn,s=o.options,a=void 0===s?{}:s,u=o.name;"function"==typeof r&&(c=r({state:c,options:a,name:u,instance:d})||c)}else c.reset=!1,i=-1}}},update:(r=function(){return new Promise((function(e){d.forceUpdate(),e(c)}))},function(){return a||(a=new Promise((function(e){Promise.resolve().then((function(){a=void 0,e(r())}))}))),a}),destroy:function(){p(),l=!0}};if(!B(e,t))return d;function p(){u.forEach((function(e){return e()})),u=[]}return d.setOptions(n).then((function(e){!l&&n.onFirstUpdate&&n.onFirstUpdate(e)})),d}}var H={passive:!0};const R={name:"eventListeners",enabled:!0,phase:"write",fn:function(){},effect:function(e){var t=e.state,n=e.instance,o=e.options,r=o.scroll,s=void 0===r||r,a=o.resize,c=void 0===a||a,u=i(t.elements.popper),l=[].concat(t.scrollParents.reference,t.scrollParents.popper);return s&&l.forEach((function(e){e.addEventListener("scroll",n.update,H)})),c&&u.addEventListener("resize",n.update,H),function(){s&&l.forEach((function(e){e.removeEventListener("scroll",n.update,H)})),c&&u.removeEventListener("resize",n.update,H)}},data:{}};function U(e){return e.split("-")[0]}function V(e){return e.split("-")[1]}function W(e){return["top","bottom"].indexOf(e)>=0?"x":"y"}function $(e){var t,n=e.reference,i=e.element,o=e.placement,r=o?U(o):null,s=o?V(o):null,a=n.x+n.width/2-i.width/2,c=n.y+n.height/2-i.height/2;switch(r){case S:t={x:a,y:n.y-i.height};break;case x:t={x:a,y:n.y+n.height};break;case O:t={x:n.x+n.width,y:c};break;case L:t={x:n.x-i.width,y:c};break;default:t={x:n.x,y:n.y}}var u=r?W(r):null;if(null!=u){var l="y"===u?"height":"width";switch(s){case C:t[u]=t[u]-(n[l]/2-i[l]/2);break;case N:t[u]=t[u]+(n[l]/2-i[l]/2)}}return t}const z={name:"popperOffsets",enabled:!0,phase:"read",fn:function(e){var t=e.state,n=e.name;t.modifiersData[n]=$({reference:t.rects.reference,element:t.rects.popper,strategy:"absolute",placement:t.placement})},data:{}};var J=Math.max,G=Math.min,Y=Math.round,K={top:"auto",right:"auto",bottom:"auto",left:"auto"};function X(e){var t,n=e.popper,o=e.popperRect,r=e.placement,s=e.variation,a=e.offsets,c=e.position,u=e.gpuAcceleration,l=e.adaptive,p=e.roundOffsets,f=!0===p?function(e){var t=e.x,n=e.y,i=window.devicePixelRatio||1;return{x:Y(Y(t*i)/i)||0,y:Y(Y(n*i)/i)||0}}(a):"function"==typeof p?p(a):a,m=f.x,g=void 0===m?0:m,v=f.y,b=void 0===v?0:v,y=a.hasOwnProperty("x"),_=a.hasOwnProperty("y"),w=L,A=S,k=window;if(l){var C=E(n),D="clientHeight",T="clientWidth";C===i(n)&&"static"!==h(C=d(n)).position&&"absolute"===c&&(D="scrollHeight",T="scrollWidth"),C=C,r!==S&&(r!==L&&r!==O||s!==N)||(A=x,b-=C[D]-o.height,b*=u?1:-1),r!==L&&(r!==S&&r!==x||s!==N)||(w=O,g-=C[T]-o.width,g*=u?1:-1)}var P,M=Object.assign({position:c},l&&K);return u?Object.assign({},M,((P={})[A]=_?"0":"",P[w]=y?"0":"",P.transform=(k.devicePixelRatio||1)<=1?"translate("+g+"px, "+b+"px)":"translate3d("+g+"px, "+b+"px, 0)",P)):Object.assign({},M,((t={})[A]=_?b+"px":"",t[w]=y?g+"px":"",t.transform="",t))}const Z={name:"applyStyles",enabled:!0,phase:"write",fn:function(e){var t=e.state;Object.keys(t.elements).forEach((function(e){var n=t.styles[e]||{},i=t.attributes[e]||{},o=t.elements[e];r(o)&&l(o)&&(Object.assign(o.style,n),Object.keys(i).forEach((function(e){var t=i[e];!1===t?o.removeAttribute(e):o.setAttribute(e,!0===t?"":t)})))}))},effect:function(e){var t=e.state,n={popper:{position:t.options.strategy,left:"0",top:"0",margin:"0"},arrow:{position:"absolute"},reference:{}};return Object.assign(t.elements.popper.style,n.popper),t.styles=n,t.elements.arrow&&Object.assign(t.elements.arrow.style,n.arrow),function(){Object.keys(t.elements).forEach((function(e){var i=t.elements[e],o=t.attributes[e]||{},s=Object.keys(t.styles.hasOwnProperty(e)?t.styles[e]:n[e]).reduce((function(e,t){return e[t]="",e}),{});r(i)&&l(i)&&(Object.assign(i.style,s),Object.keys(o).forEach((function(e){i.removeAttribute(e)})))}))}},requires:["computeStyles"]};const Q={name:"offset",enabled:!0,phase:"main",requires:["popperOffsets"],fn:function(e){var t=e.state,n=e.options,i=e.name,o=n.offset,r=void 0===o?[0,0]:o,s=M.reduce((function(e,n){return e[n]=function(e,t,n){var i=U(e),o=[L,S].indexOf(i)>=0?-1:1,r="function"==typeof n?n(Object.assign({},t,{placement:e})):n,s=r[0],a=r[1];return s=s||0,a=(a||0)*o,[L,O].indexOf(i)>=0?{x:a,y:s}:{x:s,y:a}}(n,t.rects,r),e}),{}),a=s[t.placement],c=a.x,u=a.y;null!=t.modifiersData.popperOffsets&&(t.modifiersData.popperOffsets.x+=c,t.modifiersData.popperOffsets.y+=u),t.modifiersData[i]=s}};var ee={left:"right",right:"left",bottom:"top",top:"bottom"};function te(e){return e.replace(/left|right|bottom|top/g,(function(e){return ee[e]}))}var ne={start:"end",end:"start"};function ie(e){return e.replace(/start|end/g,(function(e){return ne[e]}))}function oe(e,t){var n=t.getRootNode&&t.getRootNode();if(e.contains(t))return!0;if(n&&s(n)){var i=t;do{if(i&&e.isSameNode(i))return!0;i=i.parentNode||i.host}while(i)}return!1}function re(e){return Object.assign({},e,{left:e.x,top:e.y,right:e.x+e.width,bottom:e.y+e.height})}function se(e,t){return t===D?re(function(e){var t=i(e),n=d(e),o=t.visualViewport,r=n.clientWidth,s=n.clientHeight,a=0,c=0;return o&&(r=o.width,s=o.height,/^((?!chrome|android).)*safari/i.test(navigator.userAgent)||(a=o.offsetLeft,c=o.offsetTop)),{width:r,height:s,x:a+p(e),y:c}}(e)):r(t)?function(e){var t=c(e);return t.top=t.top+e.clientTop,t.left=t.left+e.clientLeft,t.bottom=t.top+e.clientHeight,t.right=t.left+e.clientWidth,t.width=e.clientWidth,t.height=e.clientHeight,t.x=t.left,t.y=t.top,t}(t):re(function(e){var t,n=d(e),i=u(e),o=null==(t=e.ownerDocument)?void 0:t.body,r=J(n.scrollWidth,n.clientWidth,o?o.scrollWidth:0,o?o.clientWidth:0),s=J(n.scrollHeight,n.clientHeight,o?o.scrollHeight:0,o?o.clientHeight:0),a=-i.scrollLeft+p(e),c=-i.scrollTop;return"rtl"===h(o||n).direction&&(a+=J(n.clientWidth,o?o.clientWidth:0)-r),{width:r,height:s,x:a,y:c}}(d(e)))}function ae(e,t,n){var i="clippingParents"===t?function(e){var t=y(v(e)),n=["absolute","fixed"].indexOf(h(e).position)>=0&&r(e)?E(e):e;return o(n)?t.filter((function(e){return o(e)&&oe(e,n)&&"body"!==l(e)})):[]}(e):[].concat(t),s=[].concat(i,[n]),a=s[0],c=s.reduce((function(t,n){var i=se(e,n);return t.top=J(i.top,t.top),t.right=G(i.right,t.right),t.bottom=G(i.bottom,t.bottom),t.left=J(i.left,t.left),t}),se(e,a));return c.width=c.right-c.left,c.height=c.bottom-c.top,c.x=c.left,c.y=c.top,c}function ce(e){return Object.assign({},{top:0,right:0,bottom:0,left:0},e)}function ue(e,t){return t.reduce((function(t,n){return t[n]=e,t}),{})}function le(e,t){void 0===t&&(t={});var n=t,i=n.placement,r=void 0===i?e.placement:i,s=n.boundary,a=void 0===s?"clippingParents":s,u=n.rootBoundary,l=void 0===u?D:u,p=n.elementContext,h=void 0===p?T:p,f=n.altBoundary,m=void 0!==f&&f,g=n.padding,v=void 0===g?0:g,b=ce("number"!=typeof v?v:ue(v,k)),y=h===T?"reference":T,_=e.rects.popper,w=e.elements[m?y:h],E=ae(o(w)?w:w.contextElement||d(e.elements.popper),a,l),L=c(e.elements.reference),A=$({reference:L,element:_,strategy:"absolute",placement:r}),C=re(Object.assign({},_,A)),N=h===T?C:L,P={top:E.top-N.top+b.top,bottom:N.bottom-E.bottom+b.bottom,left:E.left-N.left+b.left,right:N.right-E.right+b.right},M=e.modifiersData.offset;if(h===T&&M){var F=M[r];Object.keys(P).forEach((function(e){var t=[O,x].indexOf(e)>=0?1:-1,n=[S,x].indexOf(e)>=0?"y":"x";P[e]+=F[n]*t}))}return P}function de(e,t,n){return J(e,G(t,n))}const pe={name:"preventOverflow",enabled:!0,phase:"main",fn:function(e){var t=e.state,n=e.options,i=e.name,o=n.mainAxis,r=void 0===o||o,s=n.altAxis,a=void 0!==s&&s,c=n.boundary,u=n.rootBoundary,l=n.altBoundary,d=n.padding,p=n.tether,h=void 0===p||p,f=n.tetherOffset,m=void 0===f?0:f,v=le(t,{boundary:c,rootBoundary:u,padding:d,altBoundary:l}),b=U(t.placement),y=V(t.placement),_=!y,w=W(b),A="x"===w?"y":"x",k=t.modifiersData.popperOffsets,N=t.rects.reference,D=t.rects.popper,T="function"==typeof m?m(Object.assign({},t.rects,{placement:t.placement})):m,P={x:0,y:0};if(k){if(r||a){var M="y"===w?S:L,F="y"===w?x:O,q="y"===w?"height":"width",I=k[w],B=k[w]+v[M],j=k[w]-v[F],H=h?-D[q]/2:0,R=y===C?N[q]:D[q],$=y===C?-D[q]:-N[q],z=t.elements.arrow,Y=h&&z?g(z):{width:0,height:0},K=t.modifiersData["arrow#persistent"]?t.modifiersData["arrow#persistent"].padding:{top:0,right:0,bottom:0,left:0},X=K[M],Z=K[F],Q=de(0,N[q],Y[q]),ee=_?N[q]/2-H-Q-X-T:R-Q-X-T,te=_?-N[q]/2+H+Q+Z+T:$+Q+Z+T,ne=t.elements.arrow&&E(t.elements.arrow),ie=ne?"y"===w?ne.clientTop||0:ne.clientLeft||0:0,oe=t.modifiersData.offset?t.modifiersData.offset[t.placement][w]:0,re=k[w]+ee-oe-ie,se=k[w]+te-oe;if(r){var ae=de(h?G(B,re):B,I,h?J(j,se):j);k[w]=ae,P[w]=ae-I}if(a){var ce="x"===w?S:L,ue="x"===w?x:O,pe=k[A],he=pe+v[ce],fe=pe-v[ue],me=de(h?G(he,re):he,pe,h?J(fe,se):fe);k[A]=me,P[A]=me-pe}}t.modifiersData[i]=P}},requiresIfExists:["offset"]};const he={name:"arrow",enabled:!0,phase:"main",fn:function(e){var t,n=e.state,i=e.name,o=e.options,r=n.elements.arrow,s=n.modifiersData.popperOffsets,a=U(n.placement),c=W(a),u=[L,O].indexOf(a)>=0?"height":"width";if(r&&s){var l=function(e,t){return ce("number"!=typeof(e="function"==typeof e?e(Object.assign({},t.rects,{placement:t.placement})):e)?e:ue(e,k))}(o.padding,n),d=g(r),p="y"===c?S:L,h="y"===c?x:O,f=n.rects.reference[u]+n.rects.reference[c]-s[c]-n.rects.popper[u],m=s[c]-n.rects.reference[c],v=E(r),b=v?"y"===c?v.clientHeight||0:v.clientWidth||0:0,y=f/2-m/2,_=l[p],w=b-d[u]-l[h],A=b/2-d[u]/2+y,C=de(_,A,w),N=c;n.modifiersData[i]=((t={})[N]=C,t.centerOffset=C-A,t)}},effect:function(e){var t=e.state,n=e.options.element,i=void 0===n?"[data-popper-arrow]":n;null!=i&&("string"!=typeof i||(i=t.elements.popper.querySelector(i)))&&oe(t.elements.popper,i)&&(t.elements.arrow=i)},requires:["popperOffsets"],requiresIfExists:["preventOverflow"]};function fe(e,t,n){return void 0===n&&(n={x:0,y:0}),{top:e.top-t.height-n.y,right:e.right-t.width+n.x,bottom:e.bottom-t.height+n.y,left:e.left-t.width-n.x}}function me(e){return[S,O,x,L].some((function(t){return e[t]>=0}))}var ge=j({defaultModifiers:[R,z,{name:"computeStyles",enabled:!0,phase:"beforeWrite",fn:function(e){var t=e.state,n=e.options,i=n.gpuAcceleration,o=void 0===i||i,r=n.adaptive,s=void 0===r||r,a=n.roundOffsets,c=void 0===a||a,u={placement:U(t.placement),variation:V(t.placement),popper:t.elements.popper,popperRect:t.rects.popper,gpuAcceleration:o};null!=t.modifiersData.popperOffsets&&(t.styles.popper=Object.assign({},t.styles.popper,X(Object.assign({},u,{offsets:t.modifiersData.popperOffsets,position:t.options.strategy,adaptive:s,roundOffsets:c})))),null!=t.modifiersData.arrow&&(t.styles.arrow=Object.assign({},t.styles.arrow,X(Object.assign({},u,{offsets:t.modifiersData.arrow,position:"absolute",adaptive:!1,roundOffsets:c})))),t.attributes.popper=Object.assign({},t.attributes.popper,{"data-popper-placement":t.placement})},data:{}},Z,Q,{name:"flip",enabled:!0,phase:"main",fn:function(e){var t=e.state,n=e.options,i=e.name;if(!t.modifiersData[i]._skip){for(var o=n.mainAxis,r=void 0===o||o,s=n.altAxis,a=void 0===s||s,c=n.fallbackPlacements,u=n.padding,l=n.boundary,d=n.rootBoundary,p=n.altBoundary,h=n.flipVariations,f=void 0===h||h,m=n.allowedAutoPlacements,g=t.options.placement,v=U(g),b=c||(v===g||!f?[te(g)]:function(e){if(U(e)===A)return[];var t=te(e);return[ie(e),t,ie(t)]}(g)),y=[g].concat(b).reduce((function(e,n){return e.concat(U(n)===A?function(e,t){void 0===t&&(t={});var n=t,i=n.placement,o=n.boundary,r=n.rootBoundary,s=n.padding,a=n.flipVariations,c=n.allowedAutoPlacements,u=void 0===c?M:c,l=V(i),d=l?a?P:P.filter((function(e){return V(e)===l})):k,p=d.filter((function(e){return u.indexOf(e)>=0}));0===p.length&&(p=d);var h=p.reduce((function(t,n){return t[n]=le(e,{placement:n,boundary:o,rootBoundary:r,padding:s})[U(n)],t}),{});return Object.keys(h).sort((function(e,t){return h[e]-h[t]}))}(t,{placement:n,boundary:l,rootBoundary:d,padding:u,flipVariations:f,allowedAutoPlacements:m}):n)}),[]),_=t.rects.reference,w=t.rects.popper,E=new Map,N=!0,D=y[0],T=0;T<y.length;T++){var F=y[T],q=U(F),I=V(F)===C,B=[S,x].indexOf(q)>=0,j=B?"width":"height",H=le(t,{placement:F,boundary:l,rootBoundary:d,altBoundary:p,padding:u}),R=B?I?O:L:I?x:S;_[j]>w[j]&&(R=te(R));var W=te(R),$=[];if(r&&$.push(H[q]<=0),a&&$.push(H[R]<=0,H[W]<=0),$.every((function(e){return e}))){D=F,N=!1;break}E.set(F,$)}if(N)for(var z=function(e){var t=y.find((function(t){var n=E.get(t);if(n)return n.slice(0,e).every((function(e){return e}))}));if(t)return D=t,"break"},J=f?3:1;J>0;J--){if("break"===z(J))break}t.placement!==D&&(t.modifiersData[i]._skip=!0,t.placement=D,t.reset=!0)}},requiresIfExists:["offset"],data:{_skip:!1}},pe,he,{name:"hide",enabled:!0,phase:"main",requiresIfExists:["preventOverflow"],fn:function(e){var t=e.state,n=e.name,i=t.rects.reference,o=t.rects.popper,r=t.modifiersData.preventOverflow,s=le(t,{elementContext:"reference"}),a=le(t,{altBoundary:!0}),c=fe(s,i),u=fe(a,o,r),l=me(c),d=me(u);t.modifiersData[n]={referenceClippingOffsets:c,popperEscapeOffsets:u,isReferenceHidden:l,hasPopperEscaped:d},t.attributes.popper=Object.assign({},t.attributes.popper,{"data-popper-reference-hidden":l,"data-popper-escaped":d})}}]}),ve="tippy-content",be="tippy-backdrop",ye="tippy-arrow",_e="tippy-svg-arrow",we={passive:!0,capture:!0};function Ee(e,t,n){if(Array.isArray(e)){var i=e[t];return null==i?Array.isArray(n)?n[t]:n:i}return e}function Se(e,t){var n={}.toString.call(e);return 0===n.indexOf("[object")&&n.indexOf(t+"]")>-1}function xe(e,t){return"function"==typeof e?e.apply(void 0,t):e}function Oe(e,t){return 0===t?e:function(i){clearTimeout(n),n=setTimeout((function(){e(i)}),t)};var n}function Le(e){return[].concat(e)}function Ae(e,t){-1===e.indexOf(t)&&e.push(t)}function ke(e){return e.split("-")[0]}function Ce(e){return[].slice.call(e)}function Ne(){return document.createElement("div")}function De(e){return["Element","Fragment"].some((function(t){return Se(e,t)}))}function Te(e){return Se(e,"MouseEvent")}function Pe(e){return!(!e||!e._tippy||e._tippy.reference!==e)}function Me(e){return De(e)?[e]:function(e){return Se(e,"NodeList")}(e)?Ce(e):Array.isArray(e)?e:Ce(document.querySelectorAll(e))}function Fe(e,t){e.forEach((function(e){e&&(e.style.transitionDuration=t+"ms")}))}function qe(e,t){e.forEach((function(e){e&&e.setAttribute("data-state",t)}))}function Ie(e){var t,n=Le(e)[0];return(null==n||null==(t=n.ownerDocument)?void 0:t.body)?n.ownerDocument:document}function Be(e,t,n){var i=t+"EventListener";["transitionend","webkitTransitionEnd"].forEach((function(t){e[i](t,n)}))}var je={isTouch:!1},He=0;function Re(){je.isTouch||(je.isTouch=!0,window.performance&&document.addEventListener("mousemove",Ue))}function Ue(){var e=performance.now();e-He<20&&(je.isTouch=!1,document.removeEventListener("mousemove",Ue)),He=e}function Ve(){var e=document.activeElement;if(Pe(e)){var t=e._tippy;e.blur&&!t.state.isVisible&&e.blur()}}var We="undefined"!=typeof window&&"undefined"!=typeof document?navigator.userAgent:"",$e=/MSIE |Trident\//.test(We);var ze={animateFill:!1,followCursor:!1,inlinePositioning:!1,sticky:!1},Je=Object.assign({appendTo:function(){return document.body},aria:{content:"auto",expanded:"auto"},delay:0,duration:[300,250],getReferenceClientRect:null,hideOnClick:!0,ignoreAttributes:!1,interactive:!1,interactiveBorder:2,interactiveDebounce:0,moveTransition:"",offset:[0,10],onAfterUpdate:function(){},onBeforeUpdate:function(){},onCreate:function(){},onDestroy:function(){},onHidden:function(){},onHide:function(){},onMount:function(){},onShow:function(){},onShown:function(){},onTrigger:function(){},onUntrigger:function(){},onClickOutside:function(){},placement:"top",plugins:[],popperOptions:{},render:null,showOnCreate:!1,touch:!0,trigger:"mouseenter focus",triggerTarget:null},ze,{},{allowHTML:!1,animation:"fade",arrow:!0,content:"",inertia:!1,maxWidth:350,role:"tooltip",theme:"",zIndex:9999}),Ge=Object.keys(Je);function Ye(e){var t=(e.plugins||[]).reduce((function(t,n){var i=n.name,o=n.defaultValue;return i&&(t[i]=void 0!==e[i]?e[i]:o),t}),{});return Object.assign({},e,{},t)}function Ke(e,t){var n=Object.assign({},t,{content:xe(t.content,[e])},t.ignoreAttributes?{}:function(e,t){return(t?Object.keys(Ye(Object.assign({},Je,{plugins:t}))):Ge).reduce((function(t,n){var i=(e.getAttribute("data-tippy-"+n)||"").trim();if(!i)return t;if("content"===n)t[n]=i;else try{t[n]=JSON.parse(i)}catch(e){t[n]=i}return t}),{})}(e,t.plugins));return n.aria=Object.assign({},Je.aria,{},n.aria),n.aria={expanded:"auto"===n.aria.expanded?t.interactive:n.aria.expanded,content:"auto"===n.aria.content?t.interactive?null:"describedby":n.aria.content},n}function Xe(e,t){e.innerHTML=t}function Ze(e){var t=Ne();return!0===e?t.className=ye:(t.className=_e,De(e)?t.appendChild(e):Xe(t,e)),t}function Qe(e,t){De(t.content)?(Xe(e,""),e.appendChild(t.content)):"function"!=typeof t.content&&(t.allowHTML?Xe(e,t.content):e.textContent=t.content)}function et(e){var t=e.firstElementChild,n=Ce(t.children);return{box:t,content:n.find((function(e){return e.classList.contains(ve)})),arrow:n.find((function(e){return e.classList.contains(ye)||e.classList.contains(_e)})),backdrop:n.find((function(e){return e.classList.contains(be)}))}}function tt(e){var t=Ne(),n=Ne();n.className="tippy-box",n.setAttribute("data-state","hidden"),n.setAttribute("tabindex","-1");var i=Ne();function o(n,i){var o=et(t),r=o.box,s=o.content,a=o.arrow;i.theme?r.setAttribute("data-theme",i.theme):r.removeAttribute("data-theme"),"string"==typeof i.animation?r.setAttribute("data-animation",i.animation):r.removeAttribute("data-animation"),i.inertia?r.setAttribute("data-inertia",""):r.removeAttribute("data-inertia"),r.style.maxWidth="number"==typeof i.maxWidth?i.maxWidth+"px":i.maxWidth,i.role?r.setAttribute("role",i.role):r.removeAttribute("role"),n.content===i.content&&n.allowHTML===i.allowHTML||Qe(s,e.props),i.arrow?a?n.arrow!==i.arrow&&(r.removeChild(a),r.appendChild(Ze(i.arrow))):r.appendChild(Ze(i.arrow)):a&&r.removeChild(a)}return i.className=ve,i.setAttribute("data-state","hidden"),Qe(i,e.props),t.appendChild(n),n.appendChild(i),o(e.props,e.props),{popper:t,onUpdate:o}}tt.$$tippy=!0;var nt=1,it=[],ot=[];function rt(e,t){var n,i,o,r,s,a,c,u,l,d=Ke(e,Object.assign({},Je,{},Ye((n=t,Object.keys(n).reduce((function(e,t){return void 0!==n[t]&&(e[t]=n[t]),e}),{}))))),p=!1,h=!1,f=!1,m=!1,g=[],v=Oe(G,d.interactiveDebounce),b=nt++,y=(l=d.plugins).filter((function(e,t){return l.indexOf(e)===t})),_={id:b,reference:e,popper:Ne(),popperInstance:null,props:d,state:{isEnabled:!0,isVisible:!1,isDestroyed:!1,isMounted:!1,isShown:!1},plugins:y,clearDelayTimeouts:function(){clearTimeout(i),clearTimeout(o),cancelAnimationFrame(r)},setProps:function(t){0;if(_.state.isDestroyed)return;M("onBeforeUpdate",[_,t]),z();var n=_.props,i=Ke(e,Object.assign({},_.props,{},t,{ignoreAttributes:!0}));_.props=i,$(),n.interactiveDebounce!==i.interactiveDebounce&&(I(),v=Oe(G,i.interactiveDebounce));n.triggerTarget&&!i.triggerTarget?Le(n.triggerTarget).forEach((function(e){e.removeAttribute("aria-expanded")})):i.triggerTarget&&e.removeAttribute("aria-expanded");q(),P(),S&&S(n,i);_.popperInstance&&(Z(),ee().forEach((function(e){requestAnimationFrame(e._tippy.popperInstance.forceUpdate)})));M("onAfterUpdate",[_,t])},setContent:function(e){_.setProps({content:e})},show:function(){0;var e=_.state.isVisible,t=_.state.isDestroyed,n=!_.state.isEnabled,i=je.isTouch&&!_.props.touch,o=Ee(_.props.duration,0,Je.duration);if(e||t||n||i)return;if(C().hasAttribute("disabled"))return;if(M("onShow",[_],!1),!1===_.props.onShow(_))return;_.state.isVisible=!0,k()&&(E.style.visibility="visible");P(),R(),_.state.isMounted||(E.style.transition="none");if(k()){var r=D(),s=r.box,a=r.content;Fe([s,a],0)}c=function(){var e;if(_.state.isVisible&&!m){if(m=!0,E.offsetHeight,E.style.transition=_.props.moveTransition,k()&&_.props.animation){var t=D(),n=t.box,i=t.content;Fe([n,i],o),qe([n,i],"visible")}F(),q(),Ae(ot,_),null==(e=_.popperInstance)||e.forceUpdate(),_.state.isMounted=!0,M("onMount",[_]),_.props.animation&&k()&&function(e,t){V(e,t)}(o,(function(){_.state.isShown=!0,M("onShown",[_])}))}},function(){var e,t=_.props.appendTo,n=C();e=_.props.interactive&&t===Je.appendTo||"parent"===t?n.parentNode:xe(t,[n]);e.contains(E)||e.appendChild(E);Z(),!1}()},hide:function(){0;var e=!_.state.isVisible,t=_.state.isDestroyed,n=!_.state.isEnabled,i=Ee(_.props.duration,1,Je.duration);if(e||t||n)return;if(M("onHide",[_],!1),!1===_.props.onHide(_))return;_.state.isVisible=!1,_.state.isShown=!1,m=!1,p=!1,k()&&(E.style.visibility="hidden");if(I(),U(),P(),k()){var o=D(),r=o.box,s=o.content;_.props.animation&&(Fe([r,s],i),qe([r,s],"hidden"))}F(),q(),_.props.animation?k()&&function(e,t){V(e,(function(){!_.state.isVisible&&E.parentNode&&E.parentNode.contains(E)&&t()}))}(i,_.unmount):_.unmount()},hideWithInteractivity:function(e){0;N().addEventListener("mousemove",v),Ae(it,v),v(e)},enable:function(){_.state.isEnabled=!0},disable:function(){_.hide(),_.state.isEnabled=!1},unmount:function(){0;_.state.isVisible&&_.hide();if(!_.state.isMounted)return;Q(),ee().forEach((function(e){e._tippy.unmount()})),E.parentNode&&E.parentNode.removeChild(E);ot=ot.filter((function(e){return e!==_})),_.state.isMounted=!1,M("onHidden",[_])},destroy:function(){0;if(_.state.isDestroyed)return;_.clearDelayTimeouts(),_.unmount(),z(),delete e._tippy,_.state.isDestroyed=!0,M("onDestroy",[_])}};if(!d.render)return _;var w=d.render(_),E=w.popper,S=w.onUpdate;E.setAttribute("data-tippy-root",""),E.id="tippy-"+_.id,_.popper=E,e._tippy=_,E._tippy=_;var x=y.map((function(e){return e.fn(_)})),O=e.hasAttribute("aria-expanded");return $(),q(),P(),M("onCreate",[_]),d.showOnCreate&&te(),E.addEventListener("mouseenter",(function(){_.props.interactive&&_.state.isVisible&&_.clearDelayTimeouts()})),E.addEventListener("mouseleave",(function(e){_.props.interactive&&_.props.trigger.indexOf("mouseenter")>=0&&(N().addEventListener("mousemove",v),v(e))})),_;function L(){var e=_.props.touch;return Array.isArray(e)?e:[e,0]}function A(){return"hold"===L()[0]}function k(){var e;return!!(null==(e=_.props.render)?void 0:e.$$tippy)}function C(){return u||e}function N(){var e=C().parentNode;return e?Ie(e):document}function D(){return et(E)}function T(e){return _.state.isMounted&&!_.state.isVisible||je.isTouch||s&&"focus"===s.type?0:Ee(_.props.delay,e?0:1,Je.delay)}function P(){E.style.pointerEvents=_.props.interactive&&_.state.isVisible?"":"none",E.style.zIndex=""+_.props.zIndex}function M(e,t,n){var i;(void 0===n&&(n=!0),x.forEach((function(n){n[e]&&n[e].apply(void 0,t)})),n)&&(i=_.props)[e].apply(i,t)}function F(){var t=_.props.aria;if(t.content){var n="aria-"+t.content,i=E.id;Le(_.props.triggerTarget||e).forEach((function(e){var t=e.getAttribute(n);if(_.state.isVisible)e.setAttribute(n,t?t+" "+i:i);else{var o=t&&t.replace(i,"").trim();o?e.setAttribute(n,o):e.removeAttribute(n)}}))}}function q(){!O&&_.props.aria.expanded&&Le(_.props.triggerTarget||e).forEach((function(e){_.props.interactive?e.setAttribute("aria-expanded",_.state.isVisible&&e===C()?"true":"false"):e.removeAttribute("aria-expanded")}))}function I(){N().removeEventListener("mousemove",v),it=it.filter((function(e){return e!==v}))}function B(e){if(!(je.isTouch&&(f||"mousedown"===e.type)||_.props.interactive&&E.contains(e.target))){if(C().contains(e.target)){if(je.isTouch)return;if(_.state.isVisible&&_.props.trigger.indexOf("click")>=0)return}else M("onClickOutside",[_,e]);!0===_.props.hideOnClick&&(_.clearDelayTimeouts(),_.hide(),h=!0,setTimeout((function(){h=!1})),_.state.isMounted||U())}}function j(){f=!0}function H(){f=!1}function R(){var e=N();e.addEventListener("mousedown",B,!0),e.addEventListener("touchend",B,we),e.addEventListener("touchstart",H,we),e.addEventListener("touchmove",j,we)}function U(){var e=N();e.removeEventListener("mousedown",B,!0),e.removeEventListener("touchend",B,we),e.removeEventListener("touchstart",H,we),e.removeEventListener("touchmove",j,we)}function V(e,t){var n=D().box;function i(e){e.target===n&&(Be(n,"remove",i),t())}if(0===e)return t();Be(n,"remove",a),Be(n,"add",i),a=i}function W(t,n,i){void 0===i&&(i=!1),Le(_.props.triggerTarget||e).forEach((function(e){e.addEventListener(t,n,i),g.push({node:e,eventType:t,handler:n,options:i})}))}function $(){var e;A()&&(W("touchstart",J,{passive:!0}),W("touchend",Y,{passive:!0})),(e=_.props.trigger,e.split(/\s+/).filter(Boolean)).forEach((function(e){if("manual"!==e)switch(W(e,J),e){case"mouseenter":W("mouseleave",Y);break;case"focus":W($e?"focusout":"blur",K);break;case"focusin":W("focusout",K)}}))}function z(){g.forEach((function(e){var t=e.node,n=e.eventType,i=e.handler,o=e.options;t.removeEventListener(n,i,o)})),g=[]}function J(e){var t,n=!1;if(_.state.isEnabled&&!X(e)&&!h){var i="focus"===(null==(t=s)?void 0:t.type);s=e,u=e.currentTarget,q(),!_.state.isVisible&&Te(e)&&it.forEach((function(t){return t(e)})),"click"===e.type&&(_.props.trigger.indexOf("mouseenter")<0||p)&&!1!==_.props.hideOnClick&&_.state.isVisible?n=!0:te(e),"click"===e.type&&(p=!n),n&&!i&&ne(e)}}function G(e){var t=e.target,n=C().contains(t)||E.contains(t);if("mousemove"!==e.type||!n){var i=ee().concat(E).map((function(e){var t,n=null==(t=e._tippy.popperInstance)?void 0:t.state;return n?{popperRect:e.getBoundingClientRect(),popperState:n,props:d}:null})).filter(Boolean);(function(e,t){var n=t.clientX,i=t.clientY;return e.every((function(e){var t=e.popperRect,o=e.popperState,r=e.props.interactiveBorder,s=ke(o.placement),a=o.modifiersData.offset;if(!a)return!0;var c="bottom"===s?a.top.y:0,u="top"===s?a.bottom.y:0,l="right"===s?a.left.x:0,d="left"===s?a.right.x:0,p=t.top-i+c>r,h=i-t.bottom-u>r,f=t.left-n+l>r,m=n-t.right-d>r;return p||h||f||m}))})(i,e)&&(I(),ne(e))}}function Y(e){X(e)||_.props.trigger.indexOf("click")>=0&&p||(_.props.interactive?_.hideWithInteractivity(e):ne(e))}function K(e){_.props.trigger.indexOf("focusin")<0&&e.target!==C()||_.props.interactive&&e.relatedTarget&&E.contains(e.relatedTarget)||ne(e)}function X(e){return!!je.isTouch&&A()!==e.type.indexOf("touch")>=0}function Z(){Q();var t=_.props,n=t.popperOptions,i=t.placement,o=t.offset,r=t.getReferenceClientRect,s=t.moveTransition,a=k()?et(E).arrow:null,u=r?{getBoundingClientRect:r,contextElement:r.contextElement||C()}:e,l={name:"$$tippy",enabled:!0,phase:"beforeWrite",requires:["computeStyles"],fn:function(e){var t=e.state;if(k()){var n=D().box;["placement","reference-hidden","escaped"].forEach((function(e){"placement"===e?n.setAttribute("data-placement",t.placement):t.attributes.popper["data-popper-"+e]?n.setAttribute("data-"+e,""):n.removeAttribute("data-"+e)})),t.attributes.popper={}}}},d=[{name:"offset",options:{offset:o}},{name:"preventOverflow",options:{padding:{top:2,bottom:2,left:5,right:5}}},{name:"flip",options:{padding:5}},{name:"computeStyles",options:{adaptive:!s}},l];k()&&a&&d.push({name:"arrow",options:{element:a,padding:3}}),d.push.apply(d,(null==n?void 0:n.modifiers)||[]),_.popperInstance=ge(u,E,Object.assign({},n,{placement:i,onFirstUpdate:c,modifiers:d}))}function Q(){_.popperInstance&&(_.popperInstance.destroy(),_.popperInstance=null)}function ee(){return Ce(E.querySelectorAll("[data-tippy-root]"))}function te(e){_.clearDelayTimeouts(),e&&M("onTrigger",[_,e]),R();var t=T(!0),n=L(),o=n[0],r=n[1];je.isTouch&&"hold"===o&&r&&(t=r),t?i=setTimeout((function(){_.show()}),t):_.show()}function ne(e){if(_.clearDelayTimeouts(),M("onUntrigger",[_,e]),_.state.isVisible){if(!(_.props.trigger.indexOf("mouseenter")>=0&&_.props.trigger.indexOf("click")>=0&&["mouseleave","mousemove"].indexOf(e.type)>=0&&p)){var t=T(!1);t?o=setTimeout((function(){_.state.isVisible&&_.hide()}),t):r=requestAnimationFrame((function(){_.hide()}))}}else U()}}function st(e,t){void 0===t&&(t={});var n=Je.plugins.concat(t.plugins||[]);document.addEventListener("touchstart",Re,we),window.addEventListener("blur",Ve);var i=Object.assign({},t,{plugins:n}),o=Me(e).reduce((function(e,t){var n=t&&rt(t,i);return n&&e.push(n),e}),[]);return De(e)?o[0]:o}st.defaultProps=Je,st.setDefaultProps=function(e){Object.keys(e).forEach((function(t){Je[t]=e[t]}))},st.currentInput=je;Object.assign({},Z,{effect:function(e){var t=e.state,n={popper:{position:t.options.strategy,left:"0",top:"0",margin:"0"},arrow:{position:"absolute"},reference:{}};Object.assign(t.elements.popper.style,n.popper),t.styles=n,t.elements.arrow&&Object.assign(t.elements.arrow.style,n.arrow)}});st.setDefaultProps({render:tt});const at=st},465:(e,t,n)=>{"use strict";function i(e){if(null==e)return window;if("[object Window]"!==e.toString()){var t=e.ownerDocument;return t&&t.defaultView||window}return e}function o(e){return e instanceof i(e).Element||e instanceof Element}function r(e){return e instanceof i(e).HTMLElement||e instanceof HTMLElement}function s(e){return"undefined"!=typeof ShadowRoot&&(e instanceof i(e).ShadowRoot||e instanceof ShadowRoot)}n.d(t,{ZP:()=>at});var a=Math.round;function c(e,t){void 0===t&&(t=!1);var n=e.getBoundingClientRect(),i=1,o=1;return r(e)&&t&&(i=n.width/e.offsetWidth||1,o=n.height/e.offsetHeight||1),{width:a(n.width/i),height:a(n.height/o),top:a(n.top/o),right:a(n.right/i),bottom:a(n.bottom/o),left:a(n.left/i),x:a(n.left/i),y:a(n.top/o)}}function u(e){var t=i(e);return{scrollLeft:t.pageXOffset,scrollTop:t.pageYOffset}}function l(e){return e?(e.nodeName||"").toLowerCase():null}function d(e){return((o(e)?e.ownerDocument:e.document)||window.document).documentElement}function p(e){return c(d(e)).left+u(e).scrollLeft}function h(e){return i(e).getComputedStyle(e)}function f(e){var t=h(e),n=t.overflow,i=t.overflowX,o=t.overflowY;return/auto|scroll|overlay|hidden/.test(n+o+i)}function m(e,t,n){void 0===n&&(n=!1);var o,s,a=r(t),h=r(t)&&function(e){var t=e.getBoundingClientRect(),n=t.width/e.offsetWidth||1,i=t.height/e.offsetHeight||1;return 1!==n||1!==i}(t),m=d(t),g=c(e,h),v={scrollLeft:0,scrollTop:0},b={x:0,y:0};return(a||!a&&!n)&&(("body"!==l(t)||f(m))&&(v=(o=t)!==i(o)&&r(o)?{scrollLeft:(s=o).scrollLeft,scrollTop:s.scrollTop}:u(o)),r(t)?((b=c(t,!0)).x+=t.clientLeft,b.y+=t.clientTop):m&&(b.x=p(m))),{x:g.left+v.scrollLeft-b.x,y:g.top+v.scrollTop-b.y,width:g.width,height:g.height}}function g(e){var t=c(e),n=e.offsetWidth,i=e.offsetHeight;return Math.abs(t.width-n)<=1&&(n=t.width),Math.abs(t.height-i)<=1&&(i=t.height),{x:e.offsetLeft,y:e.offsetTop,width:n,height:i}}function v(e){return"html"===l(e)?e:e.assignedSlot||e.parentNode||(s(e)?e.host:null)||d(e)}function b(e){return["html","body","#document"].indexOf(l(e))>=0?e.ownerDocument.body:r(e)&&f(e)?e:b(v(e))}function y(e,t){var n;void 0===t&&(t=[]);var o=b(e),r=o===(null==(n=e.ownerDocument)?void 0:n.body),s=i(o),a=r?[s].concat(s.visualViewport||[],f(o)?o:[]):o,c=t.concat(a);return r?c:c.concat(y(v(a)))}function _(e){return["table","td","th"].indexOf(l(e))>=0}function w(e){return r(e)&&"fixed"!==h(e).position?e.offsetParent:null}function E(e){for(var t=i(e),n=w(e);n&&_(n)&&"static"===h(n).position;)n=w(n);return n&&("html"===l(n)||"body"===l(n)&&"static"===h(n).position)?t:n||function(e){var t=-1!==navigator.userAgent.toLowerCase().indexOf("firefox");if(-1!==navigator.userAgent.indexOf("Trident")&&r(e)&&"fixed"===h(e).position)return null;for(var n=v(e);r(n)&&["html","body"].indexOf(l(n))<0;){var i=h(n);if("none"!==i.transform||"none"!==i.perspective||"paint"===i.contain||-1!==["transform","perspective"].indexOf(i.willChange)||t&&"filter"===i.willChange||t&&i.filter&&"none"!==i.filter)return n;n=n.parentNode}return null}(e)||t}var S="top",x="bottom",O="right",L="left",A="auto",k=[S,x,O,L],C="start",N="end",D="viewport",T="popper",P=k.reduce((function(e,t){return e.concat([t+"-"+C,t+"-"+N])}),[]),M=[].concat(k,[A]).reduce((function(e,t){return e.concat([t,t+"-"+C,t+"-"+N])}),[]),F=["beforeRead","read","afterRead","beforeMain","main","afterMain","beforeWrite","write","afterWrite"];function q(e){var t=new Map,n=new Set,i=[];function o(e){n.add(e.name),[].concat(e.requires||[],e.requiresIfExists||[]).forEach((function(e){if(!n.has(e)){var i=t.get(e);i&&o(i)}})),i.push(e)}return e.forEach((function(e){t.set(e.name,e)})),e.forEach((function(e){n.has(e.name)||o(e)})),i}var I={placement:"bottom",modifiers:[],strategy:"absolute"};function B(){for(var e=arguments.length,t=new Array(e),n=0;n<e;n++)t[n]=arguments[n];return!t.some((function(e){return!(e&&"function"==typeof e.getBoundingClientRect)}))}function j(e){void 0===e&&(e={});var t=e,n=t.defaultModifiers,i=void 0===n?[]:n,r=t.defaultOptions,s=void 0===r?I:r;return function(e,t,n){void 0===n&&(n=s);var r,a,c={placement:"bottom",orderedModifiers:[],options:Object.assign({},I,s),modifiersData:{},elements:{reference:e,popper:t},attributes:{},styles:{}},u=[],l=!1,d={state:c,setOptions:function(n){p(),c.options=Object.assign({},s,c.options,n),c.scrollParents={reference:o(e)?y(e):e.contextElement?y(e.contextElement):[],popper:y(t)};var r=function(e){var t=q(e);return F.reduce((function(e,n){return e.concat(t.filter((function(e){return e.phase===n})))}),[])}(function(e){var t=e.reduce((function(e,t){var n=e[t.name];return e[t.name]=n?Object.assign({},n,t,{options:Object.assign({},n.options,t.options),data:Object.assign({},n.data,t.data)}):t,e}),{});return Object.keys(t).map((function(e){return t[e]}))}([].concat(i,c.options.modifiers)));return c.orderedModifiers=r.filter((function(e){return e.enabled})),c.orderedModifiers.forEach((function(e){var t=e.name,n=e.options,i=void 0===n?{}:n,o=e.effect;if("function"==typeof o){var r=o({state:c,name:t,instance:d,options:i}),s=function(){};u.push(r||s)}})),d.update()},forceUpdate:function(){if(!l){var e=c.elements,t=e.reference,n=e.popper;if(B(t,n)){c.rects={reference:m(t,E(n),"fixed"===c.options.strategy),popper:g(n)},c.reset=!1,c.placement=c.options.placement,c.orderedModifiers.forEach((function(e){return c.modifiersData[e.name]=Object.assign({},e.data)}));for(var i=0;i<c.orderedModifiers.length;i++)if(!0!==c.reset){var o=c.orderedModifiers[i],r=o.fn,s=o.options,a=void 0===s?{}:s,u=o.name;"function"==typeof r&&(c=r({state:c,options:a,name:u,instance:d})||c)}else c.reset=!1,i=-1}}},update:(r=function(){return new Promise((function(e){d.forceUpdate(),e(c)}))},function(){return a||(a=new Promise((function(e){Promise.resolve().then((function(){a=void 0,e(r())}))}))),a}),destroy:function(){p(),l=!0}};if(!B(e,t))return d;function p(){u.forEach((function(e){return e()})),u=[]}return d.setOptions(n).then((function(e){!l&&n.onFirstUpdate&&n.onFirstUpdate(e)})),d}}var H={passive:!0};const R={name:"eventListeners",enabled:!0,phase:"write",fn:function(){},effect:function(e){var t=e.state,n=e.instance,o=e.options,r=o.scroll,s=void 0===r||r,a=o.resize,c=void 0===a||a,u=i(t.elements.popper),l=[].concat(t.scrollParents.reference,t.scrollParents.popper);return s&&l.forEach((function(e){e.addEventListener("scroll",n.update,H)})),c&&u.addEventListener("resize",n.update,H),function(){s&&l.forEach((function(e){e.removeEventListener("scroll",n.update,H)})),c&&u.removeEventListener("resize",n.update,H)}},data:{}};function U(e){return e.split("-")[0]}function V(e){return e.split("-")[1]}function W(e){return["top","bottom"].indexOf(e)>=0?"x":"y"}function $(e){var t,n=e.reference,i=e.element,o=e.placement,r=o?U(o):null,s=o?V(o):null,a=n.x+n.width/2-i.width/2,c=n.y+n.height/2-i.height/2;switch(r){case S:t={x:a,y:n.y-i.height};break;case x:t={x:a,y:n.y+n.height};break;case O:t={x:n.x+n.width,y:c};break;case L:t={x:n.x-i.width,y:c};break;default:t={x:n.x,y:n.y}}var u=r?W(r):null;if(null!=u){var l="y"===u?"height":"width";switch(s){case C:t[u]=t[u]-(n[l]/2-i[l]/2);break;case N:t[u]=t[u]+(n[l]/2-i[l]/2)}}return t}const z={name:"popperOffsets",enabled:!0,phase:"read",fn:function(e){var t=e.state,n=e.name;t.modifiersData[n]=$({reference:t.rects.reference,element:t.rects.popper,strategy:"absolute",placement:t.placement})},data:{}};var J=Math.max,G=Math.min,Y=Math.round,K={top:"auto",right:"auto",bottom:"auto",left:"auto"};function X(e){var t,n=e.popper,o=e.popperRect,r=e.placement,s=e.offsets,a=e.position,c=e.gpuAcceleration,u=e.adaptive,l=e.roundOffsets,p=!0===l?function(e){var t=e.x,n=e.y,i=window.devicePixelRatio||1;return{x:Y(Y(t*i)/i)||0,y:Y(Y(n*i)/i)||0}}(s):"function"==typeof l?l(s):s,f=p.x,m=void 0===f?0:f,g=p.y,v=void 0===g?0:g,b=s.hasOwnProperty("x"),y=s.hasOwnProperty("y"),_=L,w=S,A=window;if(u){var k=E(n),C="clientHeight",N="clientWidth";k===i(n)&&"static"!==h(k=d(n)).position&&(C="scrollHeight",N="scrollWidth"),k=k,r===S&&(w=x,v-=k[C]-o.height,v*=c?1:-1),r===L&&(_=O,m-=k[N]-o.width,m*=c?1:-1)}var D,T=Object.assign({position:a},u&&K);return c?Object.assign({},T,((D={})[w]=y?"0":"",D[_]=b?"0":"",D.transform=(A.devicePixelRatio||1)<2?"translate("+m+"px, "+v+"px)":"translate3d("+m+"px, "+v+"px, 0)",D)):Object.assign({},T,((t={})[w]=y?v+"px":"",t[_]=b?m+"px":"",t.transform="",t))}const Z={name:"applyStyles",enabled:!0,phase:"write",fn:function(e){var t=e.state;Object.keys(t.elements).forEach((function(e){var n=t.styles[e]||{},i=t.attributes[e]||{},o=t.elements[e];r(o)&&l(o)&&(Object.assign(o.style,n),Object.keys(i).forEach((function(e){var t=i[e];!1===t?o.removeAttribute(e):o.setAttribute(e,!0===t?"":t)})))}))},effect:function(e){var t=e.state,n={popper:{position:t.options.strategy,left:"0",top:"0",margin:"0"},arrow:{position:"absolute"},reference:{}};return Object.assign(t.elements.popper.style,n.popper),t.styles=n,t.elements.arrow&&Object.assign(t.elements.arrow.style,n.arrow),function(){Object.keys(t.elements).forEach((function(e){var i=t.elements[e],o=t.attributes[e]||{},s=Object.keys(t.styles.hasOwnProperty(e)?t.styles[e]:n[e]).reduce((function(e,t){return e[t]="",e}),{});r(i)&&l(i)&&(Object.assign(i.style,s),Object.keys(o).forEach((function(e){i.removeAttribute(e)})))}))}},requires:["computeStyles"]};const Q={name:"offset",enabled:!0,phase:"main",requires:["popperOffsets"],fn:function(e){var t=e.state,n=e.options,i=e.name,o=n.offset,r=void 0===o?[0,0]:o,s=M.reduce((function(e,n){return e[n]=function(e,t,n){var i=U(e),o=[L,S].indexOf(i)>=0?-1:1,r="function"==typeof n?n(Object.assign({},t,{placement:e})):n,s=r[0],a=r[1];return s=s||0,a=(a||0)*o,[L,O].indexOf(i)>=0?{x:a,y:s}:{x:s,y:a}}(n,t.rects,r),e}),{}),a=s[t.placement],c=a.x,u=a.y;null!=t.modifiersData.popperOffsets&&(t.modifiersData.popperOffsets.x+=c,t.modifiersData.popperOffsets.y+=u),t.modifiersData[i]=s}};var ee={left:"right",right:"left",bottom:"top",top:"bottom"};function te(e){return e.replace(/left|right|bottom|top/g,(function(e){return ee[e]}))}var ne={start:"end",end:"start"};function ie(e){return e.replace(/start|end/g,(function(e){return ne[e]}))}function oe(e,t){var n=t.getRootNode&&t.getRootNode();if(e.contains(t))return!0;if(n&&s(n)){var i=t;do{if(i&&e.isSameNode(i))return!0;i=i.parentNode||i.host}while(i)}return!1}function re(e){return Object.assign({},e,{left:e.x,top:e.y,right:e.x+e.width,bottom:e.y+e.height})}function se(e,t){return t===D?re(function(e){var t=i(e),n=d(e),o=t.visualViewport,r=n.clientWidth,s=n.clientHeight,a=0,c=0;return o&&(r=o.width,s=o.height,/^((?!chrome|android).)*safari/i.test(navigator.userAgent)||(a=o.offsetLeft,c=o.offsetTop)),{width:r,height:s,x:a+p(e),y:c}}(e)):r(t)?function(e){var t=c(e);return t.top=t.top+e.clientTop,t.left=t.left+e.clientLeft,t.bottom=t.top+e.clientHeight,t.right=t.left+e.clientWidth,t.width=e.clientWidth,t.height=e.clientHeight,t.x=t.left,t.y=t.top,t}(t):re(function(e){var t,n=d(e),i=u(e),o=null==(t=e.ownerDocument)?void 0:t.body,r=J(n.scrollWidth,n.clientWidth,o?o.scrollWidth:0,o?o.clientWidth:0),s=J(n.scrollHeight,n.clientHeight,o?o.scrollHeight:0,o?o.clientHeight:0),a=-i.scrollLeft+p(e),c=-i.scrollTop;return"rtl"===h(o||n).direction&&(a+=J(n.clientWidth,o?o.clientWidth:0)-r),{width:r,height:s,x:a,y:c}}(d(e)))}function ae(e,t,n){var i="clippingParents"===t?function(e){var t=y(v(e)),n=["absolute","fixed"].indexOf(h(e).position)>=0&&r(e)?E(e):e;return o(n)?t.filter((function(e){return o(e)&&oe(e,n)&&"body"!==l(e)})):[]}(e):[].concat(t),s=[].concat(i,[n]),a=s[0],c=s.reduce((function(t,n){var i=se(e,n);return t.top=J(i.top,t.top),t.right=G(i.right,t.right),t.bottom=G(i.bottom,t.bottom),t.left=J(i.left,t.left),t}),se(e,a));return c.width=c.right-c.left,c.height=c.bottom-c.top,c.x=c.left,c.y=c.top,c}function ce(e){return Object.assign({},{top:0,right:0,bottom:0,left:0},e)}function ue(e,t){return t.reduce((function(t,n){return t[n]=e,t}),{})}function le(e,t){void 0===t&&(t={});var n=t,i=n.placement,r=void 0===i?e.placement:i,s=n.boundary,a=void 0===s?"clippingParents":s,u=n.rootBoundary,l=void 0===u?D:u,p=n.elementContext,h=void 0===p?T:p,f=n.altBoundary,m=void 0!==f&&f,g=n.padding,v=void 0===g?0:g,b=ce("number"!=typeof v?v:ue(v,k)),y=h===T?"reference":T,_=e.elements.reference,w=e.rects.popper,E=e.elements[m?y:h],L=ae(o(E)?E:E.contextElement||d(e.elements.popper),a,l),A=c(_),C=$({reference:A,element:w,strategy:"absolute",placement:r}),N=re(Object.assign({},w,C)),P=h===T?N:A,M={top:L.top-P.top+b.top,bottom:P.bottom-L.bottom+b.bottom,left:L.left-P.left+b.left,right:P.right-L.right+b.right},F=e.modifiersData.offset;if(h===T&&F){var q=F[r];Object.keys(M).forEach((function(e){var t=[O,x].indexOf(e)>=0?1:-1,n=[S,x].indexOf(e)>=0?"y":"x";M[e]+=q[n]*t}))}return M}function de(e,t,n){return J(e,G(t,n))}const pe={name:"preventOverflow",enabled:!0,phase:"main",fn:function(e){var t=e.state,n=e.options,i=e.name,o=n.mainAxis,r=void 0===o||o,s=n.altAxis,a=void 0!==s&&s,c=n.boundary,u=n.rootBoundary,l=n.altBoundary,d=n.padding,p=n.tether,h=void 0===p||p,f=n.tetherOffset,m=void 0===f?0:f,v=le(t,{boundary:c,rootBoundary:u,padding:d,altBoundary:l}),b=U(t.placement),y=V(t.placement),_=!y,w=W(b),A="x"===w?"y":"x",k=t.modifiersData.popperOffsets,N=t.rects.reference,D=t.rects.popper,T="function"==typeof m?m(Object.assign({},t.rects,{placement:t.placement})):m,P={x:0,y:0};if(k){if(r||a){var M="y"===w?S:L,F="y"===w?x:O,q="y"===w?"height":"width",I=k[w],B=k[w]+v[M],j=k[w]-v[F],H=h?-D[q]/2:0,R=y===C?N[q]:D[q],$=y===C?-D[q]:-N[q],z=t.elements.arrow,Y=h&&z?g(z):{width:0,height:0},K=t.modifiersData["arrow#persistent"]?t.modifiersData["arrow#persistent"].padding:{top:0,right:0,bottom:0,left:0},X=K[M],Z=K[F],Q=de(0,N[q],Y[q]),ee=_?N[q]/2-H-Q-X-T:R-Q-X-T,te=_?-N[q]/2+H+Q+Z+T:$+Q+Z+T,ne=t.elements.arrow&&E(t.elements.arrow),ie=ne?"y"===w?ne.clientTop||0:ne.clientLeft||0:0,oe=t.modifiersData.offset?t.modifiersData.offset[t.placement][w]:0,re=k[w]+ee-oe-ie,se=k[w]+te-oe;if(r){var ae=de(h?G(B,re):B,I,h?J(j,se):j);k[w]=ae,P[w]=ae-I}if(a){var ce="x"===w?S:L,ue="x"===w?x:O,pe=k[A],he=pe+v[ce],fe=pe-v[ue],me=de(h?G(he,re):he,pe,h?J(fe,se):fe);k[A]=me,P[A]=me-pe}}t.modifiersData[i]=P}},requiresIfExists:["offset"]};const he={name:"arrow",enabled:!0,phase:"main",fn:function(e){var t,n=e.state,i=e.name,o=e.options,r=n.elements.arrow,s=n.modifiersData.popperOffsets,a=U(n.placement),c=W(a),u=[L,O].indexOf(a)>=0?"height":"width";if(r&&s){var l=function(e,t){return ce("number"!=typeof(e="function"==typeof e?e(Object.assign({},t.rects,{placement:t.placement})):e)?e:ue(e,k))}(o.padding,n),d=g(r),p="y"===c?S:L,h="y"===c?x:O,f=n.rects.reference[u]+n.rects.reference[c]-s[c]-n.rects.popper[u],m=s[c]-n.rects.reference[c],v=E(r),b=v?"y"===c?v.clientHeight||0:v.clientWidth||0:0,y=f/2-m/2,_=l[p],w=b-d[u]-l[h],A=b/2-d[u]/2+y,C=de(_,A,w),N=c;n.modifiersData[i]=((t={})[N]=C,t.centerOffset=C-A,t)}},effect:function(e){var t=e.state,n=e.options.element,i=void 0===n?"[data-popper-arrow]":n;null!=i&&("string"!=typeof i||(i=t.elements.popper.querySelector(i)))&&oe(t.elements.popper,i)&&(t.elements.arrow=i)},requires:["popperOffsets"],requiresIfExists:["preventOverflow"]};function fe(e,t,n){return void 0===n&&(n={x:0,y:0}),{top:e.top-t.height-n.y,right:e.right-t.width+n.x,bottom:e.bottom-t.height+n.y,left:e.left-t.width-n.x}}function me(e){return[S,O,x,L].some((function(t){return e[t]>=0}))}var ge=j({defaultModifiers:[R,z,{name:"computeStyles",enabled:!0,phase:"beforeWrite",fn:function(e){var t=e.state,n=e.options,i=n.gpuAcceleration,o=void 0===i||i,r=n.adaptive,s=void 0===r||r,a=n.roundOffsets,c=void 0===a||a,u={placement:U(t.placement),popper:t.elements.popper,popperRect:t.rects.popper,gpuAcceleration:o};null!=t.modifiersData.popperOffsets&&(t.styles.popper=Object.assign({},t.styles.popper,X(Object.assign({},u,{offsets:t.modifiersData.popperOffsets,position:t.options.strategy,adaptive:s,roundOffsets:c})))),null!=t.modifiersData.arrow&&(t.styles.arrow=Object.assign({},t.styles.arrow,X(Object.assign({},u,{offsets:t.modifiersData.arrow,position:"absolute",adaptive:!1,roundOffsets:c})))),t.attributes.popper=Object.assign({},t.attributes.popper,{"data-popper-placement":t.placement})},data:{}},Z,Q,{name:"flip",enabled:!0,phase:"main",fn:function(e){var t=e.state,n=e.options,i=e.name;if(!t.modifiersData[i]._skip){for(var o=n.mainAxis,r=void 0===o||o,s=n.altAxis,a=void 0===s||s,c=n.fallbackPlacements,u=n.padding,l=n.boundary,d=n.rootBoundary,p=n.altBoundary,h=n.flipVariations,f=void 0===h||h,m=n.allowedAutoPlacements,g=t.options.placement,v=U(g),b=c||(v===g||!f?[te(g)]:function(e){if(U(e)===A)return[];var t=te(e);return[ie(e),t,ie(t)]}(g)),y=[g].concat(b).reduce((function(e,n){return e.concat(U(n)===A?function(e,t){void 0===t&&(t={});var n=t,i=n.placement,o=n.boundary,r=n.rootBoundary,s=n.padding,a=n.flipVariations,c=n.allowedAutoPlacements,u=void 0===c?M:c,l=V(i),d=l?a?P:P.filter((function(e){return V(e)===l})):k,p=d.filter((function(e){return u.indexOf(e)>=0}));0===p.length&&(p=d);var h=p.reduce((function(t,n){return t[n]=le(e,{placement:n,boundary:o,rootBoundary:r,padding:s})[U(n)],t}),{});return Object.keys(h).sort((function(e,t){return h[e]-h[t]}))}(t,{placement:n,boundary:l,rootBoundary:d,padding:u,flipVariations:f,allowedAutoPlacements:m}):n)}),[]),_=t.rects.reference,w=t.rects.popper,E=new Map,N=!0,D=y[0],T=0;T<y.length;T++){var F=y[T],q=U(F),I=V(F)===C,B=[S,x].indexOf(q)>=0,j=B?"width":"height",H=le(t,{placement:F,boundary:l,rootBoundary:d,altBoundary:p,padding:u}),R=B?I?O:L:I?x:S;_[j]>w[j]&&(R=te(R));var W=te(R),$=[];if(r&&$.push(H[q]<=0),a&&$.push(H[R]<=0,H[W]<=0),$.every((function(e){return e}))){D=F,N=!1;break}E.set(F,$)}if(N)for(var z=function(e){var t=y.find((function(t){var n=E.get(t);if(n)return n.slice(0,e).every((function(e){return e}))}));if(t)return D=t,"break"},J=f?3:1;J>0;J--){if("break"===z(J))break}t.placement!==D&&(t.modifiersData[i]._skip=!0,t.placement=D,t.reset=!0)}},requiresIfExists:["offset"],data:{_skip:!1}},pe,he,{name:"hide",enabled:!0,phase:"main",requiresIfExists:["preventOverflow"],fn:function(e){var t=e.state,n=e.name,i=t.rects.reference,o=t.rects.popper,r=t.modifiersData.preventOverflow,s=le(t,{elementContext:"reference"}),a=le(t,{altBoundary:!0}),c=fe(s,i),u=fe(a,o,r),l=me(c),d=me(u);t.modifiersData[n]={referenceClippingOffsets:c,popperEscapeOffsets:u,isReferenceHidden:l,hasPopperEscaped:d},t.attributes.popper=Object.assign({},t.attributes.popper,{"data-popper-reference-hidden":l,"data-popper-escaped":d})}}]}),ve="tippy-content",be="tippy-backdrop",ye="tippy-arrow",_e="tippy-svg-arrow",we={passive:!0,capture:!0};function Ee(e,t,n){if(Array.isArray(e)){var i=e[t];return null==i?Array.isArray(n)?n[t]:n:i}return e}function Se(e,t){var n={}.toString.call(e);return 0===n.indexOf("[object")&&n.indexOf(t+"]")>-1}function xe(e,t){return"function"==typeof e?e.apply(void 0,t):e}function Oe(e,t){return 0===t?e:function(i){clearTimeout(n),n=setTimeout((function(){e(i)}),t)};var n}function Le(e){return[].concat(e)}function Ae(e,t){-1===e.indexOf(t)&&e.push(t)}function ke(e){return e.split("-")[0]}function Ce(e){return[].slice.call(e)}function Ne(){return document.createElement("div")}function De(e){return["Element","Fragment"].some((function(t){return Se(e,t)}))}function Te(e){return Se(e,"MouseEvent")}function Pe(e){return!(!e||!e._tippy||e._tippy.reference!==e)}function Me(e){return De(e)?[e]:function(e){return Se(e,"NodeList")}(e)?Ce(e):Array.isArray(e)?e:Ce(document.querySelectorAll(e))}function Fe(e,t){e.forEach((function(e){e&&(e.style.transitionDuration=t+"ms")}))}function qe(e,t){e.forEach((function(e){e&&e.setAttribute("data-state",t)}))}function Ie(e){var t,n=Le(e)[0];return(null==n||null==(t=n.ownerDocument)?void 0:t.body)?n.ownerDocument:document}function Be(e,t,n){var i=t+"EventListener";["transitionend","webkitTransitionEnd"].forEach((function(t){e[i](t,n)}))}var je={isTouch:!1},He=0;function Re(){je.isTouch||(je.isTouch=!0,window.performance&&document.addEventListener("mousemove",Ue))}function Ue(){var e=performance.now();e-He<20&&(je.isTouch=!1,document.removeEventListener("mousemove",Ue)),He=e}function Ve(){var e=document.activeElement;if(Pe(e)){var t=e._tippy;e.blur&&!t.state.isVisible&&e.blur()}}var We="undefined"!=typeof window&&"undefined"!=typeof document?navigator.userAgent:"",$e=/MSIE |Trident\//.test(We);var ze={animateFill:!1,followCursor:!1,inlinePositioning:!1,sticky:!1},Je=Object.assign({appendTo:function(){return document.body},aria:{content:"auto",expanded:"auto"},delay:0,duration:[300,250],getReferenceClientRect:null,hideOnClick:!0,ignoreAttributes:!1,interactive:!1,interactiveBorder:2,interactiveDebounce:0,moveTransition:"",offset:[0,10],onAfterUpdate:function(){},onBeforeUpdate:function(){},onCreate:function(){},onDestroy:function(){},onHidden:function(){},onHide:function(){},onMount:function(){},onShow:function(){},onShown:function(){},onTrigger:function(){},onUntrigger:function(){},onClickOutside:function(){},placement:"top",plugins:[],popperOptions:{},render:null,showOnCreate:!1,touch:!0,trigger:"mouseenter focus",triggerTarget:null},ze,{},{allowHTML:!1,animation:"fade",arrow:!0,content:"",inertia:!1,maxWidth:350,role:"tooltip",theme:"",zIndex:9999}),Ge=Object.keys(Je);function Ye(e){var t=(e.plugins||[]).reduce((function(t,n){var i=n.name,o=n.defaultValue;return i&&(t[i]=void 0!==e[i]?e[i]:o),t}),{});return Object.assign({},e,{},t)}function Ke(e,t){var n=Object.assign({},t,{content:xe(t.content,[e])},t.ignoreAttributes?{}:function(e,t){return(t?Object.keys(Ye(Object.assign({},Je,{plugins:t}))):Ge).reduce((function(t,n){var i=(e.getAttribute("data-tippy-"+n)||"").trim();if(!i)return t;if("content"===n)t[n]=i;else try{t[n]=JSON.parse(i)}catch(e){t[n]=i}return t}),{})}(e,t.plugins));return n.aria=Object.assign({},Je.aria,{},n.aria),n.aria={expanded:"auto"===n.aria.expanded?t.interactive:n.aria.expanded,content:"auto"===n.aria.content?t.interactive?null:"describedby":n.aria.content},n}function Xe(e,t){e.innerHTML=t}function Ze(e){var t=Ne();return!0===e?t.className=ye:(t.className=_e,De(e)?t.appendChild(e):Xe(t,e)),t}function Qe(e,t){De(t.content)?(Xe(e,""),e.appendChild(t.content)):"function"!=typeof t.content&&(t.allowHTML?Xe(e,t.content):e.textContent=t.content)}function et(e){var t=e.firstElementChild,n=Ce(t.children);return{box:t,content:n.find((function(e){return e.classList.contains(ve)})),arrow:n.find((function(e){return e.classList.contains(ye)||e.classList.contains(_e)})),backdrop:n.find((function(e){return e.classList.contains(be)}))}}function tt(e){var t=Ne(),n=Ne();n.className="tippy-box",n.setAttribute("data-state","hidden"),n.setAttribute("tabindex","-1");var i=Ne();function o(n,i){var o=et(t),r=o.box,s=o.content,a=o.arrow;i.theme?r.setAttribute("data-theme",i.theme):r.removeAttribute("data-theme"),"string"==typeof i.animation?r.setAttribute("data-animation",i.animation):r.removeAttribute("data-animation"),i.inertia?r.setAttribute("data-inertia",""):r.removeAttribute("data-inertia"),r.style.maxWidth="number"==typeof i.maxWidth?i.maxWidth+"px":i.maxWidth,i.role?r.setAttribute("role",i.role):r.removeAttribute("role"),n.content===i.content&&n.allowHTML===i.allowHTML||Qe(s,e.props),i.arrow?a?n.arrow!==i.arrow&&(r.removeChild(a),r.appendChild(Ze(i.arrow))):r.appendChild(Ze(i.arrow)):a&&r.removeChild(a)}return i.className=ve,i.setAttribute("data-state","hidden"),Qe(i,e.props),t.appendChild(n),n.appendChild(i),o(e.props,e.props),{popper:t,onUpdate:o}}tt.$$tippy=!0;var nt=1,it=[],ot=[];function rt(e,t){var n,i,o,r,s,a,c,u,l,d=Ke(e,Object.assign({},Je,{},Ye((n=t,Object.keys(n).reduce((function(e,t){return void 0!==n[t]&&(e[t]=n[t]),e}),{}))))),p=!1,h=!1,f=!1,m=!1,g=[],v=Oe(G,d.interactiveDebounce),b=nt++,y=(l=d.plugins).filter((function(e,t){return l.indexOf(e)===t})),_={id:b,reference:e,popper:Ne(),popperInstance:null,props:d,state:{isEnabled:!0,isVisible:!1,isDestroyed:!1,isMounted:!1,isShown:!1},plugins:y,clearDelayTimeouts:function(){clearTimeout(i),clearTimeout(o),cancelAnimationFrame(r)},setProps:function(t){0;if(_.state.isDestroyed)return;M("onBeforeUpdate",[_,t]),z();var n=_.props,i=Ke(e,Object.assign({},_.props,{},t,{ignoreAttributes:!0}));_.props=i,$(),n.interactiveDebounce!==i.interactiveDebounce&&(I(),v=Oe(G,i.interactiveDebounce));n.triggerTarget&&!i.triggerTarget?Le(n.triggerTarget).forEach((function(e){e.removeAttribute("aria-expanded")})):i.triggerTarget&&e.removeAttribute("aria-expanded");q(),P(),S&&S(n,i);_.popperInstance&&(Z(),ee().forEach((function(e){requestAnimationFrame(e._tippy.popperInstance.forceUpdate)})));M("onAfterUpdate",[_,t])},setContent:function(e){_.setProps({content:e})},show:function(){0;var e=_.state.isVisible,t=_.state.isDestroyed,n=!_.state.isEnabled,i=je.isTouch&&!_.props.touch,o=Ee(_.props.duration,0,Je.duration);if(e||t||n||i)return;if(C().hasAttribute("disabled"))return;if(M("onShow",[_],!1),!1===_.props.onShow(_))return;_.state.isVisible=!0,k()&&(E.style.visibility="visible");P(),R(),_.state.isMounted||(E.style.transition="none");if(k()){var r=D(),s=r.box,a=r.content;Fe([s,a],0)}c=function(){var e;if(_.state.isVisible&&!m){if(m=!0,E.offsetHeight,E.style.transition=_.props.moveTransition,k()&&_.props.animation){var t=D(),n=t.box,i=t.content;Fe([n,i],o),qe([n,i],"visible")}F(),q(),Ae(ot,_),null==(e=_.popperInstance)||e.forceUpdate(),_.state.isMounted=!0,M("onMount",[_]),_.props.animation&&k()&&function(e,t){V(e,t)}(o,(function(){_.state.isShown=!0,M("onShown",[_])}))}},function(){var e,t=_.props.appendTo,n=C();e=_.props.interactive&&t===Je.appendTo||"parent"===t?n.parentNode:xe(t,[n]);e.contains(E)||e.appendChild(E);Z(),!1}()},hide:function(){0;var e=!_.state.isVisible,t=_.state.isDestroyed,n=!_.state.isEnabled,i=Ee(_.props.duration,1,Je.duration);if(e||t||n)return;if(M("onHide",[_],!1),!1===_.props.onHide(_))return;_.state.isVisible=!1,_.state.isShown=!1,m=!1,p=!1,k()&&(E.style.visibility="hidden");if(I(),U(),P(),k()){var o=D(),r=o.box,s=o.content;_.props.animation&&(Fe([r,s],i),qe([r,s],"hidden"))}F(),q(),_.props.animation?k()&&function(e,t){V(e,(function(){!_.state.isVisible&&E.parentNode&&E.parentNode.contains(E)&&t()}))}(i,_.unmount):_.unmount()},hideWithInteractivity:function(e){0;N().addEventListener("mousemove",v),Ae(it,v),v(e)},enable:function(){_.state.isEnabled=!0},disable:function(){_.hide(),_.state.isEnabled=!1},unmount:function(){0;_.state.isVisible&&_.hide();if(!_.state.isMounted)return;Q(),ee().forEach((function(e){e._tippy.unmount()})),E.parentNode&&E.parentNode.removeChild(E);ot=ot.filter((function(e){return e!==_})),_.state.isMounted=!1,M("onHidden",[_])},destroy:function(){0;if(_.state.isDestroyed)return;_.clearDelayTimeouts(),_.unmount(),z(),delete e._tippy,_.state.isDestroyed=!0,M("onDestroy",[_])}};if(!d.render)return _;var w=d.render(_),E=w.popper,S=w.onUpdate;E.setAttribute("data-tippy-root",""),E.id="tippy-"+_.id,_.popper=E,e._tippy=_,E._tippy=_;var x=y.map((function(e){return e.fn(_)})),O=e.hasAttribute("aria-expanded");return $(),q(),P(),M("onCreate",[_]),d.showOnCreate&&te(),E.addEventListener("mouseenter",(function(){_.props.interactive&&_.state.isVisible&&_.clearDelayTimeouts()})),E.addEventListener("mouseleave",(function(e){_.props.interactive&&_.props.trigger.indexOf("mouseenter")>=0&&(N().addEventListener("mousemove",v),v(e))})),_;function L(){var e=_.props.touch;return Array.isArray(e)?e:[e,0]}function A(){return"hold"===L()[0]}function k(){var e;return!!(null==(e=_.props.render)?void 0:e.$$tippy)}function C(){return u||e}function N(){var e=C().parentNode;return e?Ie(e):document}function D(){return et(E)}function T(e){return _.state.isMounted&&!_.state.isVisible||je.isTouch||s&&"focus"===s.type?0:Ee(_.props.delay,e?0:1,Je.delay)}function P(){E.style.pointerEvents=_.props.interactive&&_.state.isVisible?"":"none",E.style.zIndex=""+_.props.zIndex}function M(e,t,n){var i;(void 0===n&&(n=!0),x.forEach((function(n){n[e]&&n[e].apply(void 0,t)})),n)&&(i=_.props)[e].apply(i,t)}function F(){var t=_.props.aria;if(t.content){var n="aria-"+t.content,i=E.id;Le(_.props.triggerTarget||e).forEach((function(e){var t=e.getAttribute(n);if(_.state.isVisible)e.setAttribute(n,t?t+" "+i:i);else{var o=t&&t.replace(i,"").trim();o?e.setAttribute(n,o):e.removeAttribute(n)}}))}}function q(){!O&&_.props.aria.expanded&&Le(_.props.triggerTarget||e).forEach((function(e){_.props.interactive?e.setAttribute("aria-expanded",_.state.isVisible&&e===C()?"true":"false"):e.removeAttribute("aria-expanded")}))}function I(){N().removeEventListener("mousemove",v),it=it.filter((function(e){return e!==v}))}function B(e){if(!(je.isTouch&&(f||"mousedown"===e.type)||_.props.interactive&&E.contains(e.target))){if(C().contains(e.target)){if(je.isTouch)return;if(_.state.isVisible&&_.props.trigger.indexOf("click")>=0)return}else M("onClickOutside",[_,e]);!0===_.props.hideOnClick&&(_.clearDelayTimeouts(),_.hide(),h=!0,setTimeout((function(){h=!1})),_.state.isMounted||U())}}function j(){f=!0}function H(){f=!1}function R(){var e=N();e.addEventListener("mousedown",B,!0),e.addEventListener("touchend",B,we),e.addEventListener("touchstart",H,we),e.addEventListener("touchmove",j,we)}function U(){var e=N();e.removeEventListener("mousedown",B,!0),e.removeEventListener("touchend",B,we),e.removeEventListener("touchstart",H,we),e.removeEventListener("touchmove",j,we)}function V(e,t){var n=D().box;function i(e){e.target===n&&(Be(n,"remove",i),t())}if(0===e)return t();Be(n,"remove",a),Be(n,"add",i),a=i}function W(t,n,i){void 0===i&&(i=!1),Le(_.props.triggerTarget||e).forEach((function(e){e.addEventListener(t,n,i),g.push({node:e,eventType:t,handler:n,options:i})}))}function $(){var e;A()&&(W("touchstart",J,{passive:!0}),W("touchend",Y,{passive:!0})),(e=_.props.trigger,e.split(/\s+/).filter(Boolean)).forEach((function(e){if("manual"!==e)switch(W(e,J),e){case"mouseenter":W("mouseleave",Y);break;case"focus":W($e?"focusout":"blur",K);break;case"focusin":W("focusout",K)}}))}function z(){g.forEach((function(e){var t=e.node,n=e.eventType,i=e.handler,o=e.options;t.removeEventListener(n,i,o)})),g=[]}function J(e){var t,n=!1;if(_.state.isEnabled&&!X(e)&&!h){var i="focus"===(null==(t=s)?void 0:t.type);s=e,u=e.currentTarget,q(),!_.state.isVisible&&Te(e)&&it.forEach((function(t){return t(e)})),"click"===e.type&&(_.props.trigger.indexOf("mouseenter")<0||p)&&!1!==_.props.hideOnClick&&_.state.isVisible?n=!0:te(e),"click"===e.type&&(p=!n),n&&!i&&ne(e)}}function G(e){var t=e.target,n=C().contains(t)||E.contains(t);if("mousemove"!==e.type||!n){var i=ee().concat(E).map((function(e){var t,n=null==(t=e._tippy.popperInstance)?void 0:t.state;return n?{popperRect:e.getBoundingClientRect(),popperState:n,props:d}:null})).filter(Boolean);(function(e,t){var n=t.clientX,i=t.clientY;return e.every((function(e){var t=e.popperRect,o=e.popperState,r=e.props.interactiveBorder,s=ke(o.placement),a=o.modifiersData.offset;if(!a)return!0;var c="bottom"===s?a.top.y:0,u="top"===s?a.bottom.y:0,l="right"===s?a.left.x:0,d="left"===s?a.right.x:0,p=t.top-i+c>r,h=i-t.bottom-u>r,f=t.left-n+l>r,m=n-t.right-d>r;return p||h||f||m}))})(i,e)&&(I(),ne(e))}}function Y(e){X(e)||_.props.trigger.indexOf("click")>=0&&p||(_.props.interactive?_.hideWithInteractivity(e):ne(e))}function K(e){_.props.trigger.indexOf("focusin")<0&&e.target!==C()||_.props.interactive&&e.relatedTarget&&E.contains(e.relatedTarget)||ne(e)}function X(e){return!!je.isTouch&&A()!==e.type.indexOf("touch")>=0}function Z(){Q();var t=_.props,n=t.popperOptions,i=t.placement,o=t.offset,r=t.getReferenceClientRect,s=t.moveTransition,a=k()?et(E).arrow:null,u=r?{getBoundingClientRect:r,contextElement:r.contextElement||C()}:e,l={name:"$$tippy",enabled:!0,phase:"beforeWrite",requires:["computeStyles"],fn:function(e){var t=e.state;if(k()){var n=D().box;["placement","reference-hidden","escaped"].forEach((function(e){"placement"===e?n.setAttribute("data-placement",t.placement):t.attributes.popper["data-popper-"+e]?n.setAttribute("data-"+e,""):n.removeAttribute("data-"+e)})),t.attributes.popper={}}}},d=[{name:"offset",options:{offset:o}},{name:"preventOverflow",options:{padding:{top:2,bottom:2,left:5,right:5}}},{name:"flip",options:{padding:5}},{name:"computeStyles",options:{adaptive:!s}},l];k()&&a&&d.push({name:"arrow",options:{element:a,padding:3}}),d.push.apply(d,(null==n?void 0:n.modifiers)||[]),_.popperInstance=ge(u,E,Object.assign({},n,{placement:i,onFirstUpdate:c,modifiers:d}))}function Q(){_.popperInstance&&(_.popperInstance.destroy(),_.popperInstance=null)}function ee(){return Ce(E.querySelectorAll("[data-tippy-root]"))}function te(e){_.clearDelayTimeouts(),e&&M("onTrigger",[_,e]),R();var t=T(!0),n=L(),o=n[0],r=n[1];je.isTouch&&"hold"===o&&r&&(t=r),t?i=setTimeout((function(){_.show()}),t):_.show()}function ne(e){if(_.clearDelayTimeouts(),M("onUntrigger",[_,e]),_.state.isVisible){if(!(_.props.trigger.indexOf("mouseenter")>=0&&_.props.trigger.indexOf("click")>=0&&["mouseleave","mousemove"].indexOf(e.type)>=0&&p)){var t=T(!1);t?o=setTimeout((function(){_.state.isVisible&&_.hide()}),t):r=requestAnimationFrame((function(){_.hide()}))}}else U()}}function st(e,t){void 0===t&&(t={});var n=Je.plugins.concat(t.plugins||[]);document.addEventListener("touchstart",Re,we),window.addEventListener("blur",Ve);var i=Object.assign({},t,{plugins:n}),o=Me(e).reduce((function(e,t){var n=t&&rt(t,i);return n&&e.push(n),e}),[]);return De(e)?o[0]:o}st.defaultProps=Je,st.setDefaultProps=function(e){Object.keys(e).forEach((function(t){Je[t]=e[t]}))},st.currentInput=je;Object.assign({},Z,{effect:function(e){var t=e.state,n={popper:{position:t.options.strategy,left:"0",top:"0",margin:"0"},arrow:{position:"absolute"},reference:{}};Object.assign(t.elements.popper.style,n.popper),t.styles=n,t.elements.arrow&&Object.assign(t.elements.arrow.style,n.arrow)}});st.setDefaultProps({render:tt});const at=st},110:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.DispatchError=void 0;class n extends Error{constructor(e){super(e)}}t.DispatchError=n},53:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.DispatcherBase=void 0;const i=n(233);t.DispatcherBase=class{constructor(){this._subscriptions=new Array}get count(){return this._subscriptions.length}get onSubscriptionChange(){return null==this._onSubscriptionChange&&(this._onSubscriptionChange=new i.SubscriptionChangeEventDispatcher),this._onSubscriptionChange.asEvent()}subscribe(e){return e&&(this._subscriptions.push(this.createSubscription(e,!1)),this.triggerSubscriptionChange()),()=>{this.unsubscribe(e)}}sub(e){return this.subscribe(e)}one(e){return e&&(this._subscriptions.push(this.createSubscription(e,!0)),this.triggerSubscriptionChange()),()=>{this.unsubscribe(e)}}has(e){return!!e&&this._subscriptions.some((t=>t.handler==e))}unsubscribe(e){if(!e)return;let t=!1;for(let n=0;n<this._subscriptions.length;n++)if(this._subscriptions[n].handler==e){this._subscriptions.splice(n,1),t=!0;break}t&&this.triggerSubscriptionChange()}unsub(e){this.unsubscribe(e)}_dispatch(e,t,n){for(let o of[...this._subscriptions]){let r=new i.EventManagement((()=>this.unsub(o.handler))),s=Array.prototype.slice.call(n);if(s.push(r),o.execute(e,t,s),this.cleanup(o),!e&&r.propagationStopped)return{propagationStopped:!0}}return e?null:{propagationStopped:!1}}createSubscription(e,t){return new i.Subscription(e,t)}cleanup(e){let t=!1;if(e.isOnce&&e.isExecuted){let n=this._subscriptions.indexOf(e);n>-1&&(this._subscriptions.splice(n,1),t=!0)}t&&this.triggerSubscriptionChange()}asEvent(){return null==this._wrap&&(this._wrap=new i.DispatcherWrapper(this)),this._wrap}clear(){0!=this._subscriptions.length&&(this._subscriptions.splice(0,this._subscriptions.length),this.triggerSubscriptionChange())}triggerSubscriptionChange(){null!=this._onSubscriptionChange&&this._onSubscriptionChange.dispatch(this.count)}}},207:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.DispatcherWrapper=void 0;t.DispatcherWrapper=class{constructor(e){this._subscribe=t=>e.subscribe(t),this._unsubscribe=t=>e.unsubscribe(t),this._one=t=>e.one(t),this._has=t=>e.has(t),this._clear=()=>e.clear(),this._count=()=>e.count,this._onSubscriptionChange=()=>e.onSubscriptionChange}get onSubscriptionChange(){return this._onSubscriptionChange()}get count(){return this._count()}subscribe(e){return this._subscribe(e)}sub(e){return this.subscribe(e)}unsubscribe(e){this._unsubscribe(e)}unsub(e){this.unsubscribe(e)}one(e){return this._one(e)}has(e){return this._has(e)}clear(){this._clear()}}},685:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.EventListBase=void 0;t.EventListBase=class{constructor(){this._events={}}get(e){let t=this._events[e];return t||(t=this.createDispatcher(),this._events[e]=t,t)}remove(e){delete this._events[e]}}},928:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseDispatcherBase=void 0;const i=n(233);class o extends i.DispatcherBase{_dispatch(e,t,n){throw new i.DispatchError("_dispatch not supported. Use _dispatchAsPromise.")}createSubscription(e,t){return new i.PromiseSubscription(e,t)}async _dispatchAsPromise(e,t,n){for(let o of[...this._subscriptions]){let r=new i.EventManagement((()=>this.unsub(o.handler))),s=Array.prototype.slice.call(n);s.push(r);let a=o;if(await a.execute(e,t,s),this.cleanup(o),!e&&r.propagationStopped)return{propagationStopped:!0}}return e?null:{propagationStopped:!1}}}t.PromiseDispatcherBase=o},243:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SubscriptionChangeEventDispatcher=void 0;const i=n(233);class o extends i.DispatcherBase{dispatch(e){this._dispatch(!1,this,arguments)}}t.SubscriptionChangeEventDispatcher=o},622:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSubscription=void 0;t.PromiseSubscription=class{constructor(e,t){this.handler=e,this.isOnce=t,this.isExecuted=!1}async execute(e,t,n){if(!this.isOnce||!this.isExecuted){this.isExecuted=!0;var i=this.handler;if(e)return void setTimeout((()=>{i.apply(t,n)}),1);let o=i.apply(t,n);await o}}}},84:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.Subscription=void 0;t.Subscription=class{constructor(e,t){this.handler=e,this.isOnce=t,this.isExecuted=!1}execute(e,t,n){if(!this.isOnce||!this.isExecuted){this.isExecuted=!0;var i=this.handler;e?setTimeout((()=>{i.apply(t,n)}),1):i.apply(t,n)}}}},114:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.HandlingBase=void 0;t.HandlingBase=class{constructor(e){this.events=e}one(e,t){this.events.get(e).one(t)}has(e,t){return this.events.get(e).has(t)}subscribe(e,t){this.events.get(e).subscribe(t)}sub(e,t){this.subscribe(e,t)}unsubscribe(e,t){this.events.get(e).unsubscribe(t)}unsub(e,t){this.unsubscribe(e,t)}}},233:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SubscriptionChangeEventDispatcher=t.HandlingBase=t.PromiseDispatcherBase=t.PromiseSubscription=t.DispatchError=t.EventManagement=t.EventListBase=t.DispatcherWrapper=t.DispatcherBase=t.Subscription=void 0;const i=n(53);Object.defineProperty(t,"DispatcherBase",{enumerable:!0,get:function(){return i.DispatcherBase}});const o=n(110);Object.defineProperty(t,"DispatchError",{enumerable:!0,get:function(){return o.DispatchError}});const r=n(207);Object.defineProperty(t,"DispatcherWrapper",{enumerable:!0,get:function(){return r.DispatcherWrapper}});const s=n(685);Object.defineProperty(t,"EventListBase",{enumerable:!0,get:function(){return s.EventListBase}});const a=n(824);Object.defineProperty(t,"EventManagement",{enumerable:!0,get:function(){return a.EventManagement}});const c=n(114);Object.defineProperty(t,"HandlingBase",{enumerable:!0,get:function(){return c.HandlingBase}});const u=n(928);Object.defineProperty(t,"PromiseDispatcherBase",{enumerable:!0,get:function(){return u.PromiseDispatcherBase}});const l=n(622);Object.defineProperty(t,"PromiseSubscription",{enumerable:!0,get:function(){return l.PromiseSubscription}});const d=n(84);Object.defineProperty(t,"Subscription",{enumerable:!0,get:function(){return d.Subscription}});const p=n(243);Object.defineProperty(t,"SubscriptionChangeEventDispatcher",{enumerable:!0,get:function(){return p.SubscriptionChangeEventDispatcher}})},824:(e,t)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.EventManagement=void 0;t.EventManagement=class{constructor(e){this.unsub=e,this.propagationStopped=!1}stopPropagation(){this.propagationStopped=!0}}},608:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.EventDispatcher=void 0;const i=n(233);class o extends i.DispatcherBase{constructor(){super()}dispatch(e,t){const n=this._dispatch(!1,this,arguments);if(null==n)throw new i.DispatchError("Got `null` back from dispatch.");return n}dispatchAsync(e,t){this._dispatch(!0,this,arguments)}asEvent(){return super.asEvent()}}t.EventDispatcher=o},164:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.EventHandlingBase=void 0;const i=n(233),o=n(594);class r extends i.HandlingBase{constructor(){super(new o.EventList)}}t.EventHandlingBase=r},594:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.EventList=void 0;const i=n(233),o=n(608);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.EventDispatcher}}t.EventList=r},107:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformEventList=void 0;const i=n(608);t.NonUniformEventList=class{constructor(){this._events={}}get(e){if(this._events[e])return this._events[e];const t=this.createDispatcher();return this._events[e]=t,t}remove(e){delete this._events[e]}createDispatcher(){return new i.EventDispatcher}}},851:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformEventList=t.EventList=t.EventHandlingBase=t.EventDispatcher=void 0;const i=n(608);Object.defineProperty(t,"EventDispatcher",{enumerable:!0,get:function(){return i.EventDispatcher}});const o=n(164);Object.defineProperty(t,"EventHandlingBase",{enumerable:!0,get:function(){return o.EventHandlingBase}});const r=n(594);Object.defineProperty(t,"EventList",{enumerable:!0,get:function(){return r.EventList}});const s=n(107);Object.defineProperty(t,"NonUniformEventList",{enumerable:!0,get:function(){return s.NonUniformEventList}})},253:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformPromiseEventList=void 0;const i=n(933);t.NonUniformPromiseEventList=class{constructor(){this._events={}}get(e){if(this._events[e])return this._events[e];const t=this.createDispatcher();return this._events[e]=t,t}remove(e){delete this._events[e]}createDispatcher(){return new i.PromiseEventDispatcher}}},933:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseEventDispatcher=void 0;const i=n(233);class o extends i.PromiseDispatcherBase{constructor(){super()}async dispatch(e,t){const n=await this._dispatchAsPromise(!1,this,arguments);if(null==n)throw new i.DispatchError("Got `null` back from dispatch.");return n}dispatchAsync(e,t){this._dispatchAsPromise(!0,this,arguments)}asEvent(){return super.asEvent()}}t.PromiseEventDispatcher=o},238:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseEventHandlingBase=void 0;const i=n(233),o=n(930);class r extends i.HandlingBase{constructor(){super(new o.PromiseEventList)}}t.PromiseEventHandlingBase=r},930:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseEventList=void 0;const i=n(233),o=n(933);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.PromiseEventDispatcher}}t.PromiseEventList=r},129:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformPromiseEventList=t.PromiseEventList=t.PromiseEventHandlingBase=t.PromiseEventDispatcher=void 0;const i=n(933);Object.defineProperty(t,"PromiseEventDispatcher",{enumerable:!0,get:function(){return i.PromiseEventDispatcher}});const o=n(238);Object.defineProperty(t,"PromiseEventHandlingBase",{enumerable:!0,get:function(){return o.PromiseEventHandlingBase}});const r=n(930);Object.defineProperty(t,"PromiseEventList",{enumerable:!0,get:function(){return r.PromiseEventList}});const s=n(253);Object.defineProperty(t,"NonUniformPromiseEventList",{enumerable:!0,get:function(){return s.NonUniformPromiseEventList}})},482:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSignalDispatcher=void 0;const i=n(233);class o extends i.PromiseDispatcherBase{constructor(){super()}async dispatch(){const e=await this._dispatchAsPromise(!1,this,arguments);if(null==e)throw new i.DispatchError("Got `null` back from dispatch.");return e}dispatchAsync(){this._dispatchAsPromise(!0,this,arguments)}asEvent(){return super.asEvent()}}t.PromiseSignalDispatcher=o},948:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSignalHandlingBase=void 0;const i=n(233),o=n(758);class r extends i.HandlingBase{constructor(){super(new o.PromiseSignalList)}}t.PromiseSignalHandlingBase=r},758:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSignalList=void 0;const i=n(233),o=n(559);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.PromiseSignalDispatcher}}t.PromiseSignalList=r},559:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSignalList=t.PromiseSignalHandlingBase=t.PromiseSignalDispatcher=void 0;const i=n(482);Object.defineProperty(t,"PromiseSignalDispatcher",{enumerable:!0,get:function(){return i.PromiseSignalDispatcher}});const o=n(948);Object.defineProperty(t,"PromiseSignalHandlingBase",{enumerable:!0,get:function(){return o.PromiseSignalHandlingBase}});const r=n(758);Object.defineProperty(t,"PromiseSignalList",{enumerable:!0,get:function(){return r.PromiseSignalList}})},841:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformPromiseSimpleEventList=void 0;const i=n(377);t.NonUniformPromiseSimpleEventList=class{constructor(){this._events={}}get(e){if(this._events[e])return this._events[e];const t=this.createDispatcher();return this._events[e]=t,t}remove(e){delete this._events[e]}createDispatcher(){return new i.PromiseSimpleEventDispatcher}}},377:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSimpleEventDispatcher=void 0;const i=n(233);class o extends i.PromiseDispatcherBase{constructor(){super()}async dispatch(e){const t=await this._dispatchAsPromise(!1,this,arguments);if(null==t)throw new i.DispatchError("Got `null` back from dispatch.");return t}dispatchAsync(e){this._dispatchAsPromise(!0,this,arguments)}asEvent(){return super.asEvent()}}t.PromiseSimpleEventDispatcher=o},511:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSimpleEventHandlingBase=void 0;const i=n(233),o=n(879);class r extends i.HandlingBase{constructor(){super(new o.PromiseSimpleEventList)}}t.PromiseSimpleEventHandlingBase=r},879:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.PromiseSimpleEventList=void 0;const i=n(233),o=n(377);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.PromiseSimpleEventDispatcher}}t.PromiseSimpleEventList=r},817:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformPromiseSimpleEventList=t.PromiseSimpleEventList=t.PromiseSimpleEventHandlingBase=t.PromiseSimpleEventDispatcher=void 0;const i=n(841);Object.defineProperty(t,"NonUniformPromiseSimpleEventList",{enumerable:!0,get:function(){return i.NonUniformPromiseSimpleEventList}});const o=n(377);Object.defineProperty(t,"PromiseSimpleEventDispatcher",{enumerable:!0,get:function(){return o.PromiseSimpleEventDispatcher}});const r=n(511);Object.defineProperty(t,"PromiseSimpleEventHandlingBase",{enumerable:!0,get:function(){return r.PromiseSimpleEventHandlingBase}});const s=n(879);Object.defineProperty(t,"PromiseSimpleEventList",{enumerable:!0,get:function(){return s.PromiseSimpleEventList}})},275:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SignalDispatcher=void 0;const i=n(233);class o extends i.DispatcherBase{dispatch(){const e=this._dispatch(!1,this,arguments);if(null==e)throw new i.DispatchError("Got `null` back from dispatch.");return e}dispatchAsync(){this._dispatch(!0,this,arguments)}asEvent(){return super.asEvent()}}t.SignalDispatcher=o},36:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SignalHandlingBase=void 0;const i=n(233),o=n(350);class r extends i.HandlingBase{constructor(){super(new o.SignalList)}}t.SignalHandlingBase=r},80:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SignalList=void 0;const i=n(233),o=n(350);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.SignalDispatcher}}t.SignalList=r},350:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SignalList=t.SignalHandlingBase=t.SignalDispatcher=void 0;const i=n(275);Object.defineProperty(t,"SignalDispatcher",{enumerable:!0,get:function(){return i.SignalDispatcher}});const o=n(36);Object.defineProperty(t,"SignalHandlingBase",{enumerable:!0,get:function(){return o.SignalHandlingBase}});const r=n(80);Object.defineProperty(t,"SignalList",{enumerable:!0,get:function(){return r.SignalList}})},335:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformSimpleEventList=void 0;const i=n(120);t.NonUniformSimpleEventList=class{constructor(){this._events={}}get(e){if(this._events[e])return this._events[e];const t=this.createDispatcher();return this._events[e]=t,t}remove(e){delete this._events[e]}createDispatcher(){return new i.SimpleEventDispatcher}}},120:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SimpleEventDispatcher=void 0;const i=n(233);class o extends i.DispatcherBase{constructor(){super()}dispatch(e){const t=this._dispatch(!1,this,arguments);if(null==t)throw new i.DispatchError("Got `null` back from dispatch.");return t}dispatchAsync(e){this._dispatch(!0,this,arguments)}asEvent(){return super.asEvent()}}t.SimpleEventDispatcher=o},229:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SimpleEventHandlingBase=void 0;const i=n(233),o=n(222);class r extends i.HandlingBase{constructor(){super(new o.SimpleEventList)}}t.SimpleEventHandlingBase=r},222:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.SimpleEventList=void 0;const i=n(233),o=n(120);class r extends i.EventListBase{constructor(){super()}createDispatcher(){return new o.SimpleEventDispatcher}}t.SimpleEventList=r},844:(e,t,n)=>{"use strict";Object.defineProperty(t,"__esModule",{value:!0}),t.NonUniformSimpleEventList=t.SimpleEventList=t.SimpleEventHandlingBase=t.SimpleEventDispatcher=void 0;const i=n(120);Object.defineProperty(t,"SimpleEventDispatcher",{enumerable:!0,get:function(){return i.SimpleEventDispatcher}});const o=n(229);Object.defineProperty(t,"SimpleEventHandlingBase",{enumerable:!0,get:function(){return o.SimpleEventHandlingBase}});const r=n(335);Object.defineProperty(t,"NonUniformSimpleEventList",{enumerable:!0,get:function(){return r.NonUniformSimpleEventList}});const s=n(222);Object.defineProperty(t,"SimpleEventList",{enumerable:!0,get:function(){return s.SimpleEventList}})},590:(e,t,n)=>{"use strict";t.nz=t.FK=void 0;var i=n(233);var o=n(851);var r=n(844);Object.defineProperty(t,"FK",{enumerable:!0,get:function(){return r.SimpleEventDispatcher}});var s=n(350);Object.defineProperty(t,"nz",{enumerable:!0,get:function(){return s.SignalDispatcher}});var a=n(129);var c=n(559);var u=n(817)}},t={};function n(i){var o=t[i];if(void 0!==o)return o.exports;var r=t[i]={exports:{}};return e[i](r,r.exports,n),r.exports}n.d=(e,t)=>{for(var i in t)n.o(t,i)&&!n.o(e,i)&&Object.defineProperty(e,i,{enumerable:!0,get:t[i]})},n.o=(e,t)=>Object.prototype.hasOwnProperty.call(e,t),(()=>{"use strict";const e={backgroundImage:"",MediaAttribution:!0,applePay:!1,CapitalizeFields:!1,ClickToExpand:!0,CurrencySymbol:"$",ThousandsSeparator:"",DecimalSeparator:".",DecimalPlaces:2,SkipToMainContentLink:!0,SrcDefer:!0,NeverBounceAPI:null,NeverBounceDateField:null,NeverBounceStatusField:null,ProgressBar:!1,AutoYear:!1,Debug:!1,RememberMe:!1},t={image:"https://picsum.photos/480/650",imagePosition:"left",title:"Will you change your gift to just {new-amount} a month to boost your impact?",paragraph:"Make a monthly pledge today to support us with consistent, reliable resources during emergency moments.",yesLabel:"Yes! Process My <br> {new-amount} monthly gift",noLabel:"No, thanks. Continue with my <br> {old-amount} one-time gift",otherAmount:!0,otherLabel:"Or enter a different monthly amount:",upsellOriginalGiftAmountFieldName:"",amountRange:[{max:10,suggestion:5},{max:15,suggestion:7},{max:20,suggestion:8},{max:25,suggestion:9},{max:30,suggestion:10},{max:35,suggestion:11},{max:40,suggestion:12},{max:50,suggestion:14},{max:100,suggestion:15},{max:200,suggestion:19},{max:300,suggestion:29},{max:500,suggestion:"Math.ceil((amount / 12)/5)*5"}],canClose:!0,submitOnClose:!1};var i=n(590);class o{constructor(){this._onSubmit=new i.nz,this._onValidate=new i.nz,this._onError=new i.nz,this.submit=!0,this.validate=!0}static getInstance(){return o.instance||(o.instance=new o),o.instance}dispatchSubmit(){this._onSubmit.dispatch(),s.debug&&console.log("dispatchSubmit")}dispatchValidate(){this._onValidate.dispatch(),s.debug&&console.log("dispatchValidate")}dispatchError(){this._onError.dispatch(),s.debug&&console.log("dispatchError")}submitForm(){const e=document.querySelector("form .en__submit button");if(e){const t=document.getElementById("enModal");t&&t.classList.add("is-submitting"),e.click(),s.debug&&console.log("submitForm")}}get onSubmit(){return this._onSubmit.asEvent()}get onError(){return this._onError.asEvent()}get onValidate(){return this._onValidate.asEvent()}}class r{constructor(e="transaction.donationAmt",t="transaction.donationAmt.other"){this._onAmountChange=new i.FK,this._amount=0,this._radios="",this._other="",this._dispatch=!0,this._other=t,this._radios=e,document.addEventListener("change",(t=>{const n=t.target;n&&n.name==e&&(n.value=this.removeCommas(n.value),this.amount=parseFloat(n.value))}));const n=document.querySelector(`[name='${this._other}']`);n&&n.addEventListener("keyup",(e=>{n.value=this.removeCommas(n.value),this.amount=parseFloat(n.value)}))}static getInstance(e="transaction.donationAmt",t="transaction.donationAmt.other"){return r.instance||(r.instance=new r(e,t)),r.instance}get amount(){return this._amount}set amount(e){this._amount=e||0,this._dispatch&&this._onAmountChange.dispatch(this._amount)}get onAmountChange(){return this._onAmountChange.asEvent()}load(){const e=document.querySelector('input[name="'+this._radios+'"]:checked');if(e&&e.value){let t=parseFloat(e.value);if(t>0)this.amount=parseFloat(e.value);else{const e=document.querySelector('input[name="'+this._other+'"]');t=parseFloat(e.value),this.amount=parseFloat(e.value)}}}setAmount(e,t=!0){if(!document.getElementsByName(this._radios).length)return;this._dispatch=t;let n=Array.from(document.querySelectorAll('input[name="'+this._radios+'"]')).filter((t=>t instanceof HTMLInputElement&&parseInt(t.value)==e));if(n.length){n[0].checked=!0,this.clearOther()}else{const t=document.querySelector('input[name="'+this._other+'"]');t.focus(),t.value=parseFloat(e.toString()).toFixed(2)}this.amount=e,this._dispatch=!0}clearOther(){const e=document.querySelector('input[name="'+this._other+'"]');e.value="";e.parentNode.classList.add("en__field__item--hidden")}removeCommas(e){return e.length>3&&","==e.charAt(e.length-3)?e=e.substr(0,e.length-3)+"."+e.substr(e.length-2,2):e.length>2&&","==e.charAt(e.length-2)&&(e=e.substr(0,e.length-2)+"."+e.substr(e.length-1,1)),e.replace(/,/g,"")}}class s{constructor(){if(!s.enForm)throw new Error("Engaging Networks Form Not Found!")}static get enForm(){return document.querySelector("form.en__component")}static get debug(){return!!this.getOption("Debug")}static getUrlParameter(e){e=e.replace(/[\[]/,"\\[").replace(/[\]]/,"\\]");var t=new RegExp("[\\?&]"+e+"=([^&#]*)").exec(location.search);return null===t?"":decodeURIComponent(t[1].replace(/\+/g," "))}static getFieldValue(e){return new FormData(this.enForm).getAll(e).join(",")}static setFieldValue(e,t){document.getElementsByName(e).forEach((e=>{if("type"in e)switch(e.type){case"select-one":case"select-multiple":for(const n of e.options)n.value==t&&(n.selected=!0);break;case"checkbox":case"radio":e.value==t&&(e.checked=!0);break;default:e.value=t}})),this.enParseDependencies()}static enParseDependencies(){var e,t,n,i,o;window.EngagingNetworks&&"function"==typeof(null===(o=null===(i=null===(n=null===(t=null===(e=window.EngagingNetworks)||void 0===e?void 0:e.require)||void 0===t?void 0:t._defined)||void 0===n?void 0:n.enDependencies)||void 0===i?void 0:i.dependencies)||void 0===o?void 0:o.parseDependencies)&&(window.EngagingNetworks.require._defined.enDependencies.dependencies.parseDependencies(window.EngagingNetworks.dependencies),s.getOption("Debug")&&console.trace("EN Dependencies Triggered"))}static getGiftProcess(){return"pageJson"in window?window.pageJson.giftProcess:null}static getPageCount(){return"pageJson"in window?window.pageJson.pageCount:null}static getPageNumber(){return"pageJson"in window?window.pageJson.pageNumber:null}static getPageID(){return"pageJson"in window?window.pageJson.campaignPageId:0}static getPageType(){if(!("pageJson"in window)||!("pageType"in window.pageJson))return"DONATION";switch(window.pageJson.pageType){case"e-card":return"ECARD";case"otherdatacapture":return"SURVEY";case"emailtotarget":case"advocacypetition":return"ADVOCACY";case"emailsubscribeform":return"SUBSCRIBEFORM";default:return"DONATION"}}static setBodyData(e,t){document.querySelector("body").setAttribute(`data-engrid-${e}`,t)}static getBodyData(e){return document.querySelector("body").getAttribute(`data-engrid-${e}`)}static getOption(e){return window.EngridOptions[e]||null}static loadJS(e,t=null,n=!0){const i=document.createElement("script");i.src=e,i.onload=t,n?document.getElementsByTagName("head")[0].appendChild(i):document.getElementsByTagName("body")[0].appendChild(i)}static formatNumber(e,t=2,n=".",i=","){e=(e+"").replace(/[^0-9+\-Ee.]/g,"");const o=isFinite(+e)?+e:0,r=isFinite(+t)?Math.abs(t):0,s=void 0===i?",":i,a=void 0===n?".":n;let c=[];return c=(r?function(e,t){const n=Math.pow(10,t);return""+Math.round(e*n)/n}(o,r):""+Math.round(o)).split("."),c[0].length>3&&(c[0]=c[0].replace(/\B(?=(?:\d{3})+(?!\d))/g,s)),(c[1]||"").length<r&&(c[1]=c[1]||"",c[1]+=new Array(r-c[1].length+1).join("0")),c.join(a)}static disableSubmit(e=""){const t=document.querySelector(".en__submit button");t.dataset.originalText=t.innerText;let n="<span class='loader-wrapper'><span class='loader loader-quart'></span><span class='submit-button-text-wrapper'>"+e+"</span></span>";return!!t&&(t.disabled=!0,t.innerHTML=n,!0)}static enableSubmit(){const e=document.querySelector(".en__submit button");return!!e.dataset.originalText&&(e.disabled=!1,e.innerText=e.dataset.originalText,delete e.dataset.originalText,!0)}}class a{constructor(){this._onFrequencyChange=new i.FK,this._frequency="onetime",this._recurring="n",this._dispatch=!0,document.addEventListener("change",(e=>{const t=e.target;t&&"transaction.recurrpay"==t.name&&(this.recurring=t.value,"radio"==t.type&&(this.frequency="n"==t.value.toLowerCase()?"onetime":"monthly",s.setFieldValue("transaction.recurrfreq",this.frequency.toUpperCase()))),t&&"transaction.recurrfreq"==t.name&&(this.frequency=t.value)}))}static getInstance(){return a.instance||(a.instance=new a),a.instance}get frequency(){return this._frequency}set frequency(e){this._frequency=e.toLowerCase()||"onetime",this._dispatch&&this._onFrequencyChange.dispatch(this._frequency),s.setBodyData("transaction-recurring-frequency",this._frequency)}get recurring(){return this._recurring}set recurring(e){this._recurring=e.toLowerCase()||"n",s.setBodyData("transaction-recurring",this._recurring)}get onFrequencyChange(){return this._onFrequencyChange.asEvent()}load(){this.frequency=s.getFieldValue("transaction.recurrfreq"),this.recurring=s.getFieldValue("transaction.recurrpay")}setRecurrency(e,t=!0){document.getElementsByName("transaction.recurrpay").length&&(this._dispatch=t,s.setFieldValue("transaction.recurrpay",e.toUpperCase()),this._dispatch=!0)}setFrequency(e,t=!0){if(!document.getElementsByName("transaction.recurrfreq").length)return;this._dispatch=t;let n=Array.from(document.querySelectorAll('input[name="transaction.recurrfreq"]')).filter((t=>t instanceof HTMLInputElement&&t.value==e.toUpperCase()));if(n.length){n[0].checked=!0,this.frequency=e.toLowerCase(),"onetime"===this.frequency?this.setRecurrency("N",t):this.setRecurrency("Y",t)}this._dispatch=!0}}class c{constructor(){this._onFeeChange=new i.FK,this._amount=r.getInstance(),this._form=o.getInstance(),this._fee=0,this._field=null,document.getElementsByName("transaction.donationAmt").length&&(this._field=this.isENfeeCover()?document.querySelector("#en__field_transaction_feeCover"):document.querySelector('input[name="supporter.processing_fees"]'),this._field instanceof HTMLInputElement&&this._field.addEventListener("change",(e=>{this._field instanceof HTMLInputElement&&this._field.checked&&!this._subscribe&&(this._subscribe=this._form.onSubmit.subscribe((()=>this.addFees()))),this._onFeeChange.dispatch(this.fee)})))}static getInstance(){return c.instance||(c.instance=new c),c.instance}get onFeeChange(){return this._onFeeChange.asEvent()}get fee(){return this.calculateFees()}set fee(e){this._fee=e,this._onFeeChange.dispatch(this._fee)}calculateFees(){var e;if(this._field instanceof HTMLInputElement&&this._field.checked){if(this.isENfeeCover())return window.EngagingNetworks.require._defined.enjs.getDonationFee();const t=Object.assign({processingfeepercentadded:"0",processingfeefixedamountadded:"0"},null===(e=this._field)||void 0===e?void 0:e.dataset),n=parseFloat(t.processingfeepercentadded)/100*this._amount.amount+parseFloat(t.processingfeefixedamountadded);return Math.round(100*n)/100}return 0}addFees(){this._form.submit&&!this.isENfeeCover()&&this._amount.setAmount(this._amount.amount+this.fee,!1)}removeFees(){this.isENfeeCover()||this._amount.setAmount(this._amount.amount-this.fee)}isENfeeCover(){if("feeCover"in window.EngagingNetworks)for(const e in window.EngagingNetworks.feeCover)if(window.EngagingNetworks.feeCover.hasOwnProperty(e))return!0;return!1}}class u extends s{constructor(t){super(),this._form=o.getInstance(),this._fees=c.getInstance(),this._amount=r.getInstance("transaction.donationAmt","transaction.donationAmt.other"),this._frequency=a.getInstance(),this.shouldScroll=()=>{if(document.querySelector(".en__errorHeader"))return!0;let e=document.referrer;return new RegExp(/^(.*)\/(page)\/(\d+.*)/).test(e)},this.options=Object.assign(Object.assign({},e),t),window.EngridOptions=this.options,"loading"!==document.readyState?this.run():document.addEventListener("DOMContentLoaded",(()=>{this.run()})),window.onload=()=>{this.onLoad()},window.onresize=()=>{this.onResize()}}run(){(this.options.Debug||"true"==u.getUrlParameter("debug"))&&u.setBodyData("debug",""),new se,new ve,M(),F(),q(),I(),V(),X(),Y(),K(),D.init(),new pe("transaction.giveBySelect","giveBySelect-"),new pe("transaction.inmem","inmem-"),new pe("transaction.recurrpay","recurrpay-");let e=[];document.querySelectorAll("input[type=radio]").forEach((t=>{"name"in t&&!1===e.includes(t.name)&&e.push(t.name)})),e.forEach((e=>{new pe(e,"engrid__"+e.replace(/\./g,"")+"-")}));document.querySelectorAll("input[type=checkbox]").forEach((e=>{"name"in e&&new pe(e.name,"engrid__"+e.name.replace(/\./g,"")+"-")})),this._form.onSubmit.subscribe((()=>this.onSubmit())),this._form.onError.subscribe((()=>this.onError())),this._form.onValidate.subscribe((()=>this.onValidate())),this._amount.onAmountChange.subscribe((e=>console.log(`Live Amount: ${e}`))),this._frequency.onFrequencyChange.subscribe((e=>console.log(`Live Frequency: ${e}`))),this._form.onSubmit.subscribe((e=>console.log("Submit: ",e))),this._form.onError.subscribe((e=>console.log("Error:",e))),window.enOnSubmit=()=>(this._form.dispatchSubmit(),this._form.submit),window.enOnError=()=>{this._form.dispatchError()},window.enOnValidate=()=>(this._form.dispatchValidate(),this._form.validate),this.loadIFrame(),new le(this.options),new ge,new de,this._amount.load(),this._frequency.load(),new he,this.options.MediaAttribution&&new ue,this.options.applePay&&new x,this.options.CapitalizeFields&&new O,this.options.AutoYear&&new L,new A,new k,this.options.ClickToExpand&&new C,this.options.SkipToMainContentLink&&new fe,this.options.SrcDefer&&new me,this.options.ProgressBar&&new ye,this.options.RememberMe&&"object"==typeof this.options.RememberMe&&new we(this.options.RememberMe),this.options.NeverBounceAPI&&new be(this.options.NeverBounceAPI,this.options.NeverBounceDateField,this.options.NeverBounceStatusField),this.setDataAttributes()}onLoad(){this.options.onLoad&&this.options.onLoad(),this.inIframe()&&(u.debug&&console.log("iFrame Event - window.onload"),ae(),window.parent.postMessage({scroll:this.shouldScroll()},"*"),document.addEventListener("click",(e=>{u.debug&&console.log("iFrame Event - click"),setTimeout((()=>{ae()}),100)})))}onResize(){this.options.onResize&&this.options.onResize(),this.inIframe()&&(u.debug&&console.log("iFrame Event - window.onload"),ae())}onValidate(){this.options.onValidate&&(u.debug&&console.log("Client onValidate Triggered"),this.options.onValidate())}onSubmit(){this.options.onSubmit&&(u.debug&&console.log("Client onSubmit Triggered"),this.options.onSubmit()),this.inIframe()&&ce("submit")}onError(){this.options.onError&&(u.debug&&console.log("Client onError Triggered"),this.options.onError())}inIframe(){try{return window.self!==window.top}catch(e){return!0}}loadIFrame(){this.inIframe()&&(u.setBodyData("embedded",""),u.debug&&console.log("iFrame Event - First Resize"),ae())}setDataAttributes(){document.querySelector(".body-banner img")||u.setBodyData("body-banner","empty"),document.querySelector(".page-alert *")||u.setBodyData("no-page-alert",""),document.querySelector(".content-header *")||u.setBodyData("no-content-header",""),document.querySelector(".body-headerOutside *")||u.setBodyData("no-body-headerOutside",""),document.querySelector(".body-header *")||u.setBodyData("no-body-header",""),document.querySelector(".body-title *")||u.setBodyData("no-body-title",""),document.querySelector(".body-banner *")||u.setBodyData("no-body-banner",""),document.querySelector(".body-bannerOverlay *")||u.setBodyData("no-body-bannerOverlay",""),document.querySelector(".body-top *")||u.setBodyData("no-body-top",""),document.querySelector(".body-main *")||u.setBodyData("no-body-main",""),document.querySelector(".body-bottom *")||u.setBodyData("no-body-bottom",""),document.querySelector(".body-footer *")||u.setBodyData("no-body-footer",""),document.querySelector(".body-footerOutside *")||u.setBodyData("no-body-footerOutside",""),document.querySelector(".content-footerSpacer *")||u.setBodyData("no-content-footerSpacer",""),document.querySelector(".content-preFooter *")||u.setBodyData("no-content-preFooter",""),document.querySelector(".content-footer *")||u.setBodyData("no-content-footer",""),document.querySelector(".page-backgroundImage *")||u.setBodyData("no-page-backgroundImage",""),document.querySelector(".page-backgroundImageOverlay *")||u.setBodyData("no-page-backgroundImageOverlay",""),document.querySelector(".page-customCode *")||u.setBodyData("no-page-customCode","")}}var l=function(e,t,n,i){return new(n||(n=Promise))((function(o,r){function s(e){try{c(i.next(e))}catch(e){r(e)}}function a(e){try{c(i.throw(e))}catch(e){r(e)}}function c(e){var t;e.done?o(e.value):(t=e.value,t instanceof n?t:new n((function(e){e(t)}))).then(s,a)}c((i=i.apply(e,t||[])).next())}))};const d=window.ApplePaySession,p=window.merchantIdentifier,h=window.merchantDomainName,f=window.merchantDisplayName,m=window.merchantSessionIdentifier,g=window.merchantNonce,v=window.merchantEpochTimestamp,b=window.merchantSignature,y=window.merchantCountryCode,_=window.merchantCurrencyCode,w=window.merchantSupportedNetworks,E=window.merchantCapabilities,S=window.merchantTotalLabel;class x{constructor(){this.applePay=document.querySelector('.en__field__input.en__field__input--radio[value="applepay"]'),this._amount=r.getInstance(),this._form=o.getInstance(),this.checkApplePay()}checkApplePay(){return l(this,void 0,void 0,(function*(){const e=document.querySelector("form.en__component--page");if(!this.applePay||!window.hasOwnProperty("ApplePaySession"))return s.debug&&console.log("Apple Pay DISABLED"),!1;const t=d.canMakePaymentsWithActiveCard(p);let n=!1;yield t.then((t=>{if(n=t,t){let t=document.createElement("input");t.setAttribute("type","hidden"),t.setAttribute("name","PkPaymentToken"),t.setAttribute("id","applePayToken"),e.appendChild(t),this._form.onSubmit.subscribe((()=>this.onPayClicked()))}})),s.debug&&console.log("applePayEnabled",n);let i=this.applePay.closest(".en__field__item");return n?null==i||i.classList.add("applePayWrapper"):i&&(i.style.display="none"),n}))}performValidation(e){return new Promise((function(t,n){var i={};i.merchantIdentifier=p,i.merchantSessionIdentifier=m,i.nonce=g,i.domainName=h,i.epochTimestamp=v,i.signature=b;var o="/ea-dataservice/rest/applepay/validateurl?url="+e+("&merchantIdentifier="+p+"&merchantDomain="+h+"&displayName="+f),r=new XMLHttpRequest;r.onload=function(){var e=JSON.parse(this.responseText);s.debug&&console.log("Apple Pay Validation",e),t(e)},r.onerror=n,r.open("GET",o),r.send()}))}log(e,t){var n=new XMLHttpRequest;n.open("GET","/ea-dataservice/rest/applepay/log?name="+e+"&msg="+t),n.send()}sendPaymentToken(e){return new Promise((function(e,t){e(!0)}))}onPayClicked(){const e=document.querySelector("#en__field_transaction_paymenttype"),t=document.getElementById("applePayToken"),n=this._form;if("applepay"==e.value&&""==t.value)try{let e=this._amount.amount;var i=new d(1,{supportedNetworks:w,merchantCapabilities:E,countryCode:y,currencyCode:_,total:{label:S,amount:e}}),o=this;return i.onvalidatemerchant=function(e){o.performValidation(e.validationURL).then((function(e){s.debug&&console.log("Apple Pay merchantSession",e),i.completeMerchantValidation(e)}))},i.onpaymentauthorized=function(e){o.sendPaymentToken(e.payment.token).then((function(t){s.debug&&console.log("Apple Pay Token",e.payment.token),document.getElementById("applePayToken").value=JSON.stringify(e.payment.token),n.submitForm()}))},i.oncancel=function(e){s.debug&&console.log("Cancelled",e),alert("You cancelled. Sorry it didn't work out."),n.dispatchError()},i.begin(),this._form.submit=!1,!1}catch(e){alert("Developer mistake: '"+e.message+"'"),n.dispatchError()}return this._form.submit=!0,!0}}class O{constructor(){this._form=o.getInstance(),this._form.onSubmit.subscribe((()=>this.capitalizeFields("en__field_supporter_firstName","en__field_supporter_lastName","en__field_supporter_address1","en__field_supporter_city")))}capitalizeFields(...e){e.forEach((e=>this.capitalize(e)))}capitalize(e){let t=document.getElementById(e);return t&&(t.value=t.value.replace(/\w\S*/g,(e=>e.replace(/^\w/,(e=>e.toUpperCase())))),s.debug&&console.log("Capitalized",t.value)),!0}}class L{constructor(){if(this.yearField=document.querySelector("select[name='transaction.ccexpire']:not(#en__field_transaction_ccexpire)"),this.years=20,this.yearLength=2,this.yearField){this.clearFieldOptions();for(let e=0;e<this.years;e++){const t=(new Date).getFullYear()+e,n=document.createElement("option"),i=document.createTextNode(t.toString());n.appendChild(i),n.value=2==this.yearLength?t.toString().substr(-2):t.toString(),this.yearField.appendChild(n)}}}clearFieldOptions(){if(this.yearField)for(this.yearLength=this.yearField.options[this.yearField.options.length-1].value.length;this.yearField.options.length>1;)this.yearField.remove(1)}}class A{constructor(){this.debug=s.debug,this.autoCompleteField('[name="supporter.firstName"]',"given-name"),this.autoCompleteField('[name="supporter.lastName"]',"family-name"),this.autoCompleteField('[name="transaction.ccnumber"]',"cc-number"),this.autoCompleteField("#en__field_transaction_ccexpire","cc-exp-month"),this.autoCompleteField('[name="transaction.ccexpire"]:not(#en__field_transaction_ccexpire)',"cc-exp-year"),this.autoCompleteField('[name="transaction.ccvv"]',"cc-csc"),this.autoCompleteField('[name="supporter.emailAddress"]',"email"),this.autoCompleteField('[name="supporter.phoneNumber"]',"tel"),this.autoCompleteField('[name="supporter.country"]',"country"),this.autoCompleteField('[name="supporter.address1"]',"address-line1"),this.autoCompleteField('[name="supporter.address2"]',"address-line2"),this.autoCompleteField('[name="supporter.city"]',"address-level2"),this.autoCompleteField('[name="supporter.region"]',"address-level1"),this.autoCompleteField('[name="supporter.postcode"]',"postal-code")}autoCompleteField(e,t){let n=document.querySelector(e);return n?(n.autocomplete=t,!0):(this.debug&&console.log("AutoComplete: Field Not Found",e),!1)}}class k{constructor(){this._form=o.getInstance(),"ECARD"===s.getPageType()&&this._form.onValidate.subscribe((()=>this.checkRecipientFields()))}checkRecipientFields(){const e=document.querySelector(".en__ecarditems__addrecipient");return e&&!document.querySelector(".ecardrecipient__email")&&e.click(),!0}}class C{constructor(){this.clickToExpandWrapper=document.querySelectorAll("div.click-to-expand"),this.clickToExpandWrapper.length&&this.clickToExpandWrapper.forEach((e=>{const t='<div class="click-to-expand-cta"></div><div class="click-to-expand-text-wrapper" tabindex="0">'+e.innerHTML+"</div>";e.innerHTML=t,e.addEventListener("click",(t=>{t&&(s.debug&&console.log("A click-to-expand div was clicked"),e.classList.add("expanded"))})),e.addEventListener("keydown",(t=>{"Enter"===t.key?(s.debug&&console.log("A click-to-expand div had the 'Enter' key pressed on it"),e.classList.add("expanded")):" "===t.key&&(s.debug&&console.log("A click-to-expand div had the 'Spacebar' key pressed on it"),e.classList.add("expanded"),t.preventDefault(),t.stopPropagation())}))}))}}document.body;const N=document.getElementById("engrid"),D={init:()=>{const e=document.querySelectorAll(".en__field--text, .en__field--email:not(.en__field--checkbox), .en__field--telephone, .en__field--number, .en__field--textarea, .en__field--select, .en__field--checkbox"),t=document.querySelectorAll(".en__field__input--other");Array.from(e).forEach((e=>{let t=e.querySelector("input, textarea, select");t&&t.value&&e.classList.add("has-value"),T(e)})),Array.from(t).forEach((e=>{["focus","input"].forEach((t=>{e.addEventListener(t,(e=>{const t=e.target;if(t&&t.parentNode&&t.parentNode.parentNode){const e=t.parentNode;e.classList.remove("en__field__item--hidden"),e.parentNode&&(e.parentNode.querySelector(".en__field__item:nth-last-child(2) input").checked=!0)}}),!1)}))}))}},T=e=>{const t=e=>{const t=e.target;if(t&&t.parentNode&&t.parentNode.parentNode){t.parentNode.parentNode.classList.add("has-focus")}},n=e=>{const t=e.target;if(t&&t.parentNode&&t.parentNode.parentNode){const e=t.parentNode.parentNode;e.classList.remove("has-focus"),t.value?e.classList.add("has-value"):e.classList.remove("has-value")}},i=e=>{const t=e.target;if(t&&t.parentNode&&t.parentNode.parentNode){t.parentNode.parentNode.classList.add("has-value")}},o=e=>{const t=e.target;if(t&&t.parentNode&&t.parentNode.parentNode){t.parentNode.parentNode.classList.add("has-value")}},r=e=>{const t=e.target;switch(e.animationName){case"onAutoFillStart":return(e=>{e.parentNode.parentNode.classList.add("is-autofilled","has-value")})(t);case"onAutoFillCancel":return(e=>e.parentNode.parentNode.classList.remove("is-autofilled","has-value"))(t)}},s=e.querySelector("input, textarea, select");s&&(s.addEventListener("focus",t),s.addEventListener("blur",n),s.addEventListener("change",i),s.addEventListener("input",o),s.addEventListener("animationstart",r))},P=(e,t)=>{for(var n=e.classList.length-1;n>=0;n--)e.classList[n].startsWith(t)&&e.classList.remove(e.classList[n])},M=()=>{let e=document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other"),t=document.querySelector("input#en__field_supporter_firstName"),n=document.querySelector("input#en__field_supporter_lastName"),i=document.querySelector("input#en__field_supporter_emailAddress"),o=document.querySelector("#inputen__field_supporter_phoneNumber"),r=document.querySelector("input#en__field_supporter_phoneNumber2"),s=document.querySelector("input#en__field_supporter_country"),a=document.querySelector("input#en__field_supporter_address1"),c=document.querySelector("input#en__field_supporter_address2"),u=document.querySelector("input#en__field_supporter_city"),l=document.querySelector("input#en__field_supporter_postcode"),d=document.querySelector("input#en__field_transaction_honname"),p=document.querySelector("input#en__field_transaction_infname"),h=document.querySelector("input#en__field_transaction_infemail"),f=document.querySelector("input#en__field_transaction_infcountry"),m=document.querySelector("input#en__field_transaction_infadd1"),g=document.querySelector("input#en__field_transaction_infadd2"),v=document.querySelector("input#en__field_transaction_infcity"),b=document.querySelector("input#en__field_transaction_infpostcd"),y=document.querySelector("input#en__field_transaction_gftrsn"),_=document.querySelector("input#en__field_transaction_ccnumber"),w=document.querySelector("input#en__field_transaction_ccexpire"),E=document.querySelector("input#en__field_transaction_ccvv"),S=document.querySelector("input#en__field_supporter_bankAccountNumber"),x=document.querySelector("input#en__field_supporter_bankRoutingNumber");e&&e.setAttribute("inputmode","numeric");const O=document.querySelector("[data-engrid-add-input-placeholders]");O&&e&&(e.placeholder="Other Amount"),O&&t&&(t.placeholder="First Name"),O&&n&&(n.placeholder="Last Name"),O&&i&&(i.placeholder="Email Address"),O&&o&&(o.placeholder="Phone Number"),O&&r&&(r.placeholder="000-000-0000 (Optional)"),O&&s&&(s.placeholder="Country"),O&&a&&(a.placeholder="Street Address"),O&&c&&(c.placeholder="Apt., ste., bldg."),O&&u&&(u.placeholder="City"),O&&l&&(l.placeholder="Postal Code"),O&&d&&(d.placeholder="Honoree Name"),O&&p&&(p.placeholder="Recipient Name"),O&&h&&(h.placeholder="Recipient Email Address"),O&&f&&(f.placeholder="TBD"),O&&m&&(m.placeholder="Recipient Street Address"),O&&g&&(g.placeholder="Recipient Apt., ste., bldg."),O&&v&&(v.placeholder="Recipient City"),O&&b&&(b.placeholder="Recipient Postal Code"),O&&y&&(y.placeholder="Reason for your gift"),O&&_&&(_.placeholder="•••• •••• •••• ••••"),O&&w&&(w.placeholder="MM / YY"),O&&E&&(E.placeholder="CVV"),O&&S&&(S.placeholder="Bank Account Number"),O&&x&&(x.placeholder="Bank Routing Number")},F=()=>{let e=document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other");e&&e.setAttribute("autocomplete","off"),e&&e.setAttribute("data-lpignore","true")},q=()=>{const e=document.getElementById("en__field_transaction_inmem"),t=t=>{N&&(e.checked?N.classList.add("has-give-in-honor"):N.classList.remove("has-give-in-honor"))};e&&N&&(e.checked?N.classList.add("has-give-in-honor"):N.classList.remove("has-give-in-honor"),e.addEventListener("change",t))},I=()=>{const e=document.querySelector(".en__field--give-by-select"),t=document.getElementsByName("transaction.giveBySelect"),n=document.querySelector("#en__field_transaction_paymenttype");let i=document.querySelector('input[name="transaction.giveBySelect"]:checked');const o="has-give-by-",r=e=>{i=document.querySelector('input[name="transaction.giveBySelect"]:checked'),console.log("enFieldGiveBySelectCurrentValue:",i),i&&"card"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-card")),J()):i&&"ach"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-ach")),n.value="ach",n.value="ACH"):i&&"paypal"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-paypal")),n.value="paypal"):i&&"applepay"==i.value.toLowerCase()&&(N&&(P(N,o),N.classList.add("has-give-by-applepay")),n.value="applepay")};e&&(i=document.querySelector('input[name="transaction.giveBySelect"]:checked'),i&&"card"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-card")),J()):i&&"ach"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-check")),n.value="ach",n.value="ACH"):i&&"paypal"==i.value.toLowerCase()?(N&&(P(N,o),N.classList.add("has-give-by-paypal")),n.value="paypal",n.value="Paypal"):i&&"applepay"==i.value.toLowerCase()&&(N&&(P(N,o),N.classList.add("has-give-by-applepay")),n.value="applepay")),t&&Array.from(t).forEach((e=>{e.addEventListener("change",r)}))},B=document.getElementById("en__field_transaction_ccnumber"),j=document.getElementById("en__field_transaction_paymenttype");let H=document.querySelectorAll(".en__field--ccexpire .en__field__input--splitselect");document.getElementById("en__field_supporter_country");let R=H[0],U=H[1];const V=()=>{const e=document.querySelector(".en__field--donationAmt .en__field__input--other");e&&(e.setAttribute("step",".01"),e.setAttribute("type","number"),e.setAttribute("min","5"))};let W=new Date;var $=W.getMonth()+1,z=W.getFullYear()-2e3;const J=()=>{const e=(e=>{let t=e.charAt(0);const n=B.className.split(" ").filter((e=>!e.startsWith("live-card-type-")));switch(t){case"0":case"1":case"2":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-invalid"),!1;case"3":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-amex"),"amex";case"4":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-visa"),"visa";case"5":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-mastercard"),"mastercard";case"6":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-discover"),"discover";case"7":case"8":case"9":return B.className=n.join(" ").trim(),B.classList.add("live-card-type-invalid"),!1;default:return B.className=n.join(" ").trim(),B.classList.add("live-card-type-na"),!1}})(B.value),t={amex:["amex","american express","americanexpress","amx","ax"],visa:["visa","vi"],mastercard:["mastercard","master card","mc"],discover:["discover","di"]},n=j.options[j.selectedIndex].text;e&&n!=e&&(j.value=Array.from(j.options).filter((n=>t[e].includes(n.value.toLowerCase())))[0].value)},G=e=>{if("month"==e){let e=parseInt(R.value),t=e<$;console.log("month disable",t,typeof t,e,$);for(let e=0;e<U.options.length;e++)parseInt(U.options[e].value)<=z&&(t?U.options[e].setAttribute("disabled","disabled"):U.options[e].disabled=!1)}else if("year"==e){let e=parseInt(U.value),t=e==z;console.log("year disable",t,typeof t,e,z);for(let e=0;e<R.options.length;e++)parseInt(R.options[e].value)<$&&(t?R.options[e].setAttribute("disabled","disabled"):R.options[e].disabled=!1)}};B&&(B.addEventListener("keyup",(function(){J()})),B.addEventListener("paste",(function(){J()})),B.addEventListener("blur",(function(){J()}))),R&&U&&(R.addEventListener("change",(function(){G("month")})),U.addEventListener("change",(function(){G("year")})));const Y=()=>{const e=document.querySelectorAll(".en__contactDetails__rows"),t=e=>{let t=e.target.parentNode.parentNode.parentNode.querySelector("input");t.checked?t.checked=!1:t.checked=!0};e&&Array.from(e).forEach((e=>{e.addEventListener("click",t)}))},K=()=>{const e=window.location.href;let t="";-1!==e.search("edit")&&e.includes("https://act.ran.org/page/")&&(t=e.replace("https://act.ran.org/page/","https://us.e-activist.com/index.html#pages/"),t=t.replace("/donate/1","/edit"),t=t.replace("/action/1","/edit"),t=t.replace("/data/1","/edit"),window.location.href=t)},X=()=>{if(-1!=window.location.href.indexOf("/subscriptions")){const e=document.querySelectorAll(".forceUncheck");e&&Array.from(e).forEach((e=>{let t=e.querySelectorAll("input[type='checkbox']");t&&Array.from(t).forEach((e=>{e.checked=!1}))}))}},Z=document.getElementById("en__field_supporter_country"),Q=document.getElementById("en__field_supporter_region");Z&&Z.addEventListener("change",(()=>{setTimeout((()=>{1==Q.options.length&&"other"==Q.options[0].value?Q.classList.add("hide"):Q.classList.remove("hide")}),100)}));const ee=document.querySelector(".content-footer");function te(e,t){if(!t)return"";let n="; "+e;return!0===t?n:n+"="+t}function ne(e,t,n){return encodeURIComponent(e).replace(/%(23|24|26|2B|5E|60|7C)/g,decodeURIComponent).replace(/\(/g,"%28").replace(/\)/g,"%29")+"="+encodeURIComponent(t).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,decodeURIComponent)+function(e){if("number"==typeof e.expires){let t=new Date;t.setMilliseconds(t.getMilliseconds()+864e5*e.expires),e.expires=t}return te("Expires",e.expires?e.expires.toUTCString():"")+te("Domain",e.domain)+te("Path",e.path)+te("Secure",e.secure)+te("SameSite",e.sameSite)}(n)}function ie(){return function(e){let t={},n=e?e.split("; "):[],i=/(%[\dA-F]{2})+/gi;for(let e=0;e<n.length;e++){let o=n[e].split("="),r=o.slice(1).join("=");'"'===r.charAt(0)&&(r=r.slice(1,-1));try{t[o[0].replace(i,decodeURIComponent)]=r.replace(i,decodeURIComponent)}catch(e){}}return t}(document.cookie)}function oe(e){return ie()[e]}function re(e,t,n){document.cookie=ne(e,t,Object.assign({path:"/"},n))}ee&&(e=>{const t=e.getBoundingClientRect();return t.top>=0&&t.left>=0&&t.bottom<=(window.innerHeight||document.documentElement.clientHeight)&&t.right<=(window.innerWidth||document.documentElement.clientWidth)})(ee)?document.getElementsByTagName("BODY")[0].setAttribute("data-engrid-footer-above-fold",""):document.getElementsByTagName("BODY")[0].setAttribute("data-engrid-footer-below-fold","");class se{constructor(){this.debug=!1,this.overlay=document.createElement("div");if(!(-1!==navigator.userAgent.indexOf("MSIE")||navigator.appVersion.indexOf("Trident/")>-1))return;let e=document.createElement("div");e.id="ieModal",e.classList.add("is-hidden"),e.innerHTML='\n    <div class="ieModal-container">\n        <a href="#" class="button-close"></a>\n        <div id="ieModalContent">\n        <strong>Attention: </strong>\n        Your browser is no longer supported and will not receive any further security updates. Websites may no longer display or behave correctly as they have in the past. \n        Please transition to using <a href="https://www.microsoft.com/edge">Microsoft Edge</a>, Microsoft\'s latest browser, to continue enjoying the modern web.\n        </div>\n    </div>';const t=e.querySelector(".button-close");t.addEventListener("click",this.close.bind(this)),document.addEventListener("keyup",(e=>{"Escape"===e.key&&t.click()})),this.overlay=e,document.body.appendChild(e),this.open()}open(){oe("hide_ieModal")&&!this.debug||this.overlay.classList.remove("is-hidden")}close(e){e.preventDefault(),re("hide_ieModal","1",{expires:1}),this.overlay.classList.add("is-hidden")}}const ae=()=>{let e=document.body.offsetHeight;console.log("Sending iFrame height of: ",e,"px"),window.parent.postMessage({frameHeight:e,pageNumber:s.getPageNumber(),pageCount:s.getPageCount(),giftProcess:s.getGiftProcess()},"*")},ce=e=>{window.parent.postMessage({status:e,pageNumber:s.getPageNumber(),pageCount:s.getPageCount(),giftProcess:s.getGiftProcess()},"*")};class ue{constructor(){this.mediaWithAttribution=document.querySelectorAll("img[data-attribution-source]:not([data-attribution-hide-overlay]), video[data-attribution-source]:not([data-attribution-hide-overlay])"),this.mediaWithAttribution.forEach((e=>{s.debug&&console.log("The following image was found with data attribution fields on it. It's markup will be changed to add caption support.",e);let t=document.createElement("figure");t.classList.add("media-with-attribution");let n=e.parentNode;if(n){n.insertBefore(t,e),t.appendChild(e);let i=e,o=i.dataset.attributionSource;if(o){let e=i.dataset.attributionSourceLink;e?i.insertAdjacentHTML("afterend",'<figattribution><a href="'+decodeURIComponent(e)+'" target="_blank" tabindex="-1">'+o+"</a></figure>"):i.insertAdjacentHTML("afterend","<figattribution>"+o+"</figure>")}}}))}}class le{constructor(t){var n;this._amount=r.getInstance(),this._fees=c.getInstance(),this._frequency=a.getInstance(),this._form=o.getInstance(),this.multiplier=1/12,this.options=Object.assign(Object.assign({},e),t),this.submitLabel=(null===(n=document.querySelector(".en__submit button"))||void 0===n?void 0:n.innerHTML)||"Donate",this._amount.onAmountChange.subscribe((()=>this.changeSubmitButton())),this._amount.onAmountChange.subscribe((()=>this.changeLiveAmount())),this._amount.onAmountChange.subscribe((()=>this.changeLiveUpsellAmount())),this._fees.onFeeChange.subscribe((()=>this.changeLiveAmount())),this._fees.onFeeChange.subscribe((()=>this.changeLiveUpsellAmount())),this._fees.onFeeChange.subscribe((()=>this.changeSubmitButton())),this._frequency.onFrequencyChange.subscribe((()=>this.swapAmounts())),this._frequency.onFrequencyChange.subscribe((()=>this.changeLiveFrequency())),this._frequency.onFrequencyChange.subscribe((()=>this.changeRecurrency())),this._frequency.onFrequencyChange.subscribe((()=>this.changeSubmitButton())),this._form.onSubmit.subscribe((()=>this.loadingSubmitButton())),this._form.onError.subscribe((()=>this.changeSubmitButton())),document.addEventListener("click",(e=>{const t=e.target;t&&(t.classList.contains("monthly-upsell")?this.upsold(e):t.classList.contains("form-submit")&&(e.preventDefault(),this._form.submitForm()))}))}getAmountTxt(e=0){var t,n,i,o;const r=null!==(t=this.options.CurrencySymbol)&&void 0!==t?t:"$",a=null!==(n=this.options.DecimalSeparator)&&void 0!==n?n:".",c=null!==(i=this.options.ThousandsSeparator)&&void 0!==i?i:"",u=e%1==0?0:null!==(o=this.options.DecimalPlaces)&&void 0!==o?o:2,l=s.formatNumber(e,u,a,c);return e>0?r+l:""}getUpsellAmountTxt(e=0){var t,n,i,o;const r=null!==(t=this.options.CurrencySymbol)&&void 0!==t?t:"$",a=null!==(n=this.options.DecimalSeparator)&&void 0!==n?n:".",c=null!==(i=this.options.ThousandsSeparator)&&void 0!==i?i:"",u=e%1==0?0:null!==(o=this.options.DecimalPlaces)&&void 0!==o?o:2,l=s.formatNumber(5*Math.ceil(e/5),u,a,c);return e>0?r+l:""}getUpsellAmountRaw(e=0){const t=5*Math.ceil(e/5);return e>0?t.toString():""}changeSubmitButton(){const e=document.querySelector(".en__submit button"),t=this.getAmountTxt(this._amount.amount+this._fees.fee),n="onetime"==this._frequency.frequency?"":"annual"==this._frequency.frequency?"annually":this._frequency.frequency;let i=this.submitLabel;t?(i=i.replace("$AMOUNT",t),i=i.replace("$FREQUENCY",n)):(i=i.replace("$AMOUNT",""),i=i.replace("$FREQUENCY","")),e&&i&&(e.innerHTML=i)}loadingSubmitButton(){const e=document.querySelector(".en__submit button");let t=e.innerHTML,n="<span class='loader-wrapper'><span class='loader loader-quart'></span><span class='submit-button-text-wrapper'>"+t+"</span></span>";return t=e.innerHTML,e.innerHTML=n,!0}changeLiveAmount(){const e=this._amount.amount+this._fees.fee;document.querySelectorAll(".live-giving-amount").forEach((t=>t.innerHTML=this.getAmountTxt(e)))}changeLiveUpsellAmount(){const e=(this._amount.amount+this._fees.fee)*this.multiplier;document.querySelectorAll(".live-giving-upsell-amount").forEach((t=>t.innerHTML=this.getUpsellAmountTxt(e)));document.querySelectorAll(".live-giving-upsell-amount-raw").forEach((t=>t.innerHTML=this.getUpsellAmountRaw(e)))}changeLiveFrequency(){document.querySelectorAll(".live-giving-frequency").forEach((e=>e.innerHTML="onetime"==this._frequency.frequency?"":this._frequency.frequency))}changeRecurrency(){const e=document.querySelector("[name='transaction.recurrpay']");if(e&&"radio"!=e.type){e.value="onetime"==this._frequency.frequency?"N":"Y",this._frequency.recurring=e.value,s.getOption("Debug")&&console.log("Recurpay Changed!");const t=new Event("change",{bubbles:!0});e.dispatchEvent(t)}}swapAmounts(){if("EngridAmounts"in window&&this._frequency.frequency in window.EngridAmounts){const e=e=>{let t=[];for(let n in e.amounts)t.push({selected:e.amounts[n]===e.default,label:n,value:e.amounts[n].toString()});return t};window.EngagingNetworks.require._defined.enjs.swapList("donationAmt",e(window.EngridAmounts[this._frequency.frequency]),{ignoreCurrentValue:!window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed()}),this._amount.load(),s.getOption("Debug")&&console.log("Amounts Swapped To",window.EngridAmounts[this._frequency.frequency])}}upsold(e){const t=document.querySelector(".en__field--recurrpay input[value='Y']");t&&(t.checked=!0);const n=document.querySelector(".en__field--donationAmt input[value='other']");n&&(n.checked=!0);const i=document.querySelector("input[name='transaction.donationAmt.other']");i&&(i.value=this.getUpsellAmountRaw(this._amount.amount*this.multiplier),this._amount.load(),this._frequency.load(),i.parentElement&&i.parentElement.classList.remove("en__field__item--hidden"));const o=e.target;o&&o.classList.contains("form-submit")&&(e.preventDefault(),this._form.submitForm())}}class de{constructor(){this.overlay=document.createElement("div"),this._form=o.getInstance(),this._amount=r.getInstance(),this._frequency=a.getInstance();let e="EngridUpsell"in window?window.EngridUpsell:{};this.options=Object.assign(Object.assign({},t),e),this.shouldRun()?(this.overlay.id="enModal",this.overlay.classList.add("is-hidden"),this.overlay.classList.add("image-"+this.options.imagePosition),this.renderLightbox(),this._form.onSubmit.subscribe((()=>this.open()))):s.debug&&console.log("Upsell script should NOT run")}renderLightbox(){const e=this.options.title.replace("{new-amount}","<span class='upsell_suggestion'></span>").replace("{old-amount}","<span class='upsell_amount'></span>"),t=this.options.paragraph.replace("{new-amount}","<span class='upsell_suggestion'></span>").replace("{old-amount}","<span class='upsell_amount'></span>"),n=this.options.yesLabel.replace("{new-amount}","<span class='upsell_suggestion'></span>").replace("{old-amount}","<span class='upsell_amount'></span>"),i=this.options.noLabel.replace("{new-amount}","<span class='upsell_suggestion'></span>").replace("{old-amount}","<span class='upsell_amount'></span>"),o=`\n            <div class="upsellLightboxContainer" id="goMonthly">\n              \x3c!-- ideal image size is 480x650 pixels --\x3e\n              <div class="background" style="background-image: url('${this.options.image}');"></div>\n              <div class="upsellLightboxContent">\n              ${this.options.canClose?'<span id="goMonthlyClose"></span>':""}\n                <h1>\n                  ${e}\n                </h1>\n                ${this.options.otherAmount?`\n                <p>\n                  <span>${this.options.otherLabel}</span>\n                  <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="">\n                </p>\n                `:""}\n\n                <p>\n                  ${t}\n                </p>\n                \x3c!-- YES BUTTON --\x3e\n                <div id="upsellYesButton">\n                  <a class="pseduo__en__submit_button" href="#">\n                    <div>\n                    <span class='loader-wrapper'><span class='loader loader-quart'></span></span>\n                    <span class='label'>${n}</span>\n                    </div>\n                  </a>\n                </div>\n                \x3c!-- NO BUTTON --\x3e\n                <div id="upsellNoButton">\n                  <button title="Close (Esc)" type="button">\n                    <div>\n                    <span class='loader-wrapper'><span class='loader loader-quart'></span></span>\n                    <span class='label'>${i}</span>\n                    </div>\n                  </button>\n                </div>\n              </div>\n            </div>\n            `;this.overlay.innerHTML=o;const r=this.overlay.querySelector("#goMonthlyClose"),a=this.overlay.querySelector("#upsellYesButton a"),c=this.overlay.querySelector("#upsellNoButton button");a.addEventListener("click",this.continue.bind(this)),c.addEventListener("click",this.continue.bind(this)),r&&r.addEventListener("click",this.close.bind(this)),this.overlay.addEventListener("click",(e=>{e.target instanceof Element&&e.target.id==this.overlay.id&&this.options.canClose&&this.close(e)})),document.addEventListener("keyup",(e=>{"Escape"===e.key&&r&&r.click()})),document.body.appendChild(this.overlay);const u=document.querySelector("#secondOtherField");u&&u.addEventListener("keyup",this.popupOtherField.bind(this)),s.debug&&console.log("Upsell script rendered")}shouldRun(){return"EngridUpsell"in window&&!!window.pageJson&&1==window.pageJson.pageNumber&&["donation","premiumgift"].includes(window.pageJson.pageType)}popupOtherField(){var e,t;const n=parseFloat(null!==(t=null===(e=this.overlay.querySelector("#secondOtherField"))||void 0===e?void 0:e.value)&&void 0!==t?t:""),i=document.querySelectorAll("#upsellYesButton .upsell_suggestion");!isNaN(n)&&n>0?i.forEach((e=>e.innerHTML="$"+n.toFixed(2))):i.forEach((e=>e.innerHTML="$"+this.getUpsellAmount().toFixed(2)))}liveAmounts(){const e=document.querySelectorAll(".upsell_suggestion"),t=document.querySelectorAll(".upsell_amount"),n=this.getUpsellAmount();e.forEach((e=>e.innerHTML="$"+n.toFixed(2))),t.forEach((e=>e.innerHTML="$"+this._amount.amount.toFixed(2)))}getUpsellAmount(){var e,t;const n=this._amount.amount,i=parseFloat(null!==(t=null===(e=this.overlay.querySelector("#secondOtherField"))||void 0===e?void 0:e.value)&&void 0!==t?t:"");if(i>0)return i;let o=0;for(let e=0;e<this.options.amountRange.length;e++){let t=this.options.amountRange[e];if(0==o&&n<=t.max){if(o=t.suggestion,"number"!=typeof o){const e=o.replace("amount",n.toFixed(2));o=parseFloat(Function('"use strict";return ('+e+")")())}break}}return o}shouldOpen(){const e=this._frequency.frequency,t=this.getUpsellAmount();return"onetime"==e&&!this.overlay.classList.contains("is-submitting")&&t>0&&(s.debug&&(console.log("Upsell Frequency",this._frequency.frequency),console.log("Upsell Amount",this._amount.amount),console.log("Upsell Suggested Amount",t)),!0)}open(){if(s.debug&&console.log("Upsell Script Triggered"),!this.shouldOpen()){let e=window.sessionStorage.getItem("original");return e&&document.querySelectorAll(".en__errorList .en__error").length>0&&this.setOriginalAmount(e),this._form.submit=!0,!0}return this.liveAmounts(),this.overlay.classList.remove("is-hidden"),this._form.submit=!1,!1}setOriginalAmount(e){if(this.options.upsellOriginalGiftAmountFieldName){let t=document.querySelector(".en__field__input.en__field__input--hidden[name='"+this.options.upsellOriginalGiftAmountFieldName+"']");if(!t){let e=document.querySelector("form.en__component--page");if(e){let n=document.createElement("input");n.setAttribute("type","hidden"),n.setAttribute("name",this.options.upsellOriginalGiftAmountFieldName),n.classList.add("en__field__input","en__field__input--hidden"),e.appendChild(n),t=document.querySelector('.en__field__input.en__field__input--hidden[name="'+this.options.upsellOriginalGiftAmountFieldName+'"]')}}t&&(window.sessionStorage.setItem("original",e),t.setAttribute("value",e))}}continue(e){var t;if(e.preventDefault(),e.target instanceof Element&&(null===(t=document.querySelector("#upsellYesButton"))||void 0===t?void 0:t.contains(e.target))){s.debug&&console.log("Upsold"),this.setOriginalAmount(this._amount.amount.toString());const e=this.getUpsellAmount();this._frequency.setFrequency("monthly"),this._amount.setAmount(e)}else this.setOriginalAmount(""),window.sessionStorage.removeItem("original");this._form.submitForm()}close(e){e.preventDefault(),this.overlay.classList.add("is-hidden"),this.options.submitOnClose?this._form.submitForm():this._form.dispatchError()}}class pe{constructor(e,t){this.elements=document.getElementsByName(e),this.classes=t,this.hideAll();for(let e=0;e<this.elements.length;e++){let t=this.elements[e];t.checked&&this.show(t),t.addEventListener("change",(e=>{this.hideAll(),this.show(t)}))}}hideAll(){this.elements.forEach(((e,t)=>{e instanceof HTMLInputElement&&this.hide(e)}))}hide(e){let t=e.value;document.querySelectorAll("."+this.classes+t).forEach((e=>{e instanceof HTMLElement&&(e.style.display="none")}))}show(e){let t=e.value;document.querySelectorAll("."+this.classes+t).forEach((e=>{e instanceof HTMLElement&&(e.style.display="")})),"checkbox"!=e.type||e.checked||this.hide(e)}}class he{constructor(){if(this.countryWrapper=document.querySelector(".simple_country_select"),this.countrySelect=document.querySelector("#en__field_supporter_country"),this.countrySelect){let e=this.countrySelect.options[this.countrySelect.selectedIndex].innerHTML,t=this.countrySelect.options[this.countrySelect.selectedIndex].value;if("US"==t&&(t=" US"),"United States"==e&&(e="the United States"),document.querySelector(".simple_country_select")){this.countrySelect.tabIndex=-1;let n=document.querySelector(".en__field--address1 label");if(n){let i=n.innerHTML;this.wrap(n,document.createElement("div"));let o=document.createElement("span");o.innerHTML=' <label id="en_custom_field_simple_country_select_long" class="en__field__label"><a href="javascript:void(0)">(Outside '+e+'?)</a></label><label id="en_custom_field_simple_country_select_short" class="en__field__label"><a href="javascript:void(0)">(Outside '+t+"?)</a></label>",n.innerHTML=`${i}${o.innerHTML}`,n.querySelectorAll("a").forEach((e=>{e.addEventListener("click",this.showCountrySelect.bind(this))}))}}}}insertAfter(e,t){t.parentNode.insertBefore(e,t.nextSibling)}wrap(e,t){e.parentNode.insertBefore(t,e),t.appendChild(e)}showCountrySelect(e){var t;e.preventDefault(),this.countryWrapper.classList.add("country-select-visible"),(null===(t=document.querySelector(".en__field--address1 label").parentElement)||void 0===t?void 0:t.parentElement).classList.add("country-select-visible"),this.countrySelect.focus(),this.countrySelect.removeAttribute("tabIndex")}}class fe{constructor(){const e=document.querySelector("div[class*='body-'] title"),t=document.querySelector("div[class*='body-'] h1"),n=document.querySelector("title"),i=document.querySelector("h1");e&&e.parentElement?(e.parentElement.insertAdjacentHTML("beforebegin",'<span id="skip-link"></span>'),this.insertSkipLinkSpan()):t&&t.parentElement?(t.parentElement.insertAdjacentHTML("beforebegin",'<span id="skip-link"></span>'),this.insertSkipLinkSpan()):n&&n.parentElement?(n.parentElement.insertAdjacentHTML("beforebegin",'<span id="skip-link"></span>'),this.insertSkipLinkSpan()):i&&i.parentElement?(i.parentElement.insertAdjacentHTML("beforebegin",'<span id="skip-link"></span>'),this.insertSkipLinkSpan()):s.debug&&console.log("This page contains no <title> or <h1> and a 'Skip to main content' link was not added")}insertSkipLinkSpan(){document.body.insertAdjacentHTML("afterbegin",'<a class="skip-link" href="#skip-link">Skip to main content</a>')}}class me{constructor(){this.imgSrcDefer=document.querySelectorAll("img[data-src]"),this.videoBackground=document.querySelectorAll("video"),this.videoBackgroundSource=document.querySelectorAll("video source");for(let e=0;e<this.imgSrcDefer.length;e++){let t=this.imgSrcDefer[e];if(t){t.setAttribute("decoding","async"),t.setAttribute("loading","lazy");let e=t.getAttribute("data-src");e&&t.setAttribute("src",e),t.setAttribute("data-engrid-data-src-processed","true"),t.removeAttribute("data-src")}}for(let e=0;e<this.videoBackground.length;e++){let t=this.videoBackground[e];if(this.videoBackgroundSource=t.querySelectorAll("source"),this.videoBackgroundSource){for(let e=0;e<this.videoBackgroundSource.length;e++){let t=this.videoBackgroundSource[e];if(t){let e=t.getAttribute("data-src");e&&(t.setAttribute("src",e),t.setAttribute("data-engrid-data-src-processed","true"),t.removeAttribute("data-src"))}}let e=t.parentNode,n=t;e&&n&&(e.replaceChild(n,t),t.muted=!0,t.controls=!1,t.loop=!0,t.playsInline=!0,t.play())}}}}class ge{constructor(){this._frequency=a.getInstance(),this.linkClass="setRecurrFreq-",this.checkboxName="engrid.recurrfreq",document.querySelectorAll(`a[class^="${this.linkClass}"]`).forEach((e=>{e.addEventListener("click",(t=>{const n=e.className.split(" ").filter((e=>e.startsWith(this.linkClass)));s.debug&&console.log(n),n.length&&(t.preventDefault(),s.setFieldValue("transaction.recurrfreq",n[0].substring(this.linkClass.length).toUpperCase()),this._frequency.load())}))})),document.getElementsByName(this.checkboxName).forEach((e=>{e.addEventListener("change",(()=>{e.checked&&(s.setFieldValue("transaction.recurrfreq",e.value.toUpperCase()),this._frequency.load())}))})),this._frequency.onFrequencyChange.subscribe((()=>{const e=this._frequency.frequency.toUpperCase();document.getElementsByName(this.checkboxName).forEach((t=>{t.checked&&t.value!=e&&(t.checked=!1)}))}))}}class ve{constructor(){if(this.pageBackground=document.querySelector(".page-backgroundImage"),this.pageBackground){const e=this.pageBackground.querySelector("img");let t=null==e?void 0:e.getAttribute("data-src"),n=null==e?void 0:e.src;this.pageBackground&&t?(s.debug&&console.log("A background image set in the page was found with a data-src value, setting it as --engrid__page-backgroundImage_url",t),t="url('"+t+"')",this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url",t)):this.pageBackground&&n?(s.debug&&console.log("A background image set in the page was found with a src value, setting it as --engrid__page-backgroundImage_url",n),n="url('"+n+"')",this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url",n)):e?s.debug&&console.log("A background image set in the page was found but without a data-src or src value, no action taken",e):s.debug&&console.log("A background image set in the page was not found, any default image set in the theme on --engrid__page-backgroundImage_url will be used")}else s.debug&&console.log("A background image set in the page was not found, any default image set in the theme on --engrid__page-backgroundImage_url will be used");this.setDataAttributes()}setDataAttributes(){return this.hasVideoBackground()?s.setBodyData("page-background","video"):this.hasImageBackground()?s.setBodyData("page-background","image"):s.setBodyData("page-background","empty")}hasVideoBackground(){if(this.pageBackground)return!!this.pageBackground.querySelector("video")}hasImageBackground(){if(this.pageBackground)return!this.hasVideoBackground()&&!!this.pageBackground.querySelector("img")}}class be{constructor(e,t=null,n=null){this.apiKey=e,this.dateField=t,this.statusField=n,this.form=o.getInstance(),this.emailField=null,this.emailWrapper=document.querySelector(".en__field--emailAddress"),this.nbDate=null,this.nbStatus=null,window._NBSettings={apiKey:this.apiKey,autoFieldHookup:!1,inputLatency:500,displayPoweredBy:!1,loadingMessage:"Validating...",softRejectMessage:"Invalid email",acceptedMessage:"Email validated!",feedback:!1},s.loadJS("https://cdn.neverbounce.com/widget/dist/NeverBounce.js"),this.init(),this.form.onValidate.subscribe((()=>this.form.validate=this.validate()))}init(){if(this.emailField=document.getElementById("en__field_supporter_emailAddress"),this.dateField&&document.getElementsByName(this.dateField).length&&(this.nbDate=document.querySelector("[name='"+this.dateField+"']")),this.statusField&&document.getElementsByName(this.statusField).length&&(this.nbStatus=document.querySelector("[name='"+this.statusField+"']")),!this.emailField)return void(s.debug&&console.log("Engrid Neverbounce: E-mail Field Not Found"));if(!this.emailField)return void(s.debug&&console.log("Engrid Neverbounce: E-mail Field Not Found",this.emailField));s.debug&&console.log("Engrid Neverbounce External Script Loaded"),this.wrap(this.emailField,document.createElement("div"));this.emailField.parentNode.id="nb-wrapper";const e=document.createElement("div");e.innerHTML='<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>',this.insertAfter(e,this.emailField);const t=this;window.addEventListener("load",(function(){document.getElementsByTagName("body")[0].addEventListener("nb:registered",(function(e){const n=document.querySelector('[data-nb-id="'+e.detail.id+'"]');n.addEventListener("nb:loading",(function(e){s.disableSubmit("Validating Your Email")})),n.addEventListener("nb:clear",(function(e){t.setEmailStatus("clear"),s.enableSubmit(),t.nbDate&&(t.nbDate.value=""),t.nbStatus&&(t.nbStatus.value="")})),n.addEventListener("nb:soft-result",(function(e){t.setEmailStatus("soft-result"),t.nbDate&&(t.nbDate.value=""),t.nbStatus&&(t.nbStatus.value=""),s.enableSubmit()})),n.addEventListener("nb:result",(function(e){e.detail.result.is(window._nb.settings.getAcceptedStatusCodes())?(t.setEmailStatus("valid"),t.nbDate&&(t.nbDate.value=(new Date).toLocaleDateString("en-US",{year:"numeric",month:"2-digit",day:"2-digit"})),t.nbStatus&&(t.nbStatus.value=e.detail.result.response.result)):(t.setEmailStatus("invalid"),t.nbDate&&(t.nbDate.value=""),t.nbStatus&&(t.nbStatus.value="")),s.enableSubmit()})),n.value&&(console.log(n),setTimeout((function(){window._nb.fields.get(document.querySelector("[data-nb-id]"))[0].forceUpdate()}),100))})),window._nb.fields.registerListener(t.emailField,!0)}))}clearStatus(){if(!this.emailField)return void(s.debug&&console.log("Engrid Neverbounce: E-mail Field Not Found"));this.emailField.classList.remove("rm-error");const e=document.getElementById("nb-wrapper"),t=document.getElementById("nb-feedback");e.className="",t.className="en__field__error nb-hidden",t.innerHTML="",this.emailWrapper.classList.remove("en__field--validationFailed")}deleteENFieldError(){const e=document.querySelector(".en__field--emailAddress>div.en__field__error");e&&e.remove()}setEmailStatus(e){if(s.debug&&console.log("Neverbounce Status:",e),!this.emailField)return void(s.debug&&console.log("Engrid Neverbounce: E-mail Field Not Found"));const t=document.getElementById("nb-wrapper");let n=document.getElementById("nb-feedback");const i="nb-hidden",o="nb-loading",r="rm-error";if(!n){const e=t.querySelector("div");e&&(e.innerHTML='<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>'),n=document.getElementById("nb-feedback")}if("valid"==e)this.clearStatus();else switch(t.classList.remove("nb-success"),t.classList.add("nb-error"),e){case"required":this.deleteENFieldError(),n.innerHTML="A valid email is required",n.classList.remove(o),n.classList.remove(i),this.emailField.classList.add(r);break;case"soft-result":this.emailField.value?(this.deleteENFieldError(),n.innerHTML="Invalid email",n.classList.remove(i),this.emailField.classList.add(r)):this.clearStatus();break;case"invalid":this.deleteENFieldError(),n.innerHTML="Invalid email",n.classList.remove(o),n.classList.remove(i),this.emailField.classList.add(r);break;default:this.clearStatus()}}insertAfter(e,t){var n;null===(n=null==t?void 0:t.parentNode)||void 0===n||n.insertBefore(e,t.nextSibling)}insertBefore(e,t){var n;null===(n=null==t?void 0:t.parentNode)||void 0===n||n.insertBefore(e,t)}wrap(e,t){var n;null===(n=e.parentNode)||void 0===n||n.insertBefore(t,e),t.appendChild(e)}validate(){var e;return this.emailField?(this.nbStatus&&(this.nbStatus.value=s.getFieldValue("nb-result")),!!["catchall","unknown","valid"].includes(s.getFieldValue("nb-result"))||(this.setEmailStatus("required"),null===(e=this.emailField)||void 0===e||e.focus(),!1)):(s.debug&&console.log("Engrid Neverbounce validate(): E-mail Field Not Found. Returning true."),!0)}}class ye{constructor(){var e,t;const n=document.querySelector("span[data-engrid-progress-indicator]"),i=s.getPageCount(),o=s.getPageNumber();if(!n||!i||!o)return;let r=null!==(e=n.getAttribute("max"))&&void 0!==e?e:100;"string"==typeof r&&(r=parseInt(r));let a=null!==(t=n.getAttribute("amount"))&&void 0!==t?t:0;"string"==typeof a&&(a=parseInt(a));const c=1===o?0:Math.ceil((o-1)/i*r);let u=1===o?0:Math.ceil(o/i*r);const l=c/100;let d=u/100;if(a&&(u=Math.ceil(a)>Math.ceil(r)?r:a,d=u/100),n.innerHTML=`\n\t\t\t<div class="indicator__wrap">\n\t\t\t\t<span class="indicator__progress" style="transform: scaleX(${l});"></span>\n\t\t\t\t<span class="indicator__percentage">${u}<span class="indicator__percentage-sign">%</span></span>\n\t\t\t</div>`,u!==c){const e=document.querySelector(".indicator__progress");requestAnimationFrame((function(){e.style.transform=`scaleX(${d})`}))}}}const _e=n(465).ZP;class we{constructor(e){if(this._form=o.getInstance(),this.iframe=null,this.remoteUrl=e.remoteUrl?e.remoteUrl:null,this.cookieName=e.cookieName?e.cookieName:"engrid-autofill",this.cookieExpirationDays=e.cookieExpirationDays?e.cookieExpirationDays:365,this.rememberMeOptIn=!!e.checked&&e.checked,this.fieldNames=e.fieldNames?e.fieldNames:[],this.fieldDonationAmountRadioName=e.fieldDonationAmountRadioName?e.fieldDonationAmountRadioName:"transaction.donationAmt",this.fieldDonationAmountOtherName=e.fieldDonationAmountOtherName?e.fieldDonationAmountOtherName:"transaction.donationAmt.other",this.fieldDonationRecurrPayRadioName=e.fieldDonationRecurrPayRadioName?e.fieldDonationRecurrPayRadioName:"transaction.recurrpay",this.fieldDonationAmountOtherCheckboxID=e.fieldDonationAmountOtherCheckboxID?e.fieldDonationAmountOtherCheckboxID:"#en__field_transaction_donationAmt4",this.fieldOptInSelectorTarget=e.fieldOptInSelectorTarget?e.fieldOptInSelectorTarget:".en__field--emailAddress.en__field",this.fieldOptInSelectorTargetLocation=e.fieldOptInSelectorTargetLocation?e.fieldOptInSelectorTargetLocation:"after",this.fieldClearSelectorTarget=e.fieldClearSelectorTarget?e.fieldClearSelectorTarget:'label[for="en__field_supporter_firstName"]',this.fieldClearSelectorTargetLocation=e.fieldClearSelectorTargetLocation?e.fieldClearSelectorTargetLocation:"before",this.fieldData={},this.useRemote())this.createIframe((()=>{this.iframe&&this.iframe.contentWindow&&(this.iframe.contentWindow.postMessage({key:this.cookieName,operation:"read"},"*"),this._form.onSubmit.subscribe((()=>{this.rememberMeOptIn&&(this.readFields(),this.saveCookieToRemote())})))}),(e=>{if(e.data&&e.data.key&&void 0!==e.data.value&&e.data.key===this.cookieName){this.updateFieldData(e.data.value),this.writeFields(),Object.keys(this.fieldData).length>0?this.insertClearRememberMeLink():this.insertRememberMeOptin()}}));else{this.readCookie(),Object.keys(this.fieldData).length>0?(this.insertClearRememberMeLink(),this.rememberMeOptIn=!0):(this.insertRememberMeOptin(),this.rememberMeOptIn=!1),this.writeFields(),this._form.onSubmit.subscribe((()=>{this.rememberMeOptIn&&(this.readFields(),this.saveCookie())}))}}updateFieldData(e){if(e){let t=JSON.parse(e);for(let e=0;e<this.fieldNames.length;e++)void 0!==t[this.fieldNames[e]]&&(this.fieldData[this.fieldNames[e]]=decodeURIComponent(t[this.fieldNames[e]]))}}insertClearRememberMeLink(){if(!document.getElementById("clear-autofill-data")){const e="clear autofill",t=document.createElement("a");t.setAttribute("id","clear-autofill-data"),t.classList.add("label-tooltip"),t.setAttribute("style","cursor: pointer;"),t.innerHTML=`(${e})`;const n=this.getElementByFirstSelector(this.fieldClearSelectorTarget);n&&("after"===this.fieldClearSelectorTargetLocation?n.appendChild(t):n.prepend(t),t.addEventListener("click",(e=>{e.preventDefault(),this.clearFields(["supporter.country"]),this.useRemote()?this.clearCookieOnRemote():this.clearCookie();let t=document.getElementById("clear-autofill-data");t&&(t.style.display="none"),this.rememberMeOptIn=!1})))}}getElementByFirstSelector(e){let t=null;const n=e.split(",");for(let e=0;e<n.length&&(t=document.querySelector(n[e]),!t);e++);return t}insertRememberMeOptin(){let e=document.getElementById("remember-me-opt-in");if(e)this.rememberMeOptIn&&(e.checked=!0);else{const e="Remember Me",t="\n\t\t\t\tCheck “Remember me” to complete forms on this device faster. \n\t\t\t\tWhile your financial information won’t be stored, you should only check this box from a personal device. \n\t\t\t\tClick “Clear autofill” to remove the information from your device at any time.\n\t\t\t",n=this.rememberMeOptIn?"checked":"",i=document.createElement("div");i.classList.add("en__field","en__field--checkbox"),i.setAttribute("id","remember-me-opt-in"),i.setAttribute("style","overflow-x: hidden;"),i.innerHTML=`\n\t\t\t\t<div class="en__field__item rememberme-wrapper">\n\t\t\t\t\t<input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${n} />\n\t\t\t\t\t<label for="remember-me-checkbox" class="en__field__label en__field__label--item" style="white-space: nowrap;">\n\t\t\t\t\t\t<div class="rememberme-content" style="display: inline-flex; align-items: center;">\n\t\t\t\t\t\t\t${e}\n\t\t\t\t\t\t\t<a id="rememberme-learn-more-toggle" style="display: inline-block; display: inline-flex; align-items: center; cursor: pointer; margin-left: 10px;">\n\t\t\t\t\t\t\t\t<svg style="height: 14px; width: auto; z-index: 1;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7H9V5H11V7ZM11 9H9V15H11V9ZM10 2C5.59 2 2 5.59 2 10C2 14.41 5.59 18 10 18C14.41 18 18 14.41 18 10C18 5.59 14.41 2 10 2ZM10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0Z" fill="currentColor"/></svg>\n\t\t\t\t\t\t\t</a>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</label>\n\t\t\t\t</div>\n\t\t\t`;const o=this.getElementByFirstSelector(this.fieldOptInSelectorTarget);if(o&&o.parentNode){o.parentNode.insertBefore(i,"before"==this.fieldOptInSelectorTargetLocation?o:o.nextSibling);const e=document.getElementById("remember-me-checkbox");e&&e.addEventListener("change",(()=>{e.checked?this.rememberMeOptIn=!0:this.rememberMeOptIn=!1})),_e("#rememberme-learn-more-toggle",{content:t})}}}useRemote(){return this.remoteUrl&&window.postMessage&&window.JSON&&window.localStorage}createIframe(e,t){if(this.remoteUrl){let n=document.createElement("iframe");n.style.cssText="position:absolute;width:1px;height:1px;left:-9999px;",n.src=this.remoteUrl,n.setAttribute("sandbox","allow-same-origin allow-scripts"),this.iframe=n,document.body.appendChild(this.iframe),this.iframe.addEventListener("load",(()=>e()),!1),window.addEventListener("message",(e=>t(e)),!1)}}clearCookie(){this.fieldData={},this.saveCookie()}clearCookieOnRemote(){this.fieldData={},this.saveCookieToRemote()}saveCookieToRemote(){this.iframe&&this.iframe.contentWindow&&this.iframe.contentWindow.postMessage({key:this.cookieName,value:JSON.stringify(this.fieldData),operation:"write",expires:this.cookieExpirationDays},"*")}readCookie(){this.updateFieldData(oe(this.cookieName)||"")}saveCookie(){re(this.cookieName,JSON.stringify(this.fieldData),{expires:this.cookieExpirationDays})}readFields(){for(let e=0;e<this.fieldNames.length;e++){let t="[name='"+this.fieldNames[e]+"']",n=document.querySelector(t);if(n)if("INPUT"===n.tagName){let i=n.getAttribute("type");"radio"!==i&&"checkbox"!==i||(n=document.querySelector(t+":checked")),this.fieldData[this.fieldNames[e]]=encodeURIComponent(n.value)}else"SELECT"===n.tagName&&(this.fieldData[this.fieldNames[e]]=encodeURIComponent(n.value))}}setFieldValue(e,t,n=!1){e&&void 0!==t&&(e.value&&n||!e.value)&&(e.value=t)}clearFields(e){for(let t in this.fieldData)e.includes(t)||""===this.fieldData[t]?delete this.fieldData[t]:this.fieldData[t]="";this.writeFields(!0)}writeFields(e=!1){for(let t=0;t<this.fieldNames.length;t++){let n="[name='"+this.fieldNames[t]+"']",i=document.querySelector(n);i&&("INPUT"===i.tagName?this.fieldNames[t]===this.fieldDonationRecurrPayRadioName?"Y"===this.fieldData[this.fieldNames[t]]&&i.click():this.fieldDonationAmountRadioName===this.fieldNames[t]?(i=document.querySelector(n+"[value='"+this.fieldData[this.fieldNames[t]]+"']"),i?i.click():(i=document.querySelector("input[name='"+this.fieldDonationAmountOtherName+"']"),this.setFieldValue(i,this.fieldData[this.fieldNames[t]],!0))):this.setFieldValue(i,this.fieldData[this.fieldNames[t]],e):"SELECT"===i.tagName&&this.setFieldValue(i,this.fieldData[this.fieldNames[t]],!0))}}}n(237);const Ee={applePay:!1,CapitalizeFields:!0,ClickToExpand:!0,CurrencySymbol:"$",CurrencySeparator:".",MediaAttribution:!0,SkipToMainContentLink:!0,SrcDefer:!0,ProgressBar:!0,RememberMe:{checked:!0,remoteUrl:"https://amnestyusa.org/en_cookies_4676876234786091256.html",fieldOptInSelectorTarget:'.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',fieldOptInSelectorTargetLocation:"after",fieldClearSelectorTarget:'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',fieldClearSelectorTargetLocation:"after",fieldNames:["supporter.firstName","supporter.lastName","supporter.address1","supporter.address2","supporter.city","supporter.country","supporter.region","supporter.postcode","supporter.emailAddress"]},Debug:"true"==u.getUrlParameter("debug"),onLoad:()=>console.log("Starter Theme Loaded"),onResize:()=>console.log("Starter Theme Window Resized")};new u(Ee)})()})();
+/*!
+ * 
+ *                ((((
+ *          ((((((((
+ *       (((((((
+ *     (((((((           ****
+ *   (((((((          *******
+ *  ((((((((       **********     *********       ****    ***
+ *  ((((((((    ************   **************     ***    ****
+ *  ((((((   *******  *****   *****        *     **    ******        *****
+ *  (((   *******    ******   ******            ****  ********   ************
+ *      *******      *****     **********      ****    ****     ****      ****
+ *    *********************         *******   *****   ****     ***************
+ *     ********************            ****   ****    ****    ****
+ *                 *****    *****   *******  *****   *****     *****     **
+ *                *****     *************    ****    *******     **********
+ *
+ *  ENGRID PAGE TEMPLATE ASSETS
+ *
+ *  Date: Tuesday, October 19, 2021 @ 22:09:48 ET
+ *  By: fe
+ *  ENGrid styles: v0.4.6
+ *  ENGrid scripts: v0.4.4
+ *
+ *  Created by 4Site Studios
+ *  Come work with us or join our team, we would love to hear from you
+ *  https://www.4sitestudios.com/en
+ *
+ */
+/******/ (() => { // webpackBootstrap
+/******/ 	var __webpack_modules__ = ({
+
+/***/ 2705:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatchError = void 0;
+/**
+ * Indicates an error with dispatching.
+ *
+ * @export
+ * @class DispatchError
+ * @extends {Error}
+ */
+class DispatchError extends Error {
+    /**
+     * Creates an instance of DispatchError.
+     * @param {string} message The message.
+     *
+     * @memberOf DispatchError
+     */
+    constructor(message) {
+        super(message);
+    }
+}
+exports.DispatchError = DispatchError;
+
+
+/***/ }),
+
+/***/ 9885:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherBase = void 0;
+const __1 = __webpack_require__(4844);
+/**
+ * Base class for implementation of the dispatcher. It facilitates the subscribe
+ * and unsubscribe methods based on generic handlers. The TEventType specifies
+ * the type of event that should be exposed. Use the asEvent to expose the
+ * dispatcher as event.
+ *
+ * @export
+ * @abstract
+ * @class DispatcherBase
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherBase {
+    constructor() {
+        /**
+         * The subscriptions.
+         *
+         * @protected
+         *
+         * @memberOf DispatcherBase
+         */
+        this._subscriptions = new Array();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherBase
+     */
+    get count() {
+        return this._subscriptions.length;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherBase
+     */
+    get onSubscriptionChange() {
+        if (this._onSubscriptionChange == null) {
+            this._onSubscriptionChange = new __1.SubscriptionChangeEventDispatcher();
+        }
+        return this._onSubscriptionChange.asEvent();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    subscribe(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, false));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    one(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, true));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    has(fn) {
+        if (!fn)
+            return false;
+        return this._subscriptions.some((sub) => sub.handler == fn);
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsubscribe(fn) {
+        if (!fn)
+            return;
+        let changes = false;
+        for (let i = 0; i < this._subscriptions.length; i++) {
+            if (this._subscriptions[i].handler == fn) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+                break;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let s = sub;
+            s.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+    /**
+     * Creates a subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce True if the handler should run only one.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.Subscription(handler, isOnce);
+    }
+    /**
+     * Cleans up subs that ran and should run only once.
+     *
+     * @protected
+     * @param {ISubscription<TEventHandler>} sub The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    cleanup(sub) {
+        let changes = false;
+        if (sub.isOnce && sub.isExecuted) {
+            let i = this._subscriptions.indexOf(sub);
+            if (i > -1) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISubscribable<TEventHandler>}
+     *
+     * @memberOf DispatcherBase
+     */
+    asEvent() {
+        if (this._wrap == null) {
+            this._wrap = new __1.DispatcherWrapper(this);
+        }
+        return this._wrap;
+    }
+    /**
+     * Clears the subscriptions.
+     *
+     * @memberOf DispatcherBase
+     */
+    clear() {
+        if (this._subscriptions.length != 0) {
+            this._subscriptions.splice(0, this._subscriptions.length);
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Triggers the subscription change event.
+     *
+     * @private
+     *
+     * @memberOf DispatcherBase
+     */
+    triggerSubscriptionChange() {
+        if (this._onSubscriptionChange != null) {
+            this._onSubscriptionChange.dispatch(this.count);
+        }
+    }
+}
+exports.DispatcherBase = DispatcherBase;
+
+
+/***/ }),
+
+/***/ 1637:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherWrapper = void 0;
+/**
+ * Hides the implementation of the event dispatcher. Will expose methods that
+ * are relevent to the event.
+ *
+ * @export
+ * @class DispatcherWrapper
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherWrapper {
+    /**
+     * Creates an instance of DispatcherWrapper.
+     * @param {ISubscribable<TEventHandler>} dispatcher
+     *
+     * @memberOf DispatcherWrapper
+     */
+    constructor(dispatcher) {
+        this._subscribe = (fn) => dispatcher.subscribe(fn);
+        this._unsubscribe = (fn) => dispatcher.unsubscribe(fn);
+        this._one = (fn) => dispatcher.one(fn);
+        this._has = (fn) => dispatcher.has(fn);
+        this._clear = () => dispatcher.clear();
+        this._count = () => dispatcher.count;
+        this._onSubscriptionChange = () => dispatcher.onSubscriptionChange;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherWrapper
+     */
+    get onSubscriptionChange() {
+        return this._onSubscriptionChange();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherWrapper
+     */
+    get count() {
+        return this._count();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    subscribe(fn) {
+        return this._subscribe(fn);
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsubscribe(fn) {
+        this._unsubscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    one(fn) {
+        return this._one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    has(fn) {
+        return this._has(fn);
+    }
+    /**
+     * Clears all the subscriptions.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    clear() {
+        this._clear();
+    }
+}
+exports.DispatcherWrapper = DispatcherWrapper;
+
+
+/***/ }),
+
+/***/ 4155:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventListBase = void 0;
+/**
+ * Base class for event lists classes. Implements the get and remove.
+ *
+ * @export
+ * @abstract
+ * @class EventListBaset
+ * @template TEventDispatcher The type of event dispatcher.
+ */
+class EventListBase {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     *
+     * @param {string} name The name of the event.
+     * @returns {TEventDispatcher} The disptacher.
+     *
+     * @memberOf EventListBase
+     */
+    get(name) {
+        let event = this._events[name];
+        if (event) {
+            return event;
+        }
+        event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     *
+     * @param {string} name
+     *
+     * @memberOf EventListBase
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+}
+exports.EventListBase = EventListBase;
+
+
+/***/ }),
+
+/***/ 2849:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseDispatcherBase = void 0;
+const __1 = __webpack_require__(4844);
+/**
+ * Dispatcher base for dispatchers that use promises. Each promise
+ * is awaited before the next is dispatched, unless the event is
+ * dispatched with the executeAsync flag.
+ *
+ * @export
+ * @abstract
+ * @class PromiseDispatcherBase
+ * @extends {DispatcherBase<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseDispatcherBase extends __1.DispatcherBase {
+    /**
+     * The normal dispatch cannot be used in this class.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        throw new __1.DispatchError("_dispatch not supported. Use _dispatchAsPromise.");
+    }
+    /**
+     * Crates a new subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce Indicates if the handler should only run once.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf PromiseDispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.PromiseSubscription(handler, isOnce);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    async _dispatchAsPromise(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let ps = sub;
+            await ps.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+}
+exports.PromiseDispatcherBase = PromiseDispatcherBase;
+
+
+/***/ }),
+
+/***/ 4220:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = void 0;
+const __1 = __webpack_require__(4844);
+/**
+ * Dispatcher for subscription changes.
+ *
+ * @export
+ * @class SubscriptionChangeEventDispatcher
+ * @extends {DispatcherBase<SubscriptionChangeEventHandler>}
+ */
+class SubscriptionChangeEventDispatcher extends __1.DispatcherBase {
+    /**
+     * Dispatches the event.
+     *
+     * @param {number} count The currrent number of subscriptions.
+     *
+     * @memberOf SubscriptionChangeEventDispatcher
+     */
+    dispatch(count) {
+        this._dispatch(false, this, arguments);
+    }
+}
+exports.SubscriptionChangeEventDispatcher = SubscriptionChangeEventDispatcher;
+
+
+/***/ }),
+
+/***/ 7278:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSubscription = void 0;
+/**
+ * Subscription implementation for events with promises.
+ *
+ * @export
+ * @class PromiseSubscription
+ * @implements {ISubscription<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseSubscription {
+    /**
+     * Creates an instance of PromiseSubscription.
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     *
+     * @memberOf PromiseSubscription
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         *
+         * @memberOf PromiseSubscription
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     *
+     * @memberOf PromiseSubscription
+     */
+    async execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            //TODO: do we need to cast to any -- seems yuck
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+                return;
+            }
+            let result = fn.apply(scope, args);
+            await result;
+        }
+    }
+}
+exports.PromiseSubscription = PromiseSubscription;
+
+
+/***/ }),
+
+/***/ 8326:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Subscription = void 0;
+/**
+ * Stores a handler. Manages execution meta data.
+ * @class Subscription
+ * @template TEventHandler
+ */
+class Subscription {
+    /**
+     * Creates an instance of Subscription.
+     *
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     */
+    execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+            }
+            else {
+                fn.apply(scope, args);
+            }
+        }
+    }
+}
+exports.Subscription = Subscription;
+
+
+/***/ }),
+
+/***/ 516:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HandlingBase = void 0;
+/**
+ * Base class that implements event handling. With a an
+ * event list this base class will expose events that can be
+ * subscribed to. This will give your class generic events.
+ *
+ * @export
+ * @abstract
+ * @class HandlingBase
+ * @template TEventHandler The type of event handler.
+ * @template TDispatcher The type of dispatcher.
+ * @template TList The type of event list.
+ */
+class HandlingBase {
+    /**
+     * Creates an instance of HandlingBase.
+     * @param {TList} events The event list. Used for event management.
+     *
+     * @memberOf HandlingBase
+     */
+    constructor(events) {
+        this.events = events;
+    }
+    /**
+     * Subscribes once to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    one(name, fn) {
+        this.events.get(name).one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    has(name, fn) {
+        return this.events.get(name).has(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    subscribe(name, fn) {
+        this.events.get(name).subscribe(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    sub(name, fn) {
+        this.subscribe(name, fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsubscribe(name, fn) {
+        this.events.get(name).unsubscribe(fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsub(name, fn) {
+        this.unsubscribe(name, fn);
+    }
+}
+exports.HandlingBase = HandlingBase;
+
+
+/***/ }),
+
+/***/ 4844:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = exports.HandlingBase = exports.PromiseDispatcherBase = exports.PromiseSubscription = exports.DispatchError = exports.EventManagement = exports.EventListBase = exports.DispatcherWrapper = exports.DispatcherBase = exports.Subscription = void 0;
+const DispatcherBase_1 = __webpack_require__(9885);
+Object.defineProperty(exports, "DispatcherBase", ({ enumerable: true, get: function () { return DispatcherBase_1.DispatcherBase; } }));
+const DispatchError_1 = __webpack_require__(2705);
+Object.defineProperty(exports, "DispatchError", ({ enumerable: true, get: function () { return DispatchError_1.DispatchError; } }));
+const DispatcherWrapper_1 = __webpack_require__(1637);
+Object.defineProperty(exports, "DispatcherWrapper", ({ enumerable: true, get: function () { return DispatcherWrapper_1.DispatcherWrapper; } }));
+const EventListBase_1 = __webpack_require__(4155);
+Object.defineProperty(exports, "EventListBase", ({ enumerable: true, get: function () { return EventListBase_1.EventListBase; } }));
+const EventManagement_1 = __webpack_require__(5638);
+Object.defineProperty(exports, "EventManagement", ({ enumerable: true, get: function () { return EventManagement_1.EventManagement; } }));
+const HandlingBase_1 = __webpack_require__(516);
+Object.defineProperty(exports, "HandlingBase", ({ enumerable: true, get: function () { return HandlingBase_1.HandlingBase; } }));
+const PromiseDispatcherBase_1 = __webpack_require__(2849);
+Object.defineProperty(exports, "PromiseDispatcherBase", ({ enumerable: true, get: function () { return PromiseDispatcherBase_1.PromiseDispatcherBase; } }));
+const PromiseSubscription_1 = __webpack_require__(7278);
+Object.defineProperty(exports, "PromiseSubscription", ({ enumerable: true, get: function () { return PromiseSubscription_1.PromiseSubscription; } }));
+const Subscription_1 = __webpack_require__(8326);
+Object.defineProperty(exports, "Subscription", ({ enumerable: true, get: function () { return Subscription_1.Subscription; } }));
+const SubscriptionChangeEventHandler_1 = __webpack_require__(4220);
+Object.defineProperty(exports, "SubscriptionChangeEventDispatcher", ({ enumerable: true, get: function () { return SubscriptionChangeEventHandler_1.SubscriptionChangeEventDispatcher; } }));
+
+
+/***/ }),
+
+/***/ 5638:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventManagement = void 0;
+/**
+ * Allows the user to interact with the event.
+ *
+ * @export
+ * @class EventManagement
+ * @implements {IEventManagement}
+ */
+class EventManagement {
+    /**
+     * Creates an instance of EventManagement.
+     * @param {() => void} unsub An unsubscribe handler.
+     *
+     * @memberOf EventManagement
+     */
+    constructor(unsub) {
+        this.unsub = unsub;
+        this.propagationStopped = false;
+    }
+    /**
+     * Stops the propagation of the event.
+     * Cannot be used when async dispatch is done.
+     *
+     * @memberOf EventManagement
+     */
+    stopPropagation() {
+        this.propagationStopped = true;
+    }
+}
+exports.EventManagement = EventManagement;
+
+
+/***/ }),
+
+/***/ 4402:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventDispatcher = void 0;
+const ste_core_1 = __webpack_require__(4844);
+/**
+ * Dispatcher implementation for events. Can be used to subscribe, unsubscribe
+ * or dispatch events. Use the ToEvent() method to expose the event.
+ *
+ * @export
+ * @class EventDispatcher
+ * @extends {DispatcherBase<IEventHandler<TSender, TArgs>>}
+ * @implements {IEvent<TSender, TArgs>}
+ * @template TSender The sender type.
+ * @template TArgs The event arguments type.
+ */
+class EventDispatcher extends ste_core_1.DispatcherBase {
+    /**
+     * Creates an instance of EventDispatcher.
+     *
+     * @memberOf EventDispatcher
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Dispatches the event.
+     *
+     * @param {TSender} sender The sender.
+     * @param {TArgs} args The arguments.
+     * @returns {IPropagationStatus} The propagation status to interact with the event
+     *
+     * @memberOf EventDispatcher
+     */
+    dispatch(sender, args) {
+        const result = this._dispatch(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the event in an async way. Does not support event interaction.
+     *
+     * @param {TSender} sender The sender.
+     * @param {TArgs} args The arguments.
+     *
+     * @memberOf EventDispatcher
+     */
+    dispatchAsync(sender, args) {
+        this._dispatch(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {IEvent<TSender, TArgs>} The event.
+     *
+     * @memberOf EventDispatcher
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.EventDispatcher = EventDispatcher;
+
+
+/***/ }),
+
+/***/ 9411:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const EventList_1 = __webpack_require__(2453);
+/**
+ * Extends objects with signal event handling capabilities.
+ */
+class EventHandlingBase extends ste_core_1.HandlingBase {
+    constructor() {
+        super(new EventList_1.EventList());
+    }
+}
+exports.EventHandlingBase = EventHandlingBase;
+
+
+/***/ }),
+
+/***/ 2453:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventList = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const EventDispatcher_1 = __webpack_require__(4402);
+/**
+ * Storage class for multiple events that are accessible by name.
+ * Events dispatchers are automatically created.
+ */
+class EventList extends ste_core_1.EventListBase {
+    /**
+     * Creates a new EventList instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new EventDispatcher_1.EventDispatcher();
+    }
+}
+exports.EventList = EventList;
+
+
+/***/ }),
+
+/***/ 7891:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformEventList = void 0;
+const EventDispatcher_1 = __webpack_require__(4402);
+/**
+ * Similar to EventList, but instead of TArgs, a map of event names ang argument types is provided with TArgsMap.
+ */
+class NonUniformEventList {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    get(name) {
+        if (this._events[name]) {
+            // @TODO avoid typecasting. Not sure why TS thinks this._events[name] could still be undefined.
+            return this._events[name];
+        }
+        const event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new EventDispatcher_1.EventDispatcher();
+    }
+}
+exports.NonUniformEventList = NonUniformEventList;
+
+
+/***/ }),
+
+/***/ 3111:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformEventList = exports.EventList = exports.EventHandlingBase = exports.EventDispatcher = void 0;
+const EventDispatcher_1 = __webpack_require__(4402);
+Object.defineProperty(exports, "EventDispatcher", ({ enumerable: true, get: function () { return EventDispatcher_1.EventDispatcher; } }));
+const EventHandlingBase_1 = __webpack_require__(9411);
+Object.defineProperty(exports, "EventHandlingBase", ({ enumerable: true, get: function () { return EventHandlingBase_1.EventHandlingBase; } }));
+const EventList_1 = __webpack_require__(2453);
+Object.defineProperty(exports, "EventList", ({ enumerable: true, get: function () { return EventList_1.EventList; } }));
+const NonUniformEventList_1 = __webpack_require__(7891);
+Object.defineProperty(exports, "NonUniformEventList", ({ enumerable: true, get: function () { return NonUniformEventList_1.NonUniformEventList; } }));
+
+
+/***/ }),
+
+/***/ 4729:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SignalDispatcher = void 0;
+const ste_core_1 = __webpack_require__(4844);
+/**
+ * The dispatcher handles the storage of subsciptions and facilitates
+ * subscription, unsubscription and dispatching of a signal event.
+ *
+ * @export
+ * @class SignalDispatcher
+ * @extends {DispatcherBase<ISignalHandler>}
+ * @implements {ISignal}
+ */
+class SignalDispatcher extends ste_core_1.DispatcherBase {
+    /**
+     * Dispatches the signal.
+     *
+     * @returns {IPropagationStatus} The status of the signal.
+     *
+     * @memberOf SignalDispatcher
+     */
+    dispatch() {
+        const result = this._dispatch(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the signal without waiting for the result.
+     *
+     * @memberOf SignalDispatcher
+     */
+    dispatchAsync() {
+        this._dispatch(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISignal} The signal.
+     *
+     * @memberOf SignalDispatcher
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.SignalDispatcher = SignalDispatcher;
+
+
+/***/ }),
+
+/***/ 4243:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SignalHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const _1 = __webpack_require__(1254);
+/**
+ * Extends objects with signal event handling capabilities.
+ *
+ * @export
+ * @abstract
+ * @class SignalHandlingBase
+ * @extends {HandlingBase<ISignalHandler, SignalDispatcher, SignalList>}
+ * @implements {ISignalHandling}
+ */
+class SignalHandlingBase extends ste_core_1.HandlingBase {
+    /**
+     * Creates an instance of SignalHandlingBase.
+     *
+     * @memberOf SignalHandlingBase
+     */
+    constructor() {
+        super(new _1.SignalList());
+    }
+}
+exports.SignalHandlingBase = SignalHandlingBase;
+
+
+/***/ }),
+
+/***/ 7991:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SignalList = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const _1 = __webpack_require__(1254);
+/**
+ * Storage class for multiple signal events that are accessible by name.
+ * Events dispatchers are automatically created.
+ *
+ * @export
+ * @class SignalList
+ * @extends {EventListBase<SignalDispatcher>}
+ */
+class SignalList extends ste_core_1.EventListBase {
+    /**
+     * Creates an instance of SignalList.
+     *
+     * @memberOf SignalList
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     *
+     * @protected
+     * @returns {SignalDispatcher}
+     *
+     * @memberOf SignalList
+     */
+    createDispatcher() {
+        return new _1.SignalDispatcher();
+    }
+}
+exports.SignalList = SignalList;
+
+
+/***/ }),
+
+/***/ 1254:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Promise Signals
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SignalList = exports.SignalHandlingBase = exports.SignalDispatcher = void 0;
+const SignalDispatcher_1 = __webpack_require__(4729);
+Object.defineProperty(exports, "SignalDispatcher", ({ enumerable: true, get: function () { return SignalDispatcher_1.SignalDispatcher; } }));
+const SignalHandlingBase_1 = __webpack_require__(4243);
+Object.defineProperty(exports, "SignalHandlingBase", ({ enumerable: true, get: function () { return SignalHandlingBase_1.SignalHandlingBase; } }));
+const SignalList_1 = __webpack_require__(7991);
+Object.defineProperty(exports, "SignalList", ({ enumerable: true, get: function () { return SignalList_1.SignalList; } }));
+
+
+/***/ }),
+
+/***/ 9360:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformSimpleEventList = void 0;
+const SimpleEventDispatcher_1 = __webpack_require__(4624);
+/**
+ * Similar to EventList, but instead of TArgs, a map of event names ang argument types is provided with TArgsMap.
+ */
+class NonUniformSimpleEventList {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    get(name) {
+        if (this._events[name]) {
+            // @TODO avoid typecasting. Not sure why TS thinks this._events[name] could still be undefined.
+            return this._events[name];
+        }
+        const event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new SimpleEventDispatcher_1.SimpleEventDispatcher();
+    }
+}
+exports.NonUniformSimpleEventList = NonUniformSimpleEventList;
+
+
+/***/ }),
+
+/***/ 4624:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SimpleEventDispatcher = void 0;
+const ste_core_1 = __webpack_require__(4844);
+/**
+ * The dispatcher handles the storage of subsciptions and facilitates
+ * subscription, unsubscription and dispatching of a simple event
+ *
+ * @export
+ * @class SimpleEventDispatcher
+ * @extends {DispatcherBase<ISimpleEventHandler<TArgs>>}
+ * @implements {ISimpleEvent<TArgs>}
+ * @template TArgs
+ */
+class SimpleEventDispatcher extends ste_core_1.DispatcherBase {
+    /**
+     * Creates an instance of SimpleEventDispatcher.
+     *
+     * @memberOf SimpleEventDispatcher
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Dispatches the event.
+     *
+     * @param {TArgs} args The arguments object.
+     * @returns {IPropagationStatus} The status of the event.
+     *
+     * @memberOf SimpleEventDispatcher
+     */
+    dispatch(args) {
+        const result = this._dispatch(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the event without waiting for the result.
+     *
+     * @param {TArgs} args The arguments object.
+     *
+     * @memberOf SimpleEventDispatcher
+     */
+    dispatchAsync(args) {
+        this._dispatch(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISimpleEvent<TArgs>} The event.
+     *
+     * @memberOf SimpleEventDispatcher
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.SimpleEventDispatcher = SimpleEventDispatcher;
+
+
+/***/ }),
+
+/***/ 1269:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SimpleEventHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const SimpleEventList_1 = __webpack_require__(5570);
+/**
+ * Extends objects with signal event handling capabilities.
+ */
+class SimpleEventHandlingBase extends ste_core_1.HandlingBase {
+    constructor() {
+        super(new SimpleEventList_1.SimpleEventList());
+    }
+}
+exports.SimpleEventHandlingBase = SimpleEventHandlingBase;
+
+
+/***/ }),
+
+/***/ 5570:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SimpleEventList = void 0;
+const ste_core_1 = __webpack_require__(4844);
+const SimpleEventDispatcher_1 = __webpack_require__(4624);
+/**
+ * Storage class for multiple simple events that are accessible by name.
+ * Events dispatchers are automatically created.
+ */
+class SimpleEventList extends ste_core_1.EventListBase {
+    /**
+     * Creates a new SimpleEventList instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new SimpleEventDispatcher_1.SimpleEventDispatcher();
+    }
+}
+exports.SimpleEventList = SimpleEventList;
+
+
+/***/ }),
+
+/***/ 5931:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformSimpleEventList = exports.SimpleEventList = exports.SimpleEventHandlingBase = exports.SimpleEventDispatcher = void 0;
+const SimpleEventDispatcher_1 = __webpack_require__(4624);
+Object.defineProperty(exports, "SimpleEventDispatcher", ({ enumerable: true, get: function () { return SimpleEventDispatcher_1.SimpleEventDispatcher; } }));
+const SimpleEventHandlingBase_1 = __webpack_require__(1269);
+Object.defineProperty(exports, "SimpleEventHandlingBase", ({ enumerable: true, get: function () { return SimpleEventHandlingBase_1.SimpleEventHandlingBase; } }));
+const NonUniformSimpleEventList_1 = __webpack_require__(9360);
+Object.defineProperty(exports, "NonUniformSimpleEventList", ({ enumerable: true, get: function () { return NonUniformSimpleEventList_1.NonUniformSimpleEventList; } }));
+const SimpleEventList_1 = __webpack_require__(5570);
+Object.defineProperty(exports, "SimpleEventList", ({ enumerable: true, get: function () { return SimpleEventList_1.SimpleEventList; } }));
+
+
+/***/ }),
+
+/***/ 5363:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+var __webpack_unused_export__;
+
+/*!
+ * Strongly Typed Events for TypeScript
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+__webpack_unused_export__ = ({ value: true });
+__webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.nz = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = exports.FK = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = __webpack_unused_export__ = void 0;
+var ste_core_1 = __webpack_require__(4844);
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.Subscription; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.DispatcherBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.DispatcherWrapper; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.EventListBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.EventManagement; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.DispatchError; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.PromiseSubscription; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.PromiseDispatcherBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_core_1.HandlingBase; } });
+var ste_events_1 = __webpack_require__(3111);
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_events_1.EventDispatcher; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_events_1.EventHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_events_1.EventList; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_events_1.NonUniformEventList; } });
+var ste_simple_events_1 = __webpack_require__(5931);
+Object.defineProperty(exports, "FK", ({ enumerable: true, get: function () { return ste_simple_events_1.SimpleEventDispatcher; } }));
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_simple_events_1.SimpleEventHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_simple_events_1.SimpleEventList; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_simple_events_1.NonUniformSimpleEventList; } });
+var ste_signals_1 = __webpack_require__(1254);
+Object.defineProperty(exports, "nz", ({ enumerable: true, get: function () { return ste_signals_1.SignalDispatcher; } }));
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_signals_1.SignalHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_signals_1.SignalList; } });
+var ste_promise_events_1 = __webpack_require__(6586);
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_events_1.PromiseEventDispatcher; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_events_1.PromiseEventHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_events_1.PromiseEventList; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_events_1.NonUniformPromiseEventList; } });
+var ste_promise_signals_1 = __webpack_require__(6838);
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_signals_1.PromiseSignalDispatcher; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_signals_1.PromiseSignalHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_signals_1.PromiseSignalList; } });
+var ste_promise_simple_events_1 = __webpack_require__(9176);
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.PromiseSimpleEventDispatcher; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.PromiseSimpleEventHandlingBase; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.PromiseSimpleEventList; } });
+__webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.NonUniformPromiseSimpleEventList; } });
+
+
+/***/ }),
+
+/***/ 4747:
+/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
+
+const tippy = __webpack_require__(3861)/* ["default"] */ .ZP;
+
+document.onreadystatechange = () => {
+  if (document.readyState === "interactive" || document.readyState === "complete") {
+    // Render Critical because it moves DOM elements that can be above the fold
+    // Has also been added to the Page Template after main.js in a <script> tag that fires after DomContentLoaded
+    let inlineMonthlyUpsell = document.querySelectorAll(".move-after-transaction-recurrfreq")[0];
+    let recurrFrequencyField = document.querySelectorAll(".en__field--recurrfreq")[0];
+
+    if (inlineMonthlyUpsell && recurrFrequencyField) {
+      recurrFrequencyField.insertAdjacentElement("beforeend", inlineMonthlyUpsell); // inlineMonthlyUpsell.style.visibility='visible';
+    }
+
+    let inlineDonationAmountHeader = document.querySelectorAll(".move-before-transaction-donationamt")[0];
+    let donationAmtField = document.querySelectorAll(".en__field--donationAmt")[0];
+
+    if (inlineDonationAmountHeader && donationAmtField) {
+      donationAmtField.insertAdjacentElement("afterbegin", inlineDonationAmountHeader); // inlineGiftAmountHeader.style.visibility='visible';
+    } // Add placeholder to the Mobile Phone Field
+
+
+    let enFieldMobilePhone = document.querySelectorAll("input#en__field_supporter_NOT_TAGGED_13")[0];
+
+    if (enFieldMobilePhone) {
+      enFieldMobilePhone.placeholder = "Phone Number";
+    } // Limit the Address Field to 35 Characters which is the limit set by the Vantiv Payment Processor
+    // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
+
+
+    let enFieldAddressLine1 = document.querySelectorAll("input#en__field_supporter_address1")[0];
+
+    if (enFieldAddressLine1) {// enFieldAddressLine1.setAttribute('maxlength','35');
+    }
+
+    let enFieldAddressLine2 = document.querySelectorAll("input#en__field_supporter_address2")[0];
+
+    if (enFieldAddressLine2) {
+      enFieldAddressLine2.placeholder = "#000";
+    } // Limit the City Field to 35 Characters which is the limit set by the Vantiv Payment Processor
+    // @TODO Disabled until QA is approved https://app.productive.io/2650-4site-interactive-studios-inc/tasks/1846154
+
+
+    let enFieldCity = document.querySelectorAll("input#en__field_supporter_city")[0];
+
+    if (enFieldCity) {// enFieldCity.setAttribute('maxlength','35');
+    }
+
+    let enFieldPostalCode = document.querySelectorAll("input#en__field_supporter_postcode")[0];
+
+    if (enFieldPostalCode) {
+      enFieldPostalCode.placeholder = "00000";
+    }
+
+    let enFieldPhoneNumber = document.querySelectorAll("input#en__field_supporter_phoneNumber")[0];
+
+    if (enFieldPhoneNumber) {
+      enFieldPhoneNumber.placeholder = "Phone Number";
+    } // Add "Why is this required?" markup to the Title field
+    // Only show it if the Title field is marked as required
+
+
+    let titleLabel = document.querySelectorAll(".en__field--title.en__mandatory > label")[0];
+
+    if (titleLabel) {
+      let el = document.createElement("span");
+      let childEl = document.createElement("a");
+      childEl.href = "#";
+      childEl.id = "title-tooltip";
+      childEl.className = "label-tooltip";
+      childEl.tabIndex = "-1";
+      childEl.innerText = "Why is this required?";
+      childEl.addEventListener("click", e => e.preventDefault());
+      el.appendChild(childEl);
+      titleLabel.appendChild(el);
+      tippy("#title-tooltip", {
+        content: "The U.S. Senate is now requiring that all letters include a title. Please select one in order to ensure that your action lands in the inbox of your Senator."
+      });
+    } // Add "what's this" markup to the CVV field
+
+
+    let ccvvLabel = document.querySelectorAll(".en__field--ccvv > label")[0];
+
+    if (ccvvLabel) {
+      let el = document.createElement("span");
+      let childEl = document.createElement("a");
+      childEl.href = "#";
+      childEl.id = "ccv-tooltip";
+      childEl.className = "label-tooltip";
+      childEl.tabIndex = "-1";
+      childEl.innerText = "What's this?";
+      childEl.addEventListener("click", e => e.preventDefault());
+      el.appendChild(childEl);
+      ccvvLabel.appendChild(el);
+      tippy("#ccv-tooltip", {
+        content: "The three or four digit security code on your debit or credit card"
+      });
+    } // Conversion Tracking if this is a thank you page
+
+
+    if (typeof pageJson !== "undefined" && pageJson.giftProcess && typeof dataLayer !== "undefined") {
+      // In the upsell portion of the engrid-scripts/packages/common, we are setting 'original' to the one-time donation amount if the donor was upsold
+      let upsell = window.sessionStorage.getItem("original") ? window.sessionStorage.getItem("original") : "No value";
+      let quantity = 1;
+      let total = pageJson.amount; // Defaulting to 'Recurring' for recurring donations in case the transactionExtra object isn't defined
+      // That way those looking at the analytics data will understand that the total isn't necessarily correct because we don't know the quantity
+
+      let frequency = pageJson.recurring ? "Recurring" : "One time"; // Fallbacks in case the transactionExtra object isn't defined
+
+      let te_exists = typeof transactionExtra !== "undefined";
+      let te_frequency = te_exists && transactionExtra.frequency ? transactionExtra.frequency : "Unknown";
+      let te_city = te_exists && transactionExtra.city ? transactionExtra.city : "Unknown";
+      let te_state = te_exists && transactionExtra.state ? transactionExtra.state : "Unknown";
+
+      switch (te_frequency) {
+        case "MONTHLY":
+          frequency = "Monthly";
+          quantity = 12;
+          total = 12 * pageJson.amount;
+          let monthlyReceipt = document.getElementById("monthlyReceipt");
+
+          if (monthlyReceipt) {
+            monthlyReceipt.style.display = "block";
+          }
+
+          break;
+
+        case "ANNUAL":
+          frequency = "Annual";
+          let annualReceipt = document.getElementById("annualReceipt");
+
+          if (annualReceipt) {
+            annualReceipt.style.display = "block";
+          }
+
+          break;
+
+        default:
+          break;
+      } // Push analytics data and other custom GTM variables
+
+
+      dataLayer.push({
+        en_transaction_amount: total,
+        // custom variable in GTM
+        en_payment_amount: pageJson.amount,
+        // original payment amount not *12 for monthly gifts
+        en_transaction_id: pageJson.donationLogId,
+        // custom variable in GTM
+        en_campaign_id: pageJson.campaignId,
+        transactionId: pageJson.donationLogId,
+        transactionAffiliation: "Donation Form",
+        transactionTotal: total,
+        transactionTax: 0,
+        transactionShipping: 0,
+        transactionCity: te_city,
+        transactionState: te_state,
+        transactionCountry: pageJson.country,
+        transactionProducts: [{
+          id: pageJson.donationLogId,
+          quantity: quantity,
+          name: pageJson.pageName,
+          price: pageJson.amount,
+          sku: pageJson.campaignId,
+          category: frequency
+        }],
+        transactionPromoCode: upsell,
+        successful_donation: "main form (EN)",
+        // custom variable/event for GA
+        event: frequency,
+        // event used to determine transaction frequency for tag placement
+        donation_type: frequency
+      });
+      dataLayer.push({
+        event: "en_donation" // used to signal that we're on the thank you page instead of url/parameters
+
+      });
+    } // Close's the menu when tapping the close button on mobile
+
+
+    const menuBtn = document.querySelector('a[role="menuitem"]');
+    menuBtn.addEventListener("touchstart", function (event) {
+      const menu = document.querySelector('ul#main-menu ul[role="menu"]');
+
+      if (menu.style.display === "block") {
+        menu.style.display = "none";
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    }, {
+      passive: true
+    }); // Menu copied from: https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/menubar-1.html#
+    // @TODO Move to this package https://github.com/NickDJM/accessible-menu/blob/HEAD/docs/basics/two-level-menu-with-toggle.md
+    // MenubarItemLinks.js
+
+    /*
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
+
+    var MenubarItem = function (domNode, menuObj) {
+      this.menu = menuObj;
+      this.domNode = domNode;
+      this.popupMenu = false;
+      this.hasFocus = false;
+      this.hasHover = false;
+      this.isMenubarItem = true;
+      this.keyCode = Object.freeze({
+        TAB: 9,
+        RETURN: 13,
+        ESC: 27,
+        SPACE: 32,
+        PAGEUP: 33,
+        PAGEDOWN: 34,
+        END: 35,
+        HOME: 36,
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40
+      });
+    };
+
+    MenubarItem.prototype.init = function () {
+      this.domNode.tabIndex = -1;
+      this.domNode.addEventListener("keydown", this.handleKeydown.bind(this));
+      this.domNode.addEventListener("focus", this.handleFocus.bind(this));
+      this.domNode.addEventListener("blur", this.handleBlur.bind(this));
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Initialize pop up menus
+
+      var nextElement = this.domNode.nextElementSibling;
+
+      if (nextElement && nextElement.tagName === "UL") {
+        this.popupMenu = new PopupMenu(nextElement, this);
+        this.popupMenu.init();
+      }
+    };
+
+    MenubarItem.prototype.handleKeydown = function (event) {
+      var tgt = event.currentTarget,
+          char = event.key,
+          flag = false,
+          clickEvent;
+
+      function isPrintableCharacter(str) {
+        return str.length === 1 && str.match(/\S/);
+      }
+
+      switch (event.keyCode) {
+        case this.keyCode.SPACE:
+        case this.keyCode.RETURN:
+        case this.keyCode.DOWN:
+          if (this.popupMenu) {
+            this.popupMenu.open();
+            this.popupMenu.setFocusToFirstItem();
+            flag = true;
+          }
+
+          break;
+
+        case this.keyCode.LEFT:
+          this.menu.setFocusToPreviousItem(this);
+          flag = true;
+          break;
+
+        case this.keyCode.RIGHT:
+          this.menu.setFocusToNextItem(this);
+          flag = true;
+          break;
+
+        case this.keyCode.UP:
+          if (this.popupMenu) {
+            this.popupMenu.open();
+            this.popupMenu.setFocusToLastItem();
+            flag = true;
+          }
+
+          break;
+
+        case this.keyCode.HOME:
+        case this.keyCode.PAGEUP:
+          this.menu.setFocusToFirstItem();
+          flag = true;
+          break;
+
+        case this.keyCode.END:
+        case this.keyCode.PAGEDOWN:
+          this.menu.setFocusToLastItem();
+          flag = true;
+          break;
+
+        case this.keyCode.TAB:
+          this.popupMenu.close(true);
+          break;
+
+        case this.keyCode.ESC:
+          this.popupMenu.close(true);
+          break;
+
+        default:
+          if (isPrintableCharacter(char)) {
+            this.menu.setFocusByFirstCharacter(this, char);
+            flag = true;
+          }
+
+          break;
+      }
+
+      if (flag) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    };
+
+    MenubarItem.prototype.setExpanded = function (value) {
+      if (value) {
+        this.domNode.setAttribute("aria-expanded", "true");
+      } else {
+        this.domNode.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    MenubarItem.prototype.handleFocus = function (event) {
+      this.menu.hasFocus = true;
+    };
+
+    MenubarItem.prototype.handleBlur = function (event) {
+      this.menu.hasFocus = false;
+    };
+
+    MenubarItem.prototype.handleMouseover = function (event) {
+      this.hasHover = true;
+      this.popupMenu.open();
+    };
+
+    MenubarItem.prototype.handleMouseout = function (event) {
+      this.hasHover = false;
+      setTimeout(this.popupMenu.close.bind(this.popupMenu, false), 300);
+    }; // MenubarLinks.js
+
+    /*
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
+
+
+    var Menubar = function (domNode) {
+      var elementChildren,
+          msgPrefix = "Menubar constructor argument menubarNode "; // Check whether menubarNode is a DOM element
+
+      if (!(domNode instanceof Element)) {
+        throw new TypeError(msgPrefix + "is not a DOM Element.");
+      } // Check whether menubarNode has descendant elements
+
+
+      if (domNode.childElementCount === 0) {
+        throw new Error(msgPrefix + "has no element children.");
+      } // Check whether menubarNode has A elements
+
+
+      var e = domNode.firstElementChild;
+
+      while (e) {
+        var menubarItem = e.firstElementChild;
+
+        if (e && menubarItem && menubarItem.tagName !== "A") {
+          throw new Error(msgPrefix + "has child elements are not A elements.");
+        }
+
+        e = e.nextElementSibling;
+      }
+
+      this.isMenubar = true;
+      this.domNode = domNode;
+      this.menubarItems = []; // See Menubar init method
+
+      this.firstChars = []; // See Menubar init method
+
+      this.firstItem = null; // See Menubar init method
+
+      this.lastItem = null; // See Menubar init method
+
+      this.hasFocus = false; // See MenubarItem handleFocus, handleBlur
+
+      this.hasHover = false; // See Menubar handleMouseover, handleMouseout
+    };
+    /*
+     *   @method Menubar.prototype.init
+     *
+     *   @desc
+     *       Adds ARIA role to the menubar node
+     *       Traverse menubar children for A elements to configure each A element as a ARIA menuitem
+     *       and populate menuitems array. Initialize firstItem and lastItem properties.
+     */
+
+
+    Menubar.prototype.init = function () {
+      var menubarItem, childElement, menuElement, textContent, numItems; // Traverse the element children of menubarNode: configure each with
+      // menuitem role behavior and store reference in menuitems array.
+
+      var elem = this.domNode.firstElementChild;
+
+      while (elem) {
+        menuElement = elem.firstElementChild;
+
+        if (elem && menuElement && menuElement.tagName === "A") {
+          menubarItem = new MenubarItem(menuElement, this);
+          menubarItem.init();
+          this.menubarItems.push(menubarItem);
+          textContent = menuElement.textContent.trim();
+          this.firstChars.push(textContent.substring(0, 1).toLowerCase());
+        }
+
+        elem = elem.nextElementSibling;
+      } // Use populated menuitems array to initialize firstItem and lastItem.
+
+
+      numItems = this.menubarItems.length;
+
+      if (numItems > 0) {
+        this.firstItem = this.menubarItems[0];
+        this.lastItem = this.menubarItems[numItems - 1];
+      }
+
+      this.firstItem.domNode.tabIndex = 0;
+    };
+    /* FOCUS MANAGEMENT METHODS */
+
+
+    Menubar.prototype.setFocusToItem = function (newItem) {
+      var flag = false;
+
+      for (var i = 0; i < this.menubarItems.length; i++) {
+        var mbi = this.menubarItems[i];
+
+        if (mbi.domNode.tabIndex == 0) {
+          flag = mbi.domNode.getAttribute("aria-expanded") === "true";
+        }
+
+        mbi.domNode.tabIndex = -1;
+
+        if (mbi.popupMenu) {
+          mbi.popupMenu.close();
+        }
+      }
+
+      newItem.domNode.focus();
+      newItem.domNode.tabIndex = 0;
+
+      if (flag && newItem.popupMenu) {
+        newItem.popupMenu.open();
+      }
+    };
+
+    Menubar.prototype.setFocusToFirstItem = function (flag) {
+      this.setFocusToItem(this.firstItem);
+    };
+
+    Menubar.prototype.setFocusToLastItem = function (flag) {
+      this.setFocusToItem(this.lastItem);
+    };
+
+    Menubar.prototype.setFocusToPreviousItem = function (currentItem) {
+      var index;
+
+      if (currentItem === this.firstItem) {
+        newItem = this.lastItem;
+      } else {
+        index = this.menubarItems.indexOf(currentItem);
+        newItem = this.menubarItems[index - 1];
+      }
+
+      this.setFocusToItem(newItem);
+    };
+
+    Menubar.prototype.setFocusToNextItem = function (currentItem) {
+      var index;
+
+      if (currentItem === this.lastItem) {
+        newItem = this.firstItem;
+      } else {
+        index = this.menubarItems.indexOf(currentItem);
+        newItem = this.menubarItems[index + 1];
+      }
+
+      this.setFocusToItem(newItem);
+    };
+
+    Menubar.prototype.setFocusByFirstCharacter = function (currentItem, char) {
+      var start, index;
+      var flag = currentItem.domNode.getAttribute("aria-expanded") === "true";
+      char = char.toLowerCase(); // Get start index for search based on position of currentItem
+
+      start = this.menubarItems.indexOf(currentItem) + 1;
+
+      if (start === this.menubarItems.length) {
+        start = 0;
+      } // Check remaining slots in the menu
+
+
+      index = this.getIndexFirstChars(start, char); // If not found in remaining slots, check from beginning
+
+      if (index === -1) {
+        index = this.getIndexFirstChars(0, char);
+      } // If match was found...
+
+
+      if (index > -1) {
+        this.setFocusToItem(this.menubarItems[index]);
+      }
+    };
+
+    Menubar.prototype.getIndexFirstChars = function (startIndex, char) {
+      for (var i = startIndex; i < this.firstChars.length; i++) {
+        if (char === this.firstChars[i]) {
+          return i;
+        }
+      }
+
+      return -1;
+    }; // PopupMenuItemLinks.js
+
+    /*
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
+
+
+    var MenuItem = function (domNode, menuObj) {
+      if (typeof popupObj !== "object") {
+        var popupObj = false;
+      }
+
+      this.domNode = domNode;
+      this.menu = menuObj;
+      this.popupMenu = false;
+      this.isMenubarItem = false;
+      this.keyCode = Object.freeze({
+        TAB: 9,
+        RETURN: 13,
+        ESC: 27,
+        SPACE: 32,
+        PAGEUP: 33,
+        PAGEDOWN: 34,
+        END: 35,
+        HOME: 36,
+        LEFT: 37,
+        UP: 38,
+        RIGHT: 39,
+        DOWN: 40
+      });
+    };
+
+    MenuItem.prototype.init = function () {
+      this.domNode.tabIndex = -1;
+      this.domNode.addEventListener("keydown", this.handleKeydown.bind(this));
+      this.domNode.addEventListener("click", this.handleClick.bind(this));
+      this.domNode.addEventListener("focus", this.handleFocus.bind(this));
+      this.domNode.addEventListener("blur", this.handleBlur.bind(this));
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Initialize flyout menu
+
+      var nextElement = this.domNode.nextElementSibling;
+
+      if (nextElement && nextElement.tagName === "UL") {
+        this.popupMenu = new PopupMenu(nextElement, this);
+        this.popupMenu.init();
+      }
+    };
+
+    MenuItem.prototype.isExpanded = function () {
+      return this.domNode.getAttribute("aria-expanded") === "true";
+    };
+    /* EVENT HANDLERS */
+
+
+    MenuItem.prototype.handleKeydown = function (event) {
+      var tgt = event.currentTarget,
+          char = event.key,
+          flag = false,
+          clickEvent;
+
+      function isPrintableCharacter(str) {
+        return str.length === 1 && str.match(/\S/);
+      }
+
+      switch (event.keyCode) {
+        case this.keyCode.SPACE:
+        case this.keyCode.RETURN:
+          if (this.popupMenu) {
+            this.popupMenu.open();
+            this.popupMenu.setFocusToFirstItem();
+          } else {
+            // Create simulated mouse event to mimic the behavior of ATs
+            // and let the event handler handleClick do the housekeeping.
+            try {
+              clickEvent = new MouseEvent("click", {
+                view: window,
+                bubbles: true,
+                cancelable: true
+              });
+            } catch (err) {
+              if (document.createEvent) {
+                // DOM Level 3 for IE 9+
+                clickEvent = document.createEvent("MouseEvents");
+                clickEvent.initEvent("click", true, true);
+              }
+            }
+
+            tgt.dispatchEvent(clickEvent);
+          }
+
+          flag = true;
+          break;
+
+        case this.keyCode.UP:
+          this.menu.setFocusToPreviousItem(this);
+          flag = true;
+          break;
+
+        case this.keyCode.DOWN:
+          this.menu.setFocusToNextItem(this);
+          flag = true;
+          break;
+
+        case this.keyCode.LEFT:
+          this.menu.setFocusToController("previous", true);
+          this.menu.close(true);
+          flag = true;
+          break;
+
+        case this.keyCode.RIGHT:
+          if (this.popupMenu) {
+            this.popupMenu.open();
+            this.popupMenu.setFocusToFirstItem();
+          } else {
+            this.menu.setFocusToController("next", true);
+            this.menu.close(true);
+          }
+
+          flag = true;
+          break;
+
+        case this.keyCode.HOME:
+        case this.keyCode.PAGEUP:
+          this.menu.setFocusToFirstItem();
+          flag = true;
+          break;
+
+        case this.keyCode.END:
+        case this.keyCode.PAGEDOWN:
+          this.menu.setFocusToLastItem();
+          flag = true;
+          break;
+
+        case this.keyCode.ESC:
+          this.menu.setFocusToController();
+          this.menu.close(true);
+          flag = true;
+          break;
+
+        case this.keyCode.TAB:
+          this.menu.setFocusToController();
+          break;
+
+        default:
+          if (isPrintableCharacter(char)) {
+            this.menu.setFocusByFirstCharacter(this, char);
+            flag = true;
+          }
+
+          break;
+      }
+
+      if (flag) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
+    };
+
+    MenuItem.prototype.setExpanded = function (value) {
+      if (value) {
+        this.domNode.setAttribute("aria-expanded", "true");
+      } else {
+        this.domNode.setAttribute("aria-expanded", "false");
+      }
+    };
+
+    MenuItem.prototype.handleClick = function (event) {
+      this.menu.setFocusToController();
+      this.menu.close(true);
+    };
+
+    MenuItem.prototype.handleFocus = function (event) {
+      this.menu.hasFocus = true;
+    };
+
+    MenuItem.prototype.handleBlur = function (event) {
+      this.menu.hasFocus = false;
+      setTimeout(this.menu.close.bind(this.menu, false), 300);
+    };
+
+    MenuItem.prototype.handleMouseover = function (event) {
+      this.menu.hasHover = true;
+      this.menu.open();
+
+      if (this.popupMenu) {
+        this.popupMenu.hasHover = true;
+        this.popupMenu.open();
+      }
+    };
+
+    MenuItem.prototype.handleMouseout = function (event) {
+      if (this.popupMenu) {
+        this.popupMenu.hasHover = false;
+        this.popupMenu.close(true);
+      }
+
+      this.menu.hasHover = false;
+      setTimeout(this.menu.close.bind(this.menu, false), 300);
+    }; // PopupMenuLinks.js
+
+    /*
+     *   This content is licensed according to the W3C Software License at
+     *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+     */
+
+
+    var PopupMenu = function (domNode, controllerObj) {
+      var elementChildren,
+          msgPrefix = "PopupMenu constructor argument domNode "; // Check whether domNode is a DOM element
+
+      if (!(domNode instanceof Element)) {
+        throw new TypeError(msgPrefix + "is not a DOM Element.");
+      } // Check whether domNode has child elements
+
+
+      if (domNode.childElementCount === 0) {
+        throw new Error(msgPrefix + "has no element children.");
+      } // Check whether domNode descendant elements have A elements
+
+
+      var childElement = domNode.firstElementChild;
+
+      while (childElement) {
+        var menuitem = childElement.firstElementChild;
+
+        if (menuitem && menuitem === "A") {
+          throw new Error(msgPrefix + "has descendant elements that are not A elements.");
+        }
+
+        childElement = childElement.nextElementSibling;
+      }
+
+      this.isMenubar = false;
+      this.domNode = domNode;
+      this.controller = controllerObj;
+      this.menuitems = []; // See PopupMenu init method
+
+      this.firstChars = []; // See PopupMenu init method
+
+      this.firstItem = null; // See PopupMenu init method
+
+      this.lastItem = null; // See PopupMenu init method
+
+      this.hasFocus = false; // See MenuItem handleFocus, handleBlur
+
+      this.hasHover = false; // See PopupMenu handleMouseover, handleMouseout
+    };
+    /*
+     *   @method PopupMenu.prototype.init
+     *
+     *   @desc
+     *       Add domNode event listeners for mouseover and mouseout. Traverse
+     *       domNode children to configure each menuitem and populate menuitems
+     *       array. Initialize firstItem and lastItem properties.
+     */
+
+
+    PopupMenu.prototype.init = function () {
+      var childElement, menuElement, menuItem, textContent, numItems, label; // Configure the domNode itself
+
+      this.domNode.addEventListener("mouseover", this.handleMouseover.bind(this));
+      this.domNode.addEventListener("mouseout", this.handleMouseout.bind(this)); // Traverse the element children of domNode: configure each with
+      // menuitem role behavior and store reference in menuitems array.
+
+      childElement = this.domNode.firstElementChild;
+
+      while (childElement) {
+        menuElement = childElement.firstElementChild;
+
+        if (menuElement && menuElement.tagName === "A") {
+          menuItem = new MenuItem(menuElement, this);
+          menuItem.init();
+          this.menuitems.push(menuItem);
+          textContent = menuElement.textContent.trim();
+          this.firstChars.push(textContent.substring(0, 1).toLowerCase());
+        }
+
+        childElement = childElement.nextElementSibling;
+      } // Use populated menuitems array to initialize firstItem and lastItem.
+
+
+      numItems = this.menuitems.length;
+
+      if (numItems > 0) {
+        this.firstItem = this.menuitems[0];
+        this.lastItem = this.menuitems[numItems - 1];
+      }
+    };
+    /* EVENT HANDLERS */
+
+
+    PopupMenu.prototype.handleMouseover = function (event) {
+      this.hasHover = true;
+    };
+
+    PopupMenu.prototype.handleMouseout = function (event) {
+      this.hasHover = false;
+      setTimeout(this.close.bind(this, false), 1);
+    };
+    /* FOCUS MANAGEMENT METHODS */
+
+
+    PopupMenu.prototype.setFocusToController = function (command, flag) {
+      if (typeof command !== "string") {
+        command = "";
+      }
+
+      function setFocusToMenubarItem(controller, close) {
+        while (controller) {
+          if (controller.isMenubarItem) {
+            controller.domNode.focus();
+            return controller;
+          } else {
+            if (close) {
+              controller.menu.close(true);
+            }
+
+            controller.hasFocus = false;
+          }
+
+          controller = controller.menu.controller;
+        }
+
+        return false;
+      }
+
+      if (command === "") {
+        if (this.controller && this.controller.domNode) {
+          this.controller.domNode.focus();
+        }
+
+        return;
+      }
+
+      if (!this.controller.isMenubarItem) {
+        this.controller.domNode.focus();
+        this.close();
+
+        if (command === "next") {
+          var menubarItem = setFocusToMenubarItem(this.controller, false);
+
+          if (menubarItem) {
+            menubarItem.menu.setFocusToNextItem(menubarItem, flag);
+          }
+        }
+      } else {
+        if (command === "previous") {
+          this.controller.menu.setFocusToPreviousItem(this.controller, flag);
+        } else if (command === "next") {
+          this.controller.menu.setFocusToNextItem(this.controller, flag);
+        }
+      }
+    };
+
+    PopupMenu.prototype.setFocusToFirstItem = function () {
+      this.firstItem.domNode.focus();
+    };
+
+    PopupMenu.prototype.setFocusToLastItem = function () {
+      this.lastItem.domNode.focus();
+    };
+
+    PopupMenu.prototype.setFocusToPreviousItem = function (currentItem) {
+      var index;
+
+      if (currentItem === this.firstItem) {
+        this.lastItem.domNode.focus();
+      } else {
+        index = this.menuitems.indexOf(currentItem);
+        this.menuitems[index - 1].domNode.focus();
+      }
+    };
+
+    PopupMenu.prototype.setFocusToNextItem = function (currentItem) {
+      var index;
+
+      if (currentItem === this.lastItem) {
+        this.firstItem.domNode.focus();
+      } else {
+        index = this.menuitems.indexOf(currentItem);
+        this.menuitems[index + 1].domNode.focus();
+      }
+    };
+
+    PopupMenu.prototype.setFocusByFirstCharacter = function (currentItem, char) {
+      var start, index;
+      char = char.toLowerCase(); // Get start index for search based on position of currentItem
+
+      start = this.menuitems.indexOf(currentItem) + 1;
+
+      if (start === this.menuitems.length) {
+        start = 0;
+      } // Check remaining slots in the menu
+
+
+      index = this.getIndexFirstChars(start, char); // If not found in remaining slots, check from beginning
+
+      if (index === -1) {
+        index = this.getIndexFirstChars(0, char);
+      } // If match was found...
+
+
+      if (index > -1) {
+        this.menuitems[index].domNode.focus();
+      }
+    };
+
+    PopupMenu.prototype.getIndexFirstChars = function (startIndex, char) {
+      for (var i = startIndex; i < this.firstChars.length; i++) {
+        if (char === this.firstChars[i]) {
+          return i;
+        }
+      }
+
+      return -1;
+    };
+    /* MENU DISPLAY METHODS */
+
+
+    PopupMenu.prototype.open = function () {
+      // Get position and bounding rectangle of controller object's DOM node
+      var rect = this.controller.domNode.getBoundingClientRect(); // Set CSS properties
+
+      if (!this.controller.isMenubarItem) {
+        this.domNode.parentNode.style.position = "relative";
+        this.domNode.style.display = "block";
+        this.domNode.style.position = "absolute";
+        this.domNode.style.left = rect.width + "px";
+        this.domNode.style.zIndex = 100;
+      } else {
+        this.domNode.style.display = "block";
+        this.domNode.style.position = "absolute"; //this.domNode.style.top = (rect.height - 1) + 'px';
+
+        this.domNode.style.zIndex = 100;
+      }
+
+      this.controller.setExpanded(true);
+    };
+
+    PopupMenu.prototype.close = function (force) {
+      var controllerHasHover = this.controller.hasHover;
+      var hasFocus = this.hasFocus;
+
+      for (var i = 0; i < this.menuitems.length; i++) {
+        var mi = this.menuitems[i];
+
+        if (mi.popupMenu) {
+          hasFocus = hasFocus | mi.popupMenu.hasFocus;
+        }
+      }
+
+      if (!this.controller.isMenubarItem) {
+        controllerHasHover = false;
+      }
+
+      if (force || !hasFocus && !this.hasHover && !controllerHasHover) {
+        this.domNode.style.display = "none";
+        this.domNode.style.zIndex = 0;
+        this.controller.setExpanded(false);
+      }
+    };
+
+    var menubar = new Menubar(document.getElementById("main-menu"));
+
+    if (menubar) {
+      menubar.init();
+    }
+
+    var candleContainer = document.querySelector(".has-candle");
+
+    if (candleContainer) {
+      var monthlyLabel = candleContainer.querySelector(".en__field__input[value='MONTHLY']+label");
+      var candlePosition = candleContainer.classList.contains("left") ? "left" : "right";
+
+      if (monthlyLabel) {
+        var candleNode = document.createElement("div");
+        candleNode.classList.add("candle");
+        candleNode.classList.add(candlePosition);
+        candleNode.innerHTML = `
+      <div class="candle-flame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.5 24.978"><g data-name="Layer 2"><g data-name="flame b"><path d="M0 15.157c0 6.897 6.25 9.821 6.25 9.821s6.25-2.924 6.25-9.821S6.25 0 6.25 0 0 8.26 0 15.157z" style="fill:#ff4700"/><path d="M3.375 18.383a6.768 6.768 0 0 0 2.875 5.763 6.768 6.768 0 0 0 2.875-5.763c0-4.047-2.875-8.893-2.875-8.893s-2.875 4.846-2.875 8.893z" style="fill:#ffbf00"/></g></g></svg>
+      </div>
+      <div class="candle-base">
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+      </div>
+      `;
+        const labelText = monthlyLabel.innerText;
+        const labelSpan = document.createElement("span");
+        labelSpan.innerText = labelText;
+        monthlyLabel.innerHTML = "";
+
+        if (candlePosition === "left") {
+          monthlyLabel.appendChild(candleNode);
+          monthlyLabel.appendChild(labelSpan);
+        } else {
+          monthlyLabel.appendChild(labelSpan);
+          monthlyLabel.appendChild(candleNode);
+        }
+      }
+    }
+  }
+};
+
+/***/ }),
+
+/***/ 6357:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformPromiseEventList = void 0;
+const PromiseEventDispatcher_1 = __webpack_require__(5072);
+/**
+ * Similar to EventList, but instead of TArgs, a map of event names ang argument types is provided with TArgsMap.
+ */
+class NonUniformPromiseEventList {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    get(name) {
+        if (this._events[name]) {
+            // @TODO avoid typecasting. Not sure why TS thinks this._events[name] could still be undefined.
+            return this._events[name];
+        }
+        const event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new PromiseEventDispatcher_1.PromiseEventDispatcher();
+    }
+}
+exports.NonUniformPromiseEventList = NonUniformPromiseEventList;
+
+
+/***/ }),
+
+/***/ 5072:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseEventDispatcher = void 0;
+const ste_core_1 = __webpack_require__(2874);
+/**
+ * Dispatcher implementation for events. Can be used to subscribe, unsubscribe
+ * or dispatch events. Use the ToEvent() method to expose the event.
+ *
+ * @export
+ * @class PromiseEventDispatcher
+ * @extends {PromiseDispatcherBase<IPromiseEventHandler<TSender, TArgs>>}
+ * @implements {IPromiseEvent<TSender, TArgs>}
+ * @template TSender
+ * @template TArgs
+ */
+class PromiseEventDispatcher extends ste_core_1.PromiseDispatcherBase {
+    /**
+     * Creates a new EventDispatcher instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Dispatches the event.
+     *
+     * @param {TSender} sender The sender object.
+     * @param {TArgs} args The argument object.
+     * @returns {Promise<IPropagationStatus>} The status.
+     *
+     * @memberOf PromiseEventDispatcher
+     */
+    async dispatch(sender, args) {
+        const result = await this._dispatchAsPromise(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the event without waiting for the result.
+     *
+     * @param {TSender} sender The sender object.
+     * @param {TArgs} args The argument object.
+     *
+     * @memberOf PromiseEventDispatcher
+     */
+    dispatchAsync(sender, args) {
+        this._dispatchAsPromise(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.PromiseEventDispatcher = PromiseEventDispatcher;
+
+
+/***/ }),
+
+/***/ 7873:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseEventHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(2874);
+const PromiseEventList_1 = __webpack_require__(4414);
+/**
+ * Extends objects with signal event handling capabilities.
+ */
+class PromiseEventHandlingBase extends ste_core_1.HandlingBase {
+    constructor() {
+        super(new PromiseEventList_1.PromiseEventList());
+    }
+}
+exports.PromiseEventHandlingBase = PromiseEventHandlingBase;
+
+
+/***/ }),
+
+/***/ 4414:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseEventList = void 0;
+const ste_core_1 = __webpack_require__(2874);
+const PromiseEventDispatcher_1 = __webpack_require__(5072);
+/**
+ * Storage class for multiple events that are accessible by name.
+ * Events dispatchers are automatically created.
+ */
+class PromiseEventList extends ste_core_1.EventListBase {
+    /**
+     * Creates a new EventList instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new PromiseEventDispatcher_1.PromiseEventDispatcher();
+    }
+}
+exports.PromiseEventList = PromiseEventList;
+
+
+/***/ }),
+
+/***/ 6586:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformPromiseEventList = exports.PromiseEventList = exports.PromiseEventHandlingBase = exports.PromiseEventDispatcher = void 0;
+const PromiseEventDispatcher_1 = __webpack_require__(5072);
+Object.defineProperty(exports, "PromiseEventDispatcher", ({ enumerable: true, get: function () { return PromiseEventDispatcher_1.PromiseEventDispatcher; } }));
+const PromiseEventHandlingBase_1 = __webpack_require__(7873);
+Object.defineProperty(exports, "PromiseEventHandlingBase", ({ enumerable: true, get: function () { return PromiseEventHandlingBase_1.PromiseEventHandlingBase; } }));
+const PromiseEventList_1 = __webpack_require__(4414);
+Object.defineProperty(exports, "PromiseEventList", ({ enumerable: true, get: function () { return PromiseEventList_1.PromiseEventList; } }));
+const NonUniformPromiseEventList_1 = __webpack_require__(6357);
+Object.defineProperty(exports, "NonUniformPromiseEventList", ({ enumerable: true, get: function () { return NonUniformPromiseEventList_1.NonUniformPromiseEventList; } }));
+
+
+/***/ }),
+
+/***/ 4383:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatchError = void 0;
+/**
+ * Indicates an error with dispatching.
+ *
+ * @export
+ * @class DispatchError
+ * @extends {Error}
+ */
+class DispatchError extends Error {
+    /**
+     * Creates an instance of DispatchError.
+     * @param {string} message The message.
+     *
+     * @memberOf DispatchError
+     */
+    constructor(message) {
+        super(message);
+    }
+}
+exports.DispatchError = DispatchError;
+
+
+/***/ }),
+
+/***/ 894:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherBase = void 0;
+const __1 = __webpack_require__(2874);
+/**
+ * Base class for implementation of the dispatcher. It facilitates the subscribe
+ * and unsubscribe methods based on generic handlers. The TEventType specifies
+ * the type of event that should be exposed. Use the asEvent to expose the
+ * dispatcher as event.
+ *
+ * @export
+ * @abstract
+ * @class DispatcherBase
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherBase {
+    constructor() {
+        /**
+         * The subscriptions.
+         *
+         * @protected
+         *
+         * @memberOf DispatcherBase
+         */
+        this._subscriptions = new Array();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherBase
+     */
+    get count() {
+        return this._subscriptions.length;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherBase
+     */
+    get onSubscriptionChange() {
+        if (this._onSubscriptionChange == null) {
+            this._onSubscriptionChange = new __1.SubscriptionChangeEventDispatcher();
+        }
+        return this._onSubscriptionChange.asEvent();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    subscribe(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, false));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    one(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, true));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    has(fn) {
+        if (!fn)
+            return false;
+        return this._subscriptions.some((sub) => sub.handler == fn);
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsubscribe(fn) {
+        if (!fn)
+            return;
+        let changes = false;
+        for (let i = 0; i < this._subscriptions.length; i++) {
+            if (this._subscriptions[i].handler == fn) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+                break;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let s = sub;
+            s.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+    /**
+     * Creates a subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce True if the handler should run only one.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.Subscription(handler, isOnce);
+    }
+    /**
+     * Cleans up subs that ran and should run only once.
+     *
+     * @protected
+     * @param {ISubscription<TEventHandler>} sub The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    cleanup(sub) {
+        let changes = false;
+        if (sub.isOnce && sub.isExecuted) {
+            let i = this._subscriptions.indexOf(sub);
+            if (i > -1) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISubscribable<TEventHandler>}
+     *
+     * @memberOf DispatcherBase
+     */
+    asEvent() {
+        if (this._wrap == null) {
+            this._wrap = new __1.DispatcherWrapper(this);
+        }
+        return this._wrap;
+    }
+    /**
+     * Clears the subscriptions.
+     *
+     * @memberOf DispatcherBase
+     */
+    clear() {
+        if (this._subscriptions.length != 0) {
+            this._subscriptions.splice(0, this._subscriptions.length);
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Triggers the subscription change event.
+     *
+     * @private
+     *
+     * @memberOf DispatcherBase
+     */
+    triggerSubscriptionChange() {
+        if (this._onSubscriptionChange != null) {
+            this._onSubscriptionChange.dispatch(this.count);
+        }
+    }
+}
+exports.DispatcherBase = DispatcherBase;
+
+
+/***/ }),
+
+/***/ 9757:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherWrapper = void 0;
+/**
+ * Hides the implementation of the event dispatcher. Will expose methods that
+ * are relevent to the event.
+ *
+ * @export
+ * @class DispatcherWrapper
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherWrapper {
+    /**
+     * Creates an instance of DispatcherWrapper.
+     * @param {ISubscribable<TEventHandler>} dispatcher
+     *
+     * @memberOf DispatcherWrapper
+     */
+    constructor(dispatcher) {
+        this._subscribe = (fn) => dispatcher.subscribe(fn);
+        this._unsubscribe = (fn) => dispatcher.unsubscribe(fn);
+        this._one = (fn) => dispatcher.one(fn);
+        this._has = (fn) => dispatcher.has(fn);
+        this._clear = () => dispatcher.clear();
+        this._count = () => dispatcher.count;
+        this._onSubscriptionChange = () => dispatcher.onSubscriptionChange;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherWrapper
+     */
+    get onSubscriptionChange() {
+        return this._onSubscriptionChange();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherWrapper
+     */
+    get count() {
+        return this._count();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    subscribe(fn) {
+        return this._subscribe(fn);
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsubscribe(fn) {
+        this._unsubscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    one(fn) {
+        return this._one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    has(fn) {
+        return this._has(fn);
+    }
+    /**
+     * Clears all the subscriptions.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    clear() {
+        this._clear();
+    }
+}
+exports.DispatcherWrapper = DispatcherWrapper;
+
+
+/***/ }),
+
+/***/ 5930:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventListBase = void 0;
+/**
+ * Base class for event lists classes. Implements the get and remove.
+ *
+ * @export
+ * @abstract
+ * @class EventListBaset
+ * @template TEventDispatcher The type of event dispatcher.
+ */
+class EventListBase {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     *
+     * @param {string} name The name of the event.
+     * @returns {TEventDispatcher} The disptacher.
+     *
+     * @memberOf EventListBase
+     */
+    get(name) {
+        let event = this._events[name];
+        if (event) {
+            return event;
+        }
+        event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     *
+     * @param {string} name
+     *
+     * @memberOf EventListBase
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+}
+exports.EventListBase = EventListBase;
+
+
+/***/ }),
+
+/***/ 7541:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseDispatcherBase = void 0;
+const __1 = __webpack_require__(2874);
+/**
+ * Dispatcher base for dispatchers that use promises. Each promise
+ * is awaited before the next is dispatched, unless the event is
+ * dispatched with the executeAsync flag.
+ *
+ * @export
+ * @abstract
+ * @class PromiseDispatcherBase
+ * @extends {DispatcherBase<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseDispatcherBase extends __1.DispatcherBase {
+    /**
+     * The normal dispatch cannot be used in this class.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        throw new __1.DispatchError("_dispatch not supported. Use _dispatchAsPromise.");
+    }
+    /**
+     * Crates a new subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce Indicates if the handler should only run once.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf PromiseDispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.PromiseSubscription(handler, isOnce);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    async _dispatchAsPromise(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let ps = sub;
+            await ps.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+}
+exports.PromiseDispatcherBase = PromiseDispatcherBase;
+
+
+/***/ }),
+
+/***/ 2545:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = void 0;
+const __1 = __webpack_require__(2874);
+/**
+ * Dispatcher for subscription changes.
+ *
+ * @export
+ * @class SubscriptionChangeEventDispatcher
+ * @extends {DispatcherBase<SubscriptionChangeEventHandler>}
+ */
+class SubscriptionChangeEventDispatcher extends __1.DispatcherBase {
+    /**
+     * Dispatches the event.
+     *
+     * @param {number} count The currrent number of subscriptions.
+     *
+     * @memberOf SubscriptionChangeEventDispatcher
+     */
+    dispatch(count) {
+        this._dispatch(false, this, arguments);
+    }
+}
+exports.SubscriptionChangeEventDispatcher = SubscriptionChangeEventDispatcher;
+
+
+/***/ }),
+
+/***/ 8452:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSubscription = void 0;
+/**
+ * Subscription implementation for events with promises.
+ *
+ * @export
+ * @class PromiseSubscription
+ * @implements {ISubscription<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseSubscription {
+    /**
+     * Creates an instance of PromiseSubscription.
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     *
+     * @memberOf PromiseSubscription
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         *
+         * @memberOf PromiseSubscription
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     *
+     * @memberOf PromiseSubscription
+     */
+    async execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            //TODO: do we need to cast to any -- seems yuck
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+                return;
+            }
+            let result = fn.apply(scope, args);
+            await result;
+        }
+    }
+}
+exports.PromiseSubscription = PromiseSubscription;
+
+
+/***/ }),
+
+/***/ 365:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Subscription = void 0;
+/**
+ * Stores a handler. Manages execution meta data.
+ * @class Subscription
+ * @template TEventHandler
+ */
+class Subscription {
+    /**
+     * Creates an instance of Subscription.
+     *
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     */
+    execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+            }
+            else {
+                fn.apply(scope, args);
+            }
+        }
+    }
+}
+exports.Subscription = Subscription;
+
+
+/***/ }),
+
+/***/ 954:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HandlingBase = void 0;
+/**
+ * Base class that implements event handling. With a an
+ * event list this base class will expose events that can be
+ * subscribed to. This will give your class generic events.
+ *
+ * @export
+ * @abstract
+ * @class HandlingBase
+ * @template TEventHandler The type of event handler.
+ * @template TDispatcher The type of dispatcher.
+ * @template TList The type of event list.
+ */
+class HandlingBase {
+    /**
+     * Creates an instance of HandlingBase.
+     * @param {TList} events The event list. Used for event management.
+     *
+     * @memberOf HandlingBase
+     */
+    constructor(events) {
+        this.events = events;
+    }
+    /**
+     * Subscribes once to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    one(name, fn) {
+        this.events.get(name).one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    has(name, fn) {
+        return this.events.get(name).has(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    subscribe(name, fn) {
+        this.events.get(name).subscribe(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    sub(name, fn) {
+        this.subscribe(name, fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsubscribe(name, fn) {
+        this.events.get(name).unsubscribe(fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsub(name, fn) {
+        this.unsubscribe(name, fn);
+    }
+}
+exports.HandlingBase = HandlingBase;
+
+
+/***/ }),
+
+/***/ 2874:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = exports.HandlingBase = exports.PromiseDispatcherBase = exports.PromiseSubscription = exports.DispatchError = exports.EventManagement = exports.EventListBase = exports.DispatcherWrapper = exports.DispatcherBase = exports.Subscription = void 0;
+const DispatcherBase_1 = __webpack_require__(894);
+Object.defineProperty(exports, "DispatcherBase", ({ enumerable: true, get: function () { return DispatcherBase_1.DispatcherBase; } }));
+const DispatchError_1 = __webpack_require__(4383);
+Object.defineProperty(exports, "DispatchError", ({ enumerable: true, get: function () { return DispatchError_1.DispatchError; } }));
+const DispatcherWrapper_1 = __webpack_require__(9757);
+Object.defineProperty(exports, "DispatcherWrapper", ({ enumerable: true, get: function () { return DispatcherWrapper_1.DispatcherWrapper; } }));
+const EventListBase_1 = __webpack_require__(5930);
+Object.defineProperty(exports, "EventListBase", ({ enumerable: true, get: function () { return EventListBase_1.EventListBase; } }));
+const EventManagement_1 = __webpack_require__(4796);
+Object.defineProperty(exports, "EventManagement", ({ enumerable: true, get: function () { return EventManagement_1.EventManagement; } }));
+const HandlingBase_1 = __webpack_require__(954);
+Object.defineProperty(exports, "HandlingBase", ({ enumerable: true, get: function () { return HandlingBase_1.HandlingBase; } }));
+const PromiseDispatcherBase_1 = __webpack_require__(7541);
+Object.defineProperty(exports, "PromiseDispatcherBase", ({ enumerable: true, get: function () { return PromiseDispatcherBase_1.PromiseDispatcherBase; } }));
+const PromiseSubscription_1 = __webpack_require__(8452);
+Object.defineProperty(exports, "PromiseSubscription", ({ enumerable: true, get: function () { return PromiseSubscription_1.PromiseSubscription; } }));
+const Subscription_1 = __webpack_require__(365);
+Object.defineProperty(exports, "Subscription", ({ enumerable: true, get: function () { return Subscription_1.Subscription; } }));
+const SubscriptionChangeEventHandler_1 = __webpack_require__(2545);
+Object.defineProperty(exports, "SubscriptionChangeEventDispatcher", ({ enumerable: true, get: function () { return SubscriptionChangeEventHandler_1.SubscriptionChangeEventDispatcher; } }));
+
+
+/***/ }),
+
+/***/ 4796:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventManagement = void 0;
+/**
+ * Allows the user to interact with the event.
+ *
+ * @export
+ * @class EventManagement
+ * @implements {IEventManagement}
+ */
+class EventManagement {
+    /**
+     * Creates an instance of EventManagement.
+     * @param {() => void} unsub An unsubscribe handler.
+     *
+     * @memberOf EventManagement
+     */
+    constructor(unsub) {
+        this.unsub = unsub;
+        this.propagationStopped = false;
+    }
+    /**
+     * Stops the propagation of the event.
+     * Cannot be used when async dispatch is done.
+     *
+     * @memberOf EventManagement
+     */
+    stopPropagation() {
+        this.propagationStopped = true;
+    }
+}
+exports.EventManagement = EventManagement;
+
+
+/***/ }),
+
+/***/ 5890:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSignalDispatcher = void 0;
+const ste_core_1 = __webpack_require__(8486);
+/**
+ * The dispatcher handles the storage of subsciptions and facilitates
+ * subscription, unsubscription and dispatching of a signal event.
+ */
+class PromiseSignalDispatcher extends ste_core_1.PromiseDispatcherBase {
+    /**
+     * Creates a new SignalDispatcher instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Dispatches the signal.
+     *
+     * @returns {IPropagationStatus} The status of the dispatch.
+     *
+     * @memberOf SignalDispatcher
+     */
+    async dispatch() {
+        const result = await this._dispatchAsPromise(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the signal threaded.
+     */
+    dispatchAsync() {
+        this._dispatchAsPromise(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.PromiseSignalDispatcher = PromiseSignalDispatcher;
+
+
+/***/ }),
+
+/***/ 205:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSignalHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(8486);
+const PromiseSignalList_1 = __webpack_require__(3146);
+/**
+ * Extends objects with signal event handling capabilities.
+ */
+class PromiseSignalHandlingBase extends ste_core_1.HandlingBase {
+    constructor() {
+        super(new PromiseSignalList_1.PromiseSignalList());
+    }
+}
+exports.PromiseSignalHandlingBase = PromiseSignalHandlingBase;
+
+
+/***/ }),
+
+/***/ 3146:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSignalList = void 0;
+const ste_core_1 = __webpack_require__(8486);
+const _1 = __webpack_require__(6838);
+/**
+ * Storage class for multiple signal events that are accessible by name.
+ * Events dispatchers are automatically created.
+ */
+class PromiseSignalList extends ste_core_1.EventListBase {
+    /**
+     * Creates a new SignalList instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new _1.PromiseSignalDispatcher();
+    }
+}
+exports.PromiseSignalList = PromiseSignalList;
+
+
+/***/ }),
+
+/***/ 6838:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Promise Signals
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSignalList = exports.PromiseSignalHandlingBase = exports.PromiseSignalDispatcher = void 0;
+const PromiseSignalDispatcher_1 = __webpack_require__(5890);
+Object.defineProperty(exports, "PromiseSignalDispatcher", ({ enumerable: true, get: function () { return PromiseSignalDispatcher_1.PromiseSignalDispatcher; } }));
+const PromiseSignalHandlingBase_1 = __webpack_require__(205);
+Object.defineProperty(exports, "PromiseSignalHandlingBase", ({ enumerable: true, get: function () { return PromiseSignalHandlingBase_1.PromiseSignalHandlingBase; } }));
+const PromiseSignalList_1 = __webpack_require__(3146);
+Object.defineProperty(exports, "PromiseSignalList", ({ enumerable: true, get: function () { return PromiseSignalList_1.PromiseSignalList; } }));
+
+
+/***/ }),
+
+/***/ 6463:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatchError = void 0;
+/**
+ * Indicates an error with dispatching.
+ *
+ * @export
+ * @class DispatchError
+ * @extends {Error}
+ */
+class DispatchError extends Error {
+    /**
+     * Creates an instance of DispatchError.
+     * @param {string} message The message.
+     *
+     * @memberOf DispatchError
+     */
+    constructor(message) {
+        super(message);
+    }
+}
+exports.DispatchError = DispatchError;
+
+
+/***/ }),
+
+/***/ 1368:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherBase = void 0;
+const __1 = __webpack_require__(8486);
+/**
+ * Base class for implementation of the dispatcher. It facilitates the subscribe
+ * and unsubscribe methods based on generic handlers. The TEventType specifies
+ * the type of event that should be exposed. Use the asEvent to expose the
+ * dispatcher as event.
+ *
+ * @export
+ * @abstract
+ * @class DispatcherBase
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherBase {
+    constructor() {
+        /**
+         * The subscriptions.
+         *
+         * @protected
+         *
+         * @memberOf DispatcherBase
+         */
+        this._subscriptions = new Array();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherBase
+     */
+    get count() {
+        return this._subscriptions.length;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherBase
+     */
+    get onSubscriptionChange() {
+        if (this._onSubscriptionChange == null) {
+            this._onSubscriptionChange = new __1.SubscriptionChangeEventDispatcher();
+        }
+        return this._onSubscriptionChange.asEvent();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    subscribe(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, false));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    one(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, true));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    has(fn) {
+        if (!fn)
+            return false;
+        return this._subscriptions.some((sub) => sub.handler == fn);
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsubscribe(fn) {
+        if (!fn)
+            return;
+        let changes = false;
+        for (let i = 0; i < this._subscriptions.length; i++) {
+            if (this._subscriptions[i].handler == fn) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+                break;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let s = sub;
+            s.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+    /**
+     * Creates a subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce True if the handler should run only one.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.Subscription(handler, isOnce);
+    }
+    /**
+     * Cleans up subs that ran and should run only once.
+     *
+     * @protected
+     * @param {ISubscription<TEventHandler>} sub The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    cleanup(sub) {
+        let changes = false;
+        if (sub.isOnce && sub.isExecuted) {
+            let i = this._subscriptions.indexOf(sub);
+            if (i > -1) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISubscribable<TEventHandler>}
+     *
+     * @memberOf DispatcherBase
+     */
+    asEvent() {
+        if (this._wrap == null) {
+            this._wrap = new __1.DispatcherWrapper(this);
+        }
+        return this._wrap;
+    }
+    /**
+     * Clears the subscriptions.
+     *
+     * @memberOf DispatcherBase
+     */
+    clear() {
+        if (this._subscriptions.length != 0) {
+            this._subscriptions.splice(0, this._subscriptions.length);
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Triggers the subscription change event.
+     *
+     * @private
+     *
+     * @memberOf DispatcherBase
+     */
+    triggerSubscriptionChange() {
+        if (this._onSubscriptionChange != null) {
+            this._onSubscriptionChange.dispatch(this.count);
+        }
+    }
+}
+exports.DispatcherBase = DispatcherBase;
+
+
+/***/ }),
+
+/***/ 6982:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherWrapper = void 0;
+/**
+ * Hides the implementation of the event dispatcher. Will expose methods that
+ * are relevent to the event.
+ *
+ * @export
+ * @class DispatcherWrapper
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherWrapper {
+    /**
+     * Creates an instance of DispatcherWrapper.
+     * @param {ISubscribable<TEventHandler>} dispatcher
+     *
+     * @memberOf DispatcherWrapper
+     */
+    constructor(dispatcher) {
+        this._subscribe = (fn) => dispatcher.subscribe(fn);
+        this._unsubscribe = (fn) => dispatcher.unsubscribe(fn);
+        this._one = (fn) => dispatcher.one(fn);
+        this._has = (fn) => dispatcher.has(fn);
+        this._clear = () => dispatcher.clear();
+        this._count = () => dispatcher.count;
+        this._onSubscriptionChange = () => dispatcher.onSubscriptionChange;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherWrapper
+     */
+    get onSubscriptionChange() {
+        return this._onSubscriptionChange();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherWrapper
+     */
+    get count() {
+        return this._count();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    subscribe(fn) {
+        return this._subscribe(fn);
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsubscribe(fn) {
+        this._unsubscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    one(fn) {
+        return this._one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    has(fn) {
+        return this._has(fn);
+    }
+    /**
+     * Clears all the subscriptions.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    clear() {
+        this._clear();
+    }
+}
+exports.DispatcherWrapper = DispatcherWrapper;
+
+
+/***/ }),
+
+/***/ 2177:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventListBase = void 0;
+/**
+ * Base class for event lists classes. Implements the get and remove.
+ *
+ * @export
+ * @abstract
+ * @class EventListBaset
+ * @template TEventDispatcher The type of event dispatcher.
+ */
+class EventListBase {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     *
+     * @param {string} name The name of the event.
+     * @returns {TEventDispatcher} The disptacher.
+     *
+     * @memberOf EventListBase
+     */
+    get(name) {
+        let event = this._events[name];
+        if (event) {
+            return event;
+        }
+        event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     *
+     * @param {string} name
+     *
+     * @memberOf EventListBase
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+}
+exports.EventListBase = EventListBase;
+
+
+/***/ }),
+
+/***/ 2300:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseDispatcherBase = void 0;
+const __1 = __webpack_require__(8486);
+/**
+ * Dispatcher base for dispatchers that use promises. Each promise
+ * is awaited before the next is dispatched, unless the event is
+ * dispatched with the executeAsync flag.
+ *
+ * @export
+ * @abstract
+ * @class PromiseDispatcherBase
+ * @extends {DispatcherBase<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseDispatcherBase extends __1.DispatcherBase {
+    /**
+     * The normal dispatch cannot be used in this class.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        throw new __1.DispatchError("_dispatch not supported. Use _dispatchAsPromise.");
+    }
+    /**
+     * Crates a new subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce Indicates if the handler should only run once.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf PromiseDispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.PromiseSubscription(handler, isOnce);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    async _dispatchAsPromise(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let ps = sub;
+            await ps.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+}
+exports.PromiseDispatcherBase = PromiseDispatcherBase;
+
+
+/***/ }),
+
+/***/ 4303:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = void 0;
+const __1 = __webpack_require__(8486);
+/**
+ * Dispatcher for subscription changes.
+ *
+ * @export
+ * @class SubscriptionChangeEventDispatcher
+ * @extends {DispatcherBase<SubscriptionChangeEventHandler>}
+ */
+class SubscriptionChangeEventDispatcher extends __1.DispatcherBase {
+    /**
+     * Dispatches the event.
+     *
+     * @param {number} count The currrent number of subscriptions.
+     *
+     * @memberOf SubscriptionChangeEventDispatcher
+     */
+    dispatch(count) {
+        this._dispatch(false, this, arguments);
+    }
+}
+exports.SubscriptionChangeEventDispatcher = SubscriptionChangeEventDispatcher;
+
+
+/***/ }),
+
+/***/ 9703:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSubscription = void 0;
+/**
+ * Subscription implementation for events with promises.
+ *
+ * @export
+ * @class PromiseSubscription
+ * @implements {ISubscription<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseSubscription {
+    /**
+     * Creates an instance of PromiseSubscription.
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     *
+     * @memberOf PromiseSubscription
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         *
+         * @memberOf PromiseSubscription
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     *
+     * @memberOf PromiseSubscription
+     */
+    async execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            //TODO: do we need to cast to any -- seems yuck
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+                return;
+            }
+            let result = fn.apply(scope, args);
+            await result;
+        }
+    }
+}
+exports.PromiseSubscription = PromiseSubscription;
+
+
+/***/ }),
+
+/***/ 4683:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Subscription = void 0;
+/**
+ * Stores a handler. Manages execution meta data.
+ * @class Subscription
+ * @template TEventHandler
+ */
+class Subscription {
+    /**
+     * Creates an instance of Subscription.
+     *
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     */
+    execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+            }
+            else {
+                fn.apply(scope, args);
+            }
+        }
+    }
+}
+exports.Subscription = Subscription;
+
+
+/***/ }),
+
+/***/ 5673:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HandlingBase = void 0;
+/**
+ * Base class that implements event handling. With a an
+ * event list this base class will expose events that can be
+ * subscribed to. This will give your class generic events.
+ *
+ * @export
+ * @abstract
+ * @class HandlingBase
+ * @template TEventHandler The type of event handler.
+ * @template TDispatcher The type of dispatcher.
+ * @template TList The type of event list.
+ */
+class HandlingBase {
+    /**
+     * Creates an instance of HandlingBase.
+     * @param {TList} events The event list. Used for event management.
+     *
+     * @memberOf HandlingBase
+     */
+    constructor(events) {
+        this.events = events;
+    }
+    /**
+     * Subscribes once to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    one(name, fn) {
+        this.events.get(name).one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    has(name, fn) {
+        return this.events.get(name).has(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    subscribe(name, fn) {
+        this.events.get(name).subscribe(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    sub(name, fn) {
+        this.subscribe(name, fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsubscribe(name, fn) {
+        this.events.get(name).unsubscribe(fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsub(name, fn) {
+        this.unsubscribe(name, fn);
+    }
+}
+exports.HandlingBase = HandlingBase;
+
+
+/***/ }),
+
+/***/ 8486:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = exports.HandlingBase = exports.PromiseDispatcherBase = exports.PromiseSubscription = exports.DispatchError = exports.EventManagement = exports.EventListBase = exports.DispatcherWrapper = exports.DispatcherBase = exports.Subscription = void 0;
+const DispatcherBase_1 = __webpack_require__(1368);
+Object.defineProperty(exports, "DispatcherBase", ({ enumerable: true, get: function () { return DispatcherBase_1.DispatcherBase; } }));
+const DispatchError_1 = __webpack_require__(6463);
+Object.defineProperty(exports, "DispatchError", ({ enumerable: true, get: function () { return DispatchError_1.DispatchError; } }));
+const DispatcherWrapper_1 = __webpack_require__(6982);
+Object.defineProperty(exports, "DispatcherWrapper", ({ enumerable: true, get: function () { return DispatcherWrapper_1.DispatcherWrapper; } }));
+const EventListBase_1 = __webpack_require__(2177);
+Object.defineProperty(exports, "EventListBase", ({ enumerable: true, get: function () { return EventListBase_1.EventListBase; } }));
+const EventManagement_1 = __webpack_require__(8209);
+Object.defineProperty(exports, "EventManagement", ({ enumerable: true, get: function () { return EventManagement_1.EventManagement; } }));
+const HandlingBase_1 = __webpack_require__(5673);
+Object.defineProperty(exports, "HandlingBase", ({ enumerable: true, get: function () { return HandlingBase_1.HandlingBase; } }));
+const PromiseDispatcherBase_1 = __webpack_require__(2300);
+Object.defineProperty(exports, "PromiseDispatcherBase", ({ enumerable: true, get: function () { return PromiseDispatcherBase_1.PromiseDispatcherBase; } }));
+const PromiseSubscription_1 = __webpack_require__(9703);
+Object.defineProperty(exports, "PromiseSubscription", ({ enumerable: true, get: function () { return PromiseSubscription_1.PromiseSubscription; } }));
+const Subscription_1 = __webpack_require__(4683);
+Object.defineProperty(exports, "Subscription", ({ enumerable: true, get: function () { return Subscription_1.Subscription; } }));
+const SubscriptionChangeEventHandler_1 = __webpack_require__(4303);
+Object.defineProperty(exports, "SubscriptionChangeEventDispatcher", ({ enumerable: true, get: function () { return SubscriptionChangeEventHandler_1.SubscriptionChangeEventDispatcher; } }));
+
+
+/***/ }),
+
+/***/ 8209:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventManagement = void 0;
+/**
+ * Allows the user to interact with the event.
+ *
+ * @export
+ * @class EventManagement
+ * @implements {IEventManagement}
+ */
+class EventManagement {
+    /**
+     * Creates an instance of EventManagement.
+     * @param {() => void} unsub An unsubscribe handler.
+     *
+     * @memberOf EventManagement
+     */
+    constructor(unsub) {
+        this.unsub = unsub;
+        this.propagationStopped = false;
+    }
+    /**
+     * Stops the propagation of the event.
+     * Cannot be used when async dispatch is done.
+     *
+     * @memberOf EventManagement
+     */
+    stopPropagation() {
+        this.propagationStopped = true;
+    }
+}
+exports.EventManagement = EventManagement;
+
+
+/***/ }),
+
+/***/ 4537:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformPromiseSimpleEventList = void 0;
+const PromiseSimpleEventDispatcher_1 = __webpack_require__(8921);
+/**
+ * Similar to EventList, but instead of TArgs, a map of event names ang argument types is provided with TArgsMap.
+ */
+class NonUniformPromiseSimpleEventList {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    get(name) {
+        if (this._events[name]) {
+            // @TODO avoid typecasting. Not sure why TS thinks this._events[name] could still be undefined.
+            return this._events[name];
+        }
+        const event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     * @param name The name of the event.
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new PromiseSimpleEventDispatcher_1.PromiseSimpleEventDispatcher();
+    }
+}
+exports.NonUniformPromiseSimpleEventList = NonUniformPromiseSimpleEventList;
+
+
+/***/ }),
+
+/***/ 8921:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSimpleEventDispatcher = void 0;
+const ste_core_1 = __webpack_require__(3310);
+/**
+ * The dispatcher handles the storage of subsciptions and facilitates
+ * subscription, unsubscription and dispatching of a simple event
+ *
+ * @export
+ * @class PromiseSimpleEventDispatcher
+ * @extends {PromiseDispatcherBase<IPromiseSimpleEventHandler<TArgs>>}
+ * @implements {IPromiseSimpleEvent<TArgs>}
+ * @template TArgs
+ */
+class PromiseSimpleEventDispatcher extends ste_core_1.PromiseDispatcherBase {
+    /**
+     * Creates a new SimpleEventDispatcher instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Dispatches the event.
+     * @param args The arguments object.
+     * @returns {IPropagationStatus} The status of the dispatch.
+     * @memberOf PromiseSimpleEventDispatcher
+     */
+    async dispatch(args) {
+        const result = await this._dispatchAsPromise(false, this, arguments);
+        if (result == null) {
+            throw new ste_core_1.DispatchError("Got `null` back from dispatch.");
+        }
+        return result;
+    }
+    /**
+     * Dispatches the event without waiting for it to complete.
+     * @param args The argument object.
+     * @memberOf PromiseSimpleEventDispatcher
+     */
+    dispatchAsync(args) {
+        this._dispatchAsPromise(true, this, arguments);
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     */
+    asEvent() {
+        return super.asEvent();
+    }
+}
+exports.PromiseSimpleEventDispatcher = PromiseSimpleEventDispatcher;
+
+
+/***/ }),
+
+/***/ 532:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSimpleEventHandlingBase = void 0;
+const ste_core_1 = __webpack_require__(3310);
+const PromiseSimpleEventList_1 = __webpack_require__(7929);
+/**
+ * Extends objects with signal event handling capabilities.
+ */
+class PromiseSimpleEventHandlingBase extends ste_core_1.HandlingBase {
+    constructor() {
+        super(new PromiseSimpleEventList_1.PromiseSimpleEventList());
+    }
+}
+exports.PromiseSimpleEventHandlingBase = PromiseSimpleEventHandlingBase;
+
+
+/***/ }),
+
+/***/ 7929:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSimpleEventList = void 0;
+const ste_core_1 = __webpack_require__(3310);
+const PromiseSimpleEventDispatcher_1 = __webpack_require__(8921);
+/**
+ * Storage class for multiple simple events that are accessible by name.
+ * Events dispatchers are automatically created.
+ */
+class PromiseSimpleEventList extends ste_core_1.EventListBase {
+    /**
+     * Creates a new SimpleEventList instance.
+     */
+    constructor() {
+        super();
+    }
+    /**
+     * Creates a new dispatcher instance.
+     */
+    createDispatcher() {
+        return new PromiseSimpleEventDispatcher_1.PromiseSimpleEventDispatcher();
+    }
+}
+exports.PromiseSimpleEventList = PromiseSimpleEventList;
+
+
+/***/ }),
+
+/***/ 9176:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NonUniformPromiseSimpleEventList = exports.PromiseSimpleEventList = exports.PromiseSimpleEventHandlingBase = exports.PromiseSimpleEventDispatcher = void 0;
+const NonUniformPromiseSimpleEventList_1 = __webpack_require__(4537);
+Object.defineProperty(exports, "NonUniformPromiseSimpleEventList", ({ enumerable: true, get: function () { return NonUniformPromiseSimpleEventList_1.NonUniformPromiseSimpleEventList; } }));
+const PromiseSimpleEventDispatcher_1 = __webpack_require__(8921);
+Object.defineProperty(exports, "PromiseSimpleEventDispatcher", ({ enumerable: true, get: function () { return PromiseSimpleEventDispatcher_1.PromiseSimpleEventDispatcher; } }));
+const PromiseSimpleEventHandlingBase_1 = __webpack_require__(532);
+Object.defineProperty(exports, "PromiseSimpleEventHandlingBase", ({ enumerable: true, get: function () { return PromiseSimpleEventHandlingBase_1.PromiseSimpleEventHandlingBase; } }));
+const PromiseSimpleEventList_1 = __webpack_require__(7929);
+Object.defineProperty(exports, "PromiseSimpleEventList", ({ enumerable: true, get: function () { return PromiseSimpleEventList_1.PromiseSimpleEventList; } }));
+
+
+/***/ }),
+
+/***/ 8181:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatchError = void 0;
+/**
+ * Indicates an error with dispatching.
+ *
+ * @export
+ * @class DispatchError
+ * @extends {Error}
+ */
+class DispatchError extends Error {
+    /**
+     * Creates an instance of DispatchError.
+     * @param {string} message The message.
+     *
+     * @memberOf DispatchError
+     */
+    constructor(message) {
+        super(message);
+    }
+}
+exports.DispatchError = DispatchError;
+
+
+/***/ }),
+
+/***/ 3040:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherBase = void 0;
+const __1 = __webpack_require__(3310);
+/**
+ * Base class for implementation of the dispatcher. It facilitates the subscribe
+ * and unsubscribe methods based on generic handlers. The TEventType specifies
+ * the type of event that should be exposed. Use the asEvent to expose the
+ * dispatcher as event.
+ *
+ * @export
+ * @abstract
+ * @class DispatcherBase
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherBase {
+    constructor() {
+        /**
+         * The subscriptions.
+         *
+         * @protected
+         *
+         * @memberOf DispatcherBase
+         */
+        this._subscriptions = new Array();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherBase
+     */
+    get count() {
+        return this._subscriptions.length;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherBase
+     */
+    get onSubscriptionChange() {
+        if (this._onSubscriptionChange == null) {
+            this._onSubscriptionChange = new __1.SubscriptionChangeEventDispatcher();
+        }
+        return this._onSubscriptionChange.asEvent();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    subscribe(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, false));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherBase
+     */
+    one(fn) {
+        if (fn) {
+            this._subscriptions.push(this.createSubscription(fn, true));
+            this.triggerSubscriptionChange();
+        }
+        return () => {
+            this.unsubscribe(fn);
+        };
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    has(fn) {
+        if (!fn)
+            return false;
+        return this._subscriptions.some((sub) => sub.handler == fn);
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsubscribe(fn) {
+        if (!fn)
+            return;
+        let changes = false;
+        for (let i = 0; i < this._subscriptions.length; i++) {
+            if (this._subscriptions[i].handler == fn) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+                break;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Unsubscribes the handler from the dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf DispatcherBase
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let s = sub;
+            s.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+    /**
+     * Creates a subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce True if the handler should run only one.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.Subscription(handler, isOnce);
+    }
+    /**
+     * Cleans up subs that ran and should run only once.
+     *
+     * @protected
+     * @param {ISubscription<TEventHandler>} sub The subscription.
+     *
+     * @memberOf DispatcherBase
+     */
+    cleanup(sub) {
+        let changes = false;
+        if (sub.isOnce && sub.isExecuted) {
+            let i = this._subscriptions.indexOf(sub);
+            if (i > -1) {
+                this._subscriptions.splice(i, 1);
+                changes = true;
+            }
+        }
+        if (changes) {
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Creates an event from the dispatcher. Will return the dispatcher
+     * in a wrapper. This will prevent exposure of any dispatcher methods.
+     *
+     * @returns {ISubscribable<TEventHandler>}
+     *
+     * @memberOf DispatcherBase
+     */
+    asEvent() {
+        if (this._wrap == null) {
+            this._wrap = new __1.DispatcherWrapper(this);
+        }
+        return this._wrap;
+    }
+    /**
+     * Clears the subscriptions.
+     *
+     * @memberOf DispatcherBase
+     */
+    clear() {
+        if (this._subscriptions.length != 0) {
+            this._subscriptions.splice(0, this._subscriptions.length);
+            this.triggerSubscriptionChange();
+        }
+    }
+    /**
+     * Triggers the subscription change event.
+     *
+     * @private
+     *
+     * @memberOf DispatcherBase
+     */
+    triggerSubscriptionChange() {
+        if (this._onSubscriptionChange != null) {
+            this._onSubscriptionChange.dispatch(this.count);
+        }
+    }
+}
+exports.DispatcherBase = DispatcherBase;
+
+
+/***/ }),
+
+/***/ 3122:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.DispatcherWrapper = void 0;
+/**
+ * Hides the implementation of the event dispatcher. Will expose methods that
+ * are relevent to the event.
+ *
+ * @export
+ * @class DispatcherWrapper
+ * @implements {ISubscribable<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class DispatcherWrapper {
+    /**
+     * Creates an instance of DispatcherWrapper.
+     * @param {ISubscribable<TEventHandler>} dispatcher
+     *
+     * @memberOf DispatcherWrapper
+     */
+    constructor(dispatcher) {
+        this._subscribe = (fn) => dispatcher.subscribe(fn);
+        this._unsubscribe = (fn) => dispatcher.unsubscribe(fn);
+        this._one = (fn) => dispatcher.one(fn);
+        this._has = (fn) => dispatcher.has(fn);
+        this._clear = () => dispatcher.clear();
+        this._count = () => dispatcher.count;
+        this._onSubscriptionChange = () => dispatcher.onSubscriptionChange;
+    }
+    /**
+     * Triggered when subscriptions are changed (added or removed).
+     *
+     * @readonly
+     * @type {ISubscribable<SubscriptionChangeEventHandler>}
+     * @memberOf DispatcherWrapper
+     */
+    get onSubscriptionChange() {
+        return this._onSubscriptionChange();
+    }
+    /**
+     * Returns the number of subscriptions.
+     *
+     * @readonly
+     * @type {number}
+     * @memberOf DispatcherWrapper
+     */
+    get count() {
+        return this._count();
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    subscribe(fn) {
+        return this._subscribe(fn);
+    }
+    /**
+     * Subscribe to the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    sub(fn) {
+        return this.subscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsubscribe(fn) {
+        this._unsubscribe(fn);
+    }
+    /**
+     * Unsubscribe from the event dispatcher.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    unsub(fn) {
+        this.unsubscribe(fn);
+    }
+    /**
+     * Subscribe once to the event with the specified name.
+     *
+     * @returns {() => void} A function that unsubscribes the event handler from the event.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    one(fn) {
+        return this._one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     *
+     * @param {TEventHandler} fn The event handler that is called when the event is dispatched.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    has(fn) {
+        return this._has(fn);
+    }
+    /**
+     * Clears all the subscriptions.
+     *
+     * @memberOf DispatcherWrapper
+     */
+    clear() {
+        this._clear();
+    }
+}
+exports.DispatcherWrapper = DispatcherWrapper;
+
+
+/***/ }),
+
+/***/ 7955:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventListBase = void 0;
+/**
+ * Base class for event lists classes. Implements the get and remove.
+ *
+ * @export
+ * @abstract
+ * @class EventListBaset
+ * @template TEventDispatcher The type of event dispatcher.
+ */
+class EventListBase {
+    constructor() {
+        this._events = {};
+    }
+    /**
+     * Gets the dispatcher associated with the name.
+     *
+     * @param {string} name The name of the event.
+     * @returns {TEventDispatcher} The disptacher.
+     *
+     * @memberOf EventListBase
+     */
+    get(name) {
+        let event = this._events[name];
+        if (event) {
+            return event;
+        }
+        event = this.createDispatcher();
+        this._events[name] = event;
+        return event;
+    }
+    /**
+     * Removes the dispatcher associated with the name.
+     *
+     * @param {string} name
+     *
+     * @memberOf EventListBase
+     */
+    remove(name) {
+        delete this._events[name];
+    }
+}
+exports.EventListBase = EventListBase;
+
+
+/***/ }),
+
+/***/ 2490:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseDispatcherBase = void 0;
+const __1 = __webpack_require__(3310);
+/**
+ * Dispatcher base for dispatchers that use promises. Each promise
+ * is awaited before the next is dispatched, unless the event is
+ * dispatched with the executeAsync flag.
+ *
+ * @export
+ * @abstract
+ * @class PromiseDispatcherBase
+ * @extends {DispatcherBase<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseDispatcherBase extends __1.DispatcherBase {
+    /**
+     * The normal dispatch cannot be used in this class.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    _dispatch(executeAsync, scope, args) {
+        throw new __1.DispatchError("_dispatch not supported. Use _dispatchAsPromise.");
+    }
+    /**
+     * Crates a new subscription.
+     *
+     * @protected
+     * @param {TEventHandler} handler The handler.
+     * @param {boolean} isOnce Indicates if the handler should only run once.
+     * @returns {ISubscription<TEventHandler>} The subscription.
+     *
+     * @memberOf PromiseDispatcherBase
+     */
+    createSubscription(handler, isOnce) {
+        return new __1.PromiseSubscription(handler, isOnce);
+    }
+    /**
+     * Generic dispatch will dispatch the handlers with the given arguments.
+     *
+     * @protected
+     * @param {boolean} executeAsync `True` if the even should be executed async.
+     * @param {*} scope The scope of the event. The scope becomes the `this` for handler.
+     * @param {IArguments} args The arguments for the event.
+     * @returns {(IPropagationStatus | null)} The propagation status, or if an `executeAsync` is used `null`.
+     *
+     * @memberOf DispatcherBase
+     */
+    async _dispatchAsPromise(executeAsync, scope, args) {
+        //execute on a copy because of bug #9
+        for (let sub of [...this._subscriptions]) {
+            let ev = new __1.EventManagement(() => this.unsub(sub.handler));
+            let nargs = Array.prototype.slice.call(args);
+            nargs.push(ev);
+            let ps = sub;
+            await ps.execute(executeAsync, scope, nargs);
+            //cleanup subs that are no longer needed
+            this.cleanup(sub);
+            if (!executeAsync && ev.propagationStopped) {
+                return { propagationStopped: true };
+            }
+        }
+        if (executeAsync) {
+            return null;
+        }
+        return { propagationStopped: false };
+    }
+}
+exports.PromiseDispatcherBase = PromiseDispatcherBase;
+
+
+/***/ }),
+
+/***/ 1002:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = void 0;
+const __1 = __webpack_require__(3310);
+/**
+ * Dispatcher for subscription changes.
+ *
+ * @export
+ * @class SubscriptionChangeEventDispatcher
+ * @extends {DispatcherBase<SubscriptionChangeEventHandler>}
+ */
+class SubscriptionChangeEventDispatcher extends __1.DispatcherBase {
+    /**
+     * Dispatches the event.
+     *
+     * @param {number} count The currrent number of subscriptions.
+     *
+     * @memberOf SubscriptionChangeEventDispatcher
+     */
+    dispatch(count) {
+        this._dispatch(false, this, arguments);
+    }
+}
+exports.SubscriptionChangeEventDispatcher = SubscriptionChangeEventDispatcher;
+
+
+/***/ }),
+
+/***/ 9347:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.PromiseSubscription = void 0;
+/**
+ * Subscription implementation for events with promises.
+ *
+ * @export
+ * @class PromiseSubscription
+ * @implements {ISubscription<TEventHandler>}
+ * @template TEventHandler The type of event handler.
+ */
+class PromiseSubscription {
+    /**
+     * Creates an instance of PromiseSubscription.
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     *
+     * @memberOf PromiseSubscription
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         *
+         * @memberOf PromiseSubscription
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     *
+     * @memberOf PromiseSubscription
+     */
+    async execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            //TODO: do we need to cast to any -- seems yuck
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+                return;
+            }
+            let result = fn.apply(scope, args);
+            await result;
+        }
+    }
+}
+exports.PromiseSubscription = PromiseSubscription;
+
+
+/***/ }),
+
+/***/ 2229:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.Subscription = void 0;
+/**
+ * Stores a handler. Manages execution meta data.
+ * @class Subscription
+ * @template TEventHandler
+ */
+class Subscription {
+    /**
+     * Creates an instance of Subscription.
+     *
+     * @param {TEventHandler} handler The handler for the subscription.
+     * @param {boolean} isOnce Indicates if the handler should only be executed once.
+     */
+    constructor(handler, isOnce) {
+        this.handler = handler;
+        this.isOnce = isOnce;
+        /**
+         * Indicates if the subscription has been executed before.
+         */
+        this.isExecuted = false;
+    }
+    /**
+     * Executes the handler.
+     *
+     * @param {boolean} executeAsync True if the even should be executed async.
+     * @param {*} scope The scope the scope of the event.
+     * @param {IArguments} args The arguments for the event.
+     */
+    execute(executeAsync, scope, args) {
+        if (!this.isOnce || !this.isExecuted) {
+            this.isExecuted = true;
+            var fn = this.handler;
+            if (executeAsync) {
+                setTimeout(() => {
+                    fn.apply(scope, args);
+                }, 1);
+            }
+            else {
+                fn.apply(scope, args);
+            }
+        }
+    }
+}
+exports.Subscription = Subscription;
+
+
+/***/ }),
+
+/***/ 1605:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.HandlingBase = void 0;
+/**
+ * Base class that implements event handling. With a an
+ * event list this base class will expose events that can be
+ * subscribed to. This will give your class generic events.
+ *
+ * @export
+ * @abstract
+ * @class HandlingBase
+ * @template TEventHandler The type of event handler.
+ * @template TDispatcher The type of dispatcher.
+ * @template TList The type of event list.
+ */
+class HandlingBase {
+    /**
+     * Creates an instance of HandlingBase.
+     * @param {TList} events The event list. Used for event management.
+     *
+     * @memberOf HandlingBase
+     */
+    constructor(events) {
+        this.events = events;
+    }
+    /**
+     * Subscribes once to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    one(name, fn) {
+        this.events.get(name).one(fn);
+    }
+    /**
+     * Checks it the event has a subscription for the specified handler.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    has(name, fn) {
+        return this.events.get(name).has(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    subscribe(name, fn) {
+        this.events.get(name).subscribe(fn);
+    }
+    /**
+     * Subscribes to the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    sub(name, fn) {
+        this.subscribe(name, fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsubscribe(name, fn) {
+        this.events.get(name).unsubscribe(fn);
+    }
+    /**
+     * Unsubscribes from the event with the specified name.
+     * @param {string} name The name of the event.
+     * @param {TEventHandler} fn The event handler.
+     *
+     * @memberOf HandlingBase
+     */
+    unsub(name, fn) {
+        this.unsubscribe(name, fn);
+    }
+}
+exports.HandlingBase = HandlingBase;
+
+
+/***/ }),
+
+/***/ 3310:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+/*!
+ * Strongly Typed Events for TypeScript - Core
+ * https://github.com/KeesCBakker/StronlyTypedEvents/
+ * http://keestalkstech.com
+ *
+ * Copyright Kees C. Bakker / KeesTalksTech
+ * Released under the MIT license
+ */
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.SubscriptionChangeEventDispatcher = exports.HandlingBase = exports.PromiseDispatcherBase = exports.PromiseSubscription = exports.DispatchError = exports.EventManagement = exports.EventListBase = exports.DispatcherWrapper = exports.DispatcherBase = exports.Subscription = void 0;
+const DispatcherBase_1 = __webpack_require__(3040);
+Object.defineProperty(exports, "DispatcherBase", ({ enumerable: true, get: function () { return DispatcherBase_1.DispatcherBase; } }));
+const DispatchError_1 = __webpack_require__(8181);
+Object.defineProperty(exports, "DispatchError", ({ enumerable: true, get: function () { return DispatchError_1.DispatchError; } }));
+const DispatcherWrapper_1 = __webpack_require__(3122);
+Object.defineProperty(exports, "DispatcherWrapper", ({ enumerable: true, get: function () { return DispatcherWrapper_1.DispatcherWrapper; } }));
+const EventListBase_1 = __webpack_require__(7955);
+Object.defineProperty(exports, "EventListBase", ({ enumerable: true, get: function () { return EventListBase_1.EventListBase; } }));
+const EventManagement_1 = __webpack_require__(2234);
+Object.defineProperty(exports, "EventManagement", ({ enumerable: true, get: function () { return EventManagement_1.EventManagement; } }));
+const HandlingBase_1 = __webpack_require__(1605);
+Object.defineProperty(exports, "HandlingBase", ({ enumerable: true, get: function () { return HandlingBase_1.HandlingBase; } }));
+const PromiseDispatcherBase_1 = __webpack_require__(2490);
+Object.defineProperty(exports, "PromiseDispatcherBase", ({ enumerable: true, get: function () { return PromiseDispatcherBase_1.PromiseDispatcherBase; } }));
+const PromiseSubscription_1 = __webpack_require__(9347);
+Object.defineProperty(exports, "PromiseSubscription", ({ enumerable: true, get: function () { return PromiseSubscription_1.PromiseSubscription; } }));
+const Subscription_1 = __webpack_require__(2229);
+Object.defineProperty(exports, "Subscription", ({ enumerable: true, get: function () { return Subscription_1.Subscription; } }));
+const SubscriptionChangeEventHandler_1 = __webpack_require__(1002);
+Object.defineProperty(exports, "SubscriptionChangeEventDispatcher", ({ enumerable: true, get: function () { return SubscriptionChangeEventHandler_1.SubscriptionChangeEventDispatcher; } }));
+
+
+/***/ }),
+
+/***/ 2234:
+/***/ ((__unused_webpack_module, exports) => {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EventManagement = void 0;
+/**
+ * Allows the user to interact with the event.
+ *
+ * @export
+ * @class EventManagement
+ * @implements {IEventManagement}
+ */
+class EventManagement {
+    /**
+     * Creates an instance of EventManagement.
+     * @param {() => void} unsub An unsubscribe handler.
+     *
+     * @memberOf EventManagement
+     */
+    constructor(unsub) {
+        this.unsub = unsub;
+        this.propagationStopped = false;
+    }
+    /**
+     * Stops the propagation of the event.
+     * Cannot be used when async dispatch is done.
+     *
+     * @memberOf EventManagement
+     */
+    stopPropagation() {
+        this.propagationStopped = true;
+    }
+}
+exports.EventManagement = EventManagement;
+
+
+/***/ }),
+
+/***/ 3861:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  "ZP": () => (/* binding */ tippy_esm)
+});
+
+// UNUSED EXPORTS: animateFill, createSingleton, delegate, followCursor, hideAll, inlinePositioning, roundArrow, sticky
+
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindow.js
+function getWindow(node) {
+  if (node == null) {
+    return window;
+  }
+
+  if (node.toString() !== '[object Window]') {
+    var ownerDocument = node.ownerDocument;
+    return ownerDocument ? ownerDocument.defaultView || window : window;
+  }
+
+  return node;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/instanceOf.js
+
+
+function isElement(node) {
+  var OwnElement = getWindow(node).Element;
+  return node instanceof OwnElement || node instanceof Element;
+}
+
+function isHTMLElement(node) {
+  var OwnElement = getWindow(node).HTMLElement;
+  return node instanceof OwnElement || node instanceof HTMLElement;
+}
+
+function isShadowRoot(node) {
+  // IE 11 has no ShadowRoot
+  if (typeof ShadowRoot === 'undefined') {
+    return false;
+  }
+
+  var OwnElement = getWindow(node).ShadowRoot;
+  return node instanceof OwnElement || node instanceof ShadowRoot;
+}
+
+
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
+
+var round = Math.round;
+function getBoundingClientRect(element, includeScale) {
+  if (includeScale === void 0) {
+    includeScale = false;
+  }
+
+  var rect = element.getBoundingClientRect();
+  var scaleX = 1;
+  var scaleY = 1;
+
+  if (isHTMLElement(element) && includeScale) {
+    var offsetHeight = element.offsetHeight;
+    var offsetWidth = element.offsetWidth; // Do not attempt to divide by 0, otherwise we get `Infinity` as scale
+    // Fallback to 1 in case both values are `0`
+
+    if (offsetWidth > 0) {
+      scaleX = rect.width / offsetWidth || 1;
+    }
+
+    if (offsetHeight > 0) {
+      scaleY = rect.height / offsetHeight || 1;
+    }
+  }
+
+  return {
+    width: round(rect.width / scaleX),
+    height: round(rect.height / scaleY),
+    top: round(rect.top / scaleY),
+    right: round(rect.right / scaleX),
+    bottom: round(rect.bottom / scaleY),
+    left: round(rect.left / scaleX),
+    x: round(rect.left / scaleX),
+    y: round(rect.top / scaleY)
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
+
+function getWindowScroll(node) {
+  var win = getWindow(node);
+  var scrollLeft = win.pageXOffset;
+  var scrollTop = win.pageYOffset;
+  return {
+    scrollLeft: scrollLeft,
+    scrollTop: scrollTop
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getHTMLElementScroll.js
+function getHTMLElementScroll(element) {
+  return {
+    scrollLeft: element.scrollLeft,
+    scrollTop: element.scrollTop
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getNodeScroll.js
+
+
+
+
+function getNodeScroll(node) {
+  if (node === getWindow(node) || !isHTMLElement(node)) {
+    return getWindowScroll(node);
+  } else {
+    return getHTMLElementScroll(node);
+  }
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getNodeName.js
+function getNodeName(element) {
+  return element ? (element.nodeName || '').toLowerCase() : null;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getDocumentElement.js
+
+function getDocumentElement(element) {
+  // $FlowFixMe[incompatible-return]: assume body is always available
+  return ((isElement(element) ? element.ownerDocument : // $FlowFixMe[prop-missing]
+  element.document) || window.document).documentElement;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindowScrollBarX.js
+
+
+
+function getWindowScrollBarX(element) {
+  // If <html> has a CSS width greater than the viewport, then this will be
+  // incorrect for RTL.
+  // Popper 1 is broken in this case and never had a bug report so let's assume
+  // it's not an issue. I don't think anyone ever specifies width on <html>
+  // anyway.
+  // Browsers where the left scrollbar doesn't cause an issue report `0` for
+  // this (e.g. Edge 2019, IE11, Safari)
+  return getBoundingClientRect(getDocumentElement(element)).left + getWindowScroll(element).scrollLeft;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getComputedStyle.js
+
+function getComputedStyle(element) {
+  return getWindow(element).getComputedStyle(element);
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/isScrollParent.js
+
+function isScrollParent(element) {
+  // Firefox wants us to check `-x` and `-y` variations as well
+  var _getComputedStyle = getComputedStyle(element),
+      overflow = _getComputedStyle.overflow,
+      overflowX = _getComputedStyle.overflowX,
+      overflowY = _getComputedStyle.overflowY;
+
+  return /auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX);
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getCompositeRect.js
+
+
+
+
+
+
+
+
+function isElementScaled(element) {
+  var rect = element.getBoundingClientRect();
+  var scaleX = rect.width / element.offsetWidth || 1;
+  var scaleY = rect.height / element.offsetHeight || 1;
+  return scaleX !== 1 || scaleY !== 1;
+} // Returns the composite rect of an element relative to its offsetParent.
+// Composite means it takes into account transforms as well as layout.
+
+
+function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
+  if (isFixed === void 0) {
+    isFixed = false;
+  }
+
+  var isOffsetParentAnElement = isHTMLElement(offsetParent);
+  var offsetParentIsScaled = isHTMLElement(offsetParent) && isElementScaled(offsetParent);
+  var documentElement = getDocumentElement(offsetParent);
+  var rect = getBoundingClientRect(elementOrVirtualElement, offsetParentIsScaled);
+  var scroll = {
+    scrollLeft: 0,
+    scrollTop: 0
+  };
+  var offsets = {
+    x: 0,
+    y: 0
+  };
+
+  if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
+    if (getNodeName(offsetParent) !== 'body' || // https://github.com/popperjs/popper-core/issues/1078
+    isScrollParent(documentElement)) {
+      scroll = getNodeScroll(offsetParent);
+    }
+
+    if (isHTMLElement(offsetParent)) {
+      offsets = getBoundingClientRect(offsetParent, true);
+      offsets.x += offsetParent.clientLeft;
+      offsets.y += offsetParent.clientTop;
+    } else if (documentElement) {
+      offsets.x = getWindowScrollBarX(documentElement);
+    }
+  }
+
+  return {
+    x: rect.left + scroll.scrollLeft - offsets.x,
+    y: rect.top + scroll.scrollTop - offsets.y,
+    width: rect.width,
+    height: rect.height
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getLayoutRect.js
+ // Returns the layout rect of an element relative to its offsetParent. Layout
+// means it doesn't take into account transforms.
+
+function getLayoutRect(element) {
+  var clientRect = getBoundingClientRect(element); // Use the clientRect sizes if it's not been transformed.
+  // Fixes https://github.com/popperjs/popper-core/issues/1223
+
+  var width = element.offsetWidth;
+  var height = element.offsetHeight;
+
+  if (Math.abs(clientRect.width - width) <= 1) {
+    width = clientRect.width;
+  }
+
+  if (Math.abs(clientRect.height - height) <= 1) {
+    height = clientRect.height;
+  }
+
+  return {
+    x: element.offsetLeft,
+    y: element.offsetTop,
+    width: width,
+    height: height
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getParentNode.js
+
+
+
+function getParentNode(element) {
+  if (getNodeName(element) === 'html') {
+    return element;
+  }
+
+  return (// this is a quicker (but less type safe) way to save quite some bytes from the bundle
+    // $FlowFixMe[incompatible-return]
+    // $FlowFixMe[prop-missing]
+    element.assignedSlot || // step into the shadow DOM of the parent of a slotted node
+    element.parentNode || ( // DOM Element detected
+    isShadowRoot(element) ? element.host : null) || // ShadowRoot detected
+    // $FlowFixMe[incompatible-call]: HTMLElement is a Node
+    getDocumentElement(element) // fallback
+
+  );
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getScrollParent.js
+
+
+
+
+function getScrollParent(node) {
+  if (['html', 'body', '#document'].indexOf(getNodeName(node)) >= 0) {
+    // $FlowFixMe[incompatible-return]: assume body is always available
+    return node.ownerDocument.body;
+  }
+
+  if (isHTMLElement(node) && isScrollParent(node)) {
+    return node;
+  }
+
+  return getScrollParent(getParentNode(node));
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/listScrollParents.js
+
+
+
+
+/*
+given a DOM element, return the list of all scroll parents, up the list of ancesors
+until we get to the top window object. This list is what we attach scroll listeners
+to, because if any of these parent elements scroll, we'll need to re-calculate the
+reference element's position.
+*/
+
+function listScrollParents(element, list) {
+  var _element$ownerDocumen;
+
+  if (list === void 0) {
+    list = [];
+  }
+
+  var scrollParent = getScrollParent(element);
+  var isBody = scrollParent === ((_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body);
+  var win = getWindow(scrollParent);
+  var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
+  var updatedList = list.concat(target);
+  return isBody ? updatedList : // $FlowFixMe[incompatible-call]: isBody tells us target will be an HTMLElement here
+  updatedList.concat(listScrollParents(getParentNode(target)));
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/isTableElement.js
+
+function isTableElement(element) {
+  return ['table', 'td', 'th'].indexOf(getNodeName(element)) >= 0;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getOffsetParent.js
+
+
+
+
+
+
+
+function getTrueOffsetParent(element) {
+  if (!isHTMLElement(element) || // https://github.com/popperjs/popper-core/issues/837
+  getComputedStyle(element).position === 'fixed') {
+    return null;
+  }
+
+  return element.offsetParent;
+} // `.offsetParent` reports `null` for fixed elements, while absolute elements
+// return the containing block
+
+
+function getContainingBlock(element) {
+  var isFirefox = navigator.userAgent.toLowerCase().indexOf('firefox') !== -1;
+  var isIE = navigator.userAgent.indexOf('Trident') !== -1;
+
+  if (isIE && isHTMLElement(element)) {
+    // In IE 9, 10 and 11 fixed elements containing block is always established by the viewport
+    var elementCss = getComputedStyle(element);
+
+    if (elementCss.position === 'fixed') {
+      return null;
+    }
+  }
+
+  var currentNode = getParentNode(element);
+
+  while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
+    var css = getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
+    // create a containing block.
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block#identifying_the_containing_block
+
+    if (css.transform !== 'none' || css.perspective !== 'none' || css.contain === 'paint' || ['transform', 'perspective'].indexOf(css.willChange) !== -1 || isFirefox && css.willChange === 'filter' || isFirefox && css.filter && css.filter !== 'none') {
+      return currentNode;
+    } else {
+      currentNode = currentNode.parentNode;
+    }
+  }
+
+  return null;
+} // Gets the closest ancestor positioned element. Handles some edge cases,
+// such as table ancestors and cross browser bugs.
+
+
+function getOffsetParent(element) {
+  var window = getWindow(element);
+  var offsetParent = getTrueOffsetParent(element);
+
+  while (offsetParent && isTableElement(offsetParent) && getComputedStyle(offsetParent).position === 'static') {
+    offsetParent = getTrueOffsetParent(offsetParent);
+  }
+
+  if (offsetParent && (getNodeName(offsetParent) === 'html' || getNodeName(offsetParent) === 'body' && getComputedStyle(offsetParent).position === 'static')) {
+    return window;
+  }
+
+  return offsetParent || getContainingBlock(element) || window;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/enums.js
+var enums_top = 'top';
+var bottom = 'bottom';
+var right = 'right';
+var left = 'left';
+var auto = 'auto';
+var basePlacements = [enums_top, bottom, right, left];
+var start = 'start';
+var end = 'end';
+var clippingParents = 'clippingParents';
+var viewport = 'viewport';
+var popper = 'popper';
+var reference = 'reference';
+var variationPlacements = /*#__PURE__*/basePlacements.reduce(function (acc, placement) {
+  return acc.concat([placement + "-" + start, placement + "-" + end]);
+}, []);
+var enums_placements = /*#__PURE__*/[].concat(basePlacements, [auto]).reduce(function (acc, placement) {
+  return acc.concat([placement, placement + "-" + start, placement + "-" + end]);
+}, []); // modifiers that need to read the DOM
+
+var beforeRead = 'beforeRead';
+var read = 'read';
+var afterRead = 'afterRead'; // pure-logic modifiers
+
+var beforeMain = 'beforeMain';
+var main = 'main';
+var afterMain = 'afterMain'; // modifier with the purpose to write to the DOM (or write into a framework state)
+
+var beforeWrite = 'beforeWrite';
+var write = 'write';
+var afterWrite = 'afterWrite';
+var modifierPhases = [beforeRead, read, afterRead, beforeMain, main, afterMain, beforeWrite, write, afterWrite];
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/orderModifiers.js
+ // source: https://stackoverflow.com/questions/49875255
+
+function order(modifiers) {
+  var map = new Map();
+  var visited = new Set();
+  var result = [];
+  modifiers.forEach(function (modifier) {
+    map.set(modifier.name, modifier);
+  }); // On visiting object, check for its dependencies and visit them recursively
+
+  function sort(modifier) {
+    visited.add(modifier.name);
+    var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
+    requires.forEach(function (dep) {
+      if (!visited.has(dep)) {
+        var depModifier = map.get(dep);
+
+        if (depModifier) {
+          sort(depModifier);
+        }
+      }
+    });
+    result.push(modifier);
+  }
+
+  modifiers.forEach(function (modifier) {
+    if (!visited.has(modifier.name)) {
+      // check for visited object
+      sort(modifier);
+    }
+  });
+  return result;
+}
+
+function orderModifiers(modifiers) {
+  // order based on dependencies
+  var orderedModifiers = order(modifiers); // order based on phase
+
+  return modifierPhases.reduce(function (acc, phase) {
+    return acc.concat(orderedModifiers.filter(function (modifier) {
+      return modifier.phase === phase;
+    }));
+  }, []);
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/debounce.js
+function debounce(fn) {
+  var pending;
+  return function () {
+    if (!pending) {
+      pending = new Promise(function (resolve) {
+        Promise.resolve().then(function () {
+          pending = undefined;
+          resolve(fn());
+        });
+      });
+    }
+
+    return pending;
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/mergeByName.js
+function mergeByName(modifiers) {
+  var merged = modifiers.reduce(function (merged, current) {
+    var existing = merged[current.name];
+    merged[current.name] = existing ? Object.assign({}, existing, current, {
+      options: Object.assign({}, existing.options, current.options),
+      data: Object.assign({}, existing.data, current.data)
+    }) : current;
+    return merged;
+  }, {}); // IE11 does not support Object.values
+
+  return Object.keys(merged).map(function (key) {
+    return merged[key];
+  });
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/createPopper.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var INVALID_ELEMENT_ERROR = 'Popper: Invalid reference or popper argument provided. They must be either a DOM element or virtual element.';
+var INFINITE_LOOP_ERROR = 'Popper: An infinite loop in the modifiers cycle has been detected! The cycle has been interrupted to prevent a browser crash.';
+var DEFAULT_OPTIONS = {
+  placement: 'bottom',
+  modifiers: [],
+  strategy: 'absolute'
+};
+
+function areValidElements() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return !args.some(function (element) {
+    return !(element && typeof element.getBoundingClientRect === 'function');
+  });
+}
+
+function popperGenerator(generatorOptions) {
+  if (generatorOptions === void 0) {
+    generatorOptions = {};
+  }
+
+  var _generatorOptions = generatorOptions,
+      _generatorOptions$def = _generatorOptions.defaultModifiers,
+      defaultModifiers = _generatorOptions$def === void 0 ? [] : _generatorOptions$def,
+      _generatorOptions$def2 = _generatorOptions.defaultOptions,
+      defaultOptions = _generatorOptions$def2 === void 0 ? DEFAULT_OPTIONS : _generatorOptions$def2;
+  return function createPopper(reference, popper, options) {
+    if (options === void 0) {
+      options = defaultOptions;
+    }
+
+    var state = {
+      placement: 'bottom',
+      orderedModifiers: [],
+      options: Object.assign({}, DEFAULT_OPTIONS, defaultOptions),
+      modifiersData: {},
+      elements: {
+        reference: reference,
+        popper: popper
+      },
+      attributes: {},
+      styles: {}
+    };
+    var effectCleanupFns = [];
+    var isDestroyed = false;
+    var instance = {
+      state: state,
+      setOptions: function setOptions(setOptionsAction) {
+        var options = typeof setOptionsAction === 'function' ? setOptionsAction(state.options) : setOptionsAction;
+        cleanupModifierEffects();
+        state.options = Object.assign({}, defaultOptions, state.options, options);
+        state.scrollParents = {
+          reference: isElement(reference) ? listScrollParents(reference) : reference.contextElement ? listScrollParents(reference.contextElement) : [],
+          popper: listScrollParents(popper)
+        }; // Orders the modifiers based on their dependencies and `phase`
+        // properties
+
+        var orderedModifiers = orderModifiers(mergeByName([].concat(defaultModifiers, state.options.modifiers))); // Strip out disabled modifiers
+
+        state.orderedModifiers = orderedModifiers.filter(function (m) {
+          return m.enabled;
+        }); // Validate the provided modifiers so that the consumer will get warned
+        // if one of the modifiers is invalid for any reason
+
+        if (false) { var _getComputedStyle, marginTop, marginRight, marginBottom, marginLeft, flipModifier, modifiers; }
+
+        runModifierEffects();
+        return instance.update();
+      },
+      // Sync update – it will always be executed, even if not necessary. This
+      // is useful for low frequency updates where sync behavior simplifies the
+      // logic.
+      // For high frequency updates (e.g. `resize` and `scroll` events), always
+      // prefer the async Popper#update method
+      forceUpdate: function forceUpdate() {
+        if (isDestroyed) {
+          return;
+        }
+
+        var _state$elements = state.elements,
+            reference = _state$elements.reference,
+            popper = _state$elements.popper; // Don't proceed if `reference` or `popper` are not valid elements
+        // anymore
+
+        if (!areValidElements(reference, popper)) {
+          if (false) {}
+
+          return;
+        } // Store the reference and popper rects to be read by modifiers
+
+
+        state.rects = {
+          reference: getCompositeRect(reference, getOffsetParent(popper), state.options.strategy === 'fixed'),
+          popper: getLayoutRect(popper)
+        }; // Modifiers have the ability to reset the current update cycle. The
+        // most common use case for this is the `flip` modifier changing the
+        // placement, which then needs to re-run all the modifiers, because the
+        // logic was previously ran for the previous placement and is therefore
+        // stale/incorrect
+
+        state.reset = false;
+        state.placement = state.options.placement; // On each update cycle, the `modifiersData` property for each modifier
+        // is filled with the initial data specified by the modifier. This means
+        // it doesn't persist and is fresh on each update.
+        // To ensure persistent data, use `${name}#persistent`
+
+        state.orderedModifiers.forEach(function (modifier) {
+          return state.modifiersData[modifier.name] = Object.assign({}, modifier.data);
+        });
+        var __debug_loops__ = 0;
+
+        for (var index = 0; index < state.orderedModifiers.length; index++) {
+          if (false) {}
+
+          if (state.reset === true) {
+            state.reset = false;
+            index = -1;
+            continue;
+          }
+
+          var _state$orderedModifie = state.orderedModifiers[index],
+              fn = _state$orderedModifie.fn,
+              _state$orderedModifie2 = _state$orderedModifie.options,
+              _options = _state$orderedModifie2 === void 0 ? {} : _state$orderedModifie2,
+              name = _state$orderedModifie.name;
+
+          if (typeof fn === 'function') {
+            state = fn({
+              state: state,
+              options: _options,
+              name: name,
+              instance: instance
+            }) || state;
+          }
+        }
+      },
+      // Async and optimistically optimized update – it will not be executed if
+      // not necessary (debounced to run at most once-per-tick)
+      update: debounce(function () {
+        return new Promise(function (resolve) {
+          instance.forceUpdate();
+          resolve(state);
+        });
+      }),
+      destroy: function destroy() {
+        cleanupModifierEffects();
+        isDestroyed = true;
+      }
+    };
+
+    if (!areValidElements(reference, popper)) {
+      if (false) {}
+
+      return instance;
+    }
+
+    instance.setOptions(options).then(function (state) {
+      if (!isDestroyed && options.onFirstUpdate) {
+        options.onFirstUpdate(state);
+      }
+    }); // Modifiers have the ability to execute arbitrary code before the first
+    // update cycle runs. They will be executed in the same order as the update
+    // cycle. This is useful when a modifier adds some persistent data that
+    // other modifiers need to use, but the modifier is run after the dependent
+    // one.
+
+    function runModifierEffects() {
+      state.orderedModifiers.forEach(function (_ref3) {
+        var name = _ref3.name,
+            _ref3$options = _ref3.options,
+            options = _ref3$options === void 0 ? {} : _ref3$options,
+            effect = _ref3.effect;
+
+        if (typeof effect === 'function') {
+          var cleanupFn = effect({
+            state: state,
+            name: name,
+            instance: instance,
+            options: options
+          });
+
+          var noopFn = function noopFn() {};
+
+          effectCleanupFns.push(cleanupFn || noopFn);
+        }
+      });
+    }
+
+    function cleanupModifierEffects() {
+      effectCleanupFns.forEach(function (fn) {
+        return fn();
+      });
+      effectCleanupFns = [];
+    }
+
+    return instance;
+  };
+}
+var createPopper = /*#__PURE__*/(/* unused pure expression or super */ null && (popperGenerator())); // eslint-disable-next-line import/no-unused-modules
+
+
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/eventListeners.js
+ // eslint-disable-next-line import/no-unused-modules
+
+var passive = {
+  passive: true
+};
+
+function effect(_ref) {
+  var state = _ref.state,
+      instance = _ref.instance,
+      options = _ref.options;
+  var _options$scroll = options.scroll,
+      scroll = _options$scroll === void 0 ? true : _options$scroll,
+      _options$resize = options.resize,
+      resize = _options$resize === void 0 ? true : _options$resize;
+  var window = getWindow(state.elements.popper);
+  var scrollParents = [].concat(state.scrollParents.reference, state.scrollParents.popper);
+
+  if (scroll) {
+    scrollParents.forEach(function (scrollParent) {
+      scrollParent.addEventListener('scroll', instance.update, passive);
+    });
+  }
+
+  if (resize) {
+    window.addEventListener('resize', instance.update, passive);
+  }
+
+  return function () {
+    if (scroll) {
+      scrollParents.forEach(function (scrollParent) {
+        scrollParent.removeEventListener('scroll', instance.update, passive);
+      });
+    }
+
+    if (resize) {
+      window.removeEventListener('resize', instance.update, passive);
+    }
+  };
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const eventListeners = ({
+  name: 'eventListeners',
+  enabled: true,
+  phase: 'write',
+  fn: function fn() {},
+  effect: effect,
+  data: {}
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getBasePlacement.js
+
+function getBasePlacement(placement) {
+  return placement.split('-')[0];
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getVariation.js
+function getVariation(placement) {
+  return placement.split('-')[1];
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getMainAxisFromPlacement.js
+function getMainAxisFromPlacement(placement) {
+  return ['top', 'bottom'].indexOf(placement) >= 0 ? 'x' : 'y';
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/computeOffsets.js
+
+
+
+
+function computeOffsets(_ref) {
+  var reference = _ref.reference,
+      element = _ref.element,
+      placement = _ref.placement;
+  var basePlacement = placement ? getBasePlacement(placement) : null;
+  var variation = placement ? getVariation(placement) : null;
+  var commonX = reference.x + reference.width / 2 - element.width / 2;
+  var commonY = reference.y + reference.height / 2 - element.height / 2;
+  var offsets;
+
+  switch (basePlacement) {
+    case enums_top:
+      offsets = {
+        x: commonX,
+        y: reference.y - element.height
+      };
+      break;
+
+    case bottom:
+      offsets = {
+        x: commonX,
+        y: reference.y + reference.height
+      };
+      break;
+
+    case right:
+      offsets = {
+        x: reference.x + reference.width,
+        y: commonY
+      };
+      break;
+
+    case left:
+      offsets = {
+        x: reference.x - element.width,
+        y: commonY
+      };
+      break;
+
+    default:
+      offsets = {
+        x: reference.x,
+        y: reference.y
+      };
+  }
+
+  var mainAxis = basePlacement ? getMainAxisFromPlacement(basePlacement) : null;
+
+  if (mainAxis != null) {
+    var len = mainAxis === 'y' ? 'height' : 'width';
+
+    switch (variation) {
+      case start:
+        offsets[mainAxis] = offsets[mainAxis] - (reference[len] / 2 - element[len] / 2);
+        break;
+
+      case end:
+        offsets[mainAxis] = offsets[mainAxis] + (reference[len] / 2 - element[len] / 2);
+        break;
+
+      default:
+    }
+  }
+
+  return offsets;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/popperOffsets.js
+
+
+function popperOffsets(_ref) {
+  var state = _ref.state,
+      name = _ref.name;
+  // Offsets are the actual position the popper needs to have to be
+  // properly positioned near its reference element
+  // This is the most basic placement, and will be adjusted by
+  // the modifiers in the next step
+  state.modifiersData[name] = computeOffsets({
+    reference: state.rects.reference,
+    element: state.rects.popper,
+    strategy: 'absolute',
+    placement: state.placement
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_popperOffsets = ({
+  name: 'popperOffsets',
+  enabled: true,
+  phase: 'read',
+  fn: popperOffsets,
+  data: {}
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/math.js
+var math_max = Math.max;
+var math_min = Math.min;
+var math_round = Math.round;
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/computeStyles.js
+
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+var unsetSides = {
+  top: 'auto',
+  right: 'auto',
+  bottom: 'auto',
+  left: 'auto'
+}; // Round the offsets to the nearest suitable subpixel based on the DPR.
+// Zooming can change the DPR, but it seems to report a value that will
+// cleanly divide the values into the appropriate subpixels.
+
+function roundOffsetsByDPR(_ref) {
+  var x = _ref.x,
+      y = _ref.y;
+  var win = window;
+  var dpr = win.devicePixelRatio || 1;
+  return {
+    x: math_round(math_round(x * dpr) / dpr) || 0,
+    y: math_round(math_round(y * dpr) / dpr) || 0
+  };
+}
+
+function mapToStyles(_ref2) {
+  var _Object$assign2;
+
+  var popper = _ref2.popper,
+      popperRect = _ref2.popperRect,
+      placement = _ref2.placement,
+      variation = _ref2.variation,
+      offsets = _ref2.offsets,
+      position = _ref2.position,
+      gpuAcceleration = _ref2.gpuAcceleration,
+      adaptive = _ref2.adaptive,
+      roundOffsets = _ref2.roundOffsets;
+
+  var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
+      _ref3$x = _ref3.x,
+      x = _ref3$x === void 0 ? 0 : _ref3$x,
+      _ref3$y = _ref3.y,
+      y = _ref3$y === void 0 ? 0 : _ref3$y;
+
+  var hasX = offsets.hasOwnProperty('x');
+  var hasY = offsets.hasOwnProperty('y');
+  var sideX = left;
+  var sideY = enums_top;
+  var win = window;
+
+  if (adaptive) {
+    var offsetParent = getOffsetParent(popper);
+    var heightProp = 'clientHeight';
+    var widthProp = 'clientWidth';
+
+    if (offsetParent === getWindow(popper)) {
+      offsetParent = getDocumentElement(popper);
+
+      if (getComputedStyle(offsetParent).position !== 'static' && position === 'absolute') {
+        heightProp = 'scrollHeight';
+        widthProp = 'scrollWidth';
+      }
+    } // $FlowFixMe[incompatible-cast]: force type refinement, we compare offsetParent with window above, but Flow doesn't detect it
+
+
+    offsetParent = offsetParent;
+
+    if (placement === enums_top || (placement === left || placement === right) && variation === end) {
+      sideY = bottom; // $FlowFixMe[prop-missing]
+
+      y -= offsetParent[heightProp] - popperRect.height;
+      y *= gpuAcceleration ? 1 : -1;
+    }
+
+    if (placement === left || (placement === enums_top || placement === bottom) && variation === end) {
+      sideX = right; // $FlowFixMe[prop-missing]
+
+      x -= offsetParent[widthProp] - popperRect.width;
+      x *= gpuAcceleration ? 1 : -1;
+    }
+  }
+
+  var commonStyles = Object.assign({
+    position: position
+  }, adaptive && unsetSides);
+
+  if (gpuAcceleration) {
+    var _Object$assign;
+
+    return Object.assign({}, commonStyles, (_Object$assign = {}, _Object$assign[sideY] = hasY ? '0' : '', _Object$assign[sideX] = hasX ? '0' : '', _Object$assign.transform = (win.devicePixelRatio || 1) <= 1 ? "translate(" + x + "px, " + y + "px)" : "translate3d(" + x + "px, " + y + "px, 0)", _Object$assign));
+  }
+
+  return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
+}
+
+function computeStyles(_ref4) {
+  var state = _ref4.state,
+      options = _ref4.options;
+  var _options$gpuAccelerat = options.gpuAcceleration,
+      gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
+      _options$adaptive = options.adaptive,
+      adaptive = _options$adaptive === void 0 ? true : _options$adaptive,
+      _options$roundOffsets = options.roundOffsets,
+      roundOffsets = _options$roundOffsets === void 0 ? true : _options$roundOffsets;
+
+  if (false) { var transitionProperty; }
+
+  var commonStyles = {
+    placement: getBasePlacement(state.placement),
+    variation: getVariation(state.placement),
+    popper: state.elements.popper,
+    popperRect: state.rects.popper,
+    gpuAcceleration: gpuAcceleration
+  };
+
+  if (state.modifiersData.popperOffsets != null) {
+    state.styles.popper = Object.assign({}, state.styles.popper, mapToStyles(Object.assign({}, commonStyles, {
+      offsets: state.modifiersData.popperOffsets,
+      position: state.options.strategy,
+      adaptive: adaptive,
+      roundOffsets: roundOffsets
+    })));
+  }
+
+  if (state.modifiersData.arrow != null) {
+    state.styles.arrow = Object.assign({}, state.styles.arrow, mapToStyles(Object.assign({}, commonStyles, {
+      offsets: state.modifiersData.arrow,
+      position: 'absolute',
+      adaptive: false,
+      roundOffsets: roundOffsets
+    })));
+  }
+
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
+    'data-popper-placement': state.placement
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_computeStyles = ({
+  name: 'computeStyles',
+  enabled: true,
+  phase: 'beforeWrite',
+  fn: computeStyles,
+  data: {}
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/applyStyles.js
+
+ // This modifier takes the styles prepared by the `computeStyles` modifier
+// and applies them to the HTMLElements such as popper and arrow
+
+function applyStyles(_ref) {
+  var state = _ref.state;
+  Object.keys(state.elements).forEach(function (name) {
+    var style = state.styles[name] || {};
+    var attributes = state.attributes[name] || {};
+    var element = state.elements[name]; // arrow is optional + virtual elements
+
+    if (!isHTMLElement(element) || !getNodeName(element)) {
+      return;
+    } // Flow doesn't support to extend this property, but it's the most
+    // effective way to apply styles to an HTMLElement
+    // $FlowFixMe[cannot-write]
+
+
+    Object.assign(element.style, style);
+    Object.keys(attributes).forEach(function (name) {
+      var value = attributes[name];
+
+      if (value === false) {
+        element.removeAttribute(name);
+      } else {
+        element.setAttribute(name, value === true ? '' : value);
+      }
+    });
+  });
+}
+
+function applyStyles_effect(_ref2) {
+  var state = _ref2.state;
+  var initialStyles = {
+    popper: {
+      position: state.options.strategy,
+      left: '0',
+      top: '0',
+      margin: '0'
+    },
+    arrow: {
+      position: 'absolute'
+    },
+    reference: {}
+  };
+  Object.assign(state.elements.popper.style, initialStyles.popper);
+  state.styles = initialStyles;
+
+  if (state.elements.arrow) {
+    Object.assign(state.elements.arrow.style, initialStyles.arrow);
+  }
+
+  return function () {
+    Object.keys(state.elements).forEach(function (name) {
+      var element = state.elements[name];
+      var attributes = state.attributes[name] || {};
+      var styleProperties = Object.keys(state.styles.hasOwnProperty(name) ? state.styles[name] : initialStyles[name]); // Set all values to an empty string to unset them
+
+      var style = styleProperties.reduce(function (style, property) {
+        style[property] = '';
+        return style;
+      }, {}); // arrow is optional + virtual elements
+
+      if (!isHTMLElement(element) || !getNodeName(element)) {
+        return;
+      }
+
+      Object.assign(element.style, style);
+      Object.keys(attributes).forEach(function (attribute) {
+        element.removeAttribute(attribute);
+      });
+    });
+  };
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_applyStyles = ({
+  name: 'applyStyles',
+  enabled: true,
+  phase: 'write',
+  fn: applyStyles,
+  effect: applyStyles_effect,
+  requires: ['computeStyles']
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/offset.js
+
+
+function distanceAndSkiddingToXY(placement, rects, offset) {
+  var basePlacement = getBasePlacement(placement);
+  var invertDistance = [left, enums_top].indexOf(basePlacement) >= 0 ? -1 : 1;
+
+  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
+    placement: placement
+  })) : offset,
+      skidding = _ref[0],
+      distance = _ref[1];
+
+  skidding = skidding || 0;
+  distance = (distance || 0) * invertDistance;
+  return [left, right].indexOf(basePlacement) >= 0 ? {
+    x: distance,
+    y: skidding
+  } : {
+    x: skidding,
+    y: distance
+  };
+}
+
+function offset(_ref2) {
+  var state = _ref2.state,
+      options = _ref2.options,
+      name = _ref2.name;
+  var _options$offset = options.offset,
+      offset = _options$offset === void 0 ? [0, 0] : _options$offset;
+  var data = enums_placements.reduce(function (acc, placement) {
+    acc[placement] = distanceAndSkiddingToXY(placement, state.rects, offset);
+    return acc;
+  }, {});
+  var _data$state$placement = data[state.placement],
+      x = _data$state$placement.x,
+      y = _data$state$placement.y;
+
+  if (state.modifiersData.popperOffsets != null) {
+    state.modifiersData.popperOffsets.x += x;
+    state.modifiersData.popperOffsets.y += y;
+  }
+
+  state.modifiersData[name] = data;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_offset = ({
+  name: 'offset',
+  enabled: true,
+  phase: 'main',
+  requires: ['popperOffsets'],
+  fn: offset
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getOppositePlacement.js
+var hash = {
+  left: 'right',
+  right: 'left',
+  bottom: 'top',
+  top: 'bottom'
+};
+function getOppositePlacement(placement) {
+  return placement.replace(/left|right|bottom|top/g, function (matched) {
+    return hash[matched];
+  });
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getOppositeVariationPlacement.js
+var getOppositeVariationPlacement_hash = {
+  start: 'end',
+  end: 'start'
+};
+function getOppositeVariationPlacement(placement) {
+  return placement.replace(/start|end/g, function (matched) {
+    return getOppositeVariationPlacement_hash[matched];
+  });
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getViewportRect.js
+
+
+
+function getViewportRect(element) {
+  var win = getWindow(element);
+  var html = getDocumentElement(element);
+  var visualViewport = win.visualViewport;
+  var width = html.clientWidth;
+  var height = html.clientHeight;
+  var x = 0;
+  var y = 0; // NB: This isn't supported on iOS <= 12. If the keyboard is open, the popper
+  // can be obscured underneath it.
+  // Also, `html.clientHeight` adds the bottom bar height in Safari iOS, even
+  // if it isn't open, so if this isn't available, the popper will be detected
+  // to overflow the bottom of the screen too early.
+
+  if (visualViewport) {
+    width = visualViewport.width;
+    height = visualViewport.height; // Uses Layout Viewport (like Chrome; Safari does not currently)
+    // In Chrome, it returns a value very close to 0 (+/-) but contains rounding
+    // errors due to floating point numbers, so we need to check precision.
+    // Safari returns a number <= 0, usually < -1 when pinch-zoomed
+    // Feature detection fails in mobile emulation mode in Chrome.
+    // Math.abs(win.innerWidth / visualViewport.scale - visualViewport.width) <
+    // 0.001
+    // Fallback here: "Not Safari" userAgent
+
+    if (!/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+      x = visualViewport.offsetLeft;
+      y = visualViewport.offsetTop;
+    }
+  }
+
+  return {
+    width: width,
+    height: height,
+    x: x + getWindowScrollBarX(element),
+    y: y
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getDocumentRect.js
+
+
+
+
+ // Gets the entire size of the scrollable document area, even extending outside
+// of the `<html>` and `<body>` rect bounds if horizontally scrollable
+
+function getDocumentRect(element) {
+  var _element$ownerDocumen;
+
+  var html = getDocumentElement(element);
+  var winScroll = getWindowScroll(element);
+  var body = (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body;
+  var width = math_max(html.scrollWidth, html.clientWidth, body ? body.scrollWidth : 0, body ? body.clientWidth : 0);
+  var height = math_max(html.scrollHeight, html.clientHeight, body ? body.scrollHeight : 0, body ? body.clientHeight : 0);
+  var x = -winScroll.scrollLeft + getWindowScrollBarX(element);
+  var y = -winScroll.scrollTop;
+
+  if (getComputedStyle(body || html).direction === 'rtl') {
+    x += math_max(html.clientWidth, body ? body.clientWidth : 0) - width;
+  }
+
+  return {
+    width: width,
+    height: height,
+    x: x,
+    y: y
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/contains.js
+
+function contains(parent, child) {
+  var rootNode = child.getRootNode && child.getRootNode(); // First, attempt with faster native method
+
+  if (parent.contains(child)) {
+    return true;
+  } // then fallback to custom implementation with Shadow DOM support
+  else if (rootNode && isShadowRoot(rootNode)) {
+      var next = child;
+
+      do {
+        if (next && parent.isSameNode(next)) {
+          return true;
+        } // $FlowFixMe[prop-missing]: need a better way to handle this...
+
+
+        next = next.parentNode || next.host;
+      } while (next);
+    } // Give up, the result is false
+
+
+  return false;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/rectToClientRect.js
+function rectToClientRect(rect) {
+  return Object.assign({}, rect, {
+    left: rect.x,
+    top: rect.y,
+    right: rect.x + rect.width,
+    bottom: rect.y + rect.height
+  });
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getClippingRect.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function getInnerBoundingClientRect(element) {
+  var rect = getBoundingClientRect(element);
+  rect.top = rect.top + element.clientTop;
+  rect.left = rect.left + element.clientLeft;
+  rect.bottom = rect.top + element.clientHeight;
+  rect.right = rect.left + element.clientWidth;
+  rect.width = element.clientWidth;
+  rect.height = element.clientHeight;
+  rect.x = rect.left;
+  rect.y = rect.top;
+  return rect;
+}
+
+function getClientRectFromMixedType(element, clippingParent) {
+  return clippingParent === viewport ? rectToClientRect(getViewportRect(element)) : isHTMLElement(clippingParent) ? getInnerBoundingClientRect(clippingParent) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+} // A "clipping parent" is an overflowable container with the characteristic of
+// clipping (or hiding) overflowing elements with a position different from
+// `initial`
+
+
+function getClippingParents(element) {
+  var clippingParents = listScrollParents(getParentNode(element));
+  var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle(element).position) >= 0;
+  var clipperElement = canEscapeClipping && isHTMLElement(element) ? getOffsetParent(element) : element;
+
+  if (!isElement(clipperElement)) {
+    return [];
+  } // $FlowFixMe[incompatible-return]: https://github.com/facebook/flow/issues/1414
+
+
+  return clippingParents.filter(function (clippingParent) {
+    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
+  });
+} // Gets the maximum area that the element is visible in due to any number of
+// clipping parents
+
+
+function getClippingRect(element, boundary, rootBoundary) {
+  var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary);
+  var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
+  var firstClippingParent = clippingParents[0];
+  var clippingRect = clippingParents.reduce(function (accRect, clippingParent) {
+    var rect = getClientRectFromMixedType(element, clippingParent);
+    accRect.top = math_max(rect.top, accRect.top);
+    accRect.right = math_min(rect.right, accRect.right);
+    accRect.bottom = math_min(rect.bottom, accRect.bottom);
+    accRect.left = math_max(rect.left, accRect.left);
+    return accRect;
+  }, getClientRectFromMixedType(element, firstClippingParent));
+  clippingRect.width = clippingRect.right - clippingRect.left;
+  clippingRect.height = clippingRect.bottom - clippingRect.top;
+  clippingRect.x = clippingRect.left;
+  clippingRect.y = clippingRect.top;
+  return clippingRect;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getFreshSideObject.js
+function getFreshSideObject() {
+  return {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  };
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/mergePaddingObject.js
+
+function mergePaddingObject(paddingObject) {
+  return Object.assign({}, getFreshSideObject(), paddingObject);
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/expandToHashMap.js
+function expandToHashMap(value, keys) {
+  return keys.reduce(function (hashMap, key) {
+    hashMap[key] = value;
+    return hashMap;
+  }, {});
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/detectOverflow.js
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+function detectOverflow(state, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      _options$placement = _options.placement,
+      placement = _options$placement === void 0 ? state.placement : _options$placement,
+      _options$boundary = _options.boundary,
+      boundary = _options$boundary === void 0 ? clippingParents : _options$boundary,
+      _options$rootBoundary = _options.rootBoundary,
+      rootBoundary = _options$rootBoundary === void 0 ? viewport : _options$rootBoundary,
+      _options$elementConte = _options.elementContext,
+      elementContext = _options$elementConte === void 0 ? popper : _options$elementConte,
+      _options$altBoundary = _options.altBoundary,
+      altBoundary = _options$altBoundary === void 0 ? false : _options$altBoundary,
+      _options$padding = _options.padding,
+      padding = _options$padding === void 0 ? 0 : _options$padding;
+  var paddingObject = mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
+  var altContext = elementContext === popper ? reference : popper;
+  var popperRect = state.rects.popper;
+  var element = state.elements[altBoundary ? altContext : elementContext];
+  var clippingClientRect = getClippingRect(isElement(element) ? element : element.contextElement || getDocumentElement(state.elements.popper), boundary, rootBoundary);
+  var referenceClientRect = getBoundingClientRect(state.elements.reference);
+  var popperOffsets = computeOffsets({
+    reference: referenceClientRect,
+    element: popperRect,
+    strategy: 'absolute',
+    placement: placement
+  });
+  var popperClientRect = rectToClientRect(Object.assign({}, popperRect, popperOffsets));
+  var elementClientRect = elementContext === popper ? popperClientRect : referenceClientRect; // positive = overflowing the clipping rect
+  // 0 or negative = within the clipping rect
+
+  var overflowOffsets = {
+    top: clippingClientRect.top - elementClientRect.top + paddingObject.top,
+    bottom: elementClientRect.bottom - clippingClientRect.bottom + paddingObject.bottom,
+    left: clippingClientRect.left - elementClientRect.left + paddingObject.left,
+    right: elementClientRect.right - clippingClientRect.right + paddingObject.right
+  };
+  var offsetData = state.modifiersData.offset; // Offsets can be applied only to the popper element
+
+  if (elementContext === popper && offsetData) {
+    var offset = offsetData[placement];
+    Object.keys(overflowOffsets).forEach(function (key) {
+      var multiply = [right, bottom].indexOf(key) >= 0 ? 1 : -1;
+      var axis = [enums_top, bottom].indexOf(key) >= 0 ? 'y' : 'x';
+      overflowOffsets[key] += offset[axis] * multiply;
+    });
+  }
+
+  return overflowOffsets;
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/computeAutoPlacement.js
+
+
+
+
+function computeAutoPlacement(state, options) {
+  if (options === void 0) {
+    options = {};
+  }
+
+  var _options = options,
+      placement = _options.placement,
+      boundary = _options.boundary,
+      rootBoundary = _options.rootBoundary,
+      padding = _options.padding,
+      flipVariations = _options.flipVariations,
+      _options$allowedAutoP = _options.allowedAutoPlacements,
+      allowedAutoPlacements = _options$allowedAutoP === void 0 ? enums_placements : _options$allowedAutoP;
+  var variation = getVariation(placement);
+  var placements = variation ? flipVariations ? variationPlacements : variationPlacements.filter(function (placement) {
+    return getVariation(placement) === variation;
+  }) : basePlacements;
+  var allowedPlacements = placements.filter(function (placement) {
+    return allowedAutoPlacements.indexOf(placement) >= 0;
+  });
+
+  if (allowedPlacements.length === 0) {
+    allowedPlacements = placements;
+
+    if (false) {}
+  } // $FlowFixMe[incompatible-type]: Flow seems to have problems with two array unions...
+
+
+  var overflows = allowedPlacements.reduce(function (acc, placement) {
+    acc[placement] = detectOverflow(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      padding: padding
+    })[getBasePlacement(placement)];
+    return acc;
+  }, {});
+  return Object.keys(overflows).sort(function (a, b) {
+    return overflows[a] - overflows[b];
+  });
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/flip.js
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+function getExpandedFallbackPlacements(placement) {
+  if (getBasePlacement(placement) === auto) {
+    return [];
+  }
+
+  var oppositePlacement = getOppositePlacement(placement);
+  return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
+}
+
+function flip(_ref) {
+  var state = _ref.state,
+      options = _ref.options,
+      name = _ref.name;
+
+  if (state.modifiersData[name]._skip) {
+    return;
+  }
+
+  var _options$mainAxis = options.mainAxis,
+      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+      _options$altAxis = options.altAxis,
+      checkAltAxis = _options$altAxis === void 0 ? true : _options$altAxis,
+      specifiedFallbackPlacements = options.fallbackPlacements,
+      padding = options.padding,
+      boundary = options.boundary,
+      rootBoundary = options.rootBoundary,
+      altBoundary = options.altBoundary,
+      _options$flipVariatio = options.flipVariations,
+      flipVariations = _options$flipVariatio === void 0 ? true : _options$flipVariatio,
+      allowedAutoPlacements = options.allowedAutoPlacements;
+  var preferredPlacement = state.options.placement;
+  var basePlacement = getBasePlacement(preferredPlacement);
+  var isBasePlacement = basePlacement === preferredPlacement;
+  var fallbackPlacements = specifiedFallbackPlacements || (isBasePlacement || !flipVariations ? [getOppositePlacement(preferredPlacement)] : getExpandedFallbackPlacements(preferredPlacement));
+  var placements = [preferredPlacement].concat(fallbackPlacements).reduce(function (acc, placement) {
+    return acc.concat(getBasePlacement(placement) === auto ? computeAutoPlacement(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      padding: padding,
+      flipVariations: flipVariations,
+      allowedAutoPlacements: allowedAutoPlacements
+    }) : placement);
+  }, []);
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var checksMap = new Map();
+  var makeFallbackChecks = true;
+  var firstFittingPlacement = placements[0];
+
+  for (var i = 0; i < placements.length; i++) {
+    var placement = placements[i];
+
+    var _basePlacement = getBasePlacement(placement);
+
+    var isStartVariation = getVariation(placement) === start;
+    var isVertical = [enums_top, bottom].indexOf(_basePlacement) >= 0;
+    var len = isVertical ? 'width' : 'height';
+    var overflow = detectOverflow(state, {
+      placement: placement,
+      boundary: boundary,
+      rootBoundary: rootBoundary,
+      altBoundary: altBoundary,
+      padding: padding
+    });
+    var mainVariationSide = isVertical ? isStartVariation ? right : left : isStartVariation ? bottom : enums_top;
+
+    if (referenceRect[len] > popperRect[len]) {
+      mainVariationSide = getOppositePlacement(mainVariationSide);
+    }
+
+    var altVariationSide = getOppositePlacement(mainVariationSide);
+    var checks = [];
+
+    if (checkMainAxis) {
+      checks.push(overflow[_basePlacement] <= 0);
+    }
+
+    if (checkAltAxis) {
+      checks.push(overflow[mainVariationSide] <= 0, overflow[altVariationSide] <= 0);
+    }
+
+    if (checks.every(function (check) {
+      return check;
+    })) {
+      firstFittingPlacement = placement;
+      makeFallbackChecks = false;
+      break;
+    }
+
+    checksMap.set(placement, checks);
+  }
+
+  if (makeFallbackChecks) {
+    // `2` may be desired in some cases – research later
+    var numberOfChecks = flipVariations ? 3 : 1;
+
+    var _loop = function _loop(_i) {
+      var fittingPlacement = placements.find(function (placement) {
+        var checks = checksMap.get(placement);
+
+        if (checks) {
+          return checks.slice(0, _i).every(function (check) {
+            return check;
+          });
+        }
+      });
+
+      if (fittingPlacement) {
+        firstFittingPlacement = fittingPlacement;
+        return "break";
+      }
+    };
+
+    for (var _i = numberOfChecks; _i > 0; _i--) {
+      var _ret = _loop(_i);
+
+      if (_ret === "break") break;
+    }
+  }
+
+  if (state.placement !== firstFittingPlacement) {
+    state.modifiersData[name]._skip = true;
+    state.placement = firstFittingPlacement;
+    state.reset = true;
+  }
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_flip = ({
+  name: 'flip',
+  enabled: true,
+  phase: 'main',
+  fn: flip,
+  requiresIfExists: ['offset'],
+  data: {
+    _skip: false
+  }
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/getAltAxis.js
+function getAltAxis(axis) {
+  return axis === 'x' ? 'y' : 'x';
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/within.js
+
+function within(min, value, max) {
+  return math_max(min, math_min(value, max));
+}
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
+
+
+
+
+
+
+
+
+
+
+
+
+function preventOverflow(_ref) {
+  var state = _ref.state,
+      options = _ref.options,
+      name = _ref.name;
+  var _options$mainAxis = options.mainAxis,
+      checkMainAxis = _options$mainAxis === void 0 ? true : _options$mainAxis,
+      _options$altAxis = options.altAxis,
+      checkAltAxis = _options$altAxis === void 0 ? false : _options$altAxis,
+      boundary = options.boundary,
+      rootBoundary = options.rootBoundary,
+      altBoundary = options.altBoundary,
+      padding = options.padding,
+      _options$tether = options.tether,
+      tether = _options$tether === void 0 ? true : _options$tether,
+      _options$tetherOffset = options.tetherOffset,
+      tetherOffset = _options$tetherOffset === void 0 ? 0 : _options$tetherOffset;
+  var overflow = detectOverflow(state, {
+    boundary: boundary,
+    rootBoundary: rootBoundary,
+    padding: padding,
+    altBoundary: altBoundary
+  });
+  var basePlacement = getBasePlacement(state.placement);
+  var variation = getVariation(state.placement);
+  var isBasePlacement = !variation;
+  var mainAxis = getMainAxisFromPlacement(basePlacement);
+  var altAxis = getAltAxis(mainAxis);
+  var popperOffsets = state.modifiersData.popperOffsets;
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign({}, state.rects, {
+    placement: state.placement
+  })) : tetherOffset;
+  var data = {
+    x: 0,
+    y: 0
+  };
+
+  if (!popperOffsets) {
+    return;
+  }
+
+  if (checkMainAxis || checkAltAxis) {
+    var mainSide = mainAxis === 'y' ? enums_top : left;
+    var altSide = mainAxis === 'y' ? bottom : right;
+    var len = mainAxis === 'y' ? 'height' : 'width';
+    var offset = popperOffsets[mainAxis];
+    var min = popperOffsets[mainAxis] + overflow[mainSide];
+    var max = popperOffsets[mainAxis] - overflow[altSide];
+    var additive = tether ? -popperRect[len] / 2 : 0;
+    var minLen = variation === start ? referenceRect[len] : popperRect[len];
+    var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
+    // outside the reference bounds
+
+    var arrowElement = state.elements.arrow;
+    var arrowRect = tether && arrowElement ? getLayoutRect(arrowElement) : {
+      width: 0,
+      height: 0
+    };
+    var arrowPaddingObject = state.modifiersData['arrow#persistent'] ? state.modifiersData['arrow#persistent'].padding : getFreshSideObject();
+    var arrowPaddingMin = arrowPaddingObject[mainSide];
+    var arrowPaddingMax = arrowPaddingObject[altSide]; // If the reference length is smaller than the arrow length, we don't want
+    // to include its full size in the calculation. If the reference is small
+    // and near the edge of a boundary, the popper can overflow even if the
+    // reference is not overflowing as well (e.g. virtual elements with no
+    // width or height)
+
+    var arrowLen = within(0, referenceRect[len], arrowRect[len]);
+    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - tetherOffsetValue : minLen - arrowLen - arrowPaddingMin - tetherOffsetValue;
+    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + tetherOffsetValue : maxLen + arrowLen + arrowPaddingMax + tetherOffsetValue;
+    var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
+    var clientOffset = arrowOffsetParent ? mainAxis === 'y' ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
+    var offsetModifierValue = state.modifiersData.offset ? state.modifiersData.offset[state.placement][mainAxis] : 0;
+    var tetherMin = popperOffsets[mainAxis] + minOffset - offsetModifierValue - clientOffset;
+    var tetherMax = popperOffsets[mainAxis] + maxOffset - offsetModifierValue;
+
+    if (checkMainAxis) {
+      var preventedOffset = within(tether ? math_min(min, tetherMin) : min, offset, tether ? math_max(max, tetherMax) : max);
+      popperOffsets[mainAxis] = preventedOffset;
+      data[mainAxis] = preventedOffset - offset;
+    }
+
+    if (checkAltAxis) {
+      var _mainSide = mainAxis === 'x' ? enums_top : left;
+
+      var _altSide = mainAxis === 'x' ? bottom : right;
+
+      var _offset = popperOffsets[altAxis];
+
+      var _min = _offset + overflow[_mainSide];
+
+      var _max = _offset - overflow[_altSide];
+
+      var _preventedOffset = within(tether ? math_min(_min, tetherMin) : _min, _offset, tether ? math_max(_max, tetherMax) : _max);
+
+      popperOffsets[altAxis] = _preventedOffset;
+      data[altAxis] = _preventedOffset - _offset;
+    }
+  }
+
+  state.modifiersData[name] = data;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_preventOverflow = ({
+  name: 'preventOverflow',
+  enabled: true,
+  phase: 'main',
+  fn: preventOverflow,
+  requiresIfExists: ['offset']
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/arrow.js
+
+
+
+
+
+
+
+
+
+ // eslint-disable-next-line import/no-unused-modules
+
+var toPaddingObject = function toPaddingObject(padding, state) {
+  padding = typeof padding === 'function' ? padding(Object.assign({}, state.rects, {
+    placement: state.placement
+  })) : padding;
+  return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
+};
+
+function arrow(_ref) {
+  var _state$modifiersData$;
+
+  var state = _ref.state,
+      name = _ref.name,
+      options = _ref.options;
+  var arrowElement = state.elements.arrow;
+  var popperOffsets = state.modifiersData.popperOffsets;
+  var basePlacement = getBasePlacement(state.placement);
+  var axis = getMainAxisFromPlacement(basePlacement);
+  var isVertical = [left, right].indexOf(basePlacement) >= 0;
+  var len = isVertical ? 'height' : 'width';
+
+  if (!arrowElement || !popperOffsets) {
+    return;
+  }
+
+  var paddingObject = toPaddingObject(options.padding, state);
+  var arrowRect = getLayoutRect(arrowElement);
+  var minProp = axis === 'y' ? enums_top : left;
+  var maxProp = axis === 'y' ? bottom : right;
+  var endDiff = state.rects.reference[len] + state.rects.reference[axis] - popperOffsets[axis] - state.rects.popper[len];
+  var startDiff = popperOffsets[axis] - state.rects.reference[axis];
+  var arrowOffsetParent = getOffsetParent(arrowElement);
+  var clientSize = arrowOffsetParent ? axis === 'y' ? arrowOffsetParent.clientHeight || 0 : arrowOffsetParent.clientWidth || 0 : 0;
+  var centerToReference = endDiff / 2 - startDiff / 2; // Make sure the arrow doesn't overflow the popper if the center point is
+  // outside of the popper bounds
+
+  var min = paddingObject[minProp];
+  var max = clientSize - arrowRect[len] - paddingObject[maxProp];
+  var center = clientSize / 2 - arrowRect[len] / 2 + centerToReference;
+  var offset = within(min, center, max); // Prevents breaking syntax highlighting...
+
+  var axisProp = axis;
+  state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
+}
+
+function arrow_effect(_ref2) {
+  var state = _ref2.state,
+      options = _ref2.options;
+  var _options$element = options.element,
+      arrowElement = _options$element === void 0 ? '[data-popper-arrow]' : _options$element;
+
+  if (arrowElement == null) {
+    return;
+  } // CSS selector
+
+
+  if (typeof arrowElement === 'string') {
+    arrowElement = state.elements.popper.querySelector(arrowElement);
+
+    if (!arrowElement) {
+      return;
+    }
+  }
+
+  if (false) {}
+
+  if (!contains(state.elements.popper, arrowElement)) {
+    if (false) {}
+
+    return;
+  }
+
+  state.elements.arrow = arrowElement;
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_arrow = ({
+  name: 'arrow',
+  enabled: true,
+  phase: 'main',
+  fn: arrow,
+  effect: arrow_effect,
+  requires: ['popperOffsets'],
+  requiresIfExists: ['preventOverflow']
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/hide.js
+
+
+
+function getSideOffsets(overflow, rect, preventedOffsets) {
+  if (preventedOffsets === void 0) {
+    preventedOffsets = {
+      x: 0,
+      y: 0
+    };
+  }
+
+  return {
+    top: overflow.top - rect.height - preventedOffsets.y,
+    right: overflow.right - rect.width + preventedOffsets.x,
+    bottom: overflow.bottom - rect.height + preventedOffsets.y,
+    left: overflow.left - rect.width - preventedOffsets.x
+  };
+}
+
+function isAnySideFullyClipped(overflow) {
+  return [enums_top, right, bottom, left].some(function (side) {
+    return overflow[side] >= 0;
+  });
+}
+
+function hide(_ref) {
+  var state = _ref.state,
+      name = _ref.name;
+  var referenceRect = state.rects.reference;
+  var popperRect = state.rects.popper;
+  var preventedOffsets = state.modifiersData.preventOverflow;
+  var referenceOverflow = detectOverflow(state, {
+    elementContext: 'reference'
+  });
+  var popperAltOverflow = detectOverflow(state, {
+    altBoundary: true
+  });
+  var referenceClippingOffsets = getSideOffsets(referenceOverflow, referenceRect);
+  var popperEscapeOffsets = getSideOffsets(popperAltOverflow, popperRect, preventedOffsets);
+  var isReferenceHidden = isAnySideFullyClipped(referenceClippingOffsets);
+  var hasPopperEscaped = isAnySideFullyClipped(popperEscapeOffsets);
+  state.modifiersData[name] = {
+    referenceClippingOffsets: referenceClippingOffsets,
+    popperEscapeOffsets: popperEscapeOffsets,
+    isReferenceHidden: isReferenceHidden,
+    hasPopperEscaped: hasPopperEscaped
+  };
+  state.attributes.popper = Object.assign({}, state.attributes.popper, {
+    'data-popper-reference-hidden': isReferenceHidden,
+    'data-popper-escaped': hasPopperEscaped
+  });
+} // eslint-disable-next-line import/no-unused-modules
+
+
+/* harmony default export */ const modifiers_hide = ({
+  name: 'hide',
+  enabled: true,
+  phase: 'main',
+  requiresIfExists: ['preventOverflow'],
+  fn: hide
+});
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/popper.js
+
+
+
+
+
+
+
+
+
+
+var defaultModifiers = [eventListeners, modifiers_popperOffsets, modifiers_computeStyles, modifiers_applyStyles, modifiers_offset, modifiers_flip, modifiers_preventOverflow, modifiers_arrow, modifiers_hide];
+var popper_createPopper = /*#__PURE__*/popperGenerator({
+  defaultModifiers: defaultModifiers
+}); // eslint-disable-next-line import/no-unused-modules
+
+ // eslint-disable-next-line import/no-unused-modules
+
+ // eslint-disable-next-line import/no-unused-modules
+
+
+;// CONCATENATED MODULE: ./node_modules/tippy.js/dist/tippy.esm.js
+/**!
+* tippy.js v6.3.1
+* (c) 2017-2021 atomiks
+* MIT License
+*/
+
+
+var ROUND_ARROW = '<svg width="16" height="6" xmlns="http://www.w3.org/2000/svg"><path d="M0 6s1.796-.013 4.67-3.615C5.851.9 6.93.006 8 0c1.07-.006 2.148.887 3.343 2.385C14.233 6.005 16 6 16 6H0z"></svg>';
+var BOX_CLASS = "tippy-box";
+var CONTENT_CLASS = "tippy-content";
+var BACKDROP_CLASS = "tippy-backdrop";
+var ARROW_CLASS = "tippy-arrow";
+var SVG_ARROW_CLASS = "tippy-svg-arrow";
+var TOUCH_OPTIONS = {
+  passive: true,
+  capture: true
+};
+
+function tippy_esm_hasOwnProperty(obj, key) {
+  return {}.hasOwnProperty.call(obj, key);
+}
+function getValueAtIndexOrReturn(value, index, defaultValue) {
+  if (Array.isArray(value)) {
+    var v = value[index];
+    return v == null ? Array.isArray(defaultValue) ? defaultValue[index] : defaultValue : v;
+  }
+
+  return value;
+}
+function isType(value, type) {
+  var str = {}.toString.call(value);
+  return str.indexOf('[object') === 0 && str.indexOf(type + "]") > -1;
+}
+function invokeWithArgsOrReturn(value, args) {
+  return typeof value === 'function' ? value.apply(void 0, args) : value;
+}
+function tippy_esm_debounce(fn, ms) {
+  // Avoid wrapping in `setTimeout` if ms is 0 anyway
+  if (ms === 0) {
+    return fn;
+  }
+
+  var timeout;
+  return function (arg) {
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      fn(arg);
+    }, ms);
+  };
+}
+function removeProperties(obj, keys) {
+  var clone = Object.assign({}, obj);
+  keys.forEach(function (key) {
+    delete clone[key];
+  });
+  return clone;
+}
+function splitBySpaces(value) {
+  return value.split(/\s+/).filter(Boolean);
+}
+function normalizeToArray(value) {
+  return [].concat(value);
+}
+function pushIfUnique(arr, value) {
+  if (arr.indexOf(value) === -1) {
+    arr.push(value);
+  }
+}
+function unique(arr) {
+  return arr.filter(function (item, index) {
+    return arr.indexOf(item) === index;
+  });
+}
+function tippy_esm_getBasePlacement(placement) {
+  return placement.split('-')[0];
+}
+function arrayFrom(value) {
+  return [].slice.call(value);
+}
+function removeUndefinedProps(obj) {
+  return Object.keys(obj).reduce(function (acc, key) {
+    if (obj[key] !== undefined) {
+      acc[key] = obj[key];
+    }
+
+    return acc;
+  }, {});
+}
+
+function div() {
+  return document.createElement('div');
+}
+function tippy_esm_isElement(value) {
+  return ['Element', 'Fragment'].some(function (type) {
+    return isType(value, type);
+  });
+}
+function isNodeList(value) {
+  return isType(value, 'NodeList');
+}
+function isMouseEvent(value) {
+  return isType(value, 'MouseEvent');
+}
+function isReferenceElement(value) {
+  return !!(value && value._tippy && value._tippy.reference === value);
+}
+function getArrayOfElements(value) {
+  if (tippy_esm_isElement(value)) {
+    return [value];
+  }
+
+  if (isNodeList(value)) {
+    return arrayFrom(value);
+  }
+
+  if (Array.isArray(value)) {
+    return value;
+  }
+
+  return arrayFrom(document.querySelectorAll(value));
+}
+function setTransitionDuration(els, value) {
+  els.forEach(function (el) {
+    if (el) {
+      el.style.transitionDuration = value + "ms";
+    }
+  });
+}
+function setVisibilityState(els, state) {
+  els.forEach(function (el) {
+    if (el) {
+      el.setAttribute('data-state', state);
+    }
+  });
+}
+function getOwnerDocument(elementOrElements) {
+  var _element$ownerDocumen;
+
+  var _normalizeToArray = normalizeToArray(elementOrElements),
+      element = _normalizeToArray[0]; // Elements created via a <template> have an ownerDocument with no reference to the body
+
+
+  return (element == null ? void 0 : (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body) ? element.ownerDocument : document;
+}
+function isCursorOutsideInteractiveBorder(popperTreeData, event) {
+  var clientX = event.clientX,
+      clientY = event.clientY;
+  return popperTreeData.every(function (_ref) {
+    var popperRect = _ref.popperRect,
+        popperState = _ref.popperState,
+        props = _ref.props;
+    var interactiveBorder = props.interactiveBorder;
+    var basePlacement = tippy_esm_getBasePlacement(popperState.placement);
+    var offsetData = popperState.modifiersData.offset;
+
+    if (!offsetData) {
+      return true;
+    }
+
+    var topDistance = basePlacement === 'bottom' ? offsetData.top.y : 0;
+    var bottomDistance = basePlacement === 'top' ? offsetData.bottom.y : 0;
+    var leftDistance = basePlacement === 'right' ? offsetData.left.x : 0;
+    var rightDistance = basePlacement === 'left' ? offsetData.right.x : 0;
+    var exceedsTop = popperRect.top - clientY + topDistance > interactiveBorder;
+    var exceedsBottom = clientY - popperRect.bottom - bottomDistance > interactiveBorder;
+    var exceedsLeft = popperRect.left - clientX + leftDistance > interactiveBorder;
+    var exceedsRight = clientX - popperRect.right - rightDistance > interactiveBorder;
+    return exceedsTop || exceedsBottom || exceedsLeft || exceedsRight;
+  });
+}
+function updateTransitionEndListener(box, action, listener) {
+  var method = action + "EventListener"; // some browsers apparently support `transition` (unprefixed) but only fire
+  // `webkitTransitionEnd`...
+
+  ['transitionend', 'webkitTransitionEnd'].forEach(function (event) {
+    box[method](event, listener);
+  });
+}
+
+var currentInput = {
+  isTouch: false
+};
+var lastMouseMoveTime = 0;
+/**
+ * When a `touchstart` event is fired, it's assumed the user is using touch
+ * input. We'll bind a `mousemove` event listener to listen for mouse input in
+ * the future. This way, the `isTouch` property is fully dynamic and will handle
+ * hybrid devices that use a mix of touch + mouse input.
+ */
+
+function onDocumentTouchStart() {
+  if (currentInput.isTouch) {
+    return;
+  }
+
+  currentInput.isTouch = true;
+
+  if (window.performance) {
+    document.addEventListener('mousemove', onDocumentMouseMove);
+  }
+}
+/**
+ * When two `mousemove` event are fired consecutively within 20ms, it's assumed
+ * the user is using mouse input again. `mousemove` can fire on touch devices as
+ * well, but very rarely that quickly.
+ */
+
+function onDocumentMouseMove() {
+  var now = performance.now();
+
+  if (now - lastMouseMoveTime < 20) {
+    currentInput.isTouch = false;
+    document.removeEventListener('mousemove', onDocumentMouseMove);
+  }
+
+  lastMouseMoveTime = now;
+}
+/**
+ * When an element is in focus and has a tippy, leaving the tab/window and
+ * returning causes it to show again. For mouse users this is unexpected, but
+ * for keyboard use it makes sense.
+ * TODO: find a better technique to solve this problem
+ */
+
+function onWindowBlur() {
+  var activeElement = document.activeElement;
+
+  if (isReferenceElement(activeElement)) {
+    var instance = activeElement._tippy;
+
+    if (activeElement.blur && !instance.state.isVisible) {
+      activeElement.blur();
+    }
+  }
+}
+function bindGlobalEventListeners() {
+  document.addEventListener('touchstart', onDocumentTouchStart, TOUCH_OPTIONS);
+  window.addEventListener('blur', onWindowBlur);
+}
+
+var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
+var ua = isBrowser ? navigator.userAgent : '';
+var isIE = /MSIE |Trident\//.test(ua);
+
+function createMemoryLeakWarning(method) {
+  var txt = method === 'destroy' ? 'n already-' : ' ';
+  return [method + "() was called on a" + txt + "destroyed instance. This is a no-op but", 'indicates a potential memory leak.'].join(' ');
+}
+function clean(value) {
+  var spacesAndTabs = /[ \t]{2,}/g;
+  var lineStartWithSpaces = /^[ \t]*/gm;
+  return value.replace(spacesAndTabs, ' ').replace(lineStartWithSpaces, '').trim();
+}
+
+function getDevMessage(message) {
+  return clean("\n  %ctippy.js\n\n  %c" + clean(message) + "\n\n  %c\uD83D\uDC77\u200D This is a development-only message. It will be removed in production.\n  ");
+}
+
+function getFormattedMessage(message) {
+  return [getDevMessage(message), // title
+  'color: #00C584; font-size: 1.3em; font-weight: bold;', // message
+  'line-height: 1.5', // footer
+  'color: #a6a095;'];
+} // Assume warnings and errors never have the same message
+
+var visitedMessages;
+
+if (false) {}
+
+function resetVisitedMessages() {
+  visitedMessages = new Set();
+}
+function warnWhen(condition, message) {
+  if (condition && !visitedMessages.has(message)) {
+    var _console;
+
+    visitedMessages.add(message);
+
+    (_console = console).warn.apply(_console, getFormattedMessage(message));
+  }
+}
+function errorWhen(condition, message) {
+  if (condition && !visitedMessages.has(message)) {
+    var _console2;
+
+    visitedMessages.add(message);
+
+    (_console2 = console).error.apply(_console2, getFormattedMessage(message));
+  }
+}
+function validateTargets(targets) {
+  var didPassFalsyValue = !targets;
+  var didPassPlainObject = Object.prototype.toString.call(targets) === '[object Object]' && !targets.addEventListener;
+  errorWhen(didPassFalsyValue, ['tippy() was passed', '`' + String(targets) + '`', 'as its targets (first) argument. Valid types are: String, Element,', 'Element[], or NodeList.'].join(' '));
+  errorWhen(didPassPlainObject, ['tippy() was passed a plain object which is not supported as an argument', 'for virtual positioning. Use props.getReferenceClientRect instead.'].join(' '));
+}
+
+var pluginProps = {
+  animateFill: false,
+  followCursor: false,
+  inlinePositioning: false,
+  sticky: false
+};
+var renderProps = {
+  allowHTML: false,
+  animation: 'fade',
+  arrow: true,
+  content: '',
+  inertia: false,
+  maxWidth: 350,
+  role: 'tooltip',
+  theme: '',
+  zIndex: 9999
+};
+var defaultProps = Object.assign({
+  appendTo: function appendTo() {
+    return document.body;
+  },
+  aria: {
+    content: 'auto',
+    expanded: 'auto'
+  },
+  delay: 0,
+  duration: [300, 250],
+  getReferenceClientRect: null,
+  hideOnClick: true,
+  ignoreAttributes: false,
+  interactive: false,
+  interactiveBorder: 2,
+  interactiveDebounce: 0,
+  moveTransition: '',
+  offset: [0, 10],
+  onAfterUpdate: function onAfterUpdate() {},
+  onBeforeUpdate: function onBeforeUpdate() {},
+  onCreate: function onCreate() {},
+  onDestroy: function onDestroy() {},
+  onHidden: function onHidden() {},
+  onHide: function onHide() {},
+  onMount: function onMount() {},
+  onShow: function onShow() {},
+  onShown: function onShown() {},
+  onTrigger: function onTrigger() {},
+  onUntrigger: function onUntrigger() {},
+  onClickOutside: function onClickOutside() {},
+  placement: 'top',
+  plugins: [],
+  popperOptions: {},
+  render: null,
+  showOnCreate: false,
+  touch: true,
+  trigger: 'mouseenter focus',
+  triggerTarget: null
+}, pluginProps, {}, renderProps);
+var defaultKeys = Object.keys(defaultProps);
+var setDefaultProps = function setDefaultProps(partialProps) {
+  /* istanbul ignore else */
+  if (false) {}
+
+  var keys = Object.keys(partialProps);
+  keys.forEach(function (key) {
+    defaultProps[key] = partialProps[key];
+  });
+};
+function getExtendedPassedProps(passedProps) {
+  var plugins = passedProps.plugins || [];
+  var pluginProps = plugins.reduce(function (acc, plugin) {
+    var name = plugin.name,
+        defaultValue = plugin.defaultValue;
+
+    if (name) {
+      acc[name] = passedProps[name] !== undefined ? passedProps[name] : defaultValue;
+    }
+
+    return acc;
+  }, {});
+  return Object.assign({}, passedProps, {}, pluginProps);
+}
+function getDataAttributeProps(reference, plugins) {
+  var propKeys = plugins ? Object.keys(getExtendedPassedProps(Object.assign({}, defaultProps, {
+    plugins: plugins
+  }))) : defaultKeys;
+  var props = propKeys.reduce(function (acc, key) {
+    var valueAsString = (reference.getAttribute("data-tippy-" + key) || '').trim();
+
+    if (!valueAsString) {
+      return acc;
+    }
+
+    if (key === 'content') {
+      acc[key] = valueAsString;
+    } else {
+      try {
+        acc[key] = JSON.parse(valueAsString);
+      } catch (e) {
+        acc[key] = valueAsString;
+      }
+    }
+
+    return acc;
+  }, {});
+  return props;
+}
+function evaluateProps(reference, props) {
+  var out = Object.assign({}, props, {
+    content: invokeWithArgsOrReturn(props.content, [reference])
+  }, props.ignoreAttributes ? {} : getDataAttributeProps(reference, props.plugins));
+  out.aria = Object.assign({}, defaultProps.aria, {}, out.aria);
+  out.aria = {
+    expanded: out.aria.expanded === 'auto' ? props.interactive : out.aria.expanded,
+    content: out.aria.content === 'auto' ? props.interactive ? null : 'describedby' : out.aria.content
+  };
+  return out;
+}
+function validateProps(partialProps, plugins) {
+  if (partialProps === void 0) {
+    partialProps = {};
+  }
+
+  if (plugins === void 0) {
+    plugins = [];
+  }
+
+  var keys = Object.keys(partialProps);
+  keys.forEach(function (prop) {
+    var nonPluginProps = removeProperties(defaultProps, Object.keys(pluginProps));
+    var didPassUnknownProp = !tippy_esm_hasOwnProperty(nonPluginProps, prop); // Check if the prop exists in `plugins`
+
+    if (didPassUnknownProp) {
+      didPassUnknownProp = plugins.filter(function (plugin) {
+        return plugin.name === prop;
+      }).length === 0;
+    }
+
+    warnWhen(didPassUnknownProp, ["`" + prop + "`", "is not a valid prop. You may have spelled it incorrectly, or if it's", 'a plugin, forgot to pass it in an array as props.plugins.', '\n\n', 'All props: https://atomiks.github.io/tippyjs/v6/all-props/\n', 'Plugins: https://atomiks.github.io/tippyjs/v6/plugins/'].join(' '));
+  });
+}
+
+var innerHTML = function innerHTML() {
+  return 'innerHTML';
+};
+
+function dangerouslySetInnerHTML(element, html) {
+  element[innerHTML()] = html;
+}
+
+function createArrowElement(value) {
+  var arrow = div();
+
+  if (value === true) {
+    arrow.className = ARROW_CLASS;
+  } else {
+    arrow.className = SVG_ARROW_CLASS;
+
+    if (tippy_esm_isElement(value)) {
+      arrow.appendChild(value);
+    } else {
+      dangerouslySetInnerHTML(arrow, value);
+    }
+  }
+
+  return arrow;
+}
+
+function setContent(content, props) {
+  if (tippy_esm_isElement(props.content)) {
+    dangerouslySetInnerHTML(content, '');
+    content.appendChild(props.content);
+  } else if (typeof props.content !== 'function') {
+    if (props.allowHTML) {
+      dangerouslySetInnerHTML(content, props.content);
+    } else {
+      content.textContent = props.content;
+    }
+  }
+}
+function getChildren(popper) {
+  var box = popper.firstElementChild;
+  var boxChildren = arrayFrom(box.children);
+  return {
+    box: box,
+    content: boxChildren.find(function (node) {
+      return node.classList.contains(CONTENT_CLASS);
+    }),
+    arrow: boxChildren.find(function (node) {
+      return node.classList.contains(ARROW_CLASS) || node.classList.contains(SVG_ARROW_CLASS);
+    }),
+    backdrop: boxChildren.find(function (node) {
+      return node.classList.contains(BACKDROP_CLASS);
+    })
+  };
+}
+function render(instance) {
+  var popper = div();
+  var box = div();
+  box.className = BOX_CLASS;
+  box.setAttribute('data-state', 'hidden');
+  box.setAttribute('tabindex', '-1');
+  var content = div();
+  content.className = CONTENT_CLASS;
+  content.setAttribute('data-state', 'hidden');
+  setContent(content, instance.props);
+  popper.appendChild(box);
+  box.appendChild(content);
+  onUpdate(instance.props, instance.props);
+
+  function onUpdate(prevProps, nextProps) {
+    var _getChildren = getChildren(popper),
+        box = _getChildren.box,
+        content = _getChildren.content,
+        arrow = _getChildren.arrow;
+
+    if (nextProps.theme) {
+      box.setAttribute('data-theme', nextProps.theme);
+    } else {
+      box.removeAttribute('data-theme');
+    }
+
+    if (typeof nextProps.animation === 'string') {
+      box.setAttribute('data-animation', nextProps.animation);
+    } else {
+      box.removeAttribute('data-animation');
+    }
+
+    if (nextProps.inertia) {
+      box.setAttribute('data-inertia', '');
+    } else {
+      box.removeAttribute('data-inertia');
+    }
+
+    box.style.maxWidth = typeof nextProps.maxWidth === 'number' ? nextProps.maxWidth + "px" : nextProps.maxWidth;
+
+    if (nextProps.role) {
+      box.setAttribute('role', nextProps.role);
+    } else {
+      box.removeAttribute('role');
+    }
+
+    if (prevProps.content !== nextProps.content || prevProps.allowHTML !== nextProps.allowHTML) {
+      setContent(content, instance.props);
+    }
+
+    if (nextProps.arrow) {
+      if (!arrow) {
+        box.appendChild(createArrowElement(nextProps.arrow));
+      } else if (prevProps.arrow !== nextProps.arrow) {
+        box.removeChild(arrow);
+        box.appendChild(createArrowElement(nextProps.arrow));
+      }
+    } else if (arrow) {
+      box.removeChild(arrow);
+    }
+  }
+
+  return {
+    popper: popper,
+    onUpdate: onUpdate
+  };
+} // Runtime check to identify if the render function is the default one; this
+// way we can apply default CSS transitions logic and it can be tree-shaken away
+
+render.$$tippy = true;
+
+var idCounter = 1;
+var mouseMoveListeners = []; // Used by `hideAll()`
+
+var mountedInstances = [];
+function createTippy(reference, passedProps) {
+  var props = evaluateProps(reference, Object.assign({}, defaultProps, {}, getExtendedPassedProps(removeUndefinedProps(passedProps)))); // ===========================================================================
+  // 🔒 Private members
+  // ===========================================================================
+
+  var showTimeout;
+  var hideTimeout;
+  var scheduleHideAnimationFrame;
+  var isVisibleFromClick = false;
+  var didHideDueToDocumentMouseDown = false;
+  var didTouchMove = false;
+  var ignoreOnFirstUpdate = false;
+  var lastTriggerEvent;
+  var currentTransitionEndListener;
+  var onFirstUpdate;
+  var listeners = [];
+  var debouncedOnMouseMove = tippy_esm_debounce(onMouseMove, props.interactiveDebounce);
+  var currentTarget; // ===========================================================================
+  // 🔑 Public members
+  // ===========================================================================
+
+  var id = idCounter++;
+  var popperInstance = null;
+  var plugins = unique(props.plugins);
+  var state = {
+    // Is the instance currently enabled?
+    isEnabled: true,
+    // Is the tippy currently showing and not transitioning out?
+    isVisible: false,
+    // Has the instance been destroyed?
+    isDestroyed: false,
+    // Is the tippy currently mounted to the DOM?
+    isMounted: false,
+    // Has the tippy finished transitioning in?
+    isShown: false
+  };
+  var instance = {
+    // properties
+    id: id,
+    reference: reference,
+    popper: div(),
+    popperInstance: popperInstance,
+    props: props,
+    state: state,
+    plugins: plugins,
+    // methods
+    clearDelayTimeouts: clearDelayTimeouts,
+    setProps: setProps,
+    setContent: setContent,
+    show: show,
+    hide: hide,
+    hideWithInteractivity: hideWithInteractivity,
+    enable: enable,
+    disable: disable,
+    unmount: unmount,
+    destroy: destroy
+  }; // TODO: Investigate why this early return causes a TDZ error in the tests —
+  // it doesn't seem to happen in the browser
+
+  /* istanbul ignore if */
+
+  if (!props.render) {
+    if (false) {}
+
+    return instance;
+  } // ===========================================================================
+  // Initial mutations
+  // ===========================================================================
+
+
+  var _props$render = props.render(instance),
+      popper = _props$render.popper,
+      onUpdate = _props$render.onUpdate;
+
+  popper.setAttribute('data-tippy-root', '');
+  popper.id = "tippy-" + instance.id;
+  instance.popper = popper;
+  reference._tippy = instance;
+  popper._tippy = instance;
+  var pluginsHooks = plugins.map(function (plugin) {
+    return plugin.fn(instance);
+  });
+  var hasAriaExpanded = reference.hasAttribute('aria-expanded');
+  addListeners();
+  handleAriaExpandedAttribute();
+  handleStyles();
+  invokeHook('onCreate', [instance]);
+
+  if (props.showOnCreate) {
+    scheduleShow();
+  } // Prevent a tippy with a delay from hiding if the cursor left then returned
+  // before it started hiding
+
+
+  popper.addEventListener('mouseenter', function () {
+    if (instance.props.interactive && instance.state.isVisible) {
+      instance.clearDelayTimeouts();
+    }
+  });
+  popper.addEventListener('mouseleave', function (event) {
+    if (instance.props.interactive && instance.props.trigger.indexOf('mouseenter') >= 0) {
+      getDocument().addEventListener('mousemove', debouncedOnMouseMove);
+      debouncedOnMouseMove(event);
+    }
+  });
+  return instance; // ===========================================================================
+  // 🔒 Private methods
+  // ===========================================================================
+
+  function getNormalizedTouchSettings() {
+    var touch = instance.props.touch;
+    return Array.isArray(touch) ? touch : [touch, 0];
+  }
+
+  function getIsCustomTouchBehavior() {
+    return getNormalizedTouchSettings()[0] === 'hold';
+  }
+
+  function getIsDefaultRenderFn() {
+    var _instance$props$rende;
+
+    // @ts-ignore
+    return !!((_instance$props$rende = instance.props.render) == null ? void 0 : _instance$props$rende.$$tippy);
+  }
+
+  function getCurrentTarget() {
+    return currentTarget || reference;
+  }
+
+  function getDocument() {
+    var parent = getCurrentTarget().parentNode;
+    return parent ? getOwnerDocument(parent) : document;
+  }
+
+  function getDefaultTemplateChildren() {
+    return getChildren(popper);
+  }
+
+  function getDelay(isShow) {
+    // For touch or keyboard input, force `0` delay for UX reasons
+    // Also if the instance is mounted but not visible (transitioning out),
+    // ignore delay
+    if (instance.state.isMounted && !instance.state.isVisible || currentInput.isTouch || lastTriggerEvent && lastTriggerEvent.type === 'focus') {
+      return 0;
+    }
+
+    return getValueAtIndexOrReturn(instance.props.delay, isShow ? 0 : 1, defaultProps.delay);
+  }
+
+  function handleStyles() {
+    popper.style.pointerEvents = instance.props.interactive && instance.state.isVisible ? '' : 'none';
+    popper.style.zIndex = "" + instance.props.zIndex;
+  }
+
+  function invokeHook(hook, args, shouldInvokePropsHook) {
+    if (shouldInvokePropsHook === void 0) {
+      shouldInvokePropsHook = true;
+    }
+
+    pluginsHooks.forEach(function (pluginHooks) {
+      if (pluginHooks[hook]) {
+        pluginHooks[hook].apply(void 0, args);
+      }
+    });
+
+    if (shouldInvokePropsHook) {
+      var _instance$props;
+
+      (_instance$props = instance.props)[hook].apply(_instance$props, args);
+    }
+  }
+
+  function handleAriaContentAttribute() {
+    var aria = instance.props.aria;
+
+    if (!aria.content) {
+      return;
+    }
+
+    var attr = "aria-" + aria.content;
+    var id = popper.id;
+    var nodes = normalizeToArray(instance.props.triggerTarget || reference);
+    nodes.forEach(function (node) {
+      var currentValue = node.getAttribute(attr);
+
+      if (instance.state.isVisible) {
+        node.setAttribute(attr, currentValue ? currentValue + " " + id : id);
+      } else {
+        var nextValue = currentValue && currentValue.replace(id, '').trim();
+
+        if (nextValue) {
+          node.setAttribute(attr, nextValue);
+        } else {
+          node.removeAttribute(attr);
+        }
+      }
+    });
+  }
+
+  function handleAriaExpandedAttribute() {
+    if (hasAriaExpanded || !instance.props.aria.expanded) {
+      return;
+    }
+
+    var nodes = normalizeToArray(instance.props.triggerTarget || reference);
+    nodes.forEach(function (node) {
+      if (instance.props.interactive) {
+        node.setAttribute('aria-expanded', instance.state.isVisible && node === getCurrentTarget() ? 'true' : 'false');
+      } else {
+        node.removeAttribute('aria-expanded');
+      }
+    });
+  }
+
+  function cleanupInteractiveMouseListeners() {
+    getDocument().removeEventListener('mousemove', debouncedOnMouseMove);
+    mouseMoveListeners = mouseMoveListeners.filter(function (listener) {
+      return listener !== debouncedOnMouseMove;
+    });
+  }
+
+  function onDocumentPress(event) {
+    // Moved finger to scroll instead of an intentional tap outside
+    if (currentInput.isTouch) {
+      if (didTouchMove || event.type === 'mousedown') {
+        return;
+      }
+    } // Clicked on interactive popper
+
+
+    if (instance.props.interactive && popper.contains(event.target)) {
+      return;
+    } // Clicked on the event listeners target
+
+
+    if (getCurrentTarget().contains(event.target)) {
+      if (currentInput.isTouch) {
+        return;
+      }
+
+      if (instance.state.isVisible && instance.props.trigger.indexOf('click') >= 0) {
+        return;
+      }
+    } else {
+      invokeHook('onClickOutside', [instance, event]);
+    }
+
+    if (instance.props.hideOnClick === true) {
+      instance.clearDelayTimeouts();
+      instance.hide(); // `mousedown` event is fired right before `focus` if pressing the
+      // currentTarget. This lets a tippy with `focus` trigger know that it
+      // should not show
+
+      didHideDueToDocumentMouseDown = true;
+      setTimeout(function () {
+        didHideDueToDocumentMouseDown = false;
+      }); // The listener gets added in `scheduleShow()`, but this may be hiding it
+      // before it shows, and hide()'s early bail-out behavior can prevent it
+      // from being cleaned up
+
+      if (!instance.state.isMounted) {
+        removeDocumentPress();
+      }
+    }
+  }
+
+  function onTouchMove() {
+    didTouchMove = true;
+  }
+
+  function onTouchStart() {
+    didTouchMove = false;
+  }
+
+  function addDocumentPress() {
+    var doc = getDocument();
+    doc.addEventListener('mousedown', onDocumentPress, true);
+    doc.addEventListener('touchend', onDocumentPress, TOUCH_OPTIONS);
+    doc.addEventListener('touchstart', onTouchStart, TOUCH_OPTIONS);
+    doc.addEventListener('touchmove', onTouchMove, TOUCH_OPTIONS);
+  }
+
+  function removeDocumentPress() {
+    var doc = getDocument();
+    doc.removeEventListener('mousedown', onDocumentPress, true);
+    doc.removeEventListener('touchend', onDocumentPress, TOUCH_OPTIONS);
+    doc.removeEventListener('touchstart', onTouchStart, TOUCH_OPTIONS);
+    doc.removeEventListener('touchmove', onTouchMove, TOUCH_OPTIONS);
+  }
+
+  function onTransitionedOut(duration, callback) {
+    onTransitionEnd(duration, function () {
+      if (!instance.state.isVisible && popper.parentNode && popper.parentNode.contains(popper)) {
+        callback();
+      }
+    });
+  }
+
+  function onTransitionedIn(duration, callback) {
+    onTransitionEnd(duration, callback);
+  }
+
+  function onTransitionEnd(duration, callback) {
+    var box = getDefaultTemplateChildren().box;
+
+    function listener(event) {
+      if (event.target === box) {
+        updateTransitionEndListener(box, 'remove', listener);
+        callback();
+      }
+    } // Make callback synchronous if duration is 0
+    // `transitionend` won't fire otherwise
+
+
+    if (duration === 0) {
+      return callback();
+    }
+
+    updateTransitionEndListener(box, 'remove', currentTransitionEndListener);
+    updateTransitionEndListener(box, 'add', listener);
+    currentTransitionEndListener = listener;
+  }
+
+  function on(eventType, handler, options) {
+    if (options === void 0) {
+      options = false;
+    }
+
+    var nodes = normalizeToArray(instance.props.triggerTarget || reference);
+    nodes.forEach(function (node) {
+      node.addEventListener(eventType, handler, options);
+      listeners.push({
+        node: node,
+        eventType: eventType,
+        handler: handler,
+        options: options
+      });
+    });
+  }
+
+  function addListeners() {
+    if (getIsCustomTouchBehavior()) {
+      on('touchstart', onTrigger, {
+        passive: true
+      });
+      on('touchend', onMouseLeave, {
+        passive: true
+      });
+    }
+
+    splitBySpaces(instance.props.trigger).forEach(function (eventType) {
+      if (eventType === 'manual') {
+        return;
+      }
+
+      on(eventType, onTrigger);
+
+      switch (eventType) {
+        case 'mouseenter':
+          on('mouseleave', onMouseLeave);
+          break;
+
+        case 'focus':
+          on(isIE ? 'focusout' : 'blur', onBlurOrFocusOut);
+          break;
+
+        case 'focusin':
+          on('focusout', onBlurOrFocusOut);
+          break;
+      }
+    });
+  }
+
+  function removeListeners() {
+    listeners.forEach(function (_ref) {
+      var node = _ref.node,
+          eventType = _ref.eventType,
+          handler = _ref.handler,
+          options = _ref.options;
+      node.removeEventListener(eventType, handler, options);
+    });
+    listeners = [];
+  }
+
+  function onTrigger(event) {
+    var _lastTriggerEvent;
+
+    var shouldScheduleClickHide = false;
+
+    if (!instance.state.isEnabled || isEventListenerStopped(event) || didHideDueToDocumentMouseDown) {
+      return;
+    }
+
+    var wasFocused = ((_lastTriggerEvent = lastTriggerEvent) == null ? void 0 : _lastTriggerEvent.type) === 'focus';
+    lastTriggerEvent = event;
+    currentTarget = event.currentTarget;
+    handleAriaExpandedAttribute();
+
+    if (!instance.state.isVisible && isMouseEvent(event)) {
+      // If scrolling, `mouseenter` events can be fired if the cursor lands
+      // over a new target, but `mousemove` events don't get fired. This
+      // causes interactive tooltips to get stuck open until the cursor is
+      // moved
+      mouseMoveListeners.forEach(function (listener) {
+        return listener(event);
+      });
+    } // Toggle show/hide when clicking click-triggered tooltips
+
+
+    if (event.type === 'click' && (instance.props.trigger.indexOf('mouseenter') < 0 || isVisibleFromClick) && instance.props.hideOnClick !== false && instance.state.isVisible) {
+      shouldScheduleClickHide = true;
+    } else {
+      scheduleShow(event);
+    }
+
+    if (event.type === 'click') {
+      isVisibleFromClick = !shouldScheduleClickHide;
+    }
+
+    if (shouldScheduleClickHide && !wasFocused) {
+      scheduleHide(event);
+    }
+  }
+
+  function onMouseMove(event) {
+    var target = event.target;
+    var isCursorOverReferenceOrPopper = getCurrentTarget().contains(target) || popper.contains(target);
+
+    if (event.type === 'mousemove' && isCursorOverReferenceOrPopper) {
+      return;
+    }
+
+    var popperTreeData = getNestedPopperTree().concat(popper).map(function (popper) {
+      var _instance$popperInsta;
+
+      var instance = popper._tippy;
+      var state = (_instance$popperInsta = instance.popperInstance) == null ? void 0 : _instance$popperInsta.state;
+
+      if (state) {
+        return {
+          popperRect: popper.getBoundingClientRect(),
+          popperState: state,
+          props: props
+        };
+      }
+
+      return null;
+    }).filter(Boolean);
+
+    if (isCursorOutsideInteractiveBorder(popperTreeData, event)) {
+      cleanupInteractiveMouseListeners();
+      scheduleHide(event);
+    }
+  }
+
+  function onMouseLeave(event) {
+    var shouldBail = isEventListenerStopped(event) || instance.props.trigger.indexOf('click') >= 0 && isVisibleFromClick;
+
+    if (shouldBail) {
+      return;
+    }
+
+    if (instance.props.interactive) {
+      instance.hideWithInteractivity(event);
+      return;
+    }
+
+    scheduleHide(event);
+  }
+
+  function onBlurOrFocusOut(event) {
+    if (instance.props.trigger.indexOf('focusin') < 0 && event.target !== getCurrentTarget()) {
+      return;
+    } // If focus was moved to within the popper
+
+
+    if (instance.props.interactive && event.relatedTarget && popper.contains(event.relatedTarget)) {
+      return;
+    }
+
+    scheduleHide(event);
+  }
+
+  function isEventListenerStopped(event) {
+    return currentInput.isTouch ? getIsCustomTouchBehavior() !== event.type.indexOf('touch') >= 0 : false;
+  }
+
+  function createPopperInstance() {
+    destroyPopperInstance();
+    var _instance$props2 = instance.props,
+        popperOptions = _instance$props2.popperOptions,
+        placement = _instance$props2.placement,
+        offset = _instance$props2.offset,
+        getReferenceClientRect = _instance$props2.getReferenceClientRect,
+        moveTransition = _instance$props2.moveTransition;
+    var arrow = getIsDefaultRenderFn() ? getChildren(popper).arrow : null;
+    var computedReference = getReferenceClientRect ? {
+      getBoundingClientRect: getReferenceClientRect,
+      contextElement: getReferenceClientRect.contextElement || getCurrentTarget()
+    } : reference;
+    var tippyModifier = {
+      name: '$$tippy',
+      enabled: true,
+      phase: 'beforeWrite',
+      requires: ['computeStyles'],
+      fn: function fn(_ref2) {
+        var state = _ref2.state;
+
+        if (getIsDefaultRenderFn()) {
+          var _getDefaultTemplateCh = getDefaultTemplateChildren(),
+              box = _getDefaultTemplateCh.box;
+
+          ['placement', 'reference-hidden', 'escaped'].forEach(function (attr) {
+            if (attr === 'placement') {
+              box.setAttribute('data-placement', state.placement);
+            } else {
+              if (state.attributes.popper["data-popper-" + attr]) {
+                box.setAttribute("data-" + attr, '');
+              } else {
+                box.removeAttribute("data-" + attr);
+              }
+            }
+          });
+          state.attributes.popper = {};
+        }
+      }
+    };
+    var modifiers = [{
+      name: 'offset',
+      options: {
+        offset: offset
+      }
+    }, {
+      name: 'preventOverflow',
+      options: {
+        padding: {
+          top: 2,
+          bottom: 2,
+          left: 5,
+          right: 5
+        }
+      }
+    }, {
+      name: 'flip',
+      options: {
+        padding: 5
+      }
+    }, {
+      name: 'computeStyles',
+      options: {
+        adaptive: !moveTransition
+      }
+    }, tippyModifier];
+
+    if (getIsDefaultRenderFn() && arrow) {
+      modifiers.push({
+        name: 'arrow',
+        options: {
+          element: arrow,
+          padding: 3
+        }
+      });
+    }
+
+    modifiers.push.apply(modifiers, (popperOptions == null ? void 0 : popperOptions.modifiers) || []);
+    instance.popperInstance = popper_createPopper(computedReference, popper, Object.assign({}, popperOptions, {
+      placement: placement,
+      onFirstUpdate: onFirstUpdate,
+      modifiers: modifiers
+    }));
+  }
+
+  function destroyPopperInstance() {
+    if (instance.popperInstance) {
+      instance.popperInstance.destroy();
+      instance.popperInstance = null;
+    }
+  }
+
+  function mount() {
+    var appendTo = instance.props.appendTo;
+    var parentNode; // By default, we'll append the popper to the triggerTargets's parentNode so
+    // it's directly after the reference element so the elements inside the
+    // tippy can be tabbed to
+    // If there are clipping issues, the user can specify a different appendTo
+    // and ensure focus management is handled correctly manually
+
+    var node = getCurrentTarget();
+
+    if (instance.props.interactive && appendTo === defaultProps.appendTo || appendTo === 'parent') {
+      parentNode = node.parentNode;
+    } else {
+      parentNode = invokeWithArgsOrReturn(appendTo, [node]);
+    } // The popper element needs to exist on the DOM before its position can be
+    // updated as Popper needs to read its dimensions
+
+
+    if (!parentNode.contains(popper)) {
+      parentNode.appendChild(popper);
+    }
+
+    createPopperInstance();
+    /* istanbul ignore else */
+
+    if (false) {}
+  }
+
+  function getNestedPopperTree() {
+    return arrayFrom(popper.querySelectorAll('[data-tippy-root]'));
+  }
+
+  function scheduleShow(event) {
+    instance.clearDelayTimeouts();
+
+    if (event) {
+      invokeHook('onTrigger', [instance, event]);
+    }
+
+    addDocumentPress();
+    var delay = getDelay(true);
+
+    var _getNormalizedTouchSe = getNormalizedTouchSettings(),
+        touchValue = _getNormalizedTouchSe[0],
+        touchDelay = _getNormalizedTouchSe[1];
+
+    if (currentInput.isTouch && touchValue === 'hold' && touchDelay) {
+      delay = touchDelay;
+    }
+
+    if (delay) {
+      showTimeout = setTimeout(function () {
+        instance.show();
+      }, delay);
+    } else {
+      instance.show();
+    }
+  }
+
+  function scheduleHide(event) {
+    instance.clearDelayTimeouts();
+    invokeHook('onUntrigger', [instance, event]);
+
+    if (!instance.state.isVisible) {
+      removeDocumentPress();
+      return;
+    } // For interactive tippies, scheduleHide is added to a document.body handler
+    // from onMouseLeave so must intercept scheduled hides from mousemove/leave
+    // events when trigger contains mouseenter and click, and the tip is
+    // currently shown as a result of a click.
+
+
+    if (instance.props.trigger.indexOf('mouseenter') >= 0 && instance.props.trigger.indexOf('click') >= 0 && ['mouseleave', 'mousemove'].indexOf(event.type) >= 0 && isVisibleFromClick) {
+      return;
+    }
+
+    var delay = getDelay(false);
+
+    if (delay) {
+      hideTimeout = setTimeout(function () {
+        if (instance.state.isVisible) {
+          instance.hide();
+        }
+      }, delay);
+    } else {
+      // Fixes a `transitionend` problem when it fires 1 frame too
+      // late sometimes, we don't want hide() to be called.
+      scheduleHideAnimationFrame = requestAnimationFrame(function () {
+        instance.hide();
+      });
+    }
+  } // ===========================================================================
+  // 🔑 Public methods
+  // ===========================================================================
+
+
+  function enable() {
+    instance.state.isEnabled = true;
+  }
+
+  function disable() {
+    // Disabling the instance should also hide it
+    // https://github.com/atomiks/tippy.js-react/issues/106
+    instance.hide();
+    instance.state.isEnabled = false;
+  }
+
+  function clearDelayTimeouts() {
+    clearTimeout(showTimeout);
+    clearTimeout(hideTimeout);
+    cancelAnimationFrame(scheduleHideAnimationFrame);
+  }
+
+  function setProps(partialProps) {
+    /* istanbul ignore else */
+    if (false) {}
+
+    if (instance.state.isDestroyed) {
+      return;
+    }
+
+    invokeHook('onBeforeUpdate', [instance, partialProps]);
+    removeListeners();
+    var prevProps = instance.props;
+    var nextProps = evaluateProps(reference, Object.assign({}, instance.props, {}, partialProps, {
+      ignoreAttributes: true
+    }));
+    instance.props = nextProps;
+    addListeners();
+
+    if (prevProps.interactiveDebounce !== nextProps.interactiveDebounce) {
+      cleanupInteractiveMouseListeners();
+      debouncedOnMouseMove = tippy_esm_debounce(onMouseMove, nextProps.interactiveDebounce);
+    } // Ensure stale aria-expanded attributes are removed
+
+
+    if (prevProps.triggerTarget && !nextProps.triggerTarget) {
+      normalizeToArray(prevProps.triggerTarget).forEach(function (node) {
+        node.removeAttribute('aria-expanded');
+      });
+    } else if (nextProps.triggerTarget) {
+      reference.removeAttribute('aria-expanded');
+    }
+
+    handleAriaExpandedAttribute();
+    handleStyles();
+
+    if (onUpdate) {
+      onUpdate(prevProps, nextProps);
+    }
+
+    if (instance.popperInstance) {
+      createPopperInstance(); // Fixes an issue with nested tippies if they are all getting re-rendered,
+      // and the nested ones get re-rendered first.
+      // https://github.com/atomiks/tippyjs-react/issues/177
+      // TODO: find a cleaner / more efficient solution(!)
+
+      getNestedPopperTree().forEach(function (nestedPopper) {
+        // React (and other UI libs likely) requires a rAF wrapper as it flushes
+        // its work in one
+        requestAnimationFrame(nestedPopper._tippy.popperInstance.forceUpdate);
+      });
+    }
+
+    invokeHook('onAfterUpdate', [instance, partialProps]);
+  }
+
+  function setContent(content) {
+    instance.setProps({
+      content: content
+    });
+  }
+
+  function show() {
+    /* istanbul ignore else */
+    if (false) {} // Early bail-out
+
+
+    var isAlreadyVisible = instance.state.isVisible;
+    var isDestroyed = instance.state.isDestroyed;
+    var isDisabled = !instance.state.isEnabled;
+    var isTouchAndTouchDisabled = currentInput.isTouch && !instance.props.touch;
+    var duration = getValueAtIndexOrReturn(instance.props.duration, 0, defaultProps.duration);
+
+    if (isAlreadyVisible || isDestroyed || isDisabled || isTouchAndTouchDisabled) {
+      return;
+    } // Normalize `disabled` behavior across browsers.
+    // Firefox allows events on disabled elements, but Chrome doesn't.
+    // Using a wrapper element (i.e. <span>) is recommended.
+
+
+    if (getCurrentTarget().hasAttribute('disabled')) {
+      return;
+    }
+
+    invokeHook('onShow', [instance], false);
+
+    if (instance.props.onShow(instance) === false) {
+      return;
+    }
+
+    instance.state.isVisible = true;
+
+    if (getIsDefaultRenderFn()) {
+      popper.style.visibility = 'visible';
+    }
+
+    handleStyles();
+    addDocumentPress();
+
+    if (!instance.state.isMounted) {
+      popper.style.transition = 'none';
+    } // If flipping to the opposite side after hiding at least once, the
+    // animation will use the wrong placement without resetting the duration
+
+
+    if (getIsDefaultRenderFn()) {
+      var _getDefaultTemplateCh2 = getDefaultTemplateChildren(),
+          box = _getDefaultTemplateCh2.box,
+          content = _getDefaultTemplateCh2.content;
+
+      setTransitionDuration([box, content], 0);
+    }
+
+    onFirstUpdate = function onFirstUpdate() {
+      var _instance$popperInsta2;
+
+      if (!instance.state.isVisible || ignoreOnFirstUpdate) {
+        return;
+      }
+
+      ignoreOnFirstUpdate = true; // reflow
+
+      void popper.offsetHeight;
+      popper.style.transition = instance.props.moveTransition;
+
+      if (getIsDefaultRenderFn() && instance.props.animation) {
+        var _getDefaultTemplateCh3 = getDefaultTemplateChildren(),
+            _box = _getDefaultTemplateCh3.box,
+            _content = _getDefaultTemplateCh3.content;
+
+        setTransitionDuration([_box, _content], duration);
+        setVisibilityState([_box, _content], 'visible');
+      }
+
+      handleAriaContentAttribute();
+      handleAriaExpandedAttribute();
+      pushIfUnique(mountedInstances, instance); // certain modifiers (e.g. `maxSize`) require a second update after the
+      // popper has been positioned for the first time
+
+      (_instance$popperInsta2 = instance.popperInstance) == null ? void 0 : _instance$popperInsta2.forceUpdate();
+      instance.state.isMounted = true;
+      invokeHook('onMount', [instance]);
+
+      if (instance.props.animation && getIsDefaultRenderFn()) {
+        onTransitionedIn(duration, function () {
+          instance.state.isShown = true;
+          invokeHook('onShown', [instance]);
+        });
+      }
+    };
+
+    mount();
+  }
+
+  function hide() {
+    /* istanbul ignore else */
+    if (false) {} // Early bail-out
+
+
+    var isAlreadyHidden = !instance.state.isVisible;
+    var isDestroyed = instance.state.isDestroyed;
+    var isDisabled = !instance.state.isEnabled;
+    var duration = getValueAtIndexOrReturn(instance.props.duration, 1, defaultProps.duration);
+
+    if (isAlreadyHidden || isDestroyed || isDisabled) {
+      return;
+    }
+
+    invokeHook('onHide', [instance], false);
+
+    if (instance.props.onHide(instance) === false) {
+      return;
+    }
+
+    instance.state.isVisible = false;
+    instance.state.isShown = false;
+    ignoreOnFirstUpdate = false;
+    isVisibleFromClick = false;
+
+    if (getIsDefaultRenderFn()) {
+      popper.style.visibility = 'hidden';
+    }
+
+    cleanupInteractiveMouseListeners();
+    removeDocumentPress();
+    handleStyles();
+
+    if (getIsDefaultRenderFn()) {
+      var _getDefaultTemplateCh4 = getDefaultTemplateChildren(),
+          box = _getDefaultTemplateCh4.box,
+          content = _getDefaultTemplateCh4.content;
+
+      if (instance.props.animation) {
+        setTransitionDuration([box, content], duration);
+        setVisibilityState([box, content], 'hidden');
+      }
+    }
+
+    handleAriaContentAttribute();
+    handleAriaExpandedAttribute();
+
+    if (instance.props.animation) {
+      if (getIsDefaultRenderFn()) {
+        onTransitionedOut(duration, instance.unmount);
+      }
+    } else {
+      instance.unmount();
+    }
+  }
+
+  function hideWithInteractivity(event) {
+    /* istanbul ignore else */
+    if (false) {}
+
+    getDocument().addEventListener('mousemove', debouncedOnMouseMove);
+    pushIfUnique(mouseMoveListeners, debouncedOnMouseMove);
+    debouncedOnMouseMove(event);
+  }
+
+  function unmount() {
+    /* istanbul ignore else */
+    if (false) {}
+
+    if (instance.state.isVisible) {
+      instance.hide();
+    }
+
+    if (!instance.state.isMounted) {
+      return;
+    }
+
+    destroyPopperInstance(); // If a popper is not interactive, it will be appended outside the popper
+    // tree by default. This seems mainly for interactive tippies, but we should
+    // find a workaround if possible
+
+    getNestedPopperTree().forEach(function (nestedPopper) {
+      nestedPopper._tippy.unmount();
+    });
+
+    if (popper.parentNode) {
+      popper.parentNode.removeChild(popper);
+    }
+
+    mountedInstances = mountedInstances.filter(function (i) {
+      return i !== instance;
+    });
+    instance.state.isMounted = false;
+    invokeHook('onHidden', [instance]);
+  }
+
+  function destroy() {
+    /* istanbul ignore else */
+    if (false) {}
+
+    if (instance.state.isDestroyed) {
+      return;
+    }
+
+    instance.clearDelayTimeouts();
+    instance.unmount();
+    removeListeners();
+    delete reference._tippy;
+    instance.state.isDestroyed = true;
+    invokeHook('onDestroy', [instance]);
+  }
+}
+
+function tippy(targets, optionalProps) {
+  if (optionalProps === void 0) {
+    optionalProps = {};
+  }
+
+  var plugins = defaultProps.plugins.concat(optionalProps.plugins || []);
+  /* istanbul ignore else */
+
+  if (false) {}
+
+  bindGlobalEventListeners();
+  var passedProps = Object.assign({}, optionalProps, {
+    plugins: plugins
+  });
+  var elements = getArrayOfElements(targets);
+  /* istanbul ignore else */
+
+  if (false) { var isMoreThanOneReferenceElement, isSingleContentElement; }
+
+  var instances = elements.reduce(function (acc, reference) {
+    var instance = reference && createTippy(reference, passedProps);
+
+    if (instance) {
+      acc.push(instance);
+    }
+
+    return acc;
+  }, []);
+  return tippy_esm_isElement(targets) ? instances[0] : instances;
+}
+
+tippy.defaultProps = defaultProps;
+tippy.setDefaultProps = setDefaultProps;
+tippy.currentInput = currentInput;
+var hideAll = function hideAll(_temp) {
+  var _ref = _temp === void 0 ? {} : _temp,
+      excludedReferenceOrInstance = _ref.exclude,
+      duration = _ref.duration;
+
+  mountedInstances.forEach(function (instance) {
+    var isExcluded = false;
+
+    if (excludedReferenceOrInstance) {
+      isExcluded = isReferenceElement(excludedReferenceOrInstance) ? instance.reference === excludedReferenceOrInstance : instance.popper === excludedReferenceOrInstance.popper;
+    }
+
+    if (!isExcluded) {
+      var originalDuration = instance.props.duration;
+      instance.setProps({
+        duration: duration
+      });
+      instance.hide();
+
+      if (!instance.state.isDestroyed) {
+        instance.setProps({
+          duration: originalDuration
+        });
+      }
+    }
+  });
+};
+
+// every time the popper is destroyed (i.e. a new target), removing the styles
+// and causing transitions to break for singletons when the console is open, but
+// most notably for non-transform styles being used, `gpuAcceleration: false`.
+
+var applyStylesModifier = Object.assign({}, modifiers_applyStyles, {
+  effect: function effect(_ref) {
+    var state = _ref.state;
+    var initialStyles = {
+      popper: {
+        position: state.options.strategy,
+        left: '0',
+        top: '0',
+        margin: '0'
+      },
+      arrow: {
+        position: 'absolute'
+      },
+      reference: {}
+    };
+    Object.assign(state.elements.popper.style, initialStyles.popper);
+    state.styles = initialStyles;
+
+    if (state.elements.arrow) {
+      Object.assign(state.elements.arrow.style, initialStyles.arrow);
+    } // intentionally return no cleanup function
+    // return () => { ... }
+
+  }
+});
+
+var createSingleton = function createSingleton(tippyInstances, optionalProps) {
+  var _optionalProps$popper;
+
+  if (optionalProps === void 0) {
+    optionalProps = {};
+  }
+
+  /* istanbul ignore else */
+  if (false) {}
+
+  var individualInstances = tippyInstances;
+  var references = [];
+  var currentTarget;
+  var overrides = optionalProps.overrides;
+  var interceptSetPropsCleanups = [];
+  var shownOnCreate = false;
+
+  function setReferences() {
+    references = individualInstances.map(function (instance) {
+      return instance.reference;
+    });
+  }
+
+  function enableInstances(isEnabled) {
+    individualInstances.forEach(function (instance) {
+      if (isEnabled) {
+        instance.enable();
+      } else {
+        instance.disable();
+      }
+    });
+  }
+
+  function interceptSetProps(singleton) {
+    return individualInstances.map(function (instance) {
+      var originalSetProps = instance.setProps;
+
+      instance.setProps = function (props) {
+        originalSetProps(props);
+
+        if (instance.reference === currentTarget) {
+          singleton.setProps(props);
+        }
+      };
+
+      return function () {
+        instance.setProps = originalSetProps;
+      };
+    });
+  } // have to pass singleton, as it maybe undefined on first call
+
+
+  function prepareInstance(singleton, target) {
+    var index = references.indexOf(target); // bail-out
+
+    if (target === currentTarget) {
+      return;
+    }
+
+    currentTarget = target;
+    var overrideProps = (overrides || []).concat('content').reduce(function (acc, prop) {
+      acc[prop] = individualInstances[index].props[prop];
+      return acc;
+    }, {});
+    singleton.setProps(Object.assign({}, overrideProps, {
+      getReferenceClientRect: typeof overrideProps.getReferenceClientRect === 'function' ? overrideProps.getReferenceClientRect : function () {
+        return target.getBoundingClientRect();
+      }
+    }));
+  }
+
+  enableInstances(false);
+  setReferences();
+  var plugin = {
+    fn: function fn() {
+      return {
+        onDestroy: function onDestroy() {
+          enableInstances(true);
+        },
+        onHidden: function onHidden() {
+          currentTarget = null;
+        },
+        onClickOutside: function onClickOutside(instance) {
+          if (instance.props.showOnCreate && !shownOnCreate) {
+            shownOnCreate = true;
+            currentTarget = null;
+          }
+        },
+        onShow: function onShow(instance) {
+          if (instance.props.showOnCreate && !shownOnCreate) {
+            shownOnCreate = true;
+            prepareInstance(instance, references[0]);
+          }
+        },
+        onTrigger: function onTrigger(instance, event) {
+          prepareInstance(instance, event.currentTarget);
+        }
+      };
+    }
+  };
+  var singleton = tippy(div(), Object.assign({}, removeProperties(optionalProps, ['overrides']), {
+    plugins: [plugin].concat(optionalProps.plugins || []),
+    triggerTarget: references,
+    popperOptions: Object.assign({}, optionalProps.popperOptions, {
+      modifiers: [].concat(((_optionalProps$popper = optionalProps.popperOptions) == null ? void 0 : _optionalProps$popper.modifiers) || [], [applyStylesModifier])
+    })
+  }));
+  var originalShow = singleton.show;
+
+  singleton.show = function (target) {
+    originalShow(); // first time, showOnCreate or programmatic call with no params
+    // default to showing first instance
+
+    if (!currentTarget && target == null) {
+      return prepareInstance(singleton, references[0]);
+    } // triggered from event (do nothing as prepareInstance already called by onTrigger)
+    // programmatic call with no params when already visible (do nothing again)
+
+
+    if (currentTarget && target == null) {
+      return;
+    } // target is index of instance
+
+
+    if (typeof target === 'number') {
+      return references[target] && prepareInstance(singleton, references[target]);
+    } // target is a child tippy instance
+
+
+    if (individualInstances.includes(target)) {
+      var ref = target.reference;
+      return prepareInstance(singleton, ref);
+    } // target is a ReferenceElement
+
+
+    if (references.includes(target)) {
+      return prepareInstance(singleton, target);
+    }
+  };
+
+  singleton.showNext = function () {
+    var first = references[0];
+
+    if (!currentTarget) {
+      return singleton.show(0);
+    }
+
+    var index = references.indexOf(currentTarget);
+    singleton.show(references[index + 1] || first);
+  };
+
+  singleton.showPrevious = function () {
+    var last = references[references.length - 1];
+
+    if (!currentTarget) {
+      return singleton.show(last);
+    }
+
+    var index = references.indexOf(currentTarget);
+    var target = references[index - 1] || last;
+    singleton.show(target);
+  };
+
+  var originalSetProps = singleton.setProps;
+
+  singleton.setProps = function (props) {
+    overrides = props.overrides || overrides;
+    originalSetProps(props);
+  };
+
+  singleton.setInstances = function (nextInstances) {
+    enableInstances(true);
+    interceptSetPropsCleanups.forEach(function (fn) {
+      return fn();
+    });
+    individualInstances = nextInstances;
+    enableInstances(false);
+    setReferences();
+    interceptSetProps(singleton);
+    singleton.setProps({
+      triggerTarget: references
+    });
+  };
+
+  interceptSetPropsCleanups = interceptSetProps(singleton);
+  return singleton;
+};
+
+var BUBBLING_EVENTS_MAP = {
+  mouseover: 'mouseenter',
+  focusin: 'focus',
+  click: 'click'
+};
+/**
+ * Creates a delegate instance that controls the creation of tippy instances
+ * for child elements (`target` CSS selector).
+ */
+
+function delegate(targets, props) {
+  /* istanbul ignore else */
+  if (false) {}
+
+  var listeners = [];
+  var childTippyInstances = [];
+  var disabled = false;
+  var target = props.target;
+  var nativeProps = removeProperties(props, ['target']);
+  var parentProps = Object.assign({}, nativeProps, {
+    trigger: 'manual',
+    touch: false
+  });
+  var childProps = Object.assign({}, nativeProps, {
+    showOnCreate: true
+  });
+  var returnValue = tippy(targets, parentProps);
+  var normalizedReturnValue = normalizeToArray(returnValue);
+
+  function onTrigger(event) {
+    if (!event.target || disabled) {
+      return;
+    }
+
+    var targetNode = event.target.closest(target);
+
+    if (!targetNode) {
+      return;
+    } // Get relevant trigger with fallbacks:
+    // 1. Check `data-tippy-trigger` attribute on target node
+    // 2. Fallback to `trigger` passed to `delegate()`
+    // 3. Fallback to `defaultProps.trigger`
+
+
+    var trigger = targetNode.getAttribute('data-tippy-trigger') || props.trigger || defaultProps.trigger; // @ts-ignore
+
+    if (targetNode._tippy) {
+      return;
+    }
+
+    if (event.type === 'touchstart' && typeof childProps.touch === 'boolean') {
+      return;
+    }
+
+    if (event.type !== 'touchstart' && trigger.indexOf(BUBBLING_EVENTS_MAP[event.type]) < 0) {
+      return;
+    }
+
+    var instance = tippy(targetNode, childProps);
+
+    if (instance) {
+      childTippyInstances = childTippyInstances.concat(instance);
+    }
+  }
+
+  function on(node, eventType, handler, options) {
+    if (options === void 0) {
+      options = false;
+    }
+
+    node.addEventListener(eventType, handler, options);
+    listeners.push({
+      node: node,
+      eventType: eventType,
+      handler: handler,
+      options: options
+    });
+  }
+
+  function addEventListeners(instance) {
+    var reference = instance.reference;
+    on(reference, 'touchstart', onTrigger, TOUCH_OPTIONS);
+    on(reference, 'mouseover', onTrigger);
+    on(reference, 'focusin', onTrigger);
+    on(reference, 'click', onTrigger);
+  }
+
+  function removeEventListeners() {
+    listeners.forEach(function (_ref) {
+      var node = _ref.node,
+          eventType = _ref.eventType,
+          handler = _ref.handler,
+          options = _ref.options;
+      node.removeEventListener(eventType, handler, options);
+    });
+    listeners = [];
+  }
+
+  function applyMutations(instance) {
+    var originalDestroy = instance.destroy;
+    var originalEnable = instance.enable;
+    var originalDisable = instance.disable;
+
+    instance.destroy = function (shouldDestroyChildInstances) {
+      if (shouldDestroyChildInstances === void 0) {
+        shouldDestroyChildInstances = true;
+      }
+
+      if (shouldDestroyChildInstances) {
+        childTippyInstances.forEach(function (instance) {
+          instance.destroy();
+        });
+      }
+
+      childTippyInstances = [];
+      removeEventListeners();
+      originalDestroy();
+    };
+
+    instance.enable = function () {
+      originalEnable();
+      childTippyInstances.forEach(function (instance) {
+        return instance.enable();
+      });
+      disabled = false;
+    };
+
+    instance.disable = function () {
+      originalDisable();
+      childTippyInstances.forEach(function (instance) {
+        return instance.disable();
+      });
+      disabled = true;
+    };
+
+    addEventListeners(instance);
+  }
+
+  normalizedReturnValue.forEach(applyMutations);
+  return returnValue;
+}
+
+var animateFill = {
+  name: 'animateFill',
+  defaultValue: false,
+  fn: function fn(instance) {
+    var _instance$props$rende;
+
+    // @ts-ignore
+    if (!((_instance$props$rende = instance.props.render) == null ? void 0 : _instance$props$rende.$$tippy)) {
+      if (false) {}
+
+      return {};
+    }
+
+    var _getChildren = getChildren(instance.popper),
+        box = _getChildren.box,
+        content = _getChildren.content;
+
+    var backdrop = instance.props.animateFill ? createBackdropElement() : null;
+    return {
+      onCreate: function onCreate() {
+        if (backdrop) {
+          box.insertBefore(backdrop, box.firstElementChild);
+          box.setAttribute('data-animatefill', '');
+          box.style.overflow = 'hidden';
+          instance.setProps({
+            arrow: false,
+            animation: 'shift-away'
+          });
+        }
+      },
+      onMount: function onMount() {
+        if (backdrop) {
+          var transitionDuration = box.style.transitionDuration;
+          var duration = Number(transitionDuration.replace('ms', '')); // The content should fade in after the backdrop has mostly filled the
+          // tooltip element. `clip-path` is the other alternative but is not
+          // well-supported and is buggy on some devices.
+
+          content.style.transitionDelay = Math.round(duration / 10) + "ms";
+          backdrop.style.transitionDuration = transitionDuration;
+          setVisibilityState([backdrop], 'visible');
+        }
+      },
+      onShow: function onShow() {
+        if (backdrop) {
+          backdrop.style.transitionDuration = '0ms';
+        }
+      },
+      onHide: function onHide() {
+        if (backdrop) {
+          setVisibilityState([backdrop], 'hidden');
+        }
+      }
+    };
+  }
+};
+
+function createBackdropElement() {
+  var backdrop = div();
+  backdrop.className = BACKDROP_CLASS;
+  setVisibilityState([backdrop], 'hidden');
+  return backdrop;
+}
+
+var mouseCoords = {
+  clientX: 0,
+  clientY: 0
+};
+var activeInstances = [];
+
+function storeMouseCoords(_ref) {
+  var clientX = _ref.clientX,
+      clientY = _ref.clientY;
+  mouseCoords = {
+    clientX: clientX,
+    clientY: clientY
+  };
+}
+
+function addMouseCoordsListener(doc) {
+  doc.addEventListener('mousemove', storeMouseCoords);
+}
+
+function removeMouseCoordsListener(doc) {
+  doc.removeEventListener('mousemove', storeMouseCoords);
+}
+
+var followCursor = {
+  name: 'followCursor',
+  defaultValue: false,
+  fn: function fn(instance) {
+    var reference = instance.reference;
+    var doc = getOwnerDocument(instance.props.triggerTarget || reference);
+    var isInternalUpdate = false;
+    var wasFocusEvent = false;
+    var isUnmounted = true;
+    var prevProps = instance.props;
+
+    function getIsInitialBehavior() {
+      return instance.props.followCursor === 'initial' && instance.state.isVisible;
+    }
+
+    function addListener() {
+      doc.addEventListener('mousemove', onMouseMove);
+    }
+
+    function removeListener() {
+      doc.removeEventListener('mousemove', onMouseMove);
+    }
+
+    function unsetGetReferenceClientRect() {
+      isInternalUpdate = true;
+      instance.setProps({
+        getReferenceClientRect: null
+      });
+      isInternalUpdate = false;
+    }
+
+    function onMouseMove(event) {
+      // If the instance is interactive, avoid updating the position unless it's
+      // over the reference element
+      var isCursorOverReference = event.target ? reference.contains(event.target) : true;
+      var followCursor = instance.props.followCursor;
+      var clientX = event.clientX,
+          clientY = event.clientY;
+      var rect = reference.getBoundingClientRect();
+      var relativeX = clientX - rect.left;
+      var relativeY = clientY - rect.top;
+
+      if (isCursorOverReference || !instance.props.interactive) {
+        instance.setProps({
+          getReferenceClientRect: function getReferenceClientRect() {
+            var rect = reference.getBoundingClientRect();
+            var x = clientX;
+            var y = clientY;
+
+            if (followCursor === 'initial') {
+              x = rect.left + relativeX;
+              y = rect.top + relativeY;
+            }
+
+            var top = followCursor === 'horizontal' ? rect.top : y;
+            var right = followCursor === 'vertical' ? rect.right : x;
+            var bottom = followCursor === 'horizontal' ? rect.bottom : y;
+            var left = followCursor === 'vertical' ? rect.left : x;
+            return {
+              width: right - left,
+              height: bottom - top,
+              top: top,
+              right: right,
+              bottom: bottom,
+              left: left
+            };
+          }
+        });
+      }
+    }
+
+    function create() {
+      if (instance.props.followCursor) {
+        activeInstances.push({
+          instance: instance,
+          doc: doc
+        });
+        addMouseCoordsListener(doc);
+      }
+    }
+
+    function destroy() {
+      activeInstances = activeInstances.filter(function (data) {
+        return data.instance !== instance;
+      });
+
+      if (activeInstances.filter(function (data) {
+        return data.doc === doc;
+      }).length === 0) {
+        removeMouseCoordsListener(doc);
+      }
+    }
+
+    return {
+      onCreate: create,
+      onDestroy: destroy,
+      onBeforeUpdate: function onBeforeUpdate() {
+        prevProps = instance.props;
+      },
+      onAfterUpdate: function onAfterUpdate(_, _ref2) {
+        var followCursor = _ref2.followCursor;
+
+        if (isInternalUpdate) {
+          return;
+        }
+
+        if (followCursor !== undefined && prevProps.followCursor !== followCursor) {
+          destroy();
+
+          if (followCursor) {
+            create();
+
+            if (instance.state.isMounted && !wasFocusEvent && !getIsInitialBehavior()) {
+              addListener();
+            }
+          } else {
+            removeListener();
+            unsetGetReferenceClientRect();
+          }
+        }
+      },
+      onMount: function onMount() {
+        if (instance.props.followCursor && !wasFocusEvent) {
+          if (isUnmounted) {
+            onMouseMove(mouseCoords);
+            isUnmounted = false;
+          }
+
+          if (!getIsInitialBehavior()) {
+            addListener();
+          }
+        }
+      },
+      onTrigger: function onTrigger(_, event) {
+        if (isMouseEvent(event)) {
+          mouseCoords = {
+            clientX: event.clientX,
+            clientY: event.clientY
+          };
+        }
+
+        wasFocusEvent = event.type === 'focus';
+      },
+      onHidden: function onHidden() {
+        if (instance.props.followCursor) {
+          unsetGetReferenceClientRect();
+          removeListener();
+          isUnmounted = true;
+        }
+      }
+    };
+  }
+};
+
+function getProps(props, modifier) {
+  var _props$popperOptions;
+
+  return {
+    popperOptions: Object.assign({}, props.popperOptions, {
+      modifiers: [].concat((((_props$popperOptions = props.popperOptions) == null ? void 0 : _props$popperOptions.modifiers) || []).filter(function (_ref) {
+        var name = _ref.name;
+        return name !== modifier.name;
+      }), [modifier])
+    })
+  };
+}
+
+var inlinePositioning = {
+  name: 'inlinePositioning',
+  defaultValue: false,
+  fn: function fn(instance) {
+    var reference = instance.reference;
+
+    function isEnabled() {
+      return !!instance.props.inlinePositioning;
+    }
+
+    var placement;
+    var cursorRectIndex = -1;
+    var isInternalUpdate = false;
+    var modifier = {
+      name: 'tippyInlinePositioning',
+      enabled: true,
+      phase: 'afterWrite',
+      fn: function fn(_ref2) {
+        var state = _ref2.state;
+
+        if (isEnabled()) {
+          if (placement !== state.placement) {
+            instance.setProps({
+              getReferenceClientRect: function getReferenceClientRect() {
+                return _getReferenceClientRect(state.placement);
+              }
+            });
+          }
+
+          placement = state.placement;
+        }
+      }
+    };
+
+    function _getReferenceClientRect(placement) {
+      return getInlineBoundingClientRect(tippy_esm_getBasePlacement(placement), reference.getBoundingClientRect(), arrayFrom(reference.getClientRects()), cursorRectIndex);
+    }
+
+    function setInternalProps(partialProps) {
+      isInternalUpdate = true;
+      instance.setProps(partialProps);
+      isInternalUpdate = false;
+    }
+
+    function addModifier() {
+      if (!isInternalUpdate) {
+        setInternalProps(getProps(instance.props, modifier));
+      }
+    }
+
+    return {
+      onCreate: addModifier,
+      onAfterUpdate: addModifier,
+      onTrigger: function onTrigger(_, event) {
+        if (isMouseEvent(event)) {
+          var rects = arrayFrom(instance.reference.getClientRects());
+          var cursorRect = rects.find(function (rect) {
+            return rect.left - 2 <= event.clientX && rect.right + 2 >= event.clientX && rect.top - 2 <= event.clientY && rect.bottom + 2 >= event.clientY;
+          });
+          cursorRectIndex = rects.indexOf(cursorRect);
+        }
+      },
+      onUntrigger: function onUntrigger() {
+        cursorRectIndex = -1;
+      }
+    };
+  }
+};
+function getInlineBoundingClientRect(currentBasePlacement, boundingRect, clientRects, cursorRectIndex) {
+  // Not an inline element, or placement is not yet known
+  if (clientRects.length < 2 || currentBasePlacement === null) {
+    return boundingRect;
+  } // There are two rects and they are disjoined
+
+
+  if (clientRects.length === 2 && cursorRectIndex >= 0 && clientRects[0].left > clientRects[1].right) {
+    return clientRects[cursorRectIndex] || boundingRect;
+  }
+
+  switch (currentBasePlacement) {
+    case 'top':
+    case 'bottom':
+      {
+        var firstRect = clientRects[0];
+        var lastRect = clientRects[clientRects.length - 1];
+        var isTop = currentBasePlacement === 'top';
+        var top = firstRect.top;
+        var bottom = lastRect.bottom;
+        var left = isTop ? firstRect.left : lastRect.left;
+        var right = isTop ? firstRect.right : lastRect.right;
+        var width = right - left;
+        var height = bottom - top;
+        return {
+          top: top,
+          bottom: bottom,
+          left: left,
+          right: right,
+          width: width,
+          height: height
+        };
+      }
+
+    case 'left':
+    case 'right':
+      {
+        var minLeft = Math.min.apply(Math, clientRects.map(function (rects) {
+          return rects.left;
+        }));
+        var maxRight = Math.max.apply(Math, clientRects.map(function (rects) {
+          return rects.right;
+        }));
+        var measureRects = clientRects.filter(function (rect) {
+          return currentBasePlacement === 'left' ? rect.left === minLeft : rect.right === maxRight;
+        });
+        var _top = measureRects[0].top;
+        var _bottom = measureRects[measureRects.length - 1].bottom;
+        var _left = minLeft;
+        var _right = maxRight;
+
+        var _width = _right - _left;
+
+        var _height = _bottom - _top;
+
+        return {
+          top: _top,
+          bottom: _bottom,
+          left: _left,
+          right: _right,
+          width: _width,
+          height: _height
+        };
+      }
+
+    default:
+      {
+        return boundingRect;
+      }
+  }
+}
+
+var sticky = {
+  name: 'sticky',
+  defaultValue: false,
+  fn: function fn(instance) {
+    var reference = instance.reference,
+        popper = instance.popper;
+
+    function getReference() {
+      return instance.popperInstance ? instance.popperInstance.state.elements.reference : reference;
+    }
+
+    function shouldCheck(value) {
+      return instance.props.sticky === true || instance.props.sticky === value;
+    }
+
+    var prevRefRect = null;
+    var prevPopRect = null;
+
+    function updatePosition() {
+      var currentRefRect = shouldCheck('reference') ? getReference().getBoundingClientRect() : null;
+      var currentPopRect = shouldCheck('popper') ? popper.getBoundingClientRect() : null;
+
+      if (currentRefRect && areRectsDifferent(prevRefRect, currentRefRect) || currentPopRect && areRectsDifferent(prevPopRect, currentPopRect)) {
+        if (instance.popperInstance) {
+          instance.popperInstance.update();
+        }
+      }
+
+      prevRefRect = currentRefRect;
+      prevPopRect = currentPopRect;
+
+      if (instance.state.isMounted) {
+        requestAnimationFrame(updatePosition);
+      }
+    }
+
+    return {
+      onMount: function onMount() {
+        if (instance.props.sticky) {
+          updatePosition();
+        }
+      }
+    };
+  }
+};
+
+function areRectsDifferent(rectA, rectB) {
+  if (rectA && rectB) {
+    return rectA.top !== rectB.top || rectA.right !== rectB.right || rectA.bottom !== rectB.bottom || rectA.left !== rectB.left;
+  }
+
+  return true;
+}
+
+tippy.setDefaultProps({
+  render: render
+});
+
+/* harmony default export */ const tippy_esm = (tippy);
+
+//# sourceMappingURL=tippy.esm.js.map
+
+
+/***/ })
+
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/deprecated.js
+// A way to gracefully handle deprecation.
+// Find and replace HTML Elements, Classes, and more after the DOM is loaded but before any other Javascript fires.
+
+class Deprecated {
+    constructor() {
+        let deprecated;
+        let replacement;
+        // Checks for body-side class
+        deprecated = document.querySelector(".body-side");
+        if (deprecated) {
+            this.warning(deprecated);
+        }
+        // Checks for backgroundImage class
+        deprecated = document.querySelector(".backgroundImage");
+        if (deprecated) {
+            replacement = "background-image";
+            this.replace(deprecated, replacement);
+        }
+        // Checks for backgroundImageOverlay class
+        deprecated = document.querySelector(".backgroundImageOverlay");
+        if (deprecated) {
+            replacement = "background-image-overlay";
+            this.replace(deprecated, replacement);
+        }
+    }
+    warning(deprecated) {
+        if (ENGrid.debug)
+            console.log("Deprecated: '" + deprecated + "' was detected and nothing was done.");
+    }
+    replace(deprecated, replacement) {
+        if (ENGrid.debug)
+            console.log("Deprecated: '" +
+                deprecated +
+                "' was detected and replaced with '" +
+                replacement +
+                "'.");
+        deprecated.classList.add(replacement);
+        deprecated.classList.remove(deprecated);
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/options.js
+const OptionsDefaults = {
+    backgroundImage: "",
+    MediaAttribution: true,
+    applePay: false,
+    CapitalizeFields: false,
+    ClickToExpand: true,
+    CurrencySymbol: "$",
+    ThousandsSeparator: "",
+    DecimalSeparator: ".",
+    DecimalPlaces: 2,
+    SkipToMainContentLink: true,
+    SrcDefer: true,
+    NeverBounceAPI: null,
+    NeverBounceDateField: null,
+    NeverBounceStatusField: null,
+    ProgressBar: false,
+    AutoYear: false,
+    TranslateFields: true,
+    Debug: false,
+};
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/upsell-options.js
+const UpsellOptionsDefaults = {
+    image: "https://picsum.photos/480/650",
+    imagePosition: "left",
+    title: "Will you change your gift to just {new-amount} a month to boost your impact?",
+    paragraph: "Make a monthly pledge today to support us with consistent, reliable resources during emergency moments.",
+    yesLabel: "Yes! Process My <br> {new-amount} monthly gift",
+    noLabel: "No, thanks. Continue with my <br> {old-amount} one-time gift",
+    otherAmount: true,
+    otherLabel: "Or enter a different monthly amount:",
+    upsellOriginalGiftAmountFieldName: "",
+    amountRange: [
+        { max: 10, suggestion: 5 },
+        { max: 15, suggestion: 7 },
+        { max: 20, suggestion: 8 },
+        { max: 25, suggestion: 9 },
+        { max: 30, suggestion: 10 },
+        { max: 35, suggestion: 11 },
+        { max: 40, suggestion: 12 },
+        { max: 50, suggestion: 14 },
+        { max: 100, suggestion: 15 },
+        { max: 200, suggestion: 19 },
+        { max: 300, suggestion: 29 },
+        { max: 500, suggestion: "Math.ceil((amount / 12)/5)*5" },
+    ],
+    minAmount: 0,
+    canClose: true,
+    submitOnClose: false,
+};
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/translate-options.js
+const ptbrTranslation = [
+    { field: "supporter.firstName", translation: "Nome" },
+    { field: "supporter.lastName", translation: "Sobrenome" },
+    { field: "supporter.phoneNumber", translation: "Celular" },
+    { field: "supporter.address1", translation: "Endereço" },
+    { field: "supporter.address2", translation: "Complemento" },
+    { field: "supporter.postcode", translation: "CEP" },
+    { field: "supporter.city", translation: "Cidade" },
+    { field: "supporter.region", translation: "Estado" },
+    { field: "supporter.country", translation: "País" },
+];
+const deTranslation = [
+    { field: "supporter.address1", translation: "Straße, Hausnummer" },
+    { field: "supporter.postcode", translation: "Postleitzahl" },
+    { field: "supporter.city", translation: "Ort" },
+    { field: "supporter.region", translation: "Bundesland" },
+    { field: "supporter.country", translation: "Land" },
+];
+const frTranslation = [
+    { field: "supporter.address1", translation: "Adresse" },
+    { field: "supporter.postcode", translation: "Code Postal" },
+    { field: "supporter.city", translation: "Ville" },
+    { field: "supporter.region", translation: "Région" },
+    { field: "supporter.country", translation: "Country" },
+];
+const nlTranslation = [
+    { field: "supporter.address1", translation: "Adres" },
+    { field: "supporter.postcode", translation: "Postcode" },
+    { field: "supporter.city", translation: "Woonplaats" },
+    { field: "supporter.region", translation: "Provincie" },
+    { field: "supporter.country", translation: "Country" },
+];
+const TranslateOptionsDefaults = {
+    BR: ptbrTranslation,
+    BRA: ptbrTranslation,
+    DE: deTranslation,
+    DEU: deTranslation,
+    FR: frTranslation,
+    FRA: frTranslation,
+    NL: nlTranslation,
+    NLD: nlTranslation,
+};
+
+// EXTERNAL MODULE: ./node_modules/@4site/engrid-common/node_modules/strongly-typed-events/dist/index.js
+var dist = __webpack_require__(5363);
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/en-form.js
+
+
+class EnForm {
+    constructor() {
+        this._onSubmit = new dist/* SignalDispatcher */.nz();
+        this._onValidate = new dist/* SignalDispatcher */.nz();
+        this._onError = new dist/* SignalDispatcher */.nz();
+        this.submit = true;
+        this.validate = true;
+    }
+    static getInstance() {
+        if (!EnForm.instance) {
+            EnForm.instance = new EnForm();
+        }
+        return EnForm.instance;
+    }
+    dispatchSubmit() {
+        this._onSubmit.dispatch();
+        if (engrid_ENGrid.debug)
+            console.log("dispatchSubmit");
+    }
+    dispatchValidate() {
+        this._onValidate.dispatch();
+        if (engrid_ENGrid.debug)
+            console.log("dispatchValidate");
+    }
+    dispatchError() {
+        this._onError.dispatch();
+        if (engrid_ENGrid.debug)
+            console.log("dispatchError");
+    }
+    submitForm() {
+        const enForm = document.querySelector("form .en__submit button");
+        if (enForm) {
+            // Add submitting class to modal
+            const enModal = document.getElementById("enModal");
+            if (enModal)
+                enModal.classList.add("is-submitting");
+            enForm.click();
+            if (engrid_ENGrid.debug)
+                console.log("submitForm");
+        }
+    }
+    get onSubmit() {
+        // if(ENGrid.debug) console.log("onSubmit");
+        return this._onSubmit.asEvent();
+    }
+    get onError() {
+        // if(ENGrid.debug) console.log("onError");
+        return this._onError.asEvent();
+    }
+    get onValidate() {
+        // if(ENGrid.debug) console.log("onError");
+        return this._onValidate.asEvent();
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/donation-amount.js
+
+class DonationAmount {
+    constructor(radios = "transaction.donationAmt", other = "transaction.donationAmt.other") {
+        this._onAmountChange = new dist/* SimpleEventDispatcher */.FK();
+        this._amount = 0;
+        this._radios = "";
+        this._other = "";
+        this._dispatch = true;
+        this._other = other;
+        this._radios = radios;
+        // Watch Radios Inputs for Changes
+        document.addEventListener("change", (e) => {
+            const element = e.target;
+            if (element && element.name == radios) {
+                element.value = this.removeCommas(element.value);
+                this.amount = parseFloat(element.value);
+            }
+        });
+        // Watch Other Amount Field
+        const otherField = document.querySelector(`[name='${this._other}']`);
+        if (otherField) {
+            otherField.addEventListener("keyup", (e) => {
+                otherField.value = this.removeCommas(otherField.value);
+                this.amount = parseFloat(otherField.value);
+            });
+        }
+    }
+    static getInstance(radios = "transaction.donationAmt", other = "transaction.donationAmt.other") {
+        if (!DonationAmount.instance) {
+            DonationAmount.instance = new DonationAmount(radios, other);
+        }
+        return DonationAmount.instance;
+    }
+    get amount() {
+        return this._amount;
+    }
+    // Every time we set an amount, trigger the onAmountChange event
+    set amount(value) {
+        this._amount = value || 0;
+        if (this._dispatch)
+            this._onAmountChange.dispatch(this._amount);
+    }
+    get onAmountChange() {
+        return this._onAmountChange.asEvent();
+    }
+    // Set amount var with currently selected amount
+    load() {
+        const currentAmountField = document.querySelector('input[name="' + this._radios + '"]:checked');
+        if (currentAmountField && currentAmountField.value) {
+            let currentAmountValue = parseFloat(currentAmountField.value);
+            if (currentAmountValue > 0) {
+                this.amount = parseFloat(currentAmountField.value);
+            }
+            else {
+                const otherField = document.querySelector('input[name="' + this._other + '"]');
+                currentAmountValue = parseFloat(otherField.value);
+                this.amount = parseFloat(otherField.value);
+            }
+        }
+    }
+    // Force a new amount
+    setAmount(amount, dispatch = true) {
+        // Run only if it is a Donation Page with a Donation Amount field
+        if (!document.getElementsByName(this._radios).length) {
+            return;
+        }
+        // Set dispatch to be checked by the SET method
+        this._dispatch = dispatch;
+        // Search for the current amount on radio boxes
+        let found = Array.from(document.querySelectorAll('input[name="' + this._radios + '"]')).filter((el) => el instanceof HTMLInputElement && parseInt(el.value) == amount);
+        // We found the amount on the radio boxes, so check it
+        if (found.length) {
+            const amountField = found[0];
+            amountField.checked = true;
+            // Clear OTHER text field
+            this.clearOther();
+        }
+        else {
+            const otherField = document.querySelector('input[name="' + this._other + '"]');
+            otherField.focus();
+            otherField.value = parseFloat(amount.toString()).toFixed(2);
+        }
+        // Set the new amount and trigger all live variables
+        this.amount = amount;
+        // Revert dispatch to default value (true)
+        this._dispatch = true;
+    }
+    // Clear Other Field
+    clearOther() {
+        const otherField = document.querySelector('input[name="' + this._other + '"]');
+        otherField.value = "";
+        const otherWrapper = otherField.parentNode;
+        otherWrapper.classList.add("en__field__item--hidden");
+    }
+    // Remove commas
+    removeCommas(v) {
+        // replace 5,00 with 5.00
+        if (v.length > 3 && v.charAt(v.length - 3) == ",") {
+            v = v.substr(0, v.length - 3) + "." + v.substr(v.length - 2, 2);
+        }
+        else if (v.length > 2 && v.charAt(v.length - 2) == ",") {
+            v = v.substr(0, v.length - 2) + "." + v.substr(v.length - 1, 1);
+        }
+        // replace any remaining commas
+        return v.replace(/,/g, "");
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/engrid.js
+class engrid_ENGrid {
+    constructor() {
+        if (!engrid_ENGrid.enForm) {
+            throw new Error("Engaging Networks Form Not Found!");
+        }
+    }
+    static get enForm() {
+        return document.querySelector("form.en__component");
+    }
+    static get debug() {
+        return !!this.getOption("Debug");
+    }
+    // Return any parameter from the URL
+    static getUrlParameter(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+        var results = regex.exec(location.search);
+        return results === null
+            ? ""
+            : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+    // Return the field value from its name. It works on any field type.
+    // Multiple values (from checkboxes or multi-select) are returned as single string
+    // Separated by ,
+    static getFieldValue(name) {
+        return new FormData(this.enForm).getAll(name).join(",");
+    }
+    // Set a value to any field. If it's a dropdown, radio or checkbox, it selects the proper option matching the value
+    static setFieldValue(name, value) {
+        document.getElementsByName(name).forEach((field) => {
+            if ("type" in field) {
+                switch (field.type) {
+                    case "select-one":
+                    case "select-multiple":
+                        for (const option of field.options) {
+                            if (option.value == value) {
+                                option.selected = true;
+                            }
+                        }
+                        break;
+                    case "checkbox":
+                    case "radio":
+                        // @TODO: Try to trigger the onChange event
+                        if (field.value == value) {
+                            field.checked = true;
+                        }
+                        break;
+                    case "textarea":
+                    case "text":
+                    default:
+                        field.value = value;
+                }
+            }
+        });
+        this.enParseDependencies();
+        return;
+    }
+    // Trigger EN Dependencies
+    static enParseDependencies() {
+        var _a, _b, _c, _d, _e;
+        if (window.EngagingNetworks &&
+            typeof ((_e = (_d = (_c = (_b = (_a = window.EngagingNetworks) === null || _a === void 0 ? void 0 : _a.require) === null || _b === void 0 ? void 0 : _b._defined) === null || _c === void 0 ? void 0 : _c.enDependencies) === null || _d === void 0 ? void 0 : _d.dependencies) === null || _e === void 0 ? void 0 : _e.parseDependencies) === "function") {
+            window.EngagingNetworks.require._defined.enDependencies.dependencies.parseDependencies(window.EngagingNetworks.dependencies);
+            if (engrid_ENGrid.getOption("Debug"))
+                console.trace("EN Dependencies Triggered");
+        }
+    }
+    // Return the status of the gift process (true if a donation has been made, otherwise false)
+    static getGiftProcess() {
+        if ("pageJson" in window)
+            return window.pageJson.giftProcess;
+        return null;
+    }
+    // Return the page count
+    static getPageCount() {
+        if ("pageJson" in window)
+            return window.pageJson.pageCount;
+        return null;
+    }
+    // Return the current page number
+    static getPageNumber() {
+        if ("pageJson" in window)
+            return window.pageJson.pageNumber;
+        return null;
+    }
+    // Return the current page ID
+    static getPageID() {
+        if ("pageJson" in window)
+            return window.pageJson.campaignPageId;
+        return 0;
+    }
+    // Return the current page type
+    static getPageType() {
+        if ("pageJson" in window && "pageType" in window.pageJson) {
+            switch (window.pageJson.pageType) {
+                case "e-card":
+                    return "ECARD";
+                    break;
+                case "otherdatacapture":
+                    return "SURVEY";
+                    break;
+                case "emailtotarget":
+                case "advocacypetition":
+                    return "ADVOCACY";
+                    break;
+                case "emailsubscribeform":
+                    return "SUBSCRIBEFORM";
+                    break;
+                default:
+                    return "DONATION";
+            }
+        }
+        else {
+            return "DONATION";
+        }
+    }
+    // Set body engrid data attributes
+    static setBodyData(dataName, value) {
+        const body = document.querySelector("body");
+        // If value is boolean
+        if (typeof value === "boolean" && value === false) {
+            body.removeAttribute(`data-engrid-${dataName}`);
+            return;
+        }
+        body.setAttribute(`data-engrid-${dataName}`, value.toString());
+    }
+    // Get body engrid data attributes
+    static getBodyData(dataName) {
+        const body = document.querySelector("body");
+        return body.getAttribute(`data-engrid-${dataName}`);
+    }
+    // Return the option value
+    static getOption(key) {
+        return window.EngridOptions[key] || null;
+    }
+    // Load an external script
+    static loadJS(url, onload = null, head = true) {
+        const scriptTag = document.createElement("script");
+        scriptTag.src = url;
+        scriptTag.onload = onload;
+        if (head) {
+            document.getElementsByTagName("head")[0].appendChild(scriptTag);
+            return;
+        }
+        document.getElementsByTagName("body")[0].appendChild(scriptTag);
+        return;
+    }
+    // Format a number
+    static formatNumber(number, decimals = 2, dec_point = ".", thousands_sep = ",") {
+        // Strip all characters but numerical ones.
+        number = (number + "").replace(/[^0-9+\-Ee.]/g, "");
+        const n = !isFinite(+number) ? 0 : +number;
+        const prec = !isFinite(+decimals) ? 0 : Math.abs(decimals);
+        const sep = typeof thousands_sep === "undefined" ? "," : thousands_sep;
+        const dec = typeof dec_point === "undefined" ? "." : dec_point;
+        let s = [];
+        const toFixedFix = function (n, prec) {
+            const k = Math.pow(10, prec);
+            return "" + Math.round(n * k) / k;
+        };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : "" + Math.round(n)).split(".");
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || "").length < prec) {
+            s[1] = s[1] || "";
+            s[1] += new Array(prec - s[1].length + 1).join("0");
+        }
+        return s.join(dec);
+    }
+    static disableSubmit(label = "") {
+        const submit = document.querySelector(".en__submit button");
+        submit.dataset.originalText = submit.innerText;
+        let submitButtonProcessingHTML = "<span class='loader-wrapper'><span class='loader loader-quart'></span><span class='submit-button-text-wrapper'>" +
+            label +
+            "</span></span>";
+        if (submit) {
+            submit.disabled = true;
+            submit.innerHTML = submitButtonProcessingHTML;
+            return true;
+        }
+        return false;
+    }
+    static enableSubmit() {
+        const submit = document.querySelector(".en__submit button");
+        if (submit.dataset.originalText) {
+            submit.disabled = false;
+            submit.innerText = submit.dataset.originalText;
+            delete submit.dataset.originalText;
+            return true;
+        }
+        return false;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/donation-frequency.js
+
+
+class DonationFrequency {
+    constructor() {
+        this._onFrequencyChange = new dist/* SimpleEventDispatcher */.FK();
+        this._frequency = "onetime";
+        this._recurring = "n";
+        this._dispatch = true;
+        // Watch the Radios for Changes
+        document.addEventListener("change", (e) => {
+            const element = e.target;
+            if (element && element.name == "transaction.recurrpay") {
+                this.recurring = element.value;
+                // When this element is a radio, that means you're between onetime and monthly only
+                if (element.type == "radio") {
+                    this.frequency =
+                        element.value.toLowerCase() == "n" ? "onetime" : "monthly";
+                    // This field is hidden when transaction.recurrpay is radio
+                    engrid_ENGrid.setFieldValue("transaction.recurrfreq", this.frequency.toUpperCase());
+                }
+            }
+            if (element && element.name == "transaction.recurrfreq") {
+                this.frequency = element.value;
+            }
+        });
+    }
+    static getInstance() {
+        if (!DonationFrequency.instance) {
+            DonationFrequency.instance = new DonationFrequency();
+        }
+        return DonationFrequency.instance;
+    }
+    get frequency() {
+        return this._frequency;
+    }
+    // Every time we set a frequency, trigger the onFrequencyChange event
+    set frequency(value) {
+        this._frequency = value.toLowerCase() || "onetime";
+        if (this._dispatch)
+            this._onFrequencyChange.dispatch(this._frequency);
+        engrid_ENGrid.setBodyData("transaction-recurring-frequency", this._frequency);
+    }
+    get recurring() {
+        return this._recurring;
+    }
+    set recurring(value) {
+        this._recurring = value.toLowerCase() || "n";
+        engrid_ENGrid.setBodyData("transaction-recurring", this._recurring);
+    }
+    get onFrequencyChange() {
+        return this._onFrequencyChange.asEvent();
+    }
+    // Set amount var with currently selected amount
+    load() {
+        this.frequency = engrid_ENGrid.getFieldValue("transaction.recurrfreq");
+        this.recurring = engrid_ENGrid.getFieldValue("transaction.recurrpay");
+        // ENGrid.enParseDependencies();
+    }
+    // Force a new recurrency
+    setRecurrency(recurr, dispatch = true) {
+        // Run only if it is a Donation Page with a Recurrency
+        if (!document.getElementsByName("transaction.recurrpay").length) {
+            return;
+        }
+        // Set dispatch to be checked by the SET method
+        this._dispatch = dispatch;
+        engrid_ENGrid.setFieldValue("transaction.recurrpay", recurr.toUpperCase());
+        // Revert dispatch to default value (true)
+        this._dispatch = true;
+    }
+    // Force a new frequency
+    setFrequency(freq, dispatch = true) {
+        // Run only if it is a Donation Page with a Frequency
+        if (!document.getElementsByName("transaction.recurrfreq").length) {
+            return;
+        }
+        // Set dispatch to be checked by the SET method
+        this._dispatch = dispatch;
+        // Search for the current amount on radio boxes
+        let found = Array.from(document.querySelectorAll('input[name="transaction.recurrfreq"]')).filter((el) => el instanceof HTMLInputElement && el.value == freq.toUpperCase());
+        // We found the amount on the radio boxes, so check it
+        if (found.length) {
+            const freqField = found[0];
+            freqField.checked = true;
+            this.frequency = freq.toLowerCase();
+            if (this.frequency === "onetime") {
+                this.setRecurrency("N", dispatch);
+            }
+            else {
+                this.setRecurrency("Y", dispatch);
+            }
+        }
+        // Revert dispatch to default value (true)
+        this._dispatch = true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/processing-fees.js
+
+
+
+class ProcessingFees {
+    constructor() {
+        this._onFeeChange = new dist/* SimpleEventDispatcher */.FK();
+        this._amount = DonationAmount.getInstance();
+        this._form = EnForm.getInstance();
+        this._fee = 0;
+        this._field = null;
+        // console.log('%c Processing Fees Constructor', 'font-size: 30px; background-color: #000; color: #FF0');
+        // Run only if it is a Donation Page with a Donation Amount field
+        if (!document.getElementsByName("transaction.donationAmt").length) {
+            return;
+        }
+        this._field = this.isENfeeCover()
+            ? document.querySelector("#en__field_transaction_feeCover")
+            : document.querySelector('input[name="supporter.processing_fees"]');
+        // Watch the Radios for Changes
+        if (this._field instanceof HTMLInputElement) {
+            // console.log('%c Processing Fees Start', 'font-size: 30px; background-color: #000; color: #FF0');
+            this._field.addEventListener("change", (e) => {
+                if (this._field instanceof HTMLInputElement &&
+                    this._field.checked &&
+                    !this._subscribe) {
+                    this._subscribe = this._form.onSubmit.subscribe(() => this.addFees());
+                }
+                this._onFeeChange.dispatch(this.fee);
+                // // console.log('%c Processing Fees Script Applied', 'font-size: 30px; background-color: #000; color: #FF0');
+            });
+        }
+        // this._amount = amount;
+    }
+    static getInstance() {
+        if (!ProcessingFees.instance) {
+            ProcessingFees.instance = new ProcessingFees();
+        }
+        return ProcessingFees.instance;
+    }
+    get onFeeChange() {
+        return this._onFeeChange.asEvent();
+    }
+    get fee() {
+        return this.calculateFees();
+    }
+    // Every time we set a frequency, trigger the onFrequencyChange event
+    set fee(value) {
+        this._fee = value;
+        this._onFeeChange.dispatch(this._fee);
+    }
+    calculateFees(amount = 0) {
+        var _a;
+        if (this._field instanceof HTMLInputElement && this._field.checked) {
+            if (this.isENfeeCover()) {
+                return amount > 0
+                    ? window.EngagingNetworks.require._defined.enjs.feeCover.fee(amount)
+                    : window.EngagingNetworks.require._defined.enjs.getDonationFee();
+            }
+            const fees = Object.assign({
+                processingfeepercentadded: "0",
+                processingfeefixedamountadded: "0",
+            }, (_a = this._field) === null || _a === void 0 ? void 0 : _a.dataset);
+            const amountToFee = amount > 0 ? amount : this._amount.amount;
+            const processing_fee = (parseFloat(fees.processingfeepercentadded) / 100) * amountToFee +
+                parseFloat(fees.processingfeefixedamountadded);
+            return Math.round(processing_fee * 100) / 100;
+        }
+        return 0;
+    }
+    // Add Fees to Amount
+    addFees() {
+        if (this._form.submit && !this.isENfeeCover()) {
+            this._amount.setAmount(this._amount.amount + this.fee, false);
+        }
+    }
+    // Remove Fees From Amount
+    removeFees() {
+        if (!this.isENfeeCover())
+            this._amount.setAmount(this._amount.amount - this.fee);
+    }
+    // Check if this is a Processing Fee from EN
+    isENfeeCover() {
+        if ("feeCover" in window.EngagingNetworks) {
+            for (const key in window.EngagingNetworks.feeCover) {
+                if (window.EngagingNetworks.feeCover.hasOwnProperty(key)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/index.js
+
+
+
+
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/app.js
+
+
+class App extends engrid_ENGrid {
+    constructor(options) {
+        super();
+        // Events
+        this._form = EnForm.getInstance();
+        this._fees = ProcessingFees.getInstance();
+        this._amount = DonationAmount.getInstance("transaction.donationAmt", "transaction.donationAmt.other");
+        this._frequency = DonationFrequency.getInstance();
+        this.shouldScroll = () => {
+            // If you find a error, scroll
+            if (document.querySelector(".en__errorHeader")) {
+                return true;
+            }
+            // Try to match the iframe referrer URL by testing valid EN Page URLs
+            let referrer = document.referrer;
+            let enURLPattern = new RegExp(/^(.*)\/(page)\/(\d+.*)/);
+            // Scroll if the Regex matches, don't scroll otherwise
+            return enURLPattern.test(referrer);
+        };
+        this.options = Object.assign(Object.assign({}, OptionsDefaults), options);
+        // Add Options to window
+        window.EngridOptions = this.options;
+        // Document Load
+        if (document.readyState !== "loading") {
+            this.run();
+        }
+        else {
+            document.addEventListener("DOMContentLoaded", () => {
+                this.run();
+            });
+        }
+        // Window Load
+        window.onload = () => {
+            this.onLoad();
+        };
+        // Window Resize
+        window.onresize = () => {
+            this.onResize();
+        };
+    }
+    run() {
+        // Enable debug if available is the first thing
+        if (this.options.Debug || App.getUrlParameter("debug") == "true")
+            App.setBodyData("debug", "");
+        // IE Warning
+        new IE();
+        // Page Background
+        new PageBackground();
+        // TODO: Abstract everything to the App class so we can remove custom-methods
+        inputPlaceholder();
+        preventAutocomplete();
+        watchInmemField();
+        watchGiveBySelectField();
+        SetEnFieldOtherAmountRadioStepValue();
+        simpleUnsubscribe();
+        contactDetailLabels();
+        easyEdit();
+        enInput.init();
+        new ShowHideRadioCheckboxes("transaction.giveBySelect", "giveBySelect-");
+        new ShowHideRadioCheckboxes("transaction.inmem", "inmem-");
+        new ShowHideRadioCheckboxes("transaction.recurrpay", "recurrpay-");
+        // Automatically show/hide all radios
+        let radioFields = [];
+        const allRadios = document.querySelectorAll("input[type=radio]");
+        allRadios.forEach((radio) => {
+            if ("name" in radio && radioFields.includes(radio.name) === false) {
+                radioFields.push(radio.name);
+            }
+        });
+        radioFields.forEach((field) => {
+            new ShowHideRadioCheckboxes(field, "engrid__" + field.replace(/\./g, "") + "-");
+        });
+        // Automatically show/hide all checkboxes
+        const allCheckboxes = document.querySelectorAll("input[type=checkbox]");
+        allCheckboxes.forEach((checkbox) => {
+            if ("name" in checkbox) {
+                new ShowHideRadioCheckboxes(checkbox.name, "engrid__" + checkbox.name.replace(/\./g, "") + "-");
+            }
+        });
+        // Controls if the Theme has a the "Debug Bar"
+        // legacy.debugBar();
+        // Client onSubmit and onError functions
+        this._form.onSubmit.subscribe(() => this.onSubmit());
+        this._form.onError.subscribe(() => this.onError());
+        this._form.onValidate.subscribe(() => this.onValidate());
+        // Event Listener Examples
+        this._amount.onAmountChange.subscribe((s) => console.log(`Live Amount: ${s}`));
+        this._frequency.onFrequencyChange.subscribe((s) => console.log(`Live Frequency: ${s}`));
+        this._form.onSubmit.subscribe((s) => console.log("Submit: ", s));
+        this._form.onError.subscribe((s) => console.log("Error:", s));
+        window.enOnSubmit = () => {
+            this._form.dispatchSubmit();
+            return this._form.submit;
+        };
+        window.enOnError = () => {
+            this._form.dispatchError();
+        };
+        window.enOnValidate = () => {
+            this._form.dispatchValidate();
+            return this._form.validate;
+        };
+        // iFrame Logic
+        this.loadIFrame();
+        // Live Variables
+        new LiveVariables(this.options);
+        // Dynamically set Recurrency Frequency
+        new setRecurrFreq();
+        // Upsell Lightbox
+        new UpsellLightbox();
+        // On the end of the script, after all subscribers defined, let's load the current value
+        this._amount.load();
+        this._frequency.load();
+        // Translate Fields
+        if (this.options.TranslateFields)
+            new TranslateFields();
+        // Simple Country Select
+        new SimpleCountrySelect();
+        // Add Image Attribution
+        if (this.options.MediaAttribution)
+            new MediaAttribution();
+        // Apple Pay
+        if (this.options.applePay)
+            new ApplePay();
+        // Capitalize Fields
+        if (this.options.CapitalizeFields)
+            new CapitalizeFields();
+        // Auto Year Class
+        if (this.options.AutoYear)
+            new AutoYear();
+        // Autocomplete Class
+        new Autocomplete();
+        // Ecard Class
+        new Ecard();
+        // Click To Expand
+        if (this.options.ClickToExpand)
+            new ClickToExpand();
+        if (this.options.SkipToMainContentLink)
+            new SkipToMainContentLink();
+        if (this.options.SrcDefer)
+            new SrcDefer();
+        // Progress Bar
+        if (this.options.ProgressBar)
+            new ProgressBar();
+        if (this.options.NeverBounceAPI)
+            new NeverBounce(this.options.NeverBounceAPI, this.options.NeverBounceDateField, this.options.NeverBounceStatusField);
+        this.setDataAttributes();
+    }
+    onLoad() {
+        if (this.options.onLoad) {
+            this.options.onLoad();
+        }
+        if (this.inIframe()) {
+            // Scroll to top of iFrame
+            if (App.debug)
+                console.log("iFrame Event - window.onload");
+            sendIframeHeight();
+            window.parent.postMessage({
+                scroll: this.shouldScroll(),
+            }, "*");
+            // On click fire the resize event
+            document.addEventListener("click", (e) => {
+                if (App.debug)
+                    console.log("iFrame Event - click");
+                setTimeout(() => {
+                    sendIframeHeight();
+                }, 100);
+            });
+        }
+    }
+    onResize() {
+        if (this.options.onResize) {
+            this.options.onResize();
+        }
+        if (this.inIframe()) {
+            if (App.debug)
+                console.log("iFrame Event - window.onload");
+            sendIframeHeight();
+        }
+    }
+    onValidate() {
+        if (this.options.onValidate) {
+            if (App.debug)
+                console.log("Client onValidate Triggered");
+            this.options.onValidate();
+        }
+    }
+    onSubmit() {
+        if (this.options.onSubmit) {
+            if (App.debug)
+                console.log("Client onSubmit Triggered");
+            this.options.onSubmit();
+        }
+        if (this.inIframe()) {
+            sendIframeFormStatus("submit");
+        }
+    }
+    onError() {
+        if (this.options.onError) {
+            if (App.debug)
+                console.log("Client onError Triggered");
+            this.options.onError();
+        }
+    }
+    inIframe() {
+        try {
+            return window.self !== window.top;
+        }
+        catch (e) {
+            return true;
+        }
+    }
+    loadIFrame() {
+        if (this.inIframe()) {
+            // Add the data-engrid-embedded attribute when inside an iFrame if it wasn't already added by a script in the Page Template
+            App.setBodyData("embedded", "");
+            // Fire the resize event
+            if (App.debug)
+                console.log("iFrame Event - First Resize");
+            sendIframeHeight();
+        }
+    }
+    // Use this function to add any Data Attributes to the Body tag
+    setDataAttributes() {
+        // Add a body banner data attribute if the banner contains no image
+        // @TODO Should this account for video?
+        // @TODO Should we merge this with the script that checks the background image?
+        if (!document.querySelector(".body-banner img")) {
+            App.setBodyData("body-banner", "empty");
+        }
+        // Add a page-alert data attribute if it is empty
+        if (!document.querySelector(".page-alert *")) {
+            App.setBodyData("no-page-alert", "");
+        }
+        // Add a content-header data attribute if it is empty
+        if (!document.querySelector(".content-header *")) {
+            App.setBodyData("no-content-header", "");
+        }
+        // Add a body-headerOutside data attribute if it is empty
+        if (!document.querySelector(".body-headerOutside *")) {
+            App.setBodyData("no-body-headerOutside", "");
+        }
+        // Add a body-header data attribute if it is empty
+        if (!document.querySelector(".body-header *")) {
+            App.setBodyData("no-body-header", "");
+        }
+        // Add a body-title data attribute if it is empty
+        if (!document.querySelector(".body-title *")) {
+            App.setBodyData("no-body-title", "");
+        }
+        // Add a body-banner data attribute if it is empty
+        if (!document.querySelector(".body-banner *")) {
+            App.setBodyData("no-body-banner", "");
+        }
+        // Add a body-bannerOverlay data attribute if it is empty
+        if (!document.querySelector(".body-bannerOverlay *")) {
+            App.setBodyData("no-body-bannerOverlay", "");
+        }
+        // Add a body-top data attribute if it is empty
+        if (!document.querySelector(".body-top *")) {
+            App.setBodyData("no-body-top", "");
+        }
+        // Add a body-main data attribute if it is empty
+        if (!document.querySelector(".body-main *")) {
+            App.setBodyData("no-body-main", "");
+        }
+        // Add a body-bottom data attribute if it is empty
+        if (!document.querySelector(".body-bottom *")) {
+            App.setBodyData("no-body-bottom", "");
+        }
+        // Add a body-footer data attribute if it is empty
+        if (!document.querySelector(".body-footer *")) {
+            App.setBodyData("no-body-footer", "");
+        }
+        // Add a body-footerOutside data attribute if it is empty
+        if (!document.querySelector(".body-footerOutside *")) {
+            App.setBodyData("no-body-footerOutside", "");
+        }
+        // Add a content-footerSpacer data attribute if it is empty
+        if (!document.querySelector(".content-footerSpacer *")) {
+            App.setBodyData("no-content-footerSpacer", "");
+        }
+        // Add a content-preFooter data attribute if it is empty
+        if (!document.querySelector(".content-preFooter *")) {
+            App.setBodyData("no-content-preFooter", "");
+        }
+        // Add a content-footer data attribute if it is empty
+        if (!document.querySelector(".content-footer *")) {
+            App.setBodyData("no-content-footer", "");
+        }
+        // Add a page-backgroundImage data attribute if it is empty
+        if (!document.querySelector(".page-backgroundImage *")) {
+            App.setBodyData("no-page-backgroundImage", "");
+        }
+        // Add a page-backgroundImageOverlay data attribute if it is empty
+        if (!document.querySelector(".page-backgroundImageOverlay *")) {
+            App.setBodyData("no-page-backgroundImageOverlay", "");
+        }
+        // Add a page-customCode data attribute if it is empty
+        if (!document.querySelector(".page-customCode *")) {
+            App.setBodyData("no-page-customCode", "");
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/apple-pay.js
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+/*global window */
+const ApplePaySession = window.ApplePaySession;
+const merchantIdentifier = window.merchantIdentifier;
+const merchantDomainName = window.merchantDomainName;
+const merchantDisplayName = window.merchantDisplayName;
+const merchantSessionIdentifier = window.merchantSessionIdentifier;
+const merchantNonce = window.merchantNonce;
+const merchantEpochTimestamp = window.merchantEpochTimestamp;
+const merchantSignature = window.merchantSignature;
+const merchantCountryCode = window.merchantCountryCode;
+const merchantCurrencyCode = window.merchantCurrencyCode;
+const merchantSupportedNetworks = window.merchantSupportedNetworks;
+const merchantCapabilities = window.merchantCapabilities;
+const merchantTotalLabel = window.merchantTotalLabel;
+class ApplePay {
+    constructor() {
+        this.applePay = document.querySelector('.en__field__input.en__field__input--radio[value="applepay"]');
+        this._amount = DonationAmount.getInstance();
+        this._fees = ProcessingFees.getInstance();
+        this._form = EnForm.getInstance();
+        this.checkApplePay();
+    }
+    checkApplePay() {
+        return __awaiter(this, void 0, void 0, function* () {
+            const pageform = document.querySelector("form.en__component--page");
+            if (!this.applePay || !window.hasOwnProperty("ApplePaySession")) {
+                const applePayContainer = document.querySelector(".en__field__item.applepay");
+                if (applePayContainer)
+                    applePayContainer.remove();
+                if (engrid_ENGrid.debug)
+                    console.log("Apple Pay DISABLED");
+                return false;
+            }
+            const promise = ApplePaySession.canMakePaymentsWithActiveCard(merchantIdentifier);
+            let applePayEnabled = false;
+            yield promise.then((canMakePayments) => {
+                applePayEnabled = canMakePayments;
+                if (canMakePayments) {
+                    let input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+                    input.setAttribute("name", "PkPaymentToken");
+                    input.setAttribute("id", "applePayToken");
+                    pageform.appendChild(input);
+                    this._form.onSubmit.subscribe(() => this.onPayClicked());
+                }
+            });
+            if (engrid_ENGrid.debug)
+                console.log("applePayEnabled", applePayEnabled);
+            let applePayWrapper = this.applePay.closest(".en__field__item");
+            if (applePayEnabled) {
+                // Set Apple Pay Class
+                applePayWrapper === null || applePayWrapper === void 0 ? void 0 : applePayWrapper.classList.add("applePayWrapper");
+            }
+            else {
+                // Hide Apple Pay Wrapper
+                if (applePayWrapper)
+                    applePayWrapper.style.display = "none";
+            }
+            return applePayEnabled;
+        });
+    }
+    performValidation(url) {
+        return new Promise(function (resolve, reject) {
+            var merchantSession = {};
+            merchantSession.merchantIdentifier = merchantIdentifier;
+            merchantSession.merchantSessionIdentifier = merchantSessionIdentifier;
+            merchantSession.nonce = merchantNonce;
+            merchantSession.domainName = merchantDomainName;
+            merchantSession.epochTimestamp = merchantEpochTimestamp;
+            merchantSession.signature = merchantSignature;
+            var validationData = "&merchantIdentifier=" +
+                merchantIdentifier +
+                "&merchantDomain=" +
+                merchantDomainName +
+                "&displayName=" +
+                merchantDisplayName;
+            var validationUrl = "/ea-dataservice/rest/applepay/validateurl?url=" + url + validationData;
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function () {
+                var data = JSON.parse(this.responseText);
+                if (engrid_ENGrid.debug)
+                    console.log("Apple Pay Validation", data);
+                resolve(data);
+            };
+            xhr.onerror = reject;
+            xhr.open("GET", validationUrl);
+            xhr.send();
+        });
+    }
+    log(name, msg) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "/ea-dataservice/rest/applepay/log?name=" + name + "&msg=" + msg);
+        xhr.send();
+    }
+    sendPaymentToken(token) {
+        return new Promise(function (resolve, reject) {
+            resolve(true);
+        });
+    }
+    onPayClicked() {
+        const enFieldPaymentType = document.querySelector("#en__field_transaction_paymenttype");
+        const applePayToken = document.getElementById("applePayToken");
+        const formClass = this._form;
+        // Only work if Payment Type is Apple Pay
+        if (enFieldPaymentType.value == "applepay" && applePayToken.value == "") {
+            try {
+                let donationAmount = this._amount.amount + this._fees.fee;
+                var request = {
+                    supportedNetworks: merchantSupportedNetworks,
+                    merchantCapabilities: merchantCapabilities,
+                    countryCode: merchantCountryCode,
+                    currencyCode: merchantCurrencyCode,
+                    total: {
+                        label: merchantTotalLabel,
+                        amount: donationAmount,
+                    },
+                };
+                var session = new ApplePaySession(1, request);
+                var thisClass = this;
+                session.onvalidatemerchant = function (event) {
+                    thisClass
+                        .performValidation(event.validationURL)
+                        .then(function (merchantSession) {
+                        if (engrid_ENGrid.debug)
+                            console.log("Apple Pay merchantSession", merchantSession);
+                        session.completeMerchantValidation(merchantSession);
+                    });
+                };
+                session.onpaymentauthorized = function (event) {
+                    thisClass
+                        .sendPaymentToken(event.payment.token)
+                        .then(function (success) {
+                        if (engrid_ENGrid.debug)
+                            console.log("Apple Pay Token", event.payment.token);
+                        document.getElementById("applePayToken").value = JSON.stringify(event.payment.token);
+                        formClass.submitForm();
+                    });
+                };
+                session.oncancel = function (event) {
+                    if (engrid_ENGrid.debug)
+                        console.log("Cancelled", event);
+                    alert("You cancelled. Sorry it didn't work out.");
+                    formClass.dispatchError();
+                };
+                session.begin();
+                this._form.submit = false;
+                return false;
+            }
+            catch (e) {
+                alert("Developer mistake: '" + e.message + "'");
+                formClass.dispatchError();
+            }
+        }
+        this._form.submit = true;
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/capitalize-fields.js
+
+
+class CapitalizeFields {
+    constructor() {
+        this._form = EnForm.getInstance();
+        this._form.onSubmit.subscribe(() => this.capitalizeFields("en__field_supporter_firstName", "en__field_supporter_lastName", "en__field_supporter_address1", "en__field_supporter_city"));
+    }
+    capitalizeFields(...fields) {
+        fields.forEach((f) => this.capitalize(f));
+    }
+    capitalize(f) {
+        let field = document.getElementById(f);
+        if (field) {
+            field.value = field.value.replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
+            if (engrid_ENGrid.debug)
+                console.log("Capitalized", field.value);
+        }
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/auto-year.js
+// This class changes the Credit Card Expiration Year Field Options to
+// include the current year and the next 19 years.
+class AutoYear {
+    constructor() {
+        this.yearField = document.querySelector("select[name='transaction.ccexpire']:not(#en__field_transaction_ccexpire)");
+        this.years = 20;
+        this.yearLength = 2;
+        if (this.yearField) {
+            this.clearFieldOptions();
+            for (let i = 0; i < this.years; i++) {
+                const year = new Date().getFullYear() + i;
+                const newOption = document.createElement("option");
+                const optionText = document.createTextNode(year.toString());
+                newOption.appendChild(optionText);
+                newOption.value =
+                    this.yearLength == 2 ? year.toString().substr(-2) : year.toString();
+                this.yearField.appendChild(newOption);
+            }
+        }
+    }
+    clearFieldOptions() {
+        if (this.yearField) {
+            this.yearLength =
+                this.yearField.options[this.yearField.options.length - 1].value.length;
+            while (this.yearField.options.length > 1) {
+                this.yearField.remove(1);
+            }
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/autocomplete.js
+// This class adds the autocomplete attribute to
+// the most common input elements
+
+class Autocomplete {
+    constructor() {
+        this.debug = engrid_ENGrid.debug;
+        this.autoCompleteField('[name="supporter.firstName"]', "given-name");
+        this.autoCompleteField('[name="supporter.lastName"]', "family-name");
+        this.autoCompleteField('[name="transaction.ccnumber"]', "cc-number");
+        this.autoCompleteField("#en__field_transaction_ccexpire", "cc-exp-month");
+        this.autoCompleteField('[name="transaction.ccexpire"]:not(#en__field_transaction_ccexpire)', "cc-exp-year");
+        this.autoCompleteField('[name="transaction.ccvv"]', "cc-csc");
+        this.autoCompleteField('[name="supporter.emailAddress"]', "email");
+        this.autoCompleteField('[name="supporter.phoneNumber"]', "tel");
+        this.autoCompleteField('[name="supporter.country"]', "country");
+        this.autoCompleteField('[name="supporter.address1"]', "address-line1");
+        this.autoCompleteField('[name="supporter.address2"]', "address-line2");
+        this.autoCompleteField('[name="supporter.city"]', "address-level2");
+        this.autoCompleteField('[name="supporter.region"]', "address-level1");
+        this.autoCompleteField('[name="supporter.postcode"]', "postal-code");
+    }
+    autoCompleteField(querySelector, autoCompleteValue) {
+        let field = document.querySelector(querySelector);
+        if (field) {
+            field.autocomplete = autoCompleteValue;
+            return true;
+        }
+        if (this.debug)
+            console.log("AutoComplete: Field Not Found", querySelector);
+        return false;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/ecard.js
+
+class Ecard {
+    constructor() {
+        this._form = EnForm.getInstance();
+        if (engrid_ENGrid.getPageType() === "ECARD") {
+            this._form.onValidate.subscribe(() => this.checkRecipientFields());
+        }
+    }
+    checkRecipientFields() {
+        const addRecipientButton = document.querySelector(".en__ecarditems__addrecipient");
+        // If we find the "+" button and there's no hidden recipient field, click on the button
+        if (addRecipientButton &&
+            !document.querySelector(".ecardrecipient__email")) {
+            addRecipientButton.click();
+        }
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/click-to-expand.js
+// Depends on engrid-click-to-expand.scss to work
+
+// Works when the user has adds ".click-to-expand" as a class to any field
+class ClickToExpand {
+    constructor() {
+        this.clickToExpandWrapper = document.querySelectorAll("div.click-to-expand");
+        if (this.clickToExpandWrapper.length) {
+            this.clickToExpandWrapper.forEach((element) => {
+                const content = element.innerHTML;
+                const wrapper_html = '<div class="click-to-expand-cta"></div><div class="click-to-expand-text-wrapper" tabindex="0">' +
+                    content +
+                    "</div>";
+                element.innerHTML = wrapper_html;
+                element.addEventListener("click", (event) => {
+                    if (event) {
+                        if (engrid_ENGrid.debug)
+                            console.log("A click-to-expand div was clicked");
+                        element.classList.add("expanded");
+                    }
+                });
+                element.addEventListener("keydown", (event) => {
+                    if (event.key === "Enter") {
+                        if (engrid_ENGrid.debug)
+                            console.log("A click-to-expand div had the 'Enter' key pressed on it");
+                        element.classList.add("expanded");
+                    }
+                    else if (event.key === " ") {
+                        if (engrid_ENGrid.debug)
+                            console.log("A click-to-expand div had the 'Spacebar' key pressed on it");
+                        element.classList.add("expanded");
+                        event.preventDefault(); // Prevents the page from scrolling
+                        event.stopPropagation(); // Prevent a console error generated by LastPass https://github.com/KillerCodeMonkey/ngx-quill/issues/351#issuecomment-476017960
+                    }
+                });
+            });
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/custom-methods.js
+const body = document.body;
+const enGrid = document.getElementById("engrid");
+const enInput = (() => {
+    /************************************
+     * Globablly Scoped Constants and Variables
+     ***********************************/
+    // @TODO Needs to be expanded to bind other EN elements (checkbox, radio) and compound elements (split-text, split-select, select with other input, etc...)
+    // @TODO A "Not" condition is needed for #en__field_transaction_email because someone could name their email opt in "Email" and it will get the .en_field--email class generated for it
+    // get DOM elements
+    const init = () => {
+        const formInput = document.querySelectorAll(".en__field--text, .en__field--email:not(.en__field--checkbox), .en__field--telephone, .en__field--number, .en__field--textarea, .en__field--select, .en__field--checkbox");
+        const otherInputs = document.querySelectorAll(".en__field__input--other");
+        Array.from(formInput).forEach((e) => {
+            // @TODO Currently checkboxes always return as having a value, since they do but they're just not checked. Need to update and account for that, should also do Radio's while we're at it
+            let element = e.querySelector("input, textarea, select");
+            if (element && element.value) {
+                e.classList.add("has-value");
+            }
+            bindEvents(e);
+        });
+        /* @TODO Review Engaging Networks to see if this is still needed */
+        /************************************
+         * Automatically select other radio input when an amount is entered into it.
+         ***********************************/
+        Array.from(otherInputs).forEach((e) => {
+            ["focus", "input"].forEach((evt) => {
+                e.addEventListener(evt, (ev) => {
+                    const target = ev.target;
+                    if (target && target.parentNode && target.parentNode.parentNode) {
+                        const targetWrapper = target.parentNode;
+                        targetWrapper.classList.remove("en__field__item--hidden");
+                        if (targetWrapper.parentNode) {
+                            const lastRadioInput = targetWrapper.parentNode.querySelector(".en__field__item:nth-last-child(2) input");
+                            lastRadioInput.checked = !0;
+                        }
+                    }
+                }, false);
+            });
+        });
+    };
+    return {
+        init: init,
+    };
+})();
+const bindEvents = (e) => {
+    /* @TODO */
+    /************************************
+     * INPUT, TEXTAREA, AND SELECT ACTIVITY CLASSES (FOCUS AND BLUR)
+     * NOTE: STILL NEEDS WORK TO FUNCTION ON "SPLIT" CUSTOM EN FIELDS
+     * REF: https://developer.mozilla.org/en-US/docs/Web/API/Element/blur_event
+     ***********************************/
+    // Occurs when an input field gets focus
+    const handleFocus = (e) => {
+        const target = e.target;
+        if (target && target.parentNode && target.parentNode.parentNode) {
+            const targetWrapper = target.parentNode.parentNode;
+            targetWrapper.classList.add("has-focus");
+        }
+    };
+    // Occurs when a user leaves an input field
+    const handleBlur = (e) => {
+        const target = e.target;
+        if (target && target.parentNode && target.parentNode.parentNode) {
+            const targetWrapper = target.parentNode.parentNode;
+            targetWrapper.classList.remove("has-focus");
+            if (target.value) {
+                targetWrapper.classList.add("has-value");
+            }
+            else {
+                targetWrapper.classList.remove("has-value");
+            }
+        }
+    };
+    // Occurs when a user changes the selected option of a <select> element
+    const handleChange = (e) => {
+        const target = e.target;
+        if (target && target.parentNode && target.parentNode.parentNode) {
+            const targetWrapper = target.parentNode.parentNode;
+            targetWrapper.classList.add("has-value");
+        }
+    };
+    // Occurs when a text or textarea element gets user input
+    const handleInput = (e) => {
+        const target = e.target;
+        if (target && target.parentNode && target.parentNode.parentNode) {
+            const targetWrapper = target.parentNode.parentNode;
+            targetWrapper.classList.add("has-value");
+        }
+    };
+    // Occurs when the web browser autofills a form fields
+    // REF: engrid-autofill.scss
+    // REF: https://medium.com/@brunn/detecting-autofilled-fields-in-javascript-aed598d25da7
+    const onAutoFillStart = (e) => {
+        e.parentNode.parentNode.classList.add("is-autofilled", "has-value");
+    };
+    const onAutoFillCancel = (e) => e.parentNode.parentNode.classList.remove("is-autofilled", "has-value");
+    const onAnimationStart = (e) => {
+        const target = e.target;
+        const animation = e.animationName;
+        switch (animation) {
+            case "onAutoFillStart":
+                return onAutoFillStart(target);
+            case "onAutoFillCancel":
+                return onAutoFillCancel(target);
+        }
+    };
+    const enField = e.querySelector("input, textarea, select");
+    if (enField) {
+        enField.addEventListener("focus", handleFocus);
+        enField.addEventListener("blur", handleBlur);
+        enField.addEventListener("change", handleChange);
+        enField.addEventListener("input", handleInput);
+        enField.addEventListener("animationstart", onAnimationStart);
+    }
+};
+const removeClassesByPrefix = (el, prefix) => {
+    for (var i = el.classList.length - 1; i >= 0; i--) {
+        if (el.classList[i].startsWith(prefix)) {
+            el.classList.remove(el.classList[i]);
+        }
+    }
+};
+const debugBar = () => {
+    if (window.location.href.indexOf("debug") != -1 ||
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1") {
+        body.classList.add("debug");
+        if (enGrid) {
+            enGrid.insertAdjacentHTML("beforebegin", '<span id="debug-bar">' +
+                '<span id="info-wrapper">' +
+                "<span>DEBUG BAR</span>" +
+                "</span>" +
+                '<span id="buttons-wrapper">' +
+                '<span id="debug-close">X</span>' +
+                "</span>" +
+                "</span>");
+        }
+        if (window.location.search.indexOf("mode=DEMO") > -1) {
+            const infoWrapper = document.getElementById("info-wrapper");
+            const buttonsWrapper = document.getElementById("buttons-wrapper");
+            if (infoWrapper) {
+                // console.log(window.performance);
+                const now = new Date().getTime();
+                const initialPageLoad = (now - performance.timing.navigationStart) / 1000;
+                const domInteractive = initialPageLoad + (now - performance.timing.domInteractive) / 1000;
+                infoWrapper.insertAdjacentHTML("beforeend", "<span>Initial Load: " +
+                    initialPageLoad +
+                    "s</span>" +
+                    "<span>DOM Interactive: " +
+                    domInteractive +
+                    "s</span>");
+                if (buttonsWrapper) {
+                    buttonsWrapper.insertAdjacentHTML("afterbegin", '<button id="layout-toggle" type="button">Layout Toggle</button>' +
+                        '<button id="page-edit" type="button">Edit in PageBuilder (BETA)</button>');
+                }
+            }
+        }
+        if (window.location.href.indexOf("debug") != -1 ||
+            location.hostname === "localhost" ||
+            location.hostname === "127.0.0.1") {
+            const buttonsWrapper = document.getElementById("buttons-wrapper");
+            if (buttonsWrapper) {
+                buttonsWrapper.insertAdjacentHTML("afterbegin", '<button id="layout-toggle" type="button">Layout Toggle</button>' +
+                    '<button id="fancy-errors-toggle" type="button">Toggle Fancy Errors</button>');
+            }
+        }
+        if (document.getElementById("fancy-errors-toggle")) {
+            const debugTemplateButton = document.getElementById("fancy-errors-toggle");
+            if (debugTemplateButton) {
+                debugTemplateButton.addEventListener("click", function () {
+                    fancyErrorsToggle();
+                }, false);
+            }
+        }
+        if (document.getElementById("layout-toggle")) {
+            const debugTemplateButton = document.getElementById("layout-toggle");
+            if (debugTemplateButton) {
+                debugTemplateButton.addEventListener("click", function () {
+                    layoutToggle();
+                }, false);
+            }
+        }
+        if (document.getElementById("page-edit")) {
+            const debugTemplateButton = document.getElementById("page-edit");
+            if (debugTemplateButton) {
+                debugTemplateButton.addEventListener("click", function () {
+                    pageEdit();
+                }, false);
+            }
+        }
+        if (document.getElementById("debug-close")) {
+            const debugTemplateButton = document.getElementById("debug-close");
+            if (debugTemplateButton) {
+                debugTemplateButton.addEventListener("click", function () {
+                    debugClose();
+                }, false);
+            }
+        }
+        const fancyErrorsToggle = () => {
+            if (enGrid) {
+                enGrid.classList.toggle("fancy-errors");
+            }
+        };
+        const pageEdit = () => {
+            window.location.href = window.location.href + "?edit";
+        };
+        const layoutToggle = () => {
+            if (enGrid) {
+                if (enGrid.classList.contains("layout-centercenter1col")) {
+                    removeClassesByPrefix(enGrid, "layout-");
+                    enGrid.classList.add("layout-centerright1col");
+                }
+                else if (enGrid.classList.contains("layout-centerright1col")) {
+                    removeClassesByPrefix(enGrid, "layout-");
+                    enGrid.classList.add("layout-centerleft1col");
+                }
+                else if (enGrid.classList.contains("layout-centerleft1col")) {
+                    removeClassesByPrefix(enGrid, "layout-");
+                    enGrid.classList.add("layout-embedded");
+                }
+                else if (enGrid.classList.contains("layout-embedded")) {
+                    removeClassesByPrefix(enGrid, "layout-");
+                    enGrid.classList.add("layout-centercenter1col");
+                }
+                else {
+                    console.log("While trying to switch layouts, something unexpected happen.");
+                }
+            }
+        };
+        const debugClose = () => {
+            body.classList.remove("debug");
+            const debugBar = document.getElementById("debug-bar");
+            if (debugBar) {
+                debugBar.style.display = "none";
+            }
+        };
+    }
+};
+const inputPlaceholder = () => {
+    // FIND ALL COMMON INPUT FIELDS
+    let enFieldDonationAmt = document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other");
+    let enFieldFirstName = document.querySelector("input#en__field_supporter_firstName");
+    let enFieldLastName = document.querySelector("input#en__field_supporter_lastName");
+    let enFieldEmailAddress = document.querySelector("input#en__field_supporter_emailAddress");
+    let enFieldPhoneNumber = document.querySelector("#inputen__field_supporter_phoneNumber");
+    let enFieldPhoneNumber2 = document.querySelector("input#en__field_supporter_phoneNumber2");
+    let enFieldCountry = document.querySelector("input#en__field_supporter_country");
+    let enFieldAddress1 = document.querySelector("input#en__field_supporter_address1");
+    let enFieldAddress2 = document.querySelector("input#en__field_supporter_address2");
+    let enFieldCity = document.querySelector("input#en__field_supporter_city");
+    // let enFieldRegion = document.querySelector("input#en__field_supporter_region") as HTMLInputElement
+    let enFieldPostcode = document.querySelector("input#en__field_supporter_postcode");
+    let enFieldHonname = document.querySelector("input#en__field_transaction_honname");
+    let enFieldInfname = document.querySelector("input#en__field_transaction_infname");
+    let enFieldInfemail = document.querySelector("input#en__field_transaction_infemail");
+    let enFieldInfcountry = document.querySelector("input#en__field_transaction_infcountry");
+    let enFieldInfadd1 = document.querySelector("input#en__field_transaction_infadd1");
+    let enFieldInfadd2 = document.querySelector("input#en__field_transaction_infadd2");
+    let enFieldInfcity = document.querySelector("input#en__field_transaction_infcity");
+    let enFieldInfpostcd = document.querySelector("input#en__field_transaction_infpostcd");
+    let enFieldGftrsn = document.querySelector("input#en__field_transaction_gftrsn");
+    let enFieldCcnumber = document.querySelector("input#en__field_transaction_ccnumber");
+    let enFieldCcexpire = document.querySelector("input#en__field_transaction_ccexpire");
+    let enFieldCcvv = document.querySelector("input#en__field_transaction_ccvv");
+    let enFieldBankAccountNumber = document.querySelector("input#en__field_supporter_bankAccountNumber");
+    let enFieldBankRoutingNumber = document.querySelector("input#en__field_supporter_bankRoutingNumber");
+    // CHANGE FIELD INPUT TYPES
+    if (enFieldDonationAmt) {
+        enFieldDonationAmt.setAttribute("inputmode", "numeric");
+    }
+    // ADD FIELD PLACEHOLDERS
+    const enAddInputPlaceholder = document.querySelector("[data-engrid-add-input-placeholders]");
+    if (enAddInputPlaceholder && enFieldDonationAmt) {
+        enFieldDonationAmt.placeholder = "Other Amount";
+    }
+    if (enAddInputPlaceholder && enFieldFirstName) {
+        enFieldFirstName.placeholder = "First Name";
+    }
+    if (enAddInputPlaceholder && enFieldLastName) {
+        enFieldLastName.placeholder = "Last Name";
+    }
+    if (enAddInputPlaceholder && enFieldEmailAddress) {
+        enFieldEmailAddress.placeholder = "Email Address";
+    }
+    if (enAddInputPlaceholder && enFieldPhoneNumber) {
+        enFieldPhoneNumber.placeholder = "Phone Number";
+    }
+    if (enAddInputPlaceholder && enFieldPhoneNumber2) {
+        enFieldPhoneNumber2.placeholder = "000-000-0000 (Optional)";
+    }
+    if (enAddInputPlaceholder && enFieldCountry) {
+        enFieldCountry.placeholder = "Country";
+    }
+    if (enAddInputPlaceholder && enFieldAddress1) {
+        enFieldAddress1.placeholder = "Street Address";
+    }
+    if (enAddInputPlaceholder && enFieldAddress2) {
+        enFieldAddress2.placeholder = "Apt., ste., bldg.";
+    }
+    if (enAddInputPlaceholder && enFieldCity) {
+        enFieldCity.placeholder = "City";
+    }
+    // if (enAddInputPlaceholder && enFieldRegion){enFieldRegion.placeholder = "TBD";}
+    if (enAddInputPlaceholder && enFieldPostcode) {
+        enFieldPostcode.placeholder = "Postal Code";
+    }
+    if (enAddInputPlaceholder && enFieldHonname) {
+        enFieldHonname.placeholder = "Honoree Name";
+    }
+    if (enAddInputPlaceholder && enFieldInfname) {
+        enFieldInfname.placeholder = "Recipient Name";
+    }
+    if (enAddInputPlaceholder && enFieldInfemail) {
+        enFieldInfemail.placeholder = "Recipient Email Address";
+    }
+    if (enAddInputPlaceholder && enFieldInfcountry) {
+        enFieldInfcountry.placeholder = "TBD";
+    }
+    if (enAddInputPlaceholder && enFieldInfadd1) {
+        enFieldInfadd1.placeholder = "Recipient Street Address";
+    }
+    if (enAddInputPlaceholder && enFieldInfadd2) {
+        enFieldInfadd2.placeholder = "Recipient Apt., ste., bldg.";
+    }
+    if (enAddInputPlaceholder && enFieldInfcity) {
+        enFieldInfcity.placeholder = "Recipient City";
+    }
+    if (enAddInputPlaceholder && enFieldInfpostcd) {
+        enFieldInfpostcd.placeholder = "Recipient Postal Code";
+    }
+    if (enAddInputPlaceholder && enFieldGftrsn) {
+        enFieldGftrsn.placeholder = "Reason for your gift";
+    }
+    if (enAddInputPlaceholder && enFieldCcnumber) {
+        enFieldCcnumber.placeholder = "•••• •••• •••• ••••";
+    }
+    if (enAddInputPlaceholder && enFieldCcexpire) {
+        enFieldCcexpire.placeholder = "MM / YY";
+    }
+    if (enAddInputPlaceholder && enFieldCcvv) {
+        enFieldCcvv.placeholder = "CVV";
+    }
+    if (enAddInputPlaceholder && enFieldBankAccountNumber) {
+        enFieldBankAccountNumber.placeholder = "Bank Account Number";
+    }
+    if (enAddInputPlaceholder && enFieldBankRoutingNumber) {
+        enFieldBankRoutingNumber.placeholder = "Bank Routing Number";
+    }
+};
+const preventAutocomplete = () => {
+    let enFieldDonationAmt = document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other");
+    if (enFieldDonationAmt) {
+        enFieldDonationAmt.setAttribute("autocomplete", "off");
+    }
+    if (enFieldDonationAmt) {
+        enFieldDonationAmt.setAttribute("data-lpignore", "true");
+    }
+};
+const watchInmemField = () => {
+    const enFieldTransactionInmem = document.getElementById("en__field_transaction_inmem");
+    const handleEnFieldTransactionInmemChange = (e) => {
+        if (enGrid) {
+            if (enFieldTransactionInmem.checked) {
+                enGrid.classList.add("has-give-in-honor");
+            }
+            else {
+                enGrid.classList.remove("has-give-in-honor");
+            }
+        }
+    };
+    // Check Give In Honor State on Page Load
+    if (enFieldTransactionInmem && enGrid) {
+        // Run on page load
+        if (enFieldTransactionInmem.checked) {
+            enGrid.classList.add("has-give-in-honor");
+        }
+        else {
+            enGrid.classList.remove("has-give-in-honor");
+        }
+        // Run on change
+        enFieldTransactionInmem.addEventListener("change", handleEnFieldTransactionInmemChange);
+    }
+};
+// @TODO Refactor (low priority)
+const watchGiveBySelectField = () => {
+    const enFieldGiveBySelect = document.querySelector(".en__field--give-by-select");
+    const transactionGiveBySelect = document.getElementsByName("transaction.giveBySelect");
+    const enFieldPaymentType = document.querySelector("#en__field_transaction_paymenttype");
+    let enFieldGiveBySelectCurrentValue = document.querySelector('input[name="transaction.giveBySelect"]:checked');
+    const prefix = "has-give-by-";
+    const handleEnFieldGiveBySelect = (e) => {
+        enFieldGiveBySelectCurrentValue = document.querySelector('input[name="transaction.giveBySelect"]:checked');
+        console.log("enFieldGiveBySelectCurrentValue:", enFieldGiveBySelectCurrentValue);
+        if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "card") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-card");
+            }
+            // enFieldPaymentType.value = "card";
+            handleCCUpdate();
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "ach") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-ach");
+            }
+            enFieldPaymentType.value = "ach";
+            enFieldPaymentType.value = "ACH";
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "paypal") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-paypal");
+            }
+            enFieldPaymentType.value = "paypal";
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "applepay") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-applepay");
+            }
+            enFieldPaymentType.value = "applepay";
+        }
+    };
+    // Check Giving Frequency on page load
+    if (enFieldGiveBySelect) {
+        enFieldGiveBySelectCurrentValue = document.querySelector('input[name="transaction.giveBySelect"]:checked');
+        if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "card") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-card");
+            }
+            // enFieldPaymentType.value = "card";
+            handleCCUpdate();
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "ach") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-check");
+            }
+            enFieldPaymentType.value = "ach";
+            enFieldPaymentType.value = "ACH";
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "paypal") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-paypal");
+            }
+            enFieldPaymentType.value = "paypal";
+            enFieldPaymentType.value = "Paypal";
+        }
+        else if (enFieldGiveBySelectCurrentValue &&
+            enFieldGiveBySelectCurrentValue.value.toLowerCase() == "applepay") {
+            if (enGrid) {
+                removeClassesByPrefix(enGrid, prefix);
+                enGrid.classList.add("has-give-by-applepay");
+            }
+            enFieldPaymentType.value = "applepay";
+        }
+    }
+    // Watch each Giving Frequency radio input for a change
+    if (transactionGiveBySelect) {
+        Array.from(transactionGiveBySelect).forEach((e) => {
+            let element = e;
+            element.addEventListener("change", handleEnFieldGiveBySelect);
+        });
+    }
+};
+/*
+ * Input fields as reference variables
+ */
+const field_credit_card = document.getElementById("en__field_transaction_ccnumber");
+const field_payment_type = document.getElementById("en__field_transaction_paymenttype");
+let field_expiration_parts = document.querySelectorAll(".en__field--ccexpire .en__field__input--splitselect");
+const field_country = document.getElementById("en__field_supporter_country");
+let field_expiration_month = field_expiration_parts[0];
+let field_expiration_year = field_expiration_parts[1];
+/* The Donation Other Giving Amount is a "Number" type input field.
+   It also has its step value set to .01 so it increments up/down by once whole cent.
+   This step also client-side prevents users from entering a fraction of a penny.
+   And it has a min set to 5 so nothing less can be submitted
+*/
+const SetEnFieldOtherAmountRadioStepValue = () => {
+    const enFieldOtherAmountRadio = document.querySelector(".en__field--donationAmt .en__field__input--other");
+    if (enFieldOtherAmountRadio) {
+        enFieldOtherAmountRadio.setAttribute("step", ".01");
+        enFieldOtherAmountRadio.setAttribute("type", "number");
+        enFieldOtherAmountRadio.setAttribute("min", "5");
+    }
+};
+/*
+ * Helpers
+ */
+// current_month and current_year used by handleExpUpdate()
+let d = new Date();
+var current_month = d.getMonth() + 1; // month options in expiration dropdown are indexed from 1
+var current_year = d.getFullYear() - 2000;
+// getCardType used by handleCCUpdate()
+const getCardType = (cc_partial) => {
+    let key_character = cc_partial.charAt(0);
+    const prefix = "live-card-type-";
+    const field_credit_card_classes = field_credit_card.className
+        .split(" ")
+        .filter((c) => !c.startsWith(prefix));
+    switch (key_character) {
+        case "0":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        case "1":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        case "2":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        case "3":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-amex");
+            return "amex";
+        case "4":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-visa");
+            return "visa";
+        case "5":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-mastercard");
+            return "mastercard";
+        case "6":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-discover");
+            return "discover";
+        case "7":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        case "8":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        case "9":
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-invalid");
+            return false;
+        default:
+            field_credit_card.className = field_credit_card_classes.join(" ").trim();
+            field_credit_card.classList.add("live-card-type-na");
+            return false;
+    }
+};
+/*
+ * Handlers
+ */
+const handleCCUpdate = () => {
+    const card_type = getCardType(field_credit_card.value);
+    const card_values = {
+        amex: ["amex", "american express", "americanexpress", "amx", "ax"],
+        visa: ["visa", "vi"],
+        mastercard: ["mastercard", "master card", "mc"],
+        discover: ["discover", "di"],
+    };
+    const payment_text = field_payment_type.options[field_payment_type.selectedIndex].text;
+    if (card_type && payment_text != card_type) {
+        field_payment_type.value = Array.from(field_payment_type.options).filter((d) => card_values[card_type].includes(d.value.toLowerCase()))[0].value;
+    }
+};
+const handleExpUpdate = (e) => {
+    // handle if year is changed to current year (disable all months less than current month)
+    // handle if month is changed to less than current month (disable current year)
+    if (e == "month") {
+        let selected_month = parseInt(field_expiration_month.value);
+        let disable = selected_month < current_month;
+        console.log("month disable", disable, typeof disable, selected_month, current_month);
+        for (let i = 0; i < field_expiration_year.options.length; i++) {
+            // disable or enable current year
+            if (parseInt(field_expiration_year.options[i].value) <= current_year) {
+                if (disable) {
+                    //@TODO Couldn't get working in TypeScript
+                    field_expiration_year.options[i].setAttribute("disabled", "disabled");
+                }
+                else {
+                    field_expiration_year.options[i].disabled = false;
+                }
+            }
+        }
+    }
+    else if (e == "year") {
+        let selected_year = parseInt(field_expiration_year.value);
+        let disable = selected_year == current_year;
+        console.log("year disable", disable, typeof disable, selected_year, current_year);
+        for (let i = 0; i < field_expiration_month.options.length; i++) {
+            // disable or enable all months less than current month
+            if (parseInt(field_expiration_month.options[i].value) < current_month) {
+                if (disable) {
+                    //@TODO Couldn't get working in TypeScript
+                    field_expiration_month.options[i].setAttribute("disabled", "disabled");
+                }
+                else {
+                    field_expiration_month.options[i].disabled = false;
+                }
+            }
+        }
+    }
+};
+/*
+ * Event Listeners
+ */
+if (field_credit_card) {
+    field_credit_card.addEventListener("keyup", function () {
+        handleCCUpdate();
+    });
+    field_credit_card.addEventListener("paste", function () {
+        handleCCUpdate();
+    });
+    field_credit_card.addEventListener("blur", function () {
+        handleCCUpdate();
+    });
+}
+if (field_expiration_month && field_expiration_year) {
+    field_expiration_month.addEventListener("change", function () {
+        handleExpUpdate("month");
+    });
+    field_expiration_year.addEventListener("change", function () {
+        handleExpUpdate("year");
+    });
+}
+// EN Polyfill to support "label" clicking on Advocacy Recipient "labels"
+const contactDetailLabels = () => {
+    const contact = document.querySelectorAll(".en__contactDetails__rows");
+    // @TODO Needs refactoring. Has to be a better way to do this.
+    const recipientChange = (e) => {
+        let recipientRow = e.target;
+        // console.log("recipientChange: recipientRow: ", recipientRow);
+        let recipientRowWrapper = recipientRow.parentNode;
+        // console.log("recipientChange: recipientRowWrapper: ", recipientRowWrapper);
+        let recipientRowsWrapper = recipientRowWrapper.parentNode;
+        // console.log("recipientChange: recipientRowsWrapper: ", recipientRowsWrapper);
+        let contactDetails = recipientRowsWrapper.parentNode;
+        // console.log("recipientChange: contactDetails: ", contactDetails);
+        let contactDetailsCheckbox = contactDetails.querySelector("input");
+        // console.log("recipientChange: contactDetailsCheckbox: ", contactDetailsCheckbox);
+        if (contactDetailsCheckbox.checked) {
+            contactDetailsCheckbox.checked = false;
+        }
+        else {
+            contactDetailsCheckbox.checked = true;
+        }
+    };
+    if (contact) {
+        Array.from(contact).forEach((e) => {
+            let element = e;
+            element.addEventListener("click", recipientChange);
+        });
+    }
+};
+// @TODO Adds a URL path "/edit" that can be used to easily arrive at the editable version of the current page. Should automatically detect if the client is using us.e-activist or e-activist and adjust accoridngly. Should also pass in page number and work for all page types without each needing to be specified.
+// @TODO Remove hard coded client values
+const easyEdit = () => {
+    const liveURL = window.location.href;
+    let editURL = "";
+    if (liveURL.search("edit") !== -1) {
+        if (liveURL.includes("https://act.ran.org/page/")) {
+            editURL = liveURL.replace("https://act.ran.org/page/", "https://us.e-activist.com/index.html#pages/");
+            editURL = editURL.replace("/donate/1", "/edit");
+            editURL = editURL.replace("/action/1", "/edit");
+            editURL = editURL.replace("/data/1", "/edit");
+            window.location.href = editURL;
+        }
+    }
+};
+// If you go to and Engaging Networks Unsubscribe page anonymously
+// then the fields are in their default states. If you go to it via an email
+// link that authenticates who you are, it then populates the fields with corresponding
+// values from your account. This means to unsubscribe the user has to uncheck the
+// newsletter checkbox(s) before submitting.
+const simpleUnsubscribe = () => {
+    // console.log("simpleUnsubscribe fired");
+    // Check if we're on an Unsubscribe / Manage Subscriptions page
+    if (window.location.href.indexOf("/subscriptions") != -1) {
+        // console.log("On an subscription management page");
+        // Check if any form elements on this page have the "forceUncheck" class
+        const forceUncheck = document.querySelectorAll(".forceUncheck");
+        if (forceUncheck) {
+            // console.log("Found forceUnchecl dom elements", forceUncheck);
+            // Step through each DOM element with forceUncheck looking for checkboxes
+            Array.from(forceUncheck).forEach((e) => {
+                let element = e;
+                // console.log("Checking this formComponent for checkboxes", element);
+                // In the forceUncheck form component, find any checboxes
+                let uncheckCheckbox = element.querySelectorAll("input[type='checkbox']");
+                if (uncheckCheckbox) {
+                    // Step through each Checkbox in the forceUncheck form component
+                    Array.from(uncheckCheckbox).forEach((f) => {
+                        let checkbox = f;
+                        // console.log("Unchecking this checkbox", checkbox);
+                        // Uncheck the checbox
+                        checkbox.checked = false;
+                    });
+                }
+            });
+        }
+    }
+};
+// Watch the Region Field for changes. If there is only one option, hide it.
+// @TODO Should this be expanded where if a select only has one option it's always hidden?
+const country_select = document.getElementById("en__field_supporter_country");
+const region_select = document.getElementById("en__field_supporter_region");
+if (country_select) {
+    country_select.addEventListener("change", () => {
+        setTimeout(() => {
+            if (region_select.options.length == 1 &&
+                region_select.options[0].value == "other") {
+                region_select.classList.add("hide");
+            }
+            else {
+                region_select.classList.remove("hide");
+            }
+        }, 100);
+    });
+}
+// @TODO "Footer in Viewport Check" should be made its own TS file
+const contentFooter = document.querySelector(".content-footer");
+const isInViewport = (e) => {
+    const distance = e.getBoundingClientRect();
+    // console.log("Footer: ", distance);
+    return (distance.top >= 0 &&
+        distance.left >= 0 &&
+        distance.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight) &&
+        distance.right <=
+            (window.innerWidth || document.documentElement.clientWidth));
+};
+// Checks to see if the page is so short, the footer is above the fold. If the footer is above the folde we'll use this class to ensure at a minimum the page fills the full viewport height.
+if (contentFooter && isInViewport(contentFooter)) {
+    document
+        .getElementsByTagName("BODY")[0]
+        .setAttribute("data-engrid-footer-above-fold", "");
+}
+else {
+    document
+        .getElementsByTagName("BODY")[0]
+        .setAttribute("data-engrid-footer-below-fold", "");
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/cookie.js
+/**
+Example:
+import * as cookie from "./cookie";
+
+cookie.set('name', 'value');
+cookie.get('name'); // => 'value'
+cookie.remove('name');
+cookie.set('name', 'value', { expires: 7 }); // 7 Days cookie
+cookie.set('name', 'value', { expires: 7, path: '' }); // Set Path
+cookie.remove('name', { path: '' });
+ */
+function stringifyAttribute(name, value) {
+    if (!value) {
+        return "";
+    }
+    let stringified = "; " + name;
+    if (value === true) {
+        return stringified; // boolean attributes shouldn't have a value
+    }
+    return stringified + "=" + value;
+}
+function stringifyAttributes(attributes) {
+    if (typeof attributes.expires === "number") {
+        let expires = new Date();
+        expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
+        attributes.expires = expires;
+    }
+    return (stringifyAttribute("Expires", attributes.expires ? attributes.expires.toUTCString() : "") +
+        stringifyAttribute("Domain", attributes.domain) +
+        stringifyAttribute("Path", attributes.path) +
+        stringifyAttribute("Secure", attributes.secure) +
+        stringifyAttribute("SameSite", attributes.sameSite));
+}
+function encode(name, value, attributes) {
+    return (encodeURIComponent(name)
+        .replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent) // allowed special characters
+        .replace(/\(/g, "%28")
+        .replace(/\)/g, "%29") + // replace opening and closing parens
+        "=" +
+        encodeURIComponent(value)
+            // allowed special characters
+            .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent) +
+        stringifyAttributes(attributes));
+}
+function parse(cookieString) {
+    let result = {};
+    let cookies = cookieString ? cookieString.split("; ") : [];
+    let rdecode = /(%[\dA-F]{2})+/gi;
+    for (let i = 0; i < cookies.length; i++) {
+        let parts = cookies[i].split("=");
+        let cookie = parts.slice(1).join("=");
+        if (cookie.charAt(0) === '"') {
+            cookie = cookie.slice(1, -1);
+        }
+        try {
+            let name = parts[0].replace(rdecode, decodeURIComponent);
+            result[name] = cookie.replace(rdecode, decodeURIComponent);
+        }
+        catch (e) {
+            // ignore cookies with invalid name/value encoding
+        }
+    }
+    return result;
+}
+function getAll() {
+    return parse(document.cookie);
+}
+function get(name) {
+    return getAll()[name];
+}
+function set(name, value, attributes) {
+    document.cookie = encode(name, value, Object.assign({ path: "/" }, attributes));
+}
+function remove(name, attributes) {
+    set(name, "", Object.assign(Object.assign({}, attributes), { expires: -1 }));
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/ie.js
+
+class IE {
+    constructor() {
+        this.debug = false;
+        this.overlay = document.createElement("div");
+        const isIE = () => {
+            return (navigator.userAgent.indexOf("MSIE") !== -1 ||
+                navigator.appVersion.indexOf("Trident/") > -1);
+        };
+        // If it's not IE, get out!
+        if (!isIE())
+            return;
+        const markup = `
+    <div class="ieModal-container">
+        <a href="#" class="button-close"></a>
+        <div id="ieModalContent">
+        <strong>Attention: </strong>
+        Your browser is no longer supported and will not receive any further security updates. Websites may no longer display or behave correctly as they have in the past. 
+        Please transition to using <a href="https://www.microsoft.com/edge">Microsoft Edge</a>, Microsoft's latest browser, to continue enjoying the modern web.
+        </div>
+    </div>`;
+        let overlay = document.createElement("div");
+        overlay.id = "ieModal";
+        overlay.classList.add("is-hidden");
+        overlay.innerHTML = markup;
+        const closeButton = overlay.querySelector(".button-close");
+        closeButton.addEventListener("click", this.close.bind(this));
+        document.addEventListener("keyup", (e) => {
+            if (e.key === "Escape") {
+                closeButton.click();
+            }
+        });
+        this.overlay = overlay;
+        document.body.appendChild(overlay);
+        this.open();
+    }
+    open() {
+        const hideModal = get("hide_ieModal"); // Get cookie
+        // If we have a cookie AND no Debug, get out
+        if (hideModal && !this.debug)
+            return;
+        // Show Modal
+        this.overlay.classList.remove("is-hidden");
+    }
+    close(e) {
+        e.preventDefault();
+        set("hide_ieModal", "1", { expires: 1 }); // Create one day cookie
+        this.overlay.classList.add("is-hidden");
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/iframe.js
+
+const sendIframeHeight = () => {
+    let height = document.body.offsetHeight;
+    console.log("Sending iFrame height of: ", height, "px"); // check the message is being sent correctly
+    window.parent.postMessage({
+        frameHeight: height,
+        pageNumber: engrid_ENGrid.getPageNumber(),
+        pageCount: engrid_ENGrid.getPageCount(),
+        giftProcess: engrid_ENGrid.getGiftProcess(),
+    }, "*");
+};
+const sendIframeFormStatus = (status) => {
+    window.parent.postMessage({
+        status: status,
+        pageNumber: engrid_ENGrid.getPageNumber(),
+        pageCount: engrid_ENGrid.getPageCount(),
+        giftProcess: engrid_ENGrid.getGiftProcess(),
+    }, "*");
+};
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/media-attribution.js
+/*
+  Looks for specially crafted <img> links and will transform its markup to display an attribution overlay on top of the image
+  Depends on "_engrid-media-attribution.scss" for styling
+  
+  Example Image Input
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAQAAABeK7cBAAAADUlEQVR42mO8/5+BAQAGgwHgbKwW2QAAAABJRU5ErkJggg==" data-src="https://via.placeholder.com/300x300" data-attribution-source="© Jane Doe 1">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAQAAABeK7cBAAAADUlEQVR42mO8/5+BAQAGgwHgbKwW2QAAAABJRU5ErkJggg==" data-src="https://via.placeholder.com/300x300" data-attribution-source="© John Doe 2" data-attribution-source-link="https://www.google.com/">
+  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAQAAABeK7cBAAAADUlEQVR42mO8/5+BAQAGgwHgbKwW2QAAAABJRU5ErkJggg==" data-src="https://via.placeholder.com/300x300" data-attribution-source="© Max Doe 3" data-attribution-source-link="https://www.google.com/" data-attribution-hide-overlay>
+
+  Example Video Input (Doesn't currently visually display)
+  @TODO Video tags are processed but their <figcaption> is not visually displayed. Need to update "_engrid-media-attribution.scss"
+  <video poster="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAABCAQAAABeK7cBAAAADUlEQVR42mO8/5+BAQAGgwHgbKwW2QAAAABJRU5ErkJggg==" data-attribution-source="© Jane Doe 1" data-attribution-source-link="https://www.google.com/"> <source data-src="https://player.vimeo.com/external/123456789.hd.mp4?s=987654321&amp;profile_id=123" type="video/mp4"></video>
+
+  Example Image Output
+  <figure class="media-with-attribution"><img src="https://via.placeholder.com/300x300" data-src="https://via.placeholder.com/300x300" data-attribution-source="Jane Doe 1"><figattribution class="attribution-bottomright">Jane Doe 1</figattribution></figure>
+*/
+
+class MediaAttribution {
+    constructor() {
+        // Find all images with attribution but not with the "data-attribution-hide-overlay" attribute
+        this.mediaWithAttribution = document.querySelectorAll("img[data-attribution-source]:not([data-attribution-hide-overlay]), video[data-attribution-source]:not([data-attribution-hide-overlay])");
+        this.mediaWithAttribution.forEach((element) => {
+            if (engrid_ENGrid.debug)
+                console.log("The following image was found with data attribution fields on it. It's markup will be changed to add caption support.", element);
+            // Creates the wapping <figure> element
+            let figure = document.createElement("figure");
+            figure.classList.add("media-with-attribution");
+            // Moves the <img> inside its <figure> element
+            let mediaWithAttributionParent = element.parentNode;
+            if (mediaWithAttributionParent) {
+                mediaWithAttributionParent.insertBefore(figure, element);
+                figure.appendChild(element);
+                let mediaWithAttributionElement = element;
+                // Append the <figcaption> element after the <img> and conditionally add the Source's Link to it
+                let attributionSource = mediaWithAttributionElement.dataset.attributionSource;
+                if (attributionSource) {
+                    let attributionSourceLink = mediaWithAttributionElement.dataset.attributionSourceLink;
+                    if (attributionSourceLink) {
+                        mediaWithAttributionElement.insertAdjacentHTML("afterend", '<figattribution><a href="' +
+                            decodeURIComponent(attributionSourceLink) +
+                            '" target="_blank" tabindex="-1">' +
+                            attributionSource +
+                            "</a></figure>");
+                    }
+                    else {
+                        mediaWithAttributionElement.insertAdjacentHTML("afterend", "<figattribution>" + attributionSource + "</figure>");
+                    }
+                }
+            }
+        });
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/live-variables.js
+
+
+class LiveVariables {
+    constructor(options) {
+        var _a;
+        this._amount = DonationAmount.getInstance();
+        this._fees = ProcessingFees.getInstance();
+        this._frequency = DonationFrequency.getInstance();
+        this._form = EnForm.getInstance();
+        this.multiplier = 1 / 12;
+        this.options = Object.assign(Object.assign({}, OptionsDefaults), options);
+        this.submitLabel =
+            ((_a = document.querySelector(".en__submit button")) === null || _a === void 0 ? void 0 : _a.innerHTML) || "Donate";
+        this._amount.onAmountChange.subscribe(() => this.changeSubmitButton());
+        this._amount.onAmountChange.subscribe(() => this.changeLiveAmount());
+        this._amount.onAmountChange.subscribe(() => this.changeLiveUpsellAmount());
+        this._fees.onFeeChange.subscribe(() => this.changeLiveAmount());
+        this._fees.onFeeChange.subscribe(() => this.changeLiveUpsellAmount());
+        this._fees.onFeeChange.subscribe(() => this.changeSubmitButton());
+        this._frequency.onFrequencyChange.subscribe(() => this.swapAmounts());
+        this._frequency.onFrequencyChange.subscribe(() => this.changeLiveFrequency());
+        this._frequency.onFrequencyChange.subscribe(() => this.changeRecurrency());
+        this._frequency.onFrequencyChange.subscribe(() => this.changeSubmitButton());
+        this._form.onSubmit.subscribe(() => this.loadingSubmitButton());
+        this._form.onError.subscribe(() => this.changeSubmitButton());
+        // Watch the monthly-upsell links
+        document.addEventListener("click", (e) => {
+            const element = e.target;
+            if (element) {
+                if (element.classList.contains("monthly-upsell")) {
+                    this.upsold(e);
+                }
+                else if (element.classList.contains("form-submit")) {
+                    e.preventDefault();
+                    this._form.submitForm();
+                }
+            }
+        });
+    }
+    getAmountTxt(amount = 0) {
+        var _a, _b, _c, _d;
+        const symbol = (_a = this.options.CurrencySymbol) !== null && _a !== void 0 ? _a : "$";
+        const dec_separator = (_b = this.options.DecimalSeparator) !== null && _b !== void 0 ? _b : ".";
+        const thousands_separator = (_c = this.options.ThousandsSeparator) !== null && _c !== void 0 ? _c : "";
+        const dec_places = amount % 1 == 0 ? 0 : (_d = this.options.DecimalPlaces) !== null && _d !== void 0 ? _d : 2;
+        const amountTxt = engrid_ENGrid.formatNumber(amount, dec_places, dec_separator, thousands_separator);
+        return amount > 0 ? symbol + amountTxt : "";
+    }
+    getUpsellAmountTxt(amount = 0) {
+        var _a, _b, _c, _d;
+        const symbol = (_a = this.options.CurrencySymbol) !== null && _a !== void 0 ? _a : "$";
+        const dec_separator = (_b = this.options.DecimalSeparator) !== null && _b !== void 0 ? _b : ".";
+        const thousands_separator = (_c = this.options.ThousandsSeparator) !== null && _c !== void 0 ? _c : "";
+        const dec_places = amount % 1 == 0 ? 0 : (_d = this.options.DecimalPlaces) !== null && _d !== void 0 ? _d : 2;
+        const amountTxt = engrid_ENGrid.formatNumber(Math.ceil(amount / 5) * 5, dec_places, dec_separator, thousands_separator);
+        return amount > 0 ? symbol + amountTxt : "";
+    }
+    getUpsellAmountRaw(amount = 0) {
+        const amountRaw = Math.ceil(amount / 5) * 5;
+        return amount > 0 ? amountRaw.toString() : "";
+    }
+    changeSubmitButton() {
+        const submit = document.querySelector(".en__submit button");
+        const amount = this.getAmountTxt(this._amount.amount + this._fees.fee);
+        const frequency = this._frequency.frequency == "onetime"
+            ? ""
+            : this._frequency.frequency == "annual"
+                ? "annually"
+                : this._frequency.frequency;
+        let label = this.submitLabel;
+        if (amount) {
+            label = label.replace("$AMOUNT", amount);
+            label = label.replace("$FREQUENCY", frequency);
+        }
+        else {
+            label = label.replace("$AMOUNT", "");
+            label = label.replace("$FREQUENCY", "");
+        }
+        if (submit && label) {
+            submit.innerHTML = label;
+        }
+    }
+    loadingSubmitButton() {
+        const submit = document.querySelector(".en__submit button");
+        let submitButtonOriginalHTML = submit.innerHTML;
+        let submitButtonProcessingHTML = "<span class='loader-wrapper'><span class='loader loader-quart'></span><span class='submit-button-text-wrapper'>" +
+            submitButtonOriginalHTML +
+            "</span></span>";
+        submitButtonOriginalHTML = submit.innerHTML;
+        submit.innerHTML = submitButtonProcessingHTML;
+        return true;
+    }
+    changeLiveAmount() {
+        const value = this._amount.amount + this._fees.fee;
+        const live_amount = document.querySelectorAll(".live-giving-amount");
+        live_amount.forEach((elem) => (elem.innerHTML = this.getAmountTxt(value)));
+    }
+    changeLiveUpsellAmount() {
+        const value = (this._amount.amount + this._fees.fee) * this.multiplier;
+        const live_upsell_amount = document.querySelectorAll(".live-giving-upsell-amount");
+        live_upsell_amount.forEach((elem) => (elem.innerHTML = this.getUpsellAmountTxt(value)));
+        const live_upsell_amount_raw = document.querySelectorAll(".live-giving-upsell-amount-raw");
+        live_upsell_amount_raw.forEach((elem) => (elem.innerHTML = this.getUpsellAmountRaw(value)));
+    }
+    changeLiveFrequency() {
+        const live_frequency = document.querySelectorAll(".live-giving-frequency");
+        live_frequency.forEach((elem) => (elem.innerHTML =
+            this._frequency.frequency == "onetime"
+                ? ""
+                : this._frequency.frequency));
+    }
+    changeRecurrency() {
+        const recurrpay = document.querySelector("[name='transaction.recurrpay']");
+        if (recurrpay && recurrpay.type != "radio") {
+            recurrpay.value = this._frequency.frequency == "onetime" ? "N" : "Y";
+            this._frequency.recurring = recurrpay.value;
+            if (engrid_ENGrid.getOption("Debug"))
+                console.log("Recurpay Changed!");
+            // Trigger the onChange event for the field
+            const event = new Event("change", { bubbles: true });
+            recurrpay.dispatchEvent(event);
+        }
+    }
+    swapAmounts() {
+        if ("EngridAmounts" in window &&
+            this._frequency.frequency in window.EngridAmounts) {
+            const loadEnAmounts = (amountArray) => {
+                let ret = [];
+                for (let amount in amountArray.amounts) {
+                    ret.push({
+                        selected: amountArray.amounts[amount] === amountArray.default,
+                        label: amount,
+                        value: amountArray.amounts[amount].toString(),
+                    });
+                }
+                return ret;
+            };
+            window.EngagingNetworks.require._defined.enjs.swapList("donationAmt", loadEnAmounts(window.EngridAmounts[this._frequency.frequency]), {
+                ignoreCurrentValue: !window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed(),
+            });
+            this._amount.load();
+            if (engrid_ENGrid.getOption("Debug"))
+                console.log("Amounts Swapped To", window.EngridAmounts[this._frequency.frequency]);
+        }
+    }
+    // Watch for a clicks on monthly-upsell link
+    upsold(e) {
+        // Find and select monthly giving
+        const enFieldRecurrpay = document.querySelector(".en__field--recurrpay input[value='Y']");
+        if (enFieldRecurrpay) {
+            enFieldRecurrpay.checked = true;
+        }
+        // Find the hidden radio select that needs to be selected when entering an "Other" amount
+        const enFieldOtherAmountRadio = document.querySelector(".en__field--donationAmt input[value='other']");
+        if (enFieldOtherAmountRadio) {
+            enFieldOtherAmountRadio.checked = true;
+        }
+        // Enter the other amount and remove the "en__field__item--hidden" class from the input's parent
+        const enFieldOtherAmount = document.querySelector("input[name='transaction.donationAmt.other']");
+        if (enFieldOtherAmount) {
+            enFieldOtherAmount.value = this.getUpsellAmountRaw(this._amount.amount * this.multiplier);
+            this._amount.load();
+            this._frequency.load();
+            if (enFieldOtherAmount.parentElement) {
+                enFieldOtherAmount.parentElement.classList.remove("en__field__item--hidden");
+            }
+        }
+        const target = e.target;
+        if (target && target.classList.contains("form-submit")) {
+            e.preventDefault();
+            // Form submit
+            this._form.submitForm();
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/upsell-lightbox.js
+
+
+class UpsellLightbox {
+    constructor() {
+        this.overlay = document.createElement("div");
+        this._form = EnForm.getInstance();
+        this._amount = DonationAmount.getInstance();
+        this._fees = ProcessingFees.getInstance();
+        this._frequency = DonationFrequency.getInstance();
+        let options = "EngridUpsell" in window ? window.EngridUpsell : {};
+        this.options = Object.assign(Object.assign({}, UpsellOptionsDefaults), options);
+        if (!this.shouldRun()) {
+            if (engrid_ENGrid.debug)
+                console.log("Upsell script should NOT run");
+            // If we're not on a Donation Page, get out
+            return;
+        }
+        this.overlay.id = "enModal";
+        this.overlay.classList.add("is-hidden");
+        this.overlay.classList.add("image-" + this.options.imagePosition);
+        this.renderLightbox();
+        this._form.onSubmit.subscribe(() => this.open());
+    }
+    renderLightbox() {
+        const title = this.options.title
+            .replace("{new-amount}", "<span class='upsell_suggestion'></span>")
+            .replace("{old-amount}", "<span class='upsell_amount'></span>");
+        const paragraph = this.options.paragraph
+            .replace("{new-amount}", "<span class='upsell_suggestion'></span>")
+            .replace("{old-amount}", "<span class='upsell_amount'></span>");
+        const yes = this.options.yesLabel
+            .replace("{new-amount}", "<span class='upsell_suggestion'></span>")
+            .replace("{old-amount}", "<span class='upsell_amount'></span>");
+        const no = this.options.noLabel
+            .replace("{new-amount}", "<span class='upsell_suggestion'></span>")
+            .replace("{old-amount}", "<span class='upsell_amount'></span>");
+        const markup = `
+            <div class="upsellLightboxContainer" id="goMonthly">
+              <!-- ideal image size is 480x650 pixels -->
+              <div class="background" style="background-image: url('${this.options.image}');"></div>
+              <div class="upsellLightboxContent">
+              ${this.options.canClose ? `<span id="goMonthlyClose"></span>` : ``}
+                <h1>
+                  ${title}
+                </h1>
+                ${this.options.otherAmount
+            ? `
+                <div class="upsellOtherAmount">
+                  <div class="upsellOtherAmountLabel">
+                    <p>
+                      ${this.options.otherLabel}
+                    </p>
+                  </div>
+                  <div class="upsellOtherAmountInput">
+                    <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="" autocomplete="off">
+                    <small>Minimum ${this.getAmountTxt(this.options.minAmount)}</small>
+                  </div>
+                </div>
+                `
+            : ``}
+
+                <p>
+                  ${paragraph}
+                </p>
+                <!-- YES BUTTON -->
+                <div id="upsellYesButton">
+                  <a class="pseduo__en__submit_button" href="#">
+                    <div>
+                    <span class='loader-wrapper'><span class='loader loader-quart'></span></span>
+                    <span class='label'>${yes}</span>
+                    </div>
+                  </a>
+                </div>
+                <!-- NO BUTTON -->
+                <div id="upsellNoButton">
+                  <button title="Close (Esc)" type="button">
+                    <div>
+                    <span class='loader-wrapper'><span class='loader loader-quart'></span></span>
+                    <span class='label'>${no}</span>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            `;
+        this.overlay.innerHTML = markup;
+        const closeButton = this.overlay.querySelector("#goMonthlyClose");
+        const yesButton = this.overlay.querySelector("#upsellYesButton a");
+        const noButton = this.overlay.querySelector("#upsellNoButton button");
+        yesButton.addEventListener("click", this.continue.bind(this));
+        noButton.addEventListener("click", this.continue.bind(this));
+        if (closeButton)
+            closeButton.addEventListener("click", this.close.bind(this));
+        this.overlay.addEventListener("click", (e) => {
+            if (e.target instanceof Element &&
+                e.target.id == this.overlay.id &&
+                this.options.canClose) {
+                this.close(e);
+            }
+        });
+        document.addEventListener("keyup", (e) => {
+            if (e.key === "Escape" && closeButton) {
+                closeButton.click();
+            }
+        });
+        document.body.appendChild(this.overlay);
+        const otherField = document.querySelector("#secondOtherField");
+        if (otherField) {
+            otherField.addEventListener("keyup", this.popupOtherField.bind(this));
+        }
+        if (engrid_ENGrid.debug)
+            console.log("Upsell script rendered");
+    }
+    // Should we run the script?
+    shouldRun() {
+        // const hideModal = cookie.get("hideUpsell"); // Get cookie
+        // if it's a first page of a Donation page
+        return (
+        // !hideModal &&
+        "EngridUpsell" in window &&
+            !!window.pageJson &&
+            window.pageJson.pageNumber == 1 &&
+            ["donation", "premiumgift"].includes(window.pageJson.pageType));
+    }
+    popupOtherField() {
+        var _a, _b;
+        const value = parseFloat((_b = (_a = this.overlay.querySelector("#secondOtherField")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "");
+        const live_upsell_amount = document.querySelectorAll("#upsellYesButton .upsell_suggestion");
+        const upsellAmount = this.getUpsellAmount();
+        if (!isNaN(value) && value > 0) {
+            this.checkOtherAmount(value);
+        }
+        else {
+            this.checkOtherAmount(upsellAmount);
+        }
+        live_upsell_amount.forEach((elem) => (elem.innerHTML = this.getAmountTxt(upsellAmount + this._fees.calculateFees(upsellAmount))));
+    }
+    liveAmounts() {
+        const live_upsell_amount = document.querySelectorAll(".upsell_suggestion");
+        const live_amount = document.querySelectorAll(".upsell_amount");
+        const upsellAmount = this.getUpsellAmount();
+        const suggestedAmount = upsellAmount + this._fees.calculateFees(upsellAmount);
+        live_upsell_amount.forEach((elem) => (elem.innerHTML = this.getAmountTxt(suggestedAmount)));
+        live_amount.forEach((elem) => (elem.innerHTML = this.getAmountTxt(this._amount.amount + this._fees.fee)));
+    }
+    // Return the Suggested Upsell Amount
+    getUpsellAmount() {
+        var _a, _b;
+        const amount = this._amount.amount;
+        const otherAmount = parseFloat((_b = (_a = this.overlay.querySelector("#secondOtherField")) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "");
+        if (otherAmount > 0) {
+            return otherAmount > this.options.minAmount
+                ? otherAmount
+                : this.options.minAmount;
+        }
+        let upsellAmount = 0;
+        for (let i = 0; i < this.options.amountRange.length; i++) {
+            let val = this.options.amountRange[i];
+            if (upsellAmount == 0 && amount <= val.max) {
+                upsellAmount = val.suggestion;
+                if (typeof upsellAmount !== "number") {
+                    const suggestionMath = upsellAmount.replace("amount", amount.toFixed(2));
+                    upsellAmount = parseFloat(Function('"use strict";return (' + suggestionMath + ")")());
+                }
+                break;
+            }
+        }
+        return upsellAmount > this.options.minAmount
+            ? upsellAmount
+            : this.options.minAmount;
+    }
+    shouldOpen() {
+        const freq = this._frequency.frequency;
+        const upsellAmount = this.getUpsellAmount();
+        // If frequency is not onetime or
+        // the modal is already opened or
+        // there's no suggestion for this donation amount,
+        // we should not open
+        if (freq == "onetime" &&
+            !this.overlay.classList.contains("is-submitting") &&
+            upsellAmount > 0) {
+            if (engrid_ENGrid.debug) {
+                console.log("Upsell Frequency", this._frequency.frequency);
+                console.log("Upsell Amount", this._amount.amount);
+                console.log("Upsell Suggested Amount", upsellAmount);
+            }
+            return true;
+        }
+        return false;
+    }
+    open() {
+        if (engrid_ENGrid.debug)
+            console.log("Upsell Script Triggered");
+        if (!this.shouldOpen()) {
+            // In the circumstance when the form fails to validate via server-side validation, the page will reload
+            // When that happens, we should place the original amount saved in sessionStorage into the upsell original amount field
+            let original = window.sessionStorage.getItem("original");
+            if (original &&
+                document.querySelectorAll(".en__errorList .en__error").length > 0) {
+                this.setOriginalAmount(original);
+            }
+            // Returning true will give the "go ahead" to submit the form
+            this._form.submit = true;
+            return true;
+        }
+        this.liveAmounts();
+        this.overlay.classList.remove("is-hidden");
+        this._form.submit = false;
+        engrid_ENGrid.setBodyData("has-lightbox", "");
+        return false;
+    }
+    // Set the original amount into a hidden field using the upsellOriginalGiftAmountFieldName, if provided
+    setOriginalAmount(original) {
+        if (this.options.upsellOriginalGiftAmountFieldName) {
+            let enFieldUpsellOriginalAmount = document.querySelector(".en__field__input.en__field__input--hidden[name='" +
+                this.options.upsellOriginalGiftAmountFieldName +
+                "']");
+            if (!enFieldUpsellOriginalAmount) {
+                let pageform = document.querySelector("form.en__component--page");
+                if (pageform) {
+                    let input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+                    input.setAttribute("name", this.options.upsellOriginalGiftAmountFieldName);
+                    input.classList.add("en__field__input", "en__field__input--hidden");
+                    pageform.appendChild(input);
+                    enFieldUpsellOriginalAmount = document.querySelector('.en__field__input.en__field__input--hidden[name="' +
+                        this.options.upsellOriginalGiftAmountFieldName +
+                        '"]');
+                }
+            }
+            if (enFieldUpsellOriginalAmount) {
+                // save it to a session variable just in case this page reloaded due to server-side validation error
+                window.sessionStorage.setItem("original", original);
+                enFieldUpsellOriginalAmount.setAttribute("value", original);
+            }
+        }
+    }
+    // Proceed to the next page (upsold or not)
+    continue(e) {
+        var _a;
+        e.preventDefault();
+        if (e.target instanceof Element &&
+            ((_a = document.querySelector("#upsellYesButton")) === null || _a === void 0 ? void 0 : _a.contains(e.target))) {
+            if (engrid_ENGrid.debug)
+                console.log("Upsold");
+            this.setOriginalAmount(this._amount.amount.toString());
+            const upsoldAmount = this.getUpsellAmount();
+            this._frequency.setFrequency("monthly");
+            this._amount.setAmount(upsoldAmount);
+        }
+        else {
+            this.setOriginalAmount("");
+            window.sessionStorage.removeItem("original");
+        }
+        this._form.submitForm();
+    }
+    // Close the lightbox (no cookies)
+    close(e) {
+        e.preventDefault();
+        // cookie.set("hideUpsell", "1", { expires: 1 }); // Create one day cookie
+        this.overlay.classList.add("is-hidden");
+        engrid_ENGrid.setBodyData("has-lightbox", false);
+        if (this.options.submitOnClose) {
+            this._form.submitForm();
+        }
+        else {
+            this._form.dispatchError();
+        }
+    }
+    getAmountTxt(amount = 0) {
+        var _a, _b, _c, _d;
+        const symbol = (_a = engrid_ENGrid.getOption("CurrencySymbol")) !== null && _a !== void 0 ? _a : "$";
+        const dec_separator = (_b = engrid_ENGrid.getOption("DecimalSeparator")) !== null && _b !== void 0 ? _b : ".";
+        const thousands_separator = (_c = engrid_ENGrid.getOption("ThousandsSeparator")) !== null && _c !== void 0 ? _c : "";
+        const dec_places = amount % 1 == 0 ? 0 : (_d = engrid_ENGrid.getOption("DecimalPlaces")) !== null && _d !== void 0 ? _d : 2;
+        const amountTxt = engrid_ENGrid.formatNumber(amount, dec_places, dec_separator, thousands_separator);
+        return amount > 0 ? symbol + amountTxt : "";
+    }
+    checkOtherAmount(value) {
+        const otherInput = document.querySelector(".upsellOtherAmountInput");
+        if (otherInput) {
+            if (value >= this.options.minAmount) {
+                otherInput.classList.remove("is-invalid");
+            }
+            else {
+                otherInput.classList.add("is-invalid");
+            }
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/show-hide-radio-checkboxes.js
+class ShowHideRadioCheckboxes {
+    constructor(elements, classes) {
+        this.elements = document.getElementsByName(elements);
+        this.classes = classes;
+        this.hideAll();
+        for (let i = 0; i < this.elements.length; i++) {
+            let element = this.elements[i];
+            if (element.checked) {
+                this.show(element);
+            }
+            element.addEventListener("change", (e) => {
+                this.hideAll();
+                this.show(element);
+            });
+        }
+    }
+    // Hide All Divs
+    hideAll() {
+        this.elements.forEach((item, index) => {
+            if (item instanceof HTMLInputElement)
+                this.hide(item);
+        });
+    }
+    // Hide Single Element Div
+    hide(item) {
+        let inputValue = item.value;
+        document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
+            // Consider toggling "hide" class so these fields can be displayed when in a debug state
+            if (el instanceof HTMLElement)
+                el.style.display = "none";
+        });
+    }
+    // Show Single Element Div
+    show(item) {
+        let inputValue = item.value;
+        document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
+            // Consider toggling "hide" class so these fields can be displayed when in a debug state
+            if (el instanceof HTMLElement)
+                el.style.display = "";
+        });
+        if (item.type == "checkbox" && !item.checked) {
+            this.hide(item);
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/translate-fields.js
+
+// This class works when the user has added ".simple_country_select" as a class in page builder for the Country select
+class TranslateFields {
+    constructor() {
+        this.countrySelect = document.querySelector("#en__field_supporter_country");
+        let options = "EngridTranslate" in window ? window.EngridTranslate : {};
+        this.options = TranslateOptionsDefaults;
+        if (options) {
+            for (let key in options) {
+                this.options[key] = [...this.options[key], ...options[key]];
+            }
+        }
+        if (this.countrySelect) {
+            this.countrySelect.addEventListener("change", this.translateFields.bind(this));
+        }
+    }
+    translateFields() {
+        this.resetTranslatedFields();
+        if (this.countrySelect.value in this.options) {
+            this.options[this.countrySelect.value].forEach((field) => {
+                // console.log(field);
+                this.translateField(field.field, field.translation);
+            });
+        }
+        // Translate the "To:"
+        const recipient_block = document.querySelectorAll(".recipient-block");
+        if (!!recipient_block.length) {
+            switch (this.countrySelect.value) {
+                case "FR":
+                case "FRA":
+                case "France":
+                    recipient_block.forEach((elem) => (elem.innerHTML = "À:"));
+                    break;
+                case "DE":
+                case "DEU":
+                case "Germany":
+                    recipient_block.forEach((elem) => (elem.innerHTML = "Zu:"));
+                    break;
+                case "NL":
+                case "NLD":
+                case "Netherlands":
+                    recipient_block.forEach((elem) => (elem.innerHTML = "Aan:"));
+                    break;
+            }
+        }
+        // Translate the State Field
+        this.setStateField(this.countrySelect.value);
+    }
+    translateField(name, translation) {
+        const field = document.querySelector(`[name="${name}"]`);
+        if (field) {
+            const fieldWrapper = field.closest(".en__field");
+            if (fieldWrapper) {
+                const fieldLabel = fieldWrapper.querySelector(".en__field__label");
+                if (field instanceof HTMLInputElement && field.placeholder != "") {
+                    if (!fieldLabel || fieldLabel.innerHTML == field.placeholder) {
+                        field.dataset.original = field.placeholder;
+                        field.placeholder = translation;
+                    }
+                }
+                if (fieldLabel) {
+                    fieldLabel.dataset.original = fieldLabel.innerHTML;
+                    fieldLabel.innerHTML = translation;
+                }
+            }
+        }
+    }
+    resetTranslatedFields() {
+        const fields = document.querySelectorAll("[data-original]");
+        fields.forEach((field) => {
+            if (field instanceof HTMLInputElement && field.dataset.original) {
+                field.placeholder = field.dataset.original;
+            }
+            else {
+                field.innerHTML = field.dataset.original;
+            }
+            field.removeAttribute("data-original");
+        });
+    }
+    setStateField(country) {
+        switch (country) {
+            case "BR":
+            case "BRA":
+            case "Brazil":
+                this.setStateValues("Estado", null);
+                break;
+            case "FR":
+            case "FRA":
+            case "France":
+                this.setStateValues("Région", null);
+                break;
+            case "GB":
+            case "GBR":
+            case "United Kingdom":
+                this.setStateValues("State/Region", null);
+                break;
+            case "DE":
+            case "DEU":
+            case "Germany":
+                this.setStateValues("Bundesland", null);
+                break;
+            case "NL":
+            case "NLD":
+            case "Netherlands":
+                this.setStateValues("Provincie", null);
+                break;
+            case "AU":
+            case "AUS":
+                this.setStateValues("Province/State", [
+                    { label: "Select Province/State", value: "" },
+                    { label: "New South Wales", value: "NSW" },
+                    { label: "Victoria", value: "VIC" },
+                    { label: "Queensland", value: "QLD" },
+                    { label: "South Australia", value: "SA" },
+                    { label: "Western Australia", value: "WA" },
+                    { label: "Tasmania", value: "TAS" },
+                    { label: "Northern Territory", value: "NT" },
+                    { label: "Australian Capital Territory", value: "ACT" },
+                ]);
+                break;
+            case "Australia":
+                this.setStateValues("Province/State", [
+                    { label: "Select Province/State", value: "" },
+                    { label: "New South Wales", value: "New South Wales" },
+                    { label: "Victoria", value: "Victoria" },
+                    { label: "Queensland", value: "Queensland" },
+                    { label: "South Australia", value: "South Australia" },
+                    { label: "Western Australia", value: "Western Australia" },
+                    { label: "Tasmania", value: "Tasmania" },
+                    { label: "Northern Territory", value: "Northern Territory" },
+                    {
+                        label: "Australian Capital Territory",
+                        value: "Australian Capital Territory",
+                    },
+                ]);
+                break;
+            case "US":
+            case "USA":
+                this.setStateValues("State", [
+                    { label: "Select State", value: "" },
+                    { label: "Alabama", value: "AL" },
+                    { label: "Alaska", value: "AK" },
+                    { label: "Arizona", value: "AZ" },
+                    { label: "Arkansas", value: "AR" },
+                    { label: "California", value: "CA" },
+                    { label: "Colorado", value: "CO" },
+                    { label: "Connecticut", value: "CT" },
+                    { label: "Delaware", value: "DE" },
+                    { label: "District of Columbia", value: "DC" },
+                    { label: "Florida", value: "FL" },
+                    { label: "Georgia", value: "GA" },
+                    { label: "Hawaii", value: "HI" },
+                    { label: "Idaho", value: "ID" },
+                    { label: "Illinois", value: "IL" },
+                    { label: "Indiana", value: "IN" },
+                    { label: "Iowa", value: "IA" },
+                    { label: "Kansas", value: "KS" },
+                    { label: "Kentucky", value: "KY" },
+                    { label: "Louisiana", value: "LA" },
+                    { label: "Maine", value: "ME" },
+                    { label: "Maryland", value: "MD" },
+                    { label: "Massachusetts", value: "MA" },
+                    { label: "Michigan", value: "MI" },
+                    { label: "Minnesota", value: "MN" },
+                    { label: "Mississippi", value: "MS" },
+                    { label: "Missouri", value: "MO" },
+                    { label: "Montana", value: "MT" },
+                    { label: "Nebraska", value: "NE" },
+                    { label: "Nevada", value: "NV" },
+                    { label: "New Hampshire", value: "NH" },
+                    { label: "New Jersey", value: "NJ" },
+                    { label: "New Mexico", value: "NM" },
+                    { label: "New York", value: "NY" },
+                    { label: "North Carolina", value: "NC" },
+                    { label: "North Dakota", value: "ND" },
+                    { label: "Ohio", value: "OH" },
+                    { label: "Oklahoma", value: "OK" },
+                    { label: "Oregon", value: "OR" },
+                    { label: "Pennsylvania", value: "PA" },
+                    { label: "Rhode Island", value: "RI" },
+                    { label: "South Carolina", value: "SC" },
+                    { label: "South Dakota", value: "SD" },
+                    { label: "Tennessee", value: "TN" },
+                    { label: "Texas", value: "TX" },
+                    { label: "Utah", value: "UT" },
+                    { label: "Vermont", value: "VT" },
+                    { label: "Virginia", value: "VA" },
+                    { label: "Washington", value: "WA" },
+                    { label: "West Virginia", value: "WV" },
+                    { label: "Wisconsin", value: "WI" },
+                    { label: "Wyoming", value: "WY" },
+                ]);
+                break;
+            case "United States":
+                this.setStateValues("State", [
+                    { label: "Select State", value: "" },
+                    { label: "Alabama", value: "Alabama" },
+                    { label: "Alaska", value: "Alaska" },
+                    { label: "Arizona", value: "Arizona" },
+                    { label: "Arkansas", value: "Arkansas" },
+                    { label: "California", value: "California" },
+                    { label: "Colorado", value: "Colorado" },
+                    { label: "Connecticut", value: "Connecticut" },
+                    { label: "Delaware", value: "Delaware" },
+                    { label: "District of Columbia", value: "District of Columbia" },
+                    { label: "Florida", value: "Florida" },
+                    { label: "Georgia", value: "Georgia" },
+                    { label: "Hawaii", value: "Hawaii" },
+                    { label: "Idaho", value: "Idaho" },
+                    { label: "Illinois", value: "Illinois" },
+                    { label: "Indiana", value: "Indiana" },
+                    { label: "Iowa", value: "Iowa" },
+                    { label: "Kansas", value: "Kansas" },
+                    { label: "Kentucky", value: "Kentucky" },
+                    { label: "Louisiana", value: "Louisiana" },
+                    { label: "Maine", value: "Maine" },
+                    { label: "Maryland", value: "Maryland" },
+                    { label: "Massachusetts", value: "Massachusetts" },
+                    { label: "Michigan", value: "Michigan" },
+                    { label: "Minnesota", value: "Minnesota" },
+                    { label: "Mississippi", value: "Mississippi" },
+                    { label: "Missouri", value: "Missouri" },
+                    { label: "Montana", value: "Montana" },
+                    { label: "Nebraska", value: "Nebraska" },
+                    { label: "Nevada", value: "Nevada" },
+                    { label: "New Hampshire", value: "New Hampshire" },
+                    { label: "New Jersey", value: "New Jersey" },
+                    { label: "New Mexico", value: "New Mexico" },
+                    { label: "New York", value: "New York" },
+                    { label: "North Carolina", value: "North Carolina" },
+                    { label: "North Dakota", value: "North Dakota" },
+                    { label: "Ohio", value: "Ohio" },
+                    { label: "Oklahoma", value: "Oklahoma" },
+                    { label: "Oregon", value: "Oregon" },
+                    { label: "Pennsylvania", value: "Pennsylvania" },
+                    { label: "Rhode Island", value: "Rhode Island" },
+                    { label: "South Carolina", value: "South Carolina" },
+                    { label: "South Dakota", value: "South Dakota" },
+                    { label: "Tennessee", value: "Tennessee" },
+                    { label: "Texas", value: "Texas" },
+                    { label: "Utah", value: "Utah" },
+                    { label: "Vermont", value: "Vermont" },
+                    { label: "Virginia", value: "Virginia" },
+                    { label: "Washington", value: "Washington" },
+                    { label: "West Virginia", value: "West Virginia" },
+                    { label: "Wisconsin", value: "Wisconsin" },
+                    { label: "Wyoming", value: "Wyoming" },
+                ]);
+                break;
+            case "CA":
+            case "CAN":
+                this.setStateValues("Province/State", [
+                    { label: "Select Province/State", value: "" },
+                    { label: "Alberta", value: "AB" },
+                    { label: "British Columbia", value: "BC" },
+                    { label: "Manitoba", value: "MB" },
+                    { label: "New Brunswick", value: "NB" },
+                    { label: "Newfoundland and Labrador", value: "NL" },
+                    { label: "Northwest Territories", value: "NT" },
+                    { label: "Nova Scotia", value: "NS" },
+                    { label: "Nunavut", value: "NU" },
+                    { label: "Ontario", value: "ON" },
+                    { label: "Prince Edward Island", value: "PE" },
+                    { label: "Quebec", value: "QC" },
+                    { label: "Saskatchewan", value: "SK" },
+                    { label: "Yukon", value: "YT" },
+                ]);
+                break;
+            case "Canada":
+                this.setStateValues("Province/State", [
+                    { label: "Select Province/State", value: "" },
+                    { label: "Alberta", value: "Alberta" },
+                    { label: "British Columbia", value: "British Columbia" },
+                    { label: "Manitoba", value: "Manitoba" },
+                    { label: "New Brunswick", value: "New Brunswick" },
+                    {
+                        label: "Newfoundland and Labrador",
+                        value: "Newfoundland and Labrador",
+                    },
+                    { label: "Northwest Territories", value: "Northwest Territories" },
+                    { label: "Nova Scotia", value: "Nova Scotia" },
+                    { label: "Nunavut", value: "Nunavut" },
+                    { label: "Ontario", value: "Ontario" },
+                    { label: "Prince Edward Island", value: "Prince Edward Island" },
+                    { label: "Quebec", value: "Quebec" },
+                    { label: "Saskatchewan", value: "Saskatchewan" },
+                    { label: "Yukon", value: "Yukon" },
+                ]);
+                break;
+            default:
+                this.setStateValues("Province/State", null);
+                break;
+        }
+    }
+    setStateValues(label, values) {
+        const stateField = document.querySelector("#en__field_supporter_region");
+        const stateWrapper = stateField ? stateField.closest(".en__field") : null;
+        if (stateWrapper) {
+            const stateLabel = stateWrapper.querySelector(".en__field__label");
+            const elementWrapper = stateWrapper.querySelector(".en__field__element");
+            if (stateLabel) {
+                stateLabel.innerHTML = label;
+            }
+            if (elementWrapper) {
+                if (values === null || values === void 0 ? void 0 : values.length) {
+                    const select = document.createElement("select");
+                    select.name = "supporter.region";
+                    select.id = "en__field_supporter_region";
+                    select.classList.add("en__field__input");
+                    select.classList.add("en__field__input--select");
+                    select.autocomplete = "address-level1";
+                    values.forEach((value) => {
+                        const option = document.createElement("option");
+                        option.value = value.value;
+                        option.innerHTML = value.label;
+                        select.appendChild(option);
+                    });
+                    elementWrapper.innerHTML = "";
+                    elementWrapper.appendChild(select);
+                }
+                else {
+                    elementWrapper.innerHTML = "";
+                    const input = document.createElement("input");
+                    input.type = "text";
+                    input.name = "supporter.region";
+                    input.placeholder = label;
+                    input.id = "en__field_supporter_region";
+                    input.classList.add("en__field__input");
+                    input.classList.add("en__field__input--text");
+                    input.autocomplete = "address-level1";
+                    elementWrapper.appendChild(input);
+                }
+            }
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/simple-country-select.js
+// This class works when the user has added ".simple_country_select" as a class in page builder for the Country select
+class SimpleCountrySelect {
+    constructor() {
+        this.countryWrapper = document.querySelector(".simple_country_select");
+        this.countrySelect = document.querySelector("#en__field_supporter_country");
+        this.countriesNames = new Intl.DisplayNames(["en"], {
+            type: "region",
+        });
+        this.country = null;
+        fetch("https://www.cloudflare.com/cdn-cgi/trace")
+            .then((res) => res.text())
+            .then((t) => {
+            let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
+            data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+            const jsondata = JSON.parse(data);
+            this.country = jsondata.loc;
+            this.init();
+            // console.log("Country:", this.country);
+        });
+    }
+    init() {
+        if (this.countrySelect) {
+            if (this.country) {
+                // We are setting the country by Name because the ISO code is not always the same. They have 2 and 3 letter codes.
+                this.setCountryByName(this.countriesNames.of(this.country));
+            }
+            let countrySelectLabel = this.countrySelect.options[this.countrySelect.selectedIndex].innerHTML;
+            let countrySelectValue = this.countrySelect.options[this.countrySelect.selectedIndex].value;
+            // @TODO Update so that it reads "(Outside X?)" where X is the Value of the Country Select. No need for long form version of it.
+            if (countrySelectValue == "US") {
+                countrySelectValue = " US";
+            }
+            if (countrySelectLabel == "United States") {
+                countrySelectLabel = "the United States";
+            }
+            let countryWrapper = document.querySelector(".simple_country_select");
+            if (countryWrapper) {
+                // Remove Country Select tab index
+                this.countrySelect.tabIndex = -1;
+                // Find the address label
+                let addressLabel = document.querySelector(".en__field--address1 label");
+                // EN does not enforce a labels on fields so we have to check for it
+                // @TODO Update so that this follows the same pattern / HTML structure as the Tippy tooltips which are added to labels. REF: https://github.com/4site-interactive-studios/engrid-aiusa/blob/6e4692d4f9a28b9668d6c1bfed5622ac0cc5bdb9/src/scripts/main.js#L42
+                if (addressLabel) {
+                    let labelText = addressLabel.innerHTML;
+                    // Wrap the address label in a div to break out of the flexbox
+                    this.wrap(addressLabel, document.createElement("div"));
+                    // Add our link INSIDE the address label
+                    // Includes both long form and short form variants
+                    let newEl = document.createElement("span");
+                    newEl.innerHTML =
+                        ' <label id="en_custom_field_simple_country_select_long" class="en__field__label"><a href="javascript:void(0)">(Outside ' +
+                            countrySelectLabel +
+                            '?)</a></label><label id="en_custom_field_simple_country_select_short" class="en__field__label"><a href="javascript:void(0)">(Outside ' +
+                            countrySelectValue +
+                            "?)</a></label>";
+                    addressLabel.innerHTML = `${labelText}${newEl.innerHTML}`;
+                    addressLabel.querySelectorAll("a").forEach((el) => {
+                        el.addEventListener("click", this.showCountrySelect.bind(this));
+                    });
+                    //this.insertAfter(newEl, addressLabel);
+                }
+            }
+        }
+    }
+    // Helper function to insert HTML after a node
+    insertAfter(el, referenceNode) {
+        const parentElement = referenceNode.parentNode;
+        parentElement.insertBefore(el, referenceNode.nextSibling);
+    }
+    // Helper function to wrap a target in a new element
+    wrap(el, wrapper) {
+        const parentElement = el.parentNode;
+        parentElement.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+    }
+    showCountrySelect(e) {
+        var _a;
+        e.preventDefault();
+        this.countryWrapper.classList.add("country-select-visible");
+        let addressLabel = document.querySelector(".en__field--address1 label");
+        let addressWrapper = (_a = addressLabel.parentElement) === null || _a === void 0 ? void 0 : _a.parentElement;
+        addressWrapper.classList.add("country-select-visible");
+        this.countrySelect.focus();
+        // Reinstate Country Select tab index
+        this.countrySelect.removeAttribute("tabIndex");
+    }
+    setCountryByName(countryName) {
+        if (this.countrySelect) {
+            let countrySelectOptions = this.countrySelect.options;
+            for (let i = 0; i < countrySelectOptions.length; i++) {
+                if (countrySelectOptions[i].innerHTML.toLowerCase() ==
+                    countryName.toLowerCase()) {
+                    this.countrySelect.selectedIndex = i;
+                    break;
+                }
+            }
+            const event = new Event("change", { bubbles: true });
+            this.countrySelect.dispatchEvent(event);
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/skip-link.js
+// Javascript that adds an accessible "Skip Link" button after the <body> opening that jumps to
+// the first <title> or <h1> field in a "body-" section, or the first <h1> if none are found
+// in those sections
+// Depends on _engrid-skip-link.scss
+
+class SkipToMainContentLink {
+    constructor() {
+        const firstTitleInEngridBody = document.querySelector("div[class*='body-'] title");
+        const firstH1InEngridBody = document.querySelector("div[class*='body-'] h1");
+        const firstTitle = document.querySelector("title");
+        const firstH1 = document.querySelector("h1");
+        if (firstTitleInEngridBody && firstTitleInEngridBody.parentElement) {
+            firstTitleInEngridBody.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
+            this.insertSkipLinkSpan();
+        }
+        else if (firstH1InEngridBody && firstH1InEngridBody.parentElement) {
+            firstH1InEngridBody.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
+            this.insertSkipLinkSpan();
+        }
+        else if (firstTitle && firstTitle.parentElement) {
+            firstTitle.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
+            this.insertSkipLinkSpan();
+        }
+        else if (firstH1 && firstH1.parentElement) {
+            firstH1.parentElement.insertAdjacentHTML("beforebegin", '<span id="skip-link"></span>');
+            this.insertSkipLinkSpan();
+        }
+        else {
+            if (engrid_ENGrid.debug)
+                console.log("This page contains no <title> or <h1> and a 'Skip to main content' link was not added");
+        }
+    }
+    insertSkipLinkSpan() {
+        document.body.insertAdjacentHTML("afterbegin", '<a class="skip-link" href="#skip-link">Skip to main content</a>');
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/src-defer.js
+// Build Notes: Add the vanilla Javascript version inline inside the page template right before </body>
+// In the event the vanilla javascript is not inlined we should still process any assets with a data-src still defined on it. Plus we only process background video via this JS file as to not block the page with a large video file downloading.
+// // 4Site's simplified image lazy loader
+// var srcDefer = document.querySelectorAll("img[data-src]");
+// window.addEventListener('DOMContentLoaded', (event) => {
+//   for (var i = 0; i < srcDefer.length; i++) {
+//     let dataSrc = srcDefer[i].getAttribute("data-src");
+//     if (dataSrc) {
+//       srcDefer[i].setAttribute("decoding", "async"); // Gets image processing off the main working thread
+//       srcDefer[i].setAttribute("loading", "lazy"); // Lets the browser determine when the asset should be downloaded
+//       srcDefer[i].setAttribute("src", dataSrc); // Sets the src which will cause the browser to retrieve the asset
+//       srcDefer[i].setAttribute("data-engrid-data-src-processed", "true"); // Sets an attribute to mark that it has been processed by ENGrid
+//       srcDefer[i].removeAttribute("data-src"); // Removes the data-source
+//     }
+//   }
+// });
+class SrcDefer {
+    constructor() {
+        // Find all images and videos with a data-src defined
+        this.imgSrcDefer = document.querySelectorAll("img[data-src]");
+        this.videoBackground = document.querySelectorAll("video");
+        this.videoBackgroundSource = document.querySelectorAll("video source");
+        // Process images
+        for (let i = 0; i < this.imgSrcDefer.length; i++) {
+            let img = this.imgSrcDefer[i];
+            if (img) {
+                img.setAttribute("decoding", "async"); // Gets image processing off the main working thread, and decodes the image asynchronously to reduce delay in presenting other content
+                img.setAttribute("loading", "lazy"); // Lets the browser determine when the asset should be downloaded using it's native lazy loading
+                let imgDataSrc = img.getAttribute("data-src");
+                if (imgDataSrc) {
+                    img.setAttribute("src", imgDataSrc); // Sets the src which will cause the browser to retrieve the asset
+                }
+                img.setAttribute("data-engrid-data-src-processed", "true"); // Sets an attribute to mark that it has been processed by ENGrid
+                img.removeAttribute("data-src"); // Removes the data-source
+            }
+        }
+        // Process video
+        for (let i = 0; i < this.videoBackground.length; i++) {
+            let video = this.videoBackground[i];
+            // Process one or more defined sources in the <video> tag
+            this.videoBackgroundSource = video.querySelectorAll("source");
+            if (this.videoBackgroundSource) {
+                // loop through all the sources
+                for (let j = 0; j < this.videoBackgroundSource.length; j++) {
+                    let videoSource = this.videoBackgroundSource[j];
+                    if (videoSource) {
+                        let videoBackgroundSourcedDataSrc = videoSource.getAttribute("data-src");
+                        if (videoBackgroundSourcedDataSrc) {
+                            videoSource.setAttribute("src", videoBackgroundSourcedDataSrc);
+                            videoSource.setAttribute("data-engrid-data-src-processed", "true"); // Sets an attribute to mark that it has been processed by ENGrid
+                            videoSource.removeAttribute("data-src"); // Removes the data-source
+                        }
+                    }
+                }
+                // To get the browser to request the video asset defined we need to remove the <video> tag and re-add it
+                let videoBackgroundParent = video.parentNode; // Determine the parent of the <video> tag
+                let copyOfVideoBackground = video; // Copy the <video> tag
+                if (videoBackgroundParent && copyOfVideoBackground) {
+                    videoBackgroundParent.replaceChild(copyOfVideoBackground, video); // Replace the <video> with the copy of itself
+                    // Update the video to auto play, mute, loop
+                    video.muted = true; // Mute the video by default
+                    video.controls = false; // Hide the browser controls
+                    video.loop = true; // Loop the video
+                    video.playsInline = true; // Encourage the user agent to display video content within the element's playback area
+                    video.play(); // Plays the video
+                }
+            }
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/set-recurr-freq.js
+
+
+class setRecurrFreq {
+    constructor() {
+        this._frequency = DonationFrequency.getInstance();
+        this.linkClass = "setRecurrFreq-";
+        this.checkboxName = "engrid.recurrfreq";
+        // Watch the links that starts with linkClass
+        document
+            .querySelectorAll(`a[class^="${this.linkClass}"]`)
+            .forEach((element) => {
+            element.addEventListener("click", (e) => {
+                // Get the right class
+                const setRecurrFreqClass = element.className
+                    .split(" ")
+                    .filter((linkClass) => linkClass.startsWith(this.linkClass));
+                if (engrid_ENGrid.debug)
+                    console.log(setRecurrFreqClass);
+                if (setRecurrFreqClass.length) {
+                    e.preventDefault();
+                    engrid_ENGrid.setFieldValue("transaction.recurrfreq", setRecurrFreqClass[0]
+                        .substring(this.linkClass.length)
+                        .toUpperCase());
+                    this._frequency.load();
+                }
+            });
+        });
+        const currentFrequency = engrid_ENGrid.getFieldValue("transaction.recurrfreq").toUpperCase();
+        // Watch checkboxes with the name checkboxName
+        document.getElementsByName(this.checkboxName).forEach((element) => {
+            // Set checked status per currently-set frequency
+            const frequency = element.value.toUpperCase();
+            if (frequency === currentFrequency) {
+                element.checked = true;
+            }
+            else {
+                element.checked = false;
+            }
+            element.addEventListener("change", () => {
+                const frequency = element.value.toUpperCase();
+                if (element.checked) {
+                    engrid_ENGrid.setFieldValue("transaction.recurrfreq", frequency);
+                    engrid_ENGrid.setFieldValue("transaction.recurrpay", "Y");
+                    this._frequency.load();
+                }
+                else if (frequency !== "ONETIME") {
+                    engrid_ENGrid.setFieldValue("transaction.recurrfreq", "ONETIME");
+                    engrid_ENGrid.setFieldValue("transaction.recurrpay", "N");
+                    this._frequency.load();
+                }
+            });
+        });
+        // Uncheck the checkbox when frequency != checkbox value
+        this._frequency.onFrequencyChange.subscribe(() => {
+            const currentFrequency = this._frequency.frequency.toUpperCase();
+            document.getElementsByName(this.checkboxName).forEach((element) => {
+                const elementFrequency = element.value.toUpperCase();
+                if (element.checked && elementFrequency !== currentFrequency) {
+                    element.checked = false;
+                }
+                else if (!element.checked && elementFrequency === currentFrequency) {
+                    element.checked = true;
+                }
+            });
+        });
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/page-background.js
+
+class PageBackground {
+    constructor() {
+        // @TODO: Change page-backgroundImage to page-background
+        this.pageBackground = document.querySelector(".page-backgroundImage");
+        // Finds any <img> added to the "backgroundImage" ENGRid section and sets it as the "--engrid__page-backgroundImage_url" CSS Custom Property
+        if (this.pageBackground) {
+            const pageBackgroundImg = this.pageBackground.querySelector("img");
+            let pageBackgroundImgDataSrc = pageBackgroundImg === null || pageBackgroundImg === void 0 ? void 0 : pageBackgroundImg.getAttribute("data-src");
+            let pageBackgroundImgSrc = pageBackgroundImg === null || pageBackgroundImg === void 0 ? void 0 : pageBackgroundImg.src;
+            if (this.pageBackground && pageBackgroundImgDataSrc) {
+                if (engrid_ENGrid.debug)
+                    console.log("A background image set in the page was found with a data-src value, setting it as --engrid__page-backgroundImage_url", pageBackgroundImgDataSrc);
+                pageBackgroundImgDataSrc = "url('" + pageBackgroundImgDataSrc + "')";
+                this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url", pageBackgroundImgDataSrc);
+            }
+            else if (this.pageBackground && pageBackgroundImgSrc) {
+                if (engrid_ENGrid.debug)
+                    console.log("A background image set in the page was found with a src value, setting it as --engrid__page-backgroundImage_url", pageBackgroundImgSrc);
+                pageBackgroundImgSrc = "url('" + pageBackgroundImgSrc + "')";
+                this.pageBackground.style.setProperty("--engrid__page-backgroundImage_url", pageBackgroundImgSrc);
+            }
+            else if (pageBackgroundImg) {
+                if (engrid_ENGrid.debug)
+                    console.log("A background image set in the page was found but without a data-src or src value, no action taken", pageBackgroundImg);
+            }
+            else {
+                if (engrid_ENGrid.debug)
+                    console.log("A background image set in the page was not found, any default image set in the theme on --engrid__page-backgroundImage_url will be used");
+            }
+        }
+        else {
+            if (engrid_ENGrid.debug)
+                console.log("A background image set in the page was not found, any default image set in the theme on --engrid__page-backgroundImage_url will be used");
+        }
+        this.setDataAttributes();
+    }
+    setDataAttributes() {
+        if (this.hasVideoBackground())
+            return engrid_ENGrid.setBodyData("page-background", "video");
+        if (this.hasImageBackground())
+            return engrid_ENGrid.setBodyData("page-background", "image");
+        return engrid_ENGrid.setBodyData("page-background", "empty");
+    }
+    hasVideoBackground() {
+        if (this.pageBackground) {
+            return !!this.pageBackground.querySelector("video");
+        }
+    }
+    hasImageBackground() {
+        if (this.pageBackground) {
+            return (!this.hasVideoBackground() && !!this.pageBackground.querySelector("img"));
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/neverbounce.js
+
+
+class NeverBounce {
+    constructor(apiKey, dateField = null, statusField = null) {
+        this.apiKey = apiKey;
+        this.dateField = dateField;
+        this.statusField = statusField;
+        this.form = EnForm.getInstance();
+        this.emailField = null;
+        this.emailWrapper = document.querySelector(".en__field--emailAddress");
+        this.nbDate = null;
+        this.nbStatus = null;
+        window._NBSettings = {
+            apiKey: this.apiKey,
+            autoFieldHookup: false,
+            inputLatency: 500,
+            displayPoweredBy: false,
+            loadingMessage: "Validating...",
+            softRejectMessage: "Invalid email",
+            acceptedMessage: "Email validated!",
+            feedback: false,
+        };
+        engrid_ENGrid.loadJS("https://cdn.neverbounce.com/widget/dist/NeverBounce.js");
+        this.init();
+        this.form.onValidate.subscribe(() => (this.form.validate = this.validate()));
+    }
+    init() {
+        this.emailField = document.getElementById("en__field_supporter_emailAddress");
+        if (this.dateField && document.getElementsByName(this.dateField).length)
+            this.nbDate = document.querySelector("[name='" + this.dateField + "']");
+        if (this.statusField && document.getElementsByName(this.statusField).length)
+            this.nbStatus = document.querySelector("[name='" + this.statusField + "']");
+        if (!this.emailField) {
+            if (engrid_ENGrid.debug)
+                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            return;
+        }
+        if (!this.emailField) {
+            if (engrid_ENGrid.debug)
+                console.log("Engrid Neverbounce: E-mail Field Not Found", this.emailField);
+            return;
+        }
+        if (engrid_ENGrid.debug)
+            console.log("Engrid Neverbounce External Script Loaded");
+        this.wrap(this.emailField, document.createElement("div"));
+        const parentNode = this.emailField.parentNode;
+        parentNode.id = "nb-wrapper";
+        // Define HTML structure for a Custom NB Message and insert it after Email field
+        const nbCustomMessageHTML = document.createElement("div");
+        nbCustomMessageHTML.innerHTML =
+            '<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>';
+        this.insertAfter(nbCustomMessageHTML, this.emailField);
+        const NBClass = this;
+        window.addEventListener("load", function () {
+            document
+                .getElementsByTagName("body")[0]
+                .addEventListener("nb:registered", function (event) {
+                const field = document.querySelector('[data-nb-id="' + event.detail.id + '"]');
+                field.addEventListener("nb:loading", function (e) {
+                    engrid_ENGrid.disableSubmit("Validating Your Email");
+                });
+                // Never Bounce: Do work when input changes or when API responds with an error
+                field.addEventListener("nb:clear", function (e) {
+                    NBClass.setEmailStatus("clear");
+                    engrid_ENGrid.enableSubmit();
+                    if (NBClass.nbDate)
+                        NBClass.nbDate.value = "";
+                    if (NBClass.nbStatus)
+                        NBClass.nbStatus.value = "";
+                });
+                // Never Bounce: Do work when results have an input that does not look like an email (i.e. missing @ or no .com/.net/etc...)
+                field.addEventListener("nb:soft-result", function (e) {
+                    NBClass.setEmailStatus("soft-result");
+                    if (NBClass.nbDate)
+                        NBClass.nbDate.value = "";
+                    if (NBClass.nbStatus)
+                        NBClass.nbStatus.value = "";
+                    engrid_ENGrid.enableSubmit();
+                });
+                // Never Bounce: When results have been received
+                field.addEventListener("nb:result", function (e) {
+                    if (e.detail.result.is(window._nb.settings.getAcceptedStatusCodes())) {
+                        NBClass.setEmailStatus("valid");
+                        if (NBClass.nbDate)
+                            NBClass.nbDate.value = new Date().toLocaleDateString("en-US", {
+                                year: "numeric",
+                                month: "2-digit",
+                                day: "2-digit",
+                            });
+                        if (NBClass.nbStatus)
+                            NBClass.nbStatus.value = (e).detail.result.response.result;
+                    }
+                    else {
+                        NBClass.setEmailStatus("invalid");
+                        if (NBClass.nbDate)
+                            NBClass.nbDate.value = "";
+                        if (NBClass.nbStatus)
+                            NBClass.nbStatus.value = "";
+                    }
+                    engrid_ENGrid.enableSubmit();
+                });
+                if (field.value) {
+                    console.log(field);
+                    setTimeout(function () {
+                        window._nb.fields
+                            .get(document.querySelector("[data-nb-id]"))[0]
+                            .forceUpdate();
+                    }, 100);
+                }
+            });
+            // Never Bounce: Register field with the widget and broadcast nb:registration event
+            window._nb.fields.registerListener(NBClass.emailField, true);
+        });
+    }
+    clearStatus() {
+        if (!this.emailField) {
+            if (engrid_ENGrid.debug)
+                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            return;
+        }
+        this.emailField.classList.remove("rm-error");
+        // Search page for the NB Wrapper div and set as variable
+        const nb_email_field_wrapper = (document.getElementById("nb-wrapper"));
+        // Search page for the NB Feedback div and set as variable
+        const nb_email_feedback_field = (document.getElementById("nb-feedback"));
+        nb_email_field_wrapper.className = "";
+        nb_email_feedback_field.className = "en__field__error nb-hidden";
+        nb_email_feedback_field.innerHTML = "";
+        this.emailWrapper.classList.remove("en__field--validationFailed");
+    }
+    deleteENFieldError() {
+        const errorField = (document.querySelector(".en__field--emailAddress>div.en__field__error"));
+        if (errorField)
+            errorField.remove();
+    }
+    setEmailStatus(status) {
+        if (engrid_ENGrid.debug)
+            console.log("Neverbounce Status:", status);
+        if (!this.emailField) {
+            if (engrid_ENGrid.debug)
+                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            return;
+        }
+        // Search page for the NB Wrapper div and set as variable
+        const nb_email_field_wrapper = (document.getElementById("nb-wrapper"));
+        // Search page for the NB Feedback div and set as variable
+        let nb_email_feedback_field = (document.getElementById("nb-feedback"));
+        // classes to add or remove based on neverbounce results
+        const nb_email_field_wrapper_success = "nb-success";
+        const nb_email_field_wrapper_error = "nb-error";
+        const nb_email_feedback_hidden = "nb-hidden";
+        const nb_email_feedback_loading = "nb-loading";
+        const nb_email_field_error = "rm-error";
+        if (!nb_email_feedback_field) {
+            const nbWrapperDiv = nb_email_field_wrapper.querySelector("div");
+            if (nbWrapperDiv)
+                nbWrapperDiv.innerHTML =
+                    '<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>';
+            nb_email_feedback_field = (document.getElementById("nb-feedback"));
+        }
+        if (status == "valid") {
+            this.clearStatus();
+        }
+        else {
+            nb_email_field_wrapper.classList.remove(nb_email_field_wrapper_success);
+            nb_email_field_wrapper.classList.add(nb_email_field_wrapper_error);
+            switch (status) {
+                case "required": // special case status that we added ourselves -- doesn't come from NB
+                    this.deleteENFieldError();
+                    nb_email_feedback_field.innerHTML = "A valid email is required";
+                    nb_email_feedback_field.classList.remove(nb_email_feedback_loading);
+                    nb_email_feedback_field.classList.remove(nb_email_feedback_hidden);
+                    this.emailField.classList.add(nb_email_field_error);
+                    break;
+                case "soft-result":
+                    if (this.emailField.value) {
+                        this.deleteENFieldError();
+                        nb_email_feedback_field.innerHTML = "Invalid email";
+                        nb_email_feedback_field.classList.remove(nb_email_feedback_hidden);
+                        this.emailField.classList.add(nb_email_field_error);
+                    }
+                    else {
+                        this.clearStatus();
+                    }
+                    break;
+                case "invalid":
+                    this.deleteENFieldError();
+                    nb_email_feedback_field.innerHTML = "Invalid email";
+                    nb_email_feedback_field.classList.remove(nb_email_feedback_loading);
+                    nb_email_feedback_field.classList.remove(nb_email_feedback_hidden);
+                    this.emailField.classList.add(nb_email_field_error);
+                    break;
+                case "loading":
+                case "clear":
+                default:
+                    this.clearStatus();
+                    break;
+            }
+        }
+    }
+    // Function to insert HTML after a DIV
+    insertAfter(el, referenceNode) {
+        var _a;
+        (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(el, referenceNode.nextSibling);
+    }
+    //  to insert HTML before a DIV
+    insertBefore(el, referenceNode) {
+        var _a;
+        (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(el, referenceNode);
+    }
+    //  to Wrap HTML around a DIV
+    wrap(el, wrapper) {
+        var _a;
+        (_a = el.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(wrapper, el);
+        wrapper.appendChild(el);
+    }
+    validate() {
+        var _a;
+        if (!this.emailField) {
+            if (engrid_ENGrid.debug)
+                console.log("Engrid Neverbounce validate(): E-mail Field Not Found. Returning true.");
+            return true;
+        }
+        if (this.nbStatus) {
+            this.nbStatus.value = engrid_ENGrid.getFieldValue("nb-result");
+        }
+        if (!["catchall", "unknown", "valid"].includes(engrid_ENGrid.getFieldValue("nb-result"))) {
+            this.setEmailStatus("required");
+            (_a = this.emailField) === null || _a === void 0 ? void 0 : _a.focus();
+            return false;
+        }
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/progress-bar.js
+
+class ProgressBar {
+    constructor() {
+        var _a, _b;
+        const progressIndicator = document.querySelector("span[data-engrid-progress-indicator]");
+        const pageCount = engrid_ENGrid.getPageCount();
+        const pageNumber = engrid_ENGrid.getPageNumber();
+        if (!progressIndicator || !pageCount || !pageNumber) {
+            return;
+        }
+        let maxValue = (_a = progressIndicator.getAttribute("max")) !== null && _a !== void 0 ? _a : 100;
+        if (typeof maxValue === "string")
+            maxValue = parseInt(maxValue);
+        let amountValue = (_b = progressIndicator.getAttribute("amount")) !== null && _b !== void 0 ? _b : 0;
+        if (typeof amountValue === "string")
+            amountValue = parseInt(amountValue);
+        const prevPercentage = pageNumber === 1
+            ? 0
+            : Math.ceil(((pageNumber - 1) / pageCount) * maxValue);
+        let percentage = pageNumber === 1 ? 0 : Math.ceil((pageNumber / pageCount) * maxValue);
+        const scalePrev = prevPercentage / 100;
+        let scale = percentage / 100;
+        if (amountValue) {
+            percentage =
+                Math.ceil(amountValue) > Math.ceil(maxValue) ? maxValue : amountValue;
+            scale = percentage / 100;
+        }
+        progressIndicator.innerHTML = `
+			<div class="indicator__wrap">
+				<span class="indicator__progress" style="transform: scaleX(${scalePrev});"></span>
+				<span class="indicator__percentage">${percentage}<span class="indicator__percentage-sign">%</span></span>
+			</div>`;
+        if (percentage !== prevPercentage) {
+            const progress = document.querySelector(".indicator__progress");
+            requestAnimationFrame(function () {
+                progress.style.transform = `scaleX(${scale})`;
+            });
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
+ // Runs first so it can change the DOM markup before any markup dependent code fires
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Events
+
+
+// EXTERNAL MODULE: ./src/scripts/main.js
+var main = __webpack_require__(4747);
+;// CONCATENATED MODULE: ./src/index.ts
+ // Uses ENGrid via NPM
+// import { Options, App } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+
+
+
+const options = {
+  applePay: false,
+  CapitalizeFields: true,
+  ClickToExpand: true,
+  CurrencySymbol: "$",
+  CurrencySeparator: ".",
+  MediaAttribution: true,
+  SkipToMainContentLink: true,
+  SrcDefer: true,
+  ProgressBar: true,
+  Debug: App.getUrlParameter("debug") == "true" ? true : false,
+  onLoad: () => console.log("Starter Theme Loaded"),
+  onResize: () => console.log("Starter Theme Window Resized")
+};
+new App(options);
+})();
+
+/******/ })()
+;
