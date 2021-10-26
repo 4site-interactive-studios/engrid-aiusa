@@ -814,6 +814,11 @@
     }
   }
 
+  .handwritten{
+    font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
+    font-weight: 700; 
+  }
+
   .en__ecarditems__button {
     background: var(--color_primary);
     color: var(--color_black);
@@ -1445,26 +1450,26 @@
     background-position: center;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    margin-bottom: 1rem;
     text-align: center;
     p {
       margin: 20px 0 0;
       font-size: 1rem;
       line-height: 1.25rem;
       font-weight: 700;
-      font-family: var(--font-stack-aiusa-bold-condensed);
+      font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
+      font-weight: 700;
     }
-    &::before {
-      content: "";
-      background-image: url("https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=1614603925000");
-      width: 26px;
-      height: 15.5px;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      position: absolute;
-      left: calc(50% - 13px);
-    }
+    // &::before {
+    //   content: "";
+    //   background-image: url("https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=1614603925000");
+    //   width: 26px;
+    //   height: 15.5px;
+    //   background-size: cover;
+    //   background-position: center;
+    //   background-repeat: no-repeat;
+    //   position: absolute;
+    //   left: calc(50% - 13px);
+    // }
   }
 
   // .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
@@ -2100,6 +2105,42 @@
     }
   }
 } // END AIUSA ENGRID CUSTOM THEME
+
+[data-engrid-theme="aiusa"] {
+  // Append an "upsell" arrow to the giving amount radio button that has everything defined but its "content". Content will be defined in a text block on an inline <style> tag so that the upsell text itself helps deine where to attach the arrow to.
+  .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio] + label:after{
+    // content: "";
+    bottom: calc(-15.5px - 0.5rem);
+    background-image: url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=161460392500);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 15.5px;
+    left: calc(50% - 13px);
+    position: absolute;
+    width: 26px;
+  }
+
+  &[data-engrid-transaction-recurring="y"] {
+    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value='ONETIME' i] + label:after{
+      content:var(--giving-frequency-upsell-arrow-onetime);
+    }
+  }
+    
+  &[data-engrid-transaction-recurring="n"] {
+    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio]{
+        &[value='MONTHLY' i] + label:after{
+          content:var(--giving-frequency-upsell-arrow-monthly);
+        }
+
+        &[value='ANNUAL' i] + label:after{
+          content:var(--giving-frequency-upsell-arrow-annual);
+        }
+    }
+  }
+}
+
+
 
 /*
 * ##########################################################

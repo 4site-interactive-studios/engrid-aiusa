@@ -21,10 +21,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, October 22, 2021 @ 13:31:44 ET
- *  By: fe
- *  ENGrid styles: v0.5.1
- *  ENGrid scripts: v0.5.1
+ *  Date: Tuesday, October 26, 2021 @ 15:18:01 ET
+ *  By: bryancasler
+ *  ENGrid styles: v0.4.6
+ *  ENGrid scripts: v0.4.4
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -2768,10 +2768,6 @@ body .page-backgroundImage video.crop-on-right{
   transform:translateY(-50%);
 }
 
-.body-banner>.en__component--copyblock>p:only-child{
-  margin:0;
-}
-
 .body-banner img{
   min-width:100%;
 }
@@ -3187,15 +3183,19 @@ body:not(#en__pagebuilder) .click-to-expand.expanded .click-to-expand-text-wrapp
   align-items:center;
 }
 
-#en__pagebuilder .hide,#en__pagebuilder .i1-hide-label .en__field:first-of-type>label,#en__pagebuilder .i1-hide .en__field:first-of-type,#en__pagebuilder .i2-hide-label .en__field:nth-of-type(2)>label,#en__pagebuilder .i2-hide .en__field:nth-of-type(2),#en__pagebuilder .i3-hide-label .en__field:nth-of-type(3)>label,#en__pagebuilder .i3-hide .en__field:nth-of-type(3),#en__pagebuilder .i4-hide-label .en__field:nth-of-type(4)>label,#en__pagebuilder .i4-hide .en__field:nth-of-type(4),#en__pagebuilder .i5-hide-label .en__field:nth-of-type(5)>label,#en__pagebuilder .i5-hide .en__field:nth-of-type(5),#en__pagebuilder .i6-hide-label .en__field:nth-of-type(6)>label,#en__pagebuilder .i6-hide .en__field:nth-of-type(6),#en__pagebuilder .i7-hide-label .en__field:nth-of-type(7)>label,#en__pagebuilder .i7-hide .en__field:nth-of-type(7),#en__pagebuilder .i8-hide-label .en__field:nth-of-type(8)>label,#en__pagebuilder .i8-hide .en__field:nth-of-type(8),#en__pagebuilder .i9-hide-label .en__field:nth-of-type(9)>label,#en__pagebuilder .i9-hide .en__field:nth-of-type(9),#en__pagebuilder .i10-hide-label .en__field:nth-of-type(10)>label,#en__pagebuilder .i10-hide .en__field:nth-of-type(10),#en__pagebuilder .i11-hide-label .en__field:nth-of-type(11)>label,#en__pagebuilder .i11-hide .en__field:nth-of-type(11),[data-engrid-debug] .hide,[data-engrid-debug] .i1-hide-label .en__field:first-of-type>label,[data-engrid-debug] .i1-hide .en__field:first-of-type,[data-engrid-debug] .i2-hide-label .en__field:nth-of-type(2)>label,[data-engrid-debug] .i2-hide .en__field:nth-of-type(2),[data-engrid-debug] .i3-hide-label .en__field:nth-of-type(3)>label,[data-engrid-debug] .i3-hide .en__field:nth-of-type(3),[data-engrid-debug] .i4-hide-label .en__field:nth-of-type(4)>label,[data-engrid-debug] .i4-hide .en__field:nth-of-type(4),[data-engrid-debug] .i5-hide-label .en__field:nth-of-type(5)>label,[data-engrid-debug] .i5-hide .en__field:nth-of-type(5),[data-engrid-debug] .i6-hide-label .en__field:nth-of-type(6)>label,[data-engrid-debug] .i6-hide .en__field:nth-of-type(6),[data-engrid-debug] .i7-hide-label .en__field:nth-of-type(7)>label,[data-engrid-debug] .i7-hide .en__field:nth-of-type(7),[data-engrid-debug] .i8-hide-label .en__field:nth-of-type(8)>label,[data-engrid-debug] .i8-hide .en__field:nth-of-type(8),[data-engrid-debug] .i9-hide-label .en__field:nth-of-type(9)>label,[data-engrid-debug] .i9-hide .en__field:nth-of-type(9),[data-engrid-debug] .i10-hide-label .en__field:nth-of-type(10)>label,[data-engrid-debug] .i10-hide .en__field:nth-of-type(10),[data-engrid-debug] .i11-hide-label .en__field:nth-of-type(11)>label,[data-engrid-debug] .i11-hide .en__field:nth-of-type(11){
+#en__pagebuilder .hide,#en__pagebuilder .i1-hide .en__field:first-of-type,#en__pagebuilder .i2-hide .en__field:nth-of-type(2),#en__pagebuilder .i3-hide .en__field:nth-of-type(3),#en__pagebuilder .i4-hide .en__field:nth-of-type(4),#en__pagebuilder .i5-hide .en__field:nth-of-type(5),#en__pagebuilder .i6-hide .en__field:nth-of-type(6),#en__pagebuilder .i7-hide .en__field:nth-of-type(7),#en__pagebuilder .i8-hide .en__field:nth-of-type(8),#en__pagebuilder .i9-hide .en__field:nth-of-type(9),#en__pagebuilder .i10-hide .en__field:nth-of-type(10),#en__pagebuilder .i11-hide .en__field:nth-of-type(11){
   background-color:#ff00001a !important;
 }
 
-body:not(#en__pagebuilder):not([data-engrid-debug]) .hide,body:not(#en__pagebuilder):not([data-engrid-debug]) .i1-hide .en__field:first-of-type,body:not(#en__pagebuilder):not([data-engrid-debug]) .i2-hide .en__field:nth-of-type(2),body:not(#en__pagebuilder):not([data-engrid-debug]) .i3-hide .en__field:nth-of-type(3),body:not(#en__pagebuilder):not([data-engrid-debug]) .i4-hide .en__field:nth-of-type(4),body:not(#en__pagebuilder):not([data-engrid-debug]) .i5-hide .en__field:nth-of-type(5),body:not(#en__pagebuilder):not([data-engrid-debug]) .i6-hide .en__field:nth-of-type(6),body:not(#en__pagebuilder):not([data-engrid-debug]) .i7-hide .en__field:nth-of-type(7),body:not(#en__pagebuilder):not([data-engrid-debug]) .i8-hide .en__field:nth-of-type(8),body:not(#en__pagebuilder):not([data-engrid-debug]) .i9-hide .en__field:nth-of-type(9),body:not(#en__pagebuilder):not([data-engrid-debug]) .i10-hide .en__field:nth-of-type(10),body:not(#en__pagebuilder):not([data-engrid-debug]) .i11-hide .en__field:nth-of-type(11){
+body:not(#en__pagebuilder) .hide,body:not(#en__pagebuilder) .i1-hide .en__field:first-of-type,body:not(#en__pagebuilder) .i2-hide .en__field:nth-of-type(2),body:not(#en__pagebuilder) .i3-hide .en__field:nth-of-type(3),body:not(#en__pagebuilder) .i4-hide .en__field:nth-of-type(4),body:not(#en__pagebuilder) .i5-hide .en__field:nth-of-type(5),body:not(#en__pagebuilder) .i6-hide .en__field:nth-of-type(6),body:not(#en__pagebuilder) .i7-hide .en__field:nth-of-type(7),body:not(#en__pagebuilder) .i8-hide .en__field:nth-of-type(8),body:not(#en__pagebuilder) .i9-hide .en__field:nth-of-type(9),body:not(#en__pagebuilder) .i10-hide .en__field:nth-of-type(10),body:not(#en__pagebuilder) .i11-hide .en__field:nth-of-type(11){
   display:none;
 }
 
-body:not(#en__pagebuilder):not([data-engrid-debug]) .i1-hide-label .en__field:first-of-type>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i2-hide-label .en__field:nth-of-type(2)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i3-hide-label .en__field:nth-of-type(3)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i4-hide-label .en__field:nth-of-type(4)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i5-hide-label .en__field:nth-of-type(5)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i6-hide-label .en__field:nth-of-type(6)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i7-hide-label .en__field:nth-of-type(7)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i8-hide-label .en__field:nth-of-type(8)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i9-hide-label .en__field:nth-of-type(9)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i10-hide-label .en__field:nth-of-type(10)>label,body:not(#en__pagebuilder):not([data-engrid-debug]) .i11-hide-label .en__field:nth-of-type(11)>label{
+#en__pagebuilder .i1-hide-label .en__field:first-of-type>label,#en__pagebuilder .i2-hide-label .en__field:nth-of-type(2)>label,#en__pagebuilder .i3-hide-label .en__field:nth-of-type(3)>label,#en__pagebuilder .i4-hide-label .en__field:nth-of-type(4)>label,#en__pagebuilder .i5-hide-label .en__field:nth-of-type(5)>label,#en__pagebuilder .i6-hide-label .en__field:nth-of-type(6)>label,#en__pagebuilder .i7-hide-label .en__field:nth-of-type(7)>label,#en__pagebuilder .i8-hide-label .en__field:nth-of-type(8)>label,#en__pagebuilder .i9-hide-label .en__field:nth-of-type(9)>label,#en__pagebuilder .i10-hide-label .en__field:nth-of-type(10)>label,#en__pagebuilder .i11-hide-label .en__field:nth-of-type(11)>label{
+  background-color:#ff00001a !important;
+}
+
+body:not(#en__pagebuilder) .i1-hide-label .en__field:first-of-type>label,body:not(#en__pagebuilder) .i2-hide-label .en__field:nth-of-type(2)>label,body:not(#en__pagebuilder) .i3-hide-label .en__field:nth-of-type(3)>label,body:not(#en__pagebuilder) .i4-hide-label .en__field:nth-of-type(4)>label,body:not(#en__pagebuilder) .i5-hide-label .en__field:nth-of-type(5)>label,body:not(#en__pagebuilder) .i6-hide-label .en__field:nth-of-type(6)>label,body:not(#en__pagebuilder) .i7-hide-label .en__field:nth-of-type(7)>label,body:not(#en__pagebuilder) .i8-hide-label .en__field:nth-of-type(8)>label,body:not(#en__pagebuilder) .i9-hide-label .en__field:nth-of-type(9)>label,body:not(#en__pagebuilder) .i10-hide-label .en__field:nth-of-type(10)>label,body:not(#en__pagebuilder) .i11-hide-label .en__field:nth-of-type(11)>label{
   clip:rect(1px 1px 1px 1px);
   clip:rect(1px, 1px, 1px, 1px);
   height:1px;
@@ -6216,10 +6216,6 @@ body:not(#en__pagebuilder)[data-engrid-no-body-banner]
   position:relative;
   z-index:1;
 }
-[data-engrid-layout=debug]{
-  border:5px solid red;
-}
-
 [data-engrid-debug=accessability] img:not([alt]){
   outline:1px dashed red;
 }
@@ -6768,10 +6764,6 @@ body:not([data-engrid-debug]) #debug-bar{
   z-index:1;
 }
 
-#en__pagebuilder .giveBySelect-ach .en__mandatory,#en__pagebuilder .giveBySelect-ACH .en__mandatory,#en__pagebuilder .giveBySelect-card .en__mandatory,#en__pagebuilder .giveBySelect-Card .en__mandatory,#en__pagebuilder .giveBySelect-paypal .en__mandatory,#en__pagebuilder .giveBySelect-Paypal .en__mandatory,#en__pagebuilder .inmem-n .en__mandatory,#en__pagebuilder .inmem-N .en__mandatory,#en__pagebuilder .inmem-y .en__mandatory,#en__pagebuilder .inmem-Y .en__mandatory{
-  outline:5px solid #f12222;
-}
-
 #en__pagebuilder .live-giving-amount,#en__pagebuilder .live-giving-frequency,#en__pagebuilder .live-giving-upsell-amount,#en__pagebuilder .live-giving-upsell-amount-raw{
   background-color:#00ff001a !important;
 }
@@ -7091,6 +7083,14 @@ body:not([data-engrid-debug]) #debug-bar{
   font-style:normal;
   font-weight:700;
   src:local("AmnestyTradeGothic-BdCn20.woff"), url(https://c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/AmnestyTradeGothic-BdCn20.woff) format("woff");
+}
+
+@font-face{
+  font-display:swap;
+  font-family:Kalam;
+  font-style:normal;
+  font-weight:700;
+  src:local("kalam-v11-latin-700.woff2"), url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/kalam-v11-latin-700.woff2) format("woff2");
 }
 @keyframes firebig{
   0%{
@@ -7701,6 +7701,11 @@ label.en__field__label.en__field__label--item{
   width:40%;
 }
 
+[data-engrid-theme=aiusa] .handwritten{
+  font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
+  font-weight:700;
+}
+
 [data-engrid-theme=aiusa] .en__ecarditems__button{
   background:var(--color_primary);
   color:var(--color_black);
@@ -8142,7 +8147,6 @@ div:not(.en__field__item--other)
   background-position:50%;
   background-repeat:no-repeat;
   background-size:90%;
-  margin-bottom:1rem;
   margin-left:.5rem;
   margin-right:.5rem;
   position:relative;
@@ -8150,23 +8154,11 @@ div:not(.en__field__item--other)
 }
 
 [data-engrid-theme=aiusa] .en__component.en__component--copyblock.recurring-frequency-y-hide.inline-monthly-upsell p{
-  font-family:var(--font-stack-aiusa-bold-condensed);
+  font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
   font-size:1rem;
   font-weight:700;
   line-height:1.25rem;
   margin:20px 0 0;
-}
-
-[data-engrid-theme=aiusa] .en__component.en__component--copyblock.recurring-frequency-y-hide.inline-monthly-upsell:before{
-  background-image:url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=1614603925000);
-  background-position:50%;
-  background-repeat:no-repeat;
-  background-size:cover;
-  content:"";
-  height:15.5px;
-  left:calc(50% - 13px);
-  position:absolute;
-  width:26px;
 }
 
 [data-engrid-theme=aiusa] .en__field--donationAmt .en__field__item--other{
@@ -8883,6 +8875,30 @@ input[type=radio]:checked+label .candle .candle-base{
 .en__field--recurrfreq.en__field--radio
 input[type=radio]:checked+label .candle .candle-base .spark{
   background-color:#ff470080;
+}
+
+[data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio]+label:after{
+  background-image:url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=161460392500);
+  background-position:50%;
+  background-repeat:no-repeat;
+  background-size:cover;
+  bottom:calc(-15.5px - .5rem);
+  height:15.5px;
+  left:calc(50% - 13px);
+  position:absolute;
+  width:26px;
+}
+
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring=y] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value=ONETIME i]+label:after{
+  content:var(--giving-frequency-upsell-arrow-onetime);
+}
+
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value=MONTHLY i]+label:after{
+  content:var(--giving-frequency-upsell-arrow-monthly);
+}
+
+[data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value=ANNUAL i]+label:after{
+  content:var(--giving-frequency-upsell-arrow-annual);
 }
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
