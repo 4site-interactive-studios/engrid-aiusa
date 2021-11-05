@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, October 26, 2021 @ 15:18:01 ET
- *  By: bryancasler
- *  ENGrid styles: v0.4.6
- *  ENGrid scripts: v0.4.4
+ *  Date: Friday, November 5, 2021 @ 13:09:23 ET
+ *  By: fe
+ *  ENGrid styles: v0.5.1
+ *  ENGrid scripts: v0.5.1
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -10109,10 +10109,12 @@ const OptionsDefaults = {
     NeverBounceAPI: null,
     NeverBounceDateField: null,
     NeverBounceStatusField: null,
+    NeverBounceDateFormat: "MM/DD/YYYY",
     ProgressBar: false,
     AutoYear: false,
     TranslateFields: true,
     Debug: false,
+    RememberMe: false,
 };
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/upsell-options.js
@@ -10553,6 +10555,21 @@ class engrid_ENGrid {
         }
         return false;
     }
+    static formatDate(date, format = "MM/DD/YYYY") {
+        const dateAray = date
+            .toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        })
+            .split("/");
+        const dateString = format
+            .replace(/YYYY/g, dateAray[2])
+            .replace(/MM/g, dateAray[0])
+            .replace(/DD/g, dateAray[1])
+            .replace(/YY/g, dateAray[2].substr(2, 2));
+        return dateString;
+    }
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/donation-frequency.js
@@ -10899,8 +10916,11 @@ class App extends engrid_ENGrid {
         // Progress Bar
         if (this.options.ProgressBar)
             new ProgressBar();
+        // RememberMe
+        if (this.options.RememberMe && typeof this.options.RememberMe === 'object')
+            new RememberMe(this.options.RememberMe);
         if (this.options.NeverBounceAPI)
-            new NeverBounce(this.options.NeverBounceAPI, this.options.NeverBounceDateField, this.options.NeverBounceStatusField);
+            new NeverBounce(this.options.NeverBounceAPI, this.options.NeverBounceDateField, this.options.NeverBounceStatusField, this.options.NeverBounceDateFormat);
         this.setDataAttributes();
     }
     onLoad() {
@@ -13191,6 +13211,7 @@ class TranslateFields {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/simple-country-select.js
 // This class works when the user has added ".simple_country_select" as a class in page builder for the Country select
+
 class SimpleCountrySelect {
     constructor() {
         this.countryWrapper = document.querySelector(".simple_country_select");
@@ -13199,16 +13220,20 @@ class SimpleCountrySelect {
             type: "region",
         });
         this.country = null;
-        fetch("https://www.cloudflare.com/cdn-cgi/trace")
-            .then((res) => res.text())
-            .then((t) => {
-            let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
-            data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
-            const jsondata = JSON.parse(data);
-            this.country = jsondata.loc;
-            this.init();
-            // console.log("Country:", this.country);
-        });
+        const engridAutofill = get("engrid-autofill");
+        // Only run if there's no engrid-autofill cookie
+        if (!engridAutofill) {
+            fetch("https://www.cloudflare.com/cdn-cgi/trace")
+                .then((res) => res.text())
+                .then((t) => {
+                let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
+                data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+                const jsondata = JSON.parse(data);
+                this.country = jsondata.loc;
+                this.init();
+                // console.log("Country:", this.country);
+            });
+        }
     }
     init() {
         if (this.countrySelect) {
@@ -13533,10 +13558,11 @@ class PageBackground {
 
 
 class NeverBounce {
-    constructor(apiKey, dateField = null, statusField = null) {
+    constructor(apiKey, dateField = null, statusField = null, dateFormat) {
         this.apiKey = apiKey;
         this.dateField = dateField;
         this.statusField = statusField;
+        this.dateFormat = dateFormat;
         this.form = EnForm.getInstance();
         this.emailField = null;
         this.emailWrapper = document.querySelector(".en__field--emailAddress");
@@ -13614,11 +13640,7 @@ class NeverBounce {
                     if (e.detail.result.is(window._nb.settings.getAcceptedStatusCodes())) {
                         NBClass.setEmailStatus("valid");
                         if (NBClass.nbDate)
-                            NBClass.nbDate.value = new Date().toLocaleDateString("en-US", {
-                                year: "numeric",
-                                month: "2-digit",
-                                day: "2-digit",
-                            });
+                            NBClass.nbDate.value = engrid_ENGrid.formatDate(new Date(), NBClass.dateFormat);
                         if (NBClass.nbStatus)
                             NBClass.nbStatus.value = (e).detail.result.response.result;
                     }
@@ -13807,8 +13829,286 @@ class ProgressBar {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/remember-me.js
+
+
+const tippy = __webpack_require__(3861)/* ["default"] */ .ZP;
+class RememberMe {
+    constructor(options) {
+        this._form = EnForm.getInstance();
+        this.iframe = null;
+        this.remoteUrl = (options.remoteUrl) ? options.remoteUrl : null;
+        this.cookieName = (options.cookieName) ? options.cookieName : 'engrid-autofill';
+        this.cookieExpirationDays = (options.cookieExpirationDays) ? options.cookieExpirationDays : 365;
+        this.rememberMeOptIn = (options.checked) ? options.checked : false;
+        this.fieldNames = (options.fieldNames) ? options.fieldNames : [];
+        this.fieldDonationAmountRadioName = (options.fieldDonationAmountRadioName) ? options.fieldDonationAmountRadioName : 'transaction.donationAmt';
+        this.fieldDonationAmountOtherName = (options.fieldDonationAmountOtherName) ? options.fieldDonationAmountOtherName : 'transaction.donationAmt.other';
+        this.fieldDonationRecurrPayRadioName = (options.fieldDonationRecurrPayRadioName) ? options.fieldDonationRecurrPayRadioName : 'transaction.recurrpay';
+        this.fieldDonationAmountOtherCheckboxID = (options.fieldDonationAmountOtherCheckboxID) ? options.fieldDonationAmountOtherCheckboxID : '#en__field_transaction_donationAmt4';
+        this.fieldOptInSelectorTarget = (options.fieldOptInSelectorTarget) ? options.fieldOptInSelectorTarget : '.en__field--emailAddress.en__field';
+        this.fieldOptInSelectorTargetLocation = (options.fieldOptInSelectorTargetLocation) ? options.fieldOptInSelectorTargetLocation : 'after';
+        this.fieldClearSelectorTarget = (options.fieldClearSelectorTarget) ? options.fieldClearSelectorTarget : 'label[for="en__field_supporter_firstName"]';
+        this.fieldClearSelectorTargetLocation = (options.fieldClearSelectorTargetLocation) ? options.fieldClearSelectorTargetLocation : 'before';
+        this.fieldData = {};
+        if (this.useRemote()) {
+            this.createIframe(() => {
+                if (this.iframe && this.iframe.contentWindow) {
+                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: 'read' }, '*');
+                    this._form.onSubmit.subscribe(() => {
+                        if (this.rememberMeOptIn) {
+                            this.readFields();
+                            this.saveCookieToRemote();
+                        }
+                    });
+                }
+            }, (event) => {
+                if (event.data && event.data.key && event.data.value !== undefined && event.data.key === this.cookieName) {
+                    this.updateFieldData(event.data.value);
+                    this.writeFields();
+                    let hasFieldData = Object.keys(this.fieldData).length > 0;
+                    if (!hasFieldData) {
+                        this.insertRememberMeOptin();
+                    }
+                    else {
+                        this.insertClearRememberMeLink();
+                    }
+                }
+            });
+        }
+        else {
+            this.readCookie();
+            let hasFieldData = Object.keys(this.fieldData).length > 0;
+            if (!hasFieldData) {
+                this.insertRememberMeOptin();
+                this.rememberMeOptIn = false;
+            }
+            else {
+                this.insertClearRememberMeLink();
+                this.rememberMeOptIn = true;
+            }
+            this.writeFields();
+            this._form.onSubmit.subscribe(() => {
+                if (this.rememberMeOptIn) {
+                    this.readFields();
+                    this.saveCookie();
+                }
+            });
+        }
+    }
+    updateFieldData(jsonData) {
+        if (jsonData) {
+            let data = JSON.parse(jsonData);
+            for (let i = 0; i < this.fieldNames.length; i++) {
+                if (data[this.fieldNames[i]] !== undefined) {
+                    this.fieldData[this.fieldNames[i]] = decodeURIComponent(data[this.fieldNames[i]]);
+                }
+            }
+        }
+    }
+    insertClearRememberMeLink() {
+        if (!document.getElementById('clear-autofill-data')) {
+            const clearAutofillLabel = 'clear autofill';
+            const clearRememberMeField = document.createElement('a');
+            clearRememberMeField.setAttribute('id', 'clear-autofill-data');
+            clearRememberMeField.classList.add('label-tooltip');
+            clearRememberMeField.setAttribute('style', 'cursor: pointer;');
+            clearRememberMeField.innerHTML = `(${clearAutofillLabel})`;
+            const targetField = this.getElementByFirstSelector(this.fieldClearSelectorTarget);
+            if (targetField) {
+                if (this.fieldClearSelectorTargetLocation === 'after') {
+                    targetField.appendChild(clearRememberMeField);
+                }
+                else {
+                    targetField.prepend(clearRememberMeField);
+                }
+                clearRememberMeField.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    this.clearFields(['supporter.country' /*, 'supporter.emailAddress'*/]);
+                    if (this.useRemote()) {
+                        this.clearCookieOnRemote();
+                    }
+                    else {
+                        this.clearCookie();
+                    }
+                    let clearAutofillLink = document.getElementById('clear-autofill-data');
+                    if (clearAutofillLink) {
+                        clearAutofillLink.style.display = 'none';
+                    }
+                    this.rememberMeOptIn = false;
+                });
+            }
+        }
+    }
+    getElementByFirstSelector(selectorsString) {
+        // iterate through the selectors until we find one that exists
+        let targetField = null;
+        const selectorTargets = selectorsString.split(',');
+        for (let i = 0; i < selectorTargets.length; i++) {
+            targetField = document.querySelector(selectorTargets[i]);
+            if (targetField) {
+                break;
+            }
+        }
+        return targetField;
+    }
+    insertRememberMeOptin() {
+        let rememberMeOptInField = document.getElementById('remember-me-opt-in');
+        if (!rememberMeOptInField) {
+            const rememberMeLabel = 'Remember Me';
+            const rememberMeInfo = `
+				Check “Remember me” to complete forms on this device faster. 
+				While your financial information won’t be stored, you should only check this box from a personal device. 
+				Click “Clear autofill” to remove the information from your device at any time.
+			`;
+            const rememberMeOptInFieldChecked = (this.rememberMeOptIn) ? 'checked' : '';
+            const rememberMeOptInField = document.createElement('div');
+            rememberMeOptInField.classList.add('en__field', 'en__field--checkbox');
+            rememberMeOptInField.setAttribute('id', 'remember-me-opt-in');
+            rememberMeOptInField.setAttribute('style', 'overflow-x: hidden;');
+            rememberMeOptInField.innerHTML = `
+				<div class="en__field__item rememberme-wrapper">
+					<input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${rememberMeOptInFieldChecked} />
+					<label for="remember-me-checkbox" class="en__field__label en__field__label--item" style="white-space: nowrap;">
+						<div class="rememberme-content" style="display: inline-flex; align-items: center;">
+							${rememberMeLabel}
+							<a id="rememberme-learn-more-toggle" style="display: inline-block; display: inline-flex; align-items: center; cursor: pointer; margin-left: 10px;">
+								<svg style="height: 14px; width: auto; z-index: 1;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7H9V5H11V7ZM11 9H9V15H11V9ZM10 2C5.59 2 2 5.59 2 10C2 14.41 5.59 18 10 18C14.41 18 18 14.41 18 10C18 5.59 14.41 2 10 2ZM10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0Z" fill="currentColor"/></svg>
+							</a>
+						</div>
+					</label>
+				</div>
+			`;
+            const targetField = this.getElementByFirstSelector(this.fieldOptInSelectorTarget);
+            if (targetField && targetField.parentNode) {
+                targetField.parentNode.insertBefore(rememberMeOptInField, (this.fieldOptInSelectorTargetLocation == 'before') ? targetField : targetField.nextSibling);
+                const rememberMeCheckbox = document.getElementById('remember-me-checkbox');
+                if (rememberMeCheckbox) {
+                    rememberMeCheckbox.addEventListener('change', () => {
+                        if (rememberMeCheckbox.checked) {
+                            this.rememberMeOptIn = true;
+                        }
+                        else {
+                            this.rememberMeOptIn = false;
+                        }
+                    });
+                }
+                tippy('#rememberme-learn-more-toggle', { content: rememberMeInfo });
+            }
+        }
+        else if (this.rememberMeOptIn) {
+            rememberMeOptInField.checked = true;
+        }
+    }
+    useRemote() {
+        return (this.remoteUrl && window.postMessage && window.JSON && window.localStorage);
+    }
+    createIframe(iframeLoaded, messageReceived) {
+        if (this.remoteUrl) {
+            let iframe = document.createElement('iframe');
+            iframe.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;';
+            iframe.src = this.remoteUrl;
+            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts');
+            this.iframe = iframe;
+            document.body.appendChild(this.iframe);
+            this.iframe.addEventListener('load', () => iframeLoaded(), false);
+            window.addEventListener('message', (event) => messageReceived(event), false);
+        }
+    }
+    clearCookie() {
+        this.fieldData = {};
+        this.saveCookie();
+    }
+    clearCookieOnRemote() {
+        this.fieldData = {};
+        this.saveCookieToRemote();
+    }
+    saveCookieToRemote() {
+        if (this.iframe && this.iframe.contentWindow) {
+            this.iframe.contentWindow.postMessage({ key: this.cookieName, value: JSON.stringify(this.fieldData), operation: 'write', expires: this.cookieExpirationDays }, '*');
+        }
+    }
+    readCookie() {
+        this.updateFieldData(get(this.cookieName) || '');
+    }
+    saveCookie() {
+        set(this.cookieName, JSON.stringify(this.fieldData), { expires: this.cookieExpirationDays });
+    }
+    readFields() {
+        for (let i = 0; i < this.fieldNames.length; i++) {
+            let fieldSelector = "[name='" + this.fieldNames[i] + "']";
+            let field = document.querySelector(fieldSelector);
+            if (field) {
+                if (field.tagName === 'INPUT') {
+                    let type = field.getAttribute('type');
+                    if (type === 'radio' || type === 'checkbox') {
+                        field = document.querySelector(fieldSelector + ":checked");
+                    }
+                    this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
+                }
+                else if (field.tagName === 'SELECT') {
+                    this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
+                }
+            }
+        }
+    }
+    setFieldValue(field, value, overwrite = false) {
+        if (field && value !== undefined) {
+            if (field.value && overwrite || !field.value) {
+                field.value = value;
+            }
+        }
+    }
+    clearFields(skipFields) {
+        for (let key in this.fieldData) {
+            if (skipFields.includes(key)) {
+                delete this.fieldData[key];
+            }
+            else if (this.fieldData[key] === '') {
+                delete this.fieldData[key];
+            }
+            else {
+                this.fieldData[key] = '';
+            }
+        }
+        this.writeFields(true);
+    }
+    writeFields(overwrite = false) {
+        for (let i = 0; i < this.fieldNames.length; i++) {
+            let fieldSelector = "[name='" + this.fieldNames[i] + "']";
+            let field = document.querySelector(fieldSelector);
+            if (field) {
+                if (field.tagName === 'INPUT') {
+                    if (this.fieldNames[i] === this.fieldDonationRecurrPayRadioName) {
+                        if (this.fieldData[this.fieldNames[i]] === 'Y') {
+                            field.click();
+                        }
+                    }
+                    else if (this.fieldDonationAmountRadioName === this.fieldNames[i]) {
+                        field = document.querySelector(fieldSelector + "[value='" + this.fieldData[this.fieldNames[i]] + "']");
+                        if (field) {
+                            field.click();
+                        }
+                        else {
+                            field = document.querySelector("input[name='" + this.fieldDonationAmountOtherName + "']");
+                            this.setFieldValue(field, this.fieldData[this.fieldNames[i]], true);
+                        }
+                    }
+                    else {
+                        this.setFieldValue(field, this.fieldData[this.fieldNames[i]], overwrite);
+                    }
+                }
+                else if (field.tagName === 'SELECT') {
+                    this.setFieldValue(field, this.fieldData[this.fieldNames[i]], true);
+                }
+            }
+        }
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
@@ -13839,11 +14139,1262 @@ class ProgressBar {
 // Events
 
 
+;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/common.js
+const checkBehavior = (behavior) => {
+    return behavior === undefined || behavior === "auto" || behavior === "instant" || behavior === "smooth";
+};
+function elementScrollXY(x, y) {
+    this.scrollLeft = x;
+    this.scrollTop = y;
+}
+const failedExecute = (method, object, reason = "cannot convert to dictionary.") => `Failed to execute '${method}' on '${object}': ${reason}`;
+const failedExecuteInvalidEnumValue = (method, object, value) => failedExecute(method, object, `The provided value '${value}' is not a valid enum value of type ScrollBehavior.`);
+/* eslint-disable */
+const backupMethod = (proto, method, fallback) => {
+    const backup = `__SEAMLESS.BACKUP$${method}`;
+    if (proto[method] && !proto[method]?.__isPolyfill) {
+        proto[backup] ||= proto[method];
+    }
+    return proto[backup] || fallback;
+};
+/* eslint-enable */
+const isObject = (value) => {
+    const type = typeof value;
+    return value !== null && (type === "object" || type === "function");
+};
+const isScrollBehaviorSupported = () => "scrollBehavior" in window.document.documentElement.style;
+const markPolyfill = (method) => {
+    Object.defineProperty(method, "__isPolyfill", { value: true });
+};
+const modifyPrototypes = (prop, func) => {
+    markPolyfill(func);
+    [HTMLElement.prototype, SVGElement.prototype, Element.prototype].forEach((prototype) => {
+        backupMethod(prototype, prop);
+        prototype[prop] = func;
+    });
+};
+/**
+ * - On Chrome and Firefox, document.scrollingElement will return the <html> element.
+ * - Safari, document.scrollingElement will return the <body> element.
+ * - On Edge, document.scrollingElement will return the <body> element.
+ * - IE11 does not support document.scrollingElement, but you can assume its <html>.
+ */
+const scrollingElement = (element) => element.ownerDocument.scrollingElement || element.ownerDocument.documentElement;
+//# sourceMappingURL=common.js.map
+;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scroll-step.js
+const ease = (k) => {
+    return 0.5 * (1 - Math.cos(Math.PI * k));
+};
+const now = () => window.performance?.now?.() ?? window.Date.now();
+const DURATION = 500;
+const step = (context) => {
+    const currentTime = now();
+    const elapsed = (currentTime - context.timeStamp) / (context.duration || DURATION);
+    if (elapsed > 1) {
+        context.method(context.targetX, context.targetY);
+        context.callback();
+        return;
+    }
+    const value = (context.timingFunc || ease)(elapsed);
+    const currentX = context.startX + (context.targetX - context.startX) * value;
+    const currentY = context.startY + (context.targetY - context.startY) * value;
+    context.method(currentX, currentY);
+    context.rafId = window.requestAnimationFrame(() => {
+        step(context);
+    });
+};
+//# sourceMappingURL=scroll-step.js.map
+;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scroll.js
+
+
+// https://drafts.csswg.org/cssom-view/#normalize-non-finite-values
+const nonFinite = (value) => {
+    if (!isFinite(value)) {
+        return 0;
+    }
+    return Number(value);
+};
+const isConnected = (node) => {
+    return (node.isConnected ??
+        (!node.ownerDocument ||
+            // eslint-disable-next-line no-bitwise
+            !(node.ownerDocument.compareDocumentPosition(node) & /** DOCUMENT_POSITION_DISCONNECTED */ 1)));
+};
+const scrollWithOptions = (element, options, config) => {
+    if (!isConnected(element)) {
+        return;
+    }
+    const startX = element.scrollLeft;
+    const startY = element.scrollTop;
+    const targetX = nonFinite(options.left ?? startX);
+    const targetY = nonFinite(options.top ?? startY);
+    if (targetX === startX && targetY === startY) {
+        return;
+    }
+    const fallback = backupMethod(HTMLElement.prototype, "scroll", elementScrollXY);
+    const method = backupMethod(Object.getPrototypeOf(element), "scroll", fallback).bind(element);
+    if (options.behavior !== "smooth") {
+        method(targetX, targetY);
+        return;
+    }
+    const removeEventListener = () => {
+        window.removeEventListener("wheel", cancelScroll);
+        window.removeEventListener("touchmove", cancelScroll);
+    };
+    const context = {
+        ...config,
+        timeStamp: now(),
+        startX,
+        startY,
+        targetX,
+        targetY,
+        rafId: 0,
+        method,
+        callback: removeEventListener,
+    };
+    const cancelScroll = () => {
+        window.cancelAnimationFrame(context.rafId);
+        removeEventListener();
+    };
+    window.addEventListener("wheel", cancelScroll, {
+        passive: true,
+        once: true,
+    });
+    window.addEventListener("touchmove", cancelScroll, {
+        passive: true,
+        once: true,
+    });
+    step(context);
+};
+const isWindow = (obj) => obj.window === obj;
+const createScroll = (scrollName) => (target, scrollOptions, config) => {
+    const [element, scrollType] = isWindow(target)
+        ? [scrollingElement(target.document.documentElement), "Window"]
+        : [target, "Element"];
+    const options = scrollOptions ?? {};
+    if (!isObject(options)) {
+        throw new TypeError(failedExecute(scrollName, scrollType));
+    }
+    if (!checkBehavior(options.behavior)) {
+        throw new TypeError(failedExecuteInvalidEnumValue(scrollName, scrollType, options.behavior));
+    }
+    if (scrollName === "scrollBy") {
+        options.left = nonFinite(options.left) + element.scrollLeft;
+        options.top = nonFinite(options.top) + element.scrollTop;
+    }
+    scrollWithOptions(element, options, config);
+};
+const scroll_scroll = createScroll("scroll");
+const scrollTo = createScroll("scrollTo");
+const scrollBy = createScroll("scrollBy");
+const elementScroll = scroll_scroll;
+const elementScrollTo = (/* unused pure expression or super */ null && (scrollTo));
+const elementScrollBy = (/* unused pure expression or super */ null && (scrollBy));
+const windowScroll = (/* unused pure expression or super */ null && (scroll_scroll));
+const windowScrollTo = (/* unused pure expression or super */ null && (scrollTo));
+const windowScrollBy = (/* unused pure expression or super */ null && (scrollBy));
+//# sourceMappingURL=scroll.js.map
+;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scrollIntoView.js
+/* eslint-disable no-bitwise */
+
+
+// https://drafts.csswg.org/css-writing-modes-4/#block-flow
+const normalizeWritingMode = (writingMode) => {
+    switch (writingMode) {
+        case "horizontal-tb":
+        case "lr":
+        case "lr-tb":
+        case "rl":
+        case "rl-tb":
+            return 0 /* HorizontalTb */;
+        case "vertical-rl":
+        case "tb":
+        case "tb-rl":
+            return 1 /* VerticalRl */;
+        case "vertical-lr":
+        case "tb-lr":
+            return 2 /* VerticalLr */;
+        case "sideways-rl":
+            return 3 /* SidewaysRl */;
+        case "sideways-lr":
+            return 4 /* SidewaysLr */;
+    }
+    return 0 /* HorizontalTb */;
+};
+const calcPhysicalAxis = (writingMode, isLTR, hPos, vPos) => {
+    /**  0b{vertical}{horizontal}  0: normal, 1: reverse */
+    let layout = 0b00;
+    /**
+     * WritingMode.VerticalLr: ↓→
+     * | 1 | 4 |   |
+     * | 2 | 5 |   |
+     * | 3 |   |   |
+     *
+     * RTL: ↑→
+     * | 3 |   |   |
+     * | 2 | 5 |   |
+     * | 1 | 4 |   |
+     */
+    if (!isLTR) {
+        layout ^= 2 /* ReverseVertical */;
+    }
+    switch (writingMode) {
+        /**
+         * ↓→
+         * | 1 | 2 | 3 |
+         * | 4 | 5 |   |
+         * |   |   |   |
+         *
+         * RTL: ↓←
+         * | 3 | 2 | 1 |
+         * |   | 5 | 4 |
+         * |   |   |   |
+         */
+        case 0 /* HorizontalTb */:
+            // swap horizontal and vertical
+            layout = (layout >> 1) | ((layout & 1) << 1);
+            [hPos, vPos] = [vPos, hPos];
+            break;
+        /**
+         * ↓←
+         * |   | 4 | 1 |
+         * |   | 5 | 2 |
+         * |   |   | 3 |
+         *
+         * RTL: ↑←
+         * |   |   | 3 |
+         * |   | 5 | 2 |
+         * |   | 4 | 1 |
+         */
+        case 1 /* VerticalRl */:
+        case 3 /* SidewaysRl */:
+            //  reverse horizontal
+            layout ^= 1 /* ReverseHorizontal */;
+            break;
+        /**
+         * ↑→
+         * | 3 |   |   |
+         * | 2 | 5 |   |
+         * | 1 | 4 |   |
+         *
+         * RTL: ↓→
+         * | 1 | 4 |   |
+         * | 2 | 5 |   |
+         * | 3 |   |   |
+         */
+        case 4 /* SidewaysLr */:
+            // reverse vertical
+            layout ^= 2 /* ReverseVertical */;
+            break;
+    }
+    return [layout, hPos, vPos];
+};
+const isXReversed = (computedStyle) => {
+    const layout = calcPhysicalAxis(normalizeWritingMode(computedStyle.writingMode), computedStyle.direction !== "rtl", undefined, undefined)[0];
+    return (layout & 1) === 1;
+};
+// https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/dom/element.cc;l=1097-1189;drc=6a7533d4a1e9f2372223a9d912a9e53a6fa35ae0
+const toPhysicalAlignment = (options, writingMode, isLTR) => {
+    const [layout, hPos, vPos] = calcPhysicalAxis(writingMode, isLTR, options.block || "start", options.inline || "nearest");
+    return [hPos, vPos].map((value, index) => {
+        switch (value) {
+            case "center":
+                return 1 /* CenterAlways */;
+            case "nearest":
+                return 0 /* ToEdgeIfNeeded */;
+            default: {
+                const reverse = (layout >> index) & 1;
+                return (value === "start") === !reverse ? 2 /* LeftOrTop */ : 3 /* RightOrBottom */;
+            }
+        }
+    });
+};
+// code from stipsan/compute-scroll-into-view
+// https://github.com/stipsan/compute-scroll-into-view/blob/5396c6b78af5d0bbce11a7c4e93cc3146546fcd3/src/index.ts
+/**
+ * Find out which edge to align against when logical scroll position is "nearest"
+ * Interesting fact: "nearest" works similarily to "if-needed", if the element is fully visible it will not scroll it
+ *
+ * Legends:
+ * ┌────────┐ ┏ ━ ━ ━ ┓
+ * │ target │   frame
+ * └────────┘ ┗ ━ ━ ━ ┛
+ */
+const mapNearest = (align, scrollingEdgeStart, scrollingEdgeEnd, scrollingSize, elementEdgeStart, elementEdgeEnd, elementSize) => {
+    if (align !== 0 /* ToEdgeIfNeeded */) {
+        return align;
+    }
+    /**
+     * If element edge A and element edge B are both outside scrolling box edge A and scrolling box edge B
+     *
+     *          ┌──┐
+     *        ┏━│━━│━┓
+     *          │  │
+     *        ┃ │  │ ┃        do nothing
+     *          │  │
+     *        ┗━│━━│━┛
+     *          └──┘
+     *
+     *  If element edge C and element edge D are both outside scrolling box edge C and scrolling box edge D
+     *
+     *    ┏ ━ ━ ━ ━ ┓
+     *   ┌───────────┐
+     *   │┃         ┃│        do nothing
+     *   └───────────┘
+     *    ┗ ━ ━ ━ ━ ┛
+     */
+    if ((elementEdgeStart < scrollingEdgeStart && elementEdgeEnd > scrollingEdgeEnd) ||
+        (elementEdgeStart > scrollingEdgeStart && elementEdgeEnd < scrollingEdgeEnd)) {
+        return null;
+    }
+    /**
+     * If element edge A is outside scrolling box edge A and element height is less than scrolling box height
+     *
+     *          ┌──┐
+     *        ┏━│━━│━┓         ┏━┌━━┐━┓
+     *          └──┘             │  │
+     *  from  ┃      ┃     to  ┃ └──┘ ┃
+     *
+     *        ┗━ ━━ ━┛         ┗━ ━━ ━┛
+     *
+     * If element edge B is outside scrolling box edge B and element height is greater than scrolling box height
+     *
+     *        ┏━ ━━ ━┓         ┏━┌━━┐━┓
+     *                           │  │
+     *  from  ┃ ┌──┐ ┃     to  ┃ │  │ ┃
+     *          │  │             │  │
+     *        ┗━│━━│━┛         ┗━│━━│━┛
+     *          │  │             └──┘
+     *          │  │
+     *          └──┘
+     *
+     * If element edge C is outside scrolling box edge C and element width is less than scrolling box width
+     *
+     *       from                 to
+     *    ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
+     *  ┌───┐                 ┌───┐
+     *  │ ┃ │       ┃         ┃   │     ┃
+     *  └───┘                 └───┘
+     *    ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
+     *
+     * If element edge D is outside scrolling box edge D and element width is greater than scrolling box width
+     *
+     *       from                 to
+     *    ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
+     *        ┌───────────┐   ┌───────────┐
+     *    ┃   │     ┃     │   ┃         ┃ │
+     *        └───────────┘   └───────────┘
+     *    ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
+     */
+    if ((elementEdgeStart <= scrollingEdgeStart && elementSize <= scrollingSize) ||
+        (elementEdgeEnd >= scrollingEdgeEnd && elementSize >= scrollingSize)) {
+        return 2 /* LeftOrTop */;
+    }
+    /**
+     * If element edge B is outside scrolling box edge B and element height is less than scrolling box height
+     *
+     *        ┏━ ━━ ━┓         ┏━ ━━ ━┓
+     *
+     *  from  ┃      ┃     to  ┃ ┌──┐ ┃
+     *          ┌──┐             │  │
+     *        ┗━│━━│━┛         ┗━└━━┘━┛
+     *          └──┘
+     *
+     * If element edge A is outside scrolling box edge A and element height is greater than scrolling box height
+     *
+     *          ┌──┐
+     *          │  │
+     *          │  │             ┌──┐
+     *        ┏━│━━│━┓         ┏━│━━│━┓
+     *          │  │             │  │
+     *  from  ┃ └──┘ ┃     to  ┃ │  │ ┃
+     *                           │  │
+     *        ┗━ ━━ ━┛         ┗━└━━┘━┛
+     *
+     * If element edge C is outside scrolling box edge C and element width is greater than scrolling box width
+     *
+     *           from                 to
+     *        ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
+     *  ┌───────────┐           ┌───────────┐
+     *  │     ┃     │   ┃       │ ┃         ┃
+     *  └───────────┘           └───────────┘
+     *        ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
+     *
+     * If element edge D is outside scrolling box edge D and element width is less than scrolling box width
+     *
+     *           from                 to
+     *        ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
+     *                ┌───┐             ┌───┐
+     *        ┃       │ ┃ │       ┃     │   ┃
+     *                └───┘             └───┘
+     *        ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
+     *
+     */
+    if ((elementEdgeEnd > scrollingEdgeEnd && elementSize < scrollingSize) ||
+        (elementEdgeStart < scrollingEdgeStart && elementSize > scrollingSize)) {
+        return 3 /* RightOrBottom */;
+    }
+    return null;
+};
+const canOverflow = (overflow) => {
+    return overflow !== "visible" && overflow !== "clip";
+};
+const getFrameElement = (element) => {
+    try {
+        return element.ownerDocument.defaultView?.frameElement || null;
+    }
+    catch {
+        return null;
+    }
+};
+const isScrollable = (element, computedStyle) => {
+    if (element.clientHeight < element.scrollHeight || element.clientWidth < element.scrollWidth) {
+        return (canOverflow(computedStyle.overflowY) ||
+            canOverflow(computedStyle.overflowX) ||
+            element === scrollingElement(element));
+    }
+    return false;
+};
+const parentElement = (element) => {
+    const pNode = element.parentNode;
+    const pElement = element.parentElement;
+    if (pElement === null && pNode !== null) {
+        if (pNode.nodeType === /** Node.DOCUMENT_FRAGMENT_NODE */ 11) {
+            return pNode.host;
+        }
+        if (pNode.nodeType === /** Node.DOCUMENT_NODE */ 9) {
+            return getFrameElement(element);
+        }
+    }
+    return pElement;
+};
+const clamp = (value, min, max) => {
+    if (value < min) {
+        return min;
+    }
+    if (value > max) {
+        return max;
+    }
+    return value;
+};
+const getSupportedScrollMarginProperty = (ownerDocument) => {
+    // Webkit uses "scroll-snap-margin" https://bugs.webkit.org/show_bug.cgi?id=189265.
+    return ["scroll-margin", "scroll-snap-margin"].filter((property) => property in ownerDocument.documentElement.style)[0];
+};
+const getElementScrollSnapArea = (element, elementRect, computedStyle) => {
+    const { top, right, bottom, left } = elementRect;
+    const scrollProperty = getSupportedScrollMarginProperty(element.ownerDocument);
+    if (!scrollProperty) {
+        return [top, right, bottom, left];
+    }
+    const scrollMarginValue = (edge) => {
+        const value = computedStyle.getPropertyValue(`${scrollProperty}-${edge}`);
+        return parseInt(value, 10) || 0;
+    };
+    return [
+        top - scrollMarginValue("top"),
+        right + scrollMarginValue("right"),
+        bottom + scrollMarginValue("bottom"),
+        left - scrollMarginValue("left"),
+    ];
+};
+const calcAlignEdge = (align, start, end) => {
+    switch (align) {
+        case 1 /* CenterAlways */:
+            return (start + end) / 2;
+        case 3 /* RightOrBottom */:
+            return end;
+        case 2 /* LeftOrTop */:
+        case 0 /* ToEdgeIfNeeded */:
+            return start;
+    }
+};
+const getFrameViewport = (frame, frameRect) => {
+    const visualViewport = frame.ownerDocument.defaultView?.visualViewport;
+    const [x, y, width, height] = frame === scrollingElement(frame)
+        ? [0, 0, visualViewport?.width ?? frame.clientWidth, visualViewport?.height ?? frame.clientHeight]
+        : [frameRect.left, frameRect.top, frame.clientWidth, frame.clientHeight];
+    const left = x + frame.clientLeft;
+    const top = y + frame.clientTop;
+    const right = left + width;
+    const bottom = top + height;
+    return [top, right, bottom, left];
+};
+const computeScrollIntoView = (element, options) => {
+    // Collect all the scrolling boxes, as defined in the spec: https://drafts.csswg.org/cssom-view/#scrolling-box
+    const actions = [];
+    let ownerDocument = element.ownerDocument;
+    let ownerWindow = ownerDocument.defaultView;
+    if (!ownerWindow) {
+        return actions;
+    }
+    const computedStyle = window.getComputedStyle(element);
+    const isLTR = computedStyle.direction !== "rtl";
+    const writingMode = normalizeWritingMode(computedStyle.writingMode ||
+        computedStyle.getPropertyValue("-webkit-writing-mode") ||
+        computedStyle.getPropertyValue("-ms-writing-mode"));
+    const [alignH, alignV] = toPhysicalAlignment(options, writingMode, isLTR);
+    let [top, right, bottom, left] = getElementScrollSnapArea(element, element.getBoundingClientRect(), computedStyle);
+    for (let frame = parentElement(element); frame !== null; frame = parentElement(frame)) {
+        if (ownerDocument !== frame.ownerDocument) {
+            ownerDocument = frame.ownerDocument;
+            ownerWindow = ownerDocument.defaultView;
+            if (!ownerWindow) {
+                break;
+            }
+            const { left: dX, top: dY } = frame.getBoundingClientRect();
+            top += dY;
+            right += dX;
+            bottom += dY;
+            left += dX;
+        }
+        const frameStyle = ownerWindow.getComputedStyle(frame);
+        if (frameStyle.position === "fixed") {
+            break;
+        }
+        if (!isScrollable(frame, frameStyle)) {
+            continue;
+        }
+        const frameRect = frame.getBoundingClientRect();
+        const [frameTop, frameRight, frameBottom, frameLeft] = getFrameViewport(frame, frameRect);
+        const eAlignH = mapNearest(alignH, frameLeft, frameRight, frame.clientWidth, left, right, right - left);
+        const eAlignV = mapNearest(alignV, frameTop, frameBottom, frame.clientHeight, top, bottom, bottom - top);
+        const diffX = eAlignH === null ? 0 : calcAlignEdge(eAlignH, left, right) - calcAlignEdge(eAlignH, frameLeft, frameRight);
+        const diffY = eAlignV === null ? 0 : calcAlignEdge(eAlignV, top, bottom) - calcAlignEdge(eAlignV, frameTop, frameBottom);
+        const moveX = isXReversed(frameStyle)
+            ? clamp(diffX, -frame.scrollWidth + frame.clientWidth - frame.scrollLeft, -frame.scrollLeft)
+            : clamp(diffX, -frame.scrollLeft, frame.scrollWidth - frame.clientWidth - frame.scrollLeft);
+        const moveY = clamp(diffY, -frame.scrollTop, frame.scrollHeight - frame.clientHeight - frame.scrollTop);
+        actions.push([
+            frame,
+            { left: frame.scrollLeft + moveX, top: frame.scrollTop + moveY, behavior: options.behavior },
+        ]);
+        top = Math.max(top - moveY, frameTop);
+        right = Math.min(right - moveX, frameRight);
+        bottom = Math.min(bottom - moveY, frameBottom);
+        left = Math.max(left - moveX, frameLeft);
+    }
+    return actions;
+};
+const scrollIntoView = (element, scrollIntoViewOptions, config) => {
+    const options = scrollIntoViewOptions || {};
+    if (!checkBehavior(options.behavior)) {
+        throw new TypeError(failedExecuteInvalidEnumValue("scrollIntoView", "Element", options.behavior));
+    }
+    const actions = computeScrollIntoView(element, options);
+    actions.forEach(([frame, scrollToOptions]) => {
+        elementScroll(frame, scrollToOptions, config);
+    });
+};
+const elementScrollIntoView = scrollIntoView;
+//# sourceMappingURL=scrollIntoView.js.map
+;// CONCATENATED MODULE: ./src/scripts/donation-lightbox-form.js
+
+class DonationLightboxForm {
+  constructor(DonationAmount, DonationFrequency) {
+    if (!this.isIframe()) return;
+    this.amount = DonationAmount;
+    this.frequency = DonationFrequency;
+    this.ipCountry = "";
+    console.log("DonationLightboxForm: constructor"); // Each EN Row is a Section
+
+    this.sections = document.querySelectorAll("form.en__component > .en__component"); // Check if we're on the Thank You page
+
+    if (pageJson.pageNumber === pageJson.pageCount) {
+      this.sendMessage("status", "loaded");
+      this.sendMessage("status", "celebrate");
+      this.sendMessage("class", "thank-you");
+      document.querySelector("body").dataset.thankYou = "true"; // Get Query Strings
+
+      const urlParams = new URLSearchParams(window.location.search);
+
+      if (urlParams.get("name")) {
+        let engrid = document.querySelector("#engrid");
+
+        if (engrid) {
+          let engridContent = engrid.innerHTML;
+          engridContent = engridContent.replace("{user_data~First Name}", urlParams.get("name"));
+          engridContent = engridContent.replace("{receipt_data~recurringFrequency}", urlParams.get("frequency"));
+          engridContent = engridContent.replace("{receipt_data~amount}", "$" + urlParams.get("amount"));
+          engrid.innerHTML = engridContent;
+          this.sendMessage("firstname", urlParams.get("name"));
+        }
+      } else {
+        // Try to get the first name
+        const thisClass = this;
+        const pageDataUrl = location.protocol + "//" + location.host + location.pathname + "/pagedata";
+        fetch(pageDataUrl).then(function (response) {
+          return response.json();
+        }).then(function (json) {
+          if (json.hasOwnProperty("firstName") && json.firstName !== null) {
+            thisClass.sendMessage("firstname", json.firstName);
+          } else {
+            thisClass.sendMessage("firstname", "Friend");
+          }
+        }).catch(error => {
+          console.error("PageData Error:", error);
+        });
+      }
+
+      return false;
+    }
+
+    if (!this.sections.length) {
+      // No section or no Donation Page was found
+      this.sendMessage("error", "No sections found");
+      return false;
+    }
+
+    console.log(this.sections);
+
+    if (this.isIframe()) {
+      // If iFrame
+      this.buildSectionNavigation(); // If Form Submission Failed
+
+      if (EngagingNetworks.require._defined.enjs.checkSubmissionFailed()) {
+        // Submission failed
+        if (this.validateForm()) {
+          // Front-End Validation Passed, get first Error Message
+          const error = document.querySelector("li.en__error");
+
+          if (error) {
+            // Check if error contains "problem processing" to send a smaller message
+            if (error.innerHTML.toLowerCase().indexOf("problem processing") > -1) {
+              this.sendMessage("error", "Sorry! There's a problem processing your donation.");
+              this.scrollToElement(document.querySelector(".en__field--ccnumber"));
+            } else {
+              this.sendMessage("error", error.textContent);
+            } // Check if error contains "payment" or "account" and scroll to the right section
+
+
+            if (error.innerHTML.toLowerCase().indexOf("payment") > -1 || error.innerHTML.toLowerCase().indexOf("account") > -1) {
+              this.scrollToElement(document.querySelector(".en__field--ccnumber"));
+            }
+          }
+        }
+      }
+    }
+
+    let paymentOpts = document.querySelector(".payment-options");
+
+    if (paymentOpts) {
+      this.clickPaymentOptions(paymentOpts);
+    }
+
+    this.putArrowUpSVG();
+    DonationFrequency.getInstance().onFrequencyChange.subscribe(s => this.bounceArrow(s));
+    DonationFrequency.getInstance().onFrequencyChange.subscribe(() => this.changeSubmitButton());
+    DonationAmount.getInstance().onAmountChange.subscribe(() => this.changeSubmitButton());
+    this.changeSubmitButton();
+    this.sendMessage("status", "loaded"); // Check if theres a color value in the url
+
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get("color")) {
+      document.body.style.setProperty("--color_primary", urlParams.get("color"));
+    } // Check your IP Country
+
+
+    fetch("https://www.cloudflare.com/cdn-cgi/trace").then(res => res.text()).then(t => {
+      let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
+      data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+      const jsondata = JSON.parse(data);
+      this.ipCountry = jsondata.loc;
+      this.canadaOnly();
+      console.log("Country:", this.ipCountry);
+    });
+    const countryField = document.querySelector("#en__field_supporter_country");
+
+    if (countryField) {
+      countryField.addEventListener("change", e => {
+        this.canadaOnly();
+      });
+    }
+  } // Send iframe message to parent
+
+
+  sendMessage(key, value) {
+    const message = {
+      key: key,
+      value: value
+    };
+    window.parent.postMessage(message, "*");
+  } // Check if is iFrame
+
+
+  isIframe() {
+    return window.self !== window.top;
+  } // Build Section Navigation
+
+
+  buildSectionNavigation() {
+    console.log("DonationLightboxForm: buildSectionNavigation");
+    this.sections.forEach((section, key) => {
+      var _sectionNavigation$qu, _sectionNavigation$qu2, _sectionNavigation$qu3;
+
+      section.dataset.sectionId = key;
+      const sectionNavigation = document.createElement("div");
+      sectionNavigation.classList.add("section-navigation");
+      const sectionCount = document.createElement("div");
+      sectionCount.classList.add("section-count");
+      const sectionTotal = this.sections.length;
+
+      if (key == 0) {
+        sectionNavigation.innerHTML = `
+        <button class="section-navigation__next" data-section-id="${key}">
+          <span>Continue</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 14 14">
+              <path fill="currentColor" d="M7.687 13.313c-.38.38-.995.38-1.374 0-.38-.38-.38-.996 0-1.375L10 8.25H1.1c-.608 0-1.1-.493-1.1-1.1 0-.608.492-1.1 1.1-1.1h9.2L6.313 2.062c-.38-.38-.38-.995 0-1.375s.995-.38 1.374 0L14 7l-6.313 6.313z"/>
+          </svg>
+        </button>
+      `;
+      } else if (key == this.sections.length - 1) {
+        sectionNavigation.innerHTML = `
+        <button class="section-navigation__previous" data-section-id="${key}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M7.214.786c.434-.434 1.138-.434 1.572 0 .433.434.433 1.137 0 1.571L4.57 6.572h10.172c.694 0 1.257.563 1.257 1.257s-.563 1.257-1.257 1.257H4.229l4.557 4.557c.433.434.433 1.137 0 1.571-.434.434-1.138.434-1.572 0L0 8 7.214.786z"/>
+          </svg>
+        </button>
+        <button class="section-navigation__submit" data-section-id="${key}" type="submit" data-label="Give $AMOUNT$FREQUENCY">
+          <span>Give Now</span>
+        </button>
+      `;
+      } else {
+        sectionNavigation.innerHTML = `
+        <button class="section-navigation__previous" data-section-id="${key}">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 16 16">
+              <path fill="currentColor" d="M7.214.786c.434-.434 1.138-.434 1.572 0 .433.434.433 1.137 0 1.571L4.57 6.572h10.172c.694 0 1.257.563 1.257 1.257s-.563 1.257-1.257 1.257H4.229l4.557 4.557c.433.434.433 1.137 0 1.571-.434.434-1.138.434-1.572 0L0 8 7.214.786z"/>
+          </svg>
+        </button>
+        <button class="section-navigation__next" data-section-id="${key}">
+          <span>Continue</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 14 14">
+              <path fill="currentColor" d="M7.687 13.313c-.38.38-.995.38-1.374 0-.38-.38-.38-.996 0-1.375L10 8.25H1.1c-.608 0-1.1-.493-1.1-1.1 0-.608.492-1.1 1.1-1.1h9.2L6.313 2.062c-.38-.38-.38-.995 0-1.375s.995-.38 1.374 0L14 7l-6.313 6.313z"/>
+          </svg>
+        </button>
+      `;
+      }
+
+      sectionCount.innerHTML = `
+        <span class="section-count__current">${key + 1}</span> of
+        <span class="section-count__total">${sectionTotal}</span>
+      `;
+      (_sectionNavigation$qu = sectionNavigation.querySelector(".section-navigation__previous")) === null || _sectionNavigation$qu === void 0 ? void 0 : _sectionNavigation$qu.addEventListener("click", e => {
+        e.preventDefault();
+        this.scrollToSection(key - 1);
+      });
+      (_sectionNavigation$qu2 = sectionNavigation.querySelector(".section-navigation__next")) === null || _sectionNavigation$qu2 === void 0 ? void 0 : _sectionNavigation$qu2.addEventListener("click", e => {
+        e.preventDefault();
+
+        if (this.validateForm(key)) {
+          this.scrollToSection(key + 1);
+        }
+      });
+      (_sectionNavigation$qu3 = sectionNavigation.querySelector(".section-navigation__submit")) === null || _sectionNavigation$qu3 === void 0 ? void 0 : _sectionNavigation$qu3.addEventListener("click", e => {
+        e.preventDefault(); // Validate the entire form again
+
+        if (this.validateForm()) {
+          // Send Basic User Data to Parent
+          this.sendMessage("donationinfo", JSON.stringify({
+            name: document.querySelector("#en__field_supporter_firstName").value,
+            amount: EngagingNetworks.require._defined.enjs.getDonationTotal(),
+            frequency: this.frequency.getInstance().frequency
+          })); // Only shows cortain if payment is not paypal
+
+          const paymentType = document.querySelector("#en__field_transaction_paymenttype").value;
+
+          if (paymentType != "paypal") {
+            this.sendMessage("status", "loading");
+          } else {
+            // If Paypal, submit the form on a new tab
+            const thisClass = this;
+            document.addEventListener("visibilitychange", function () {
+              if (document.visibilityState === "visible") {
+                thisClass.sendMessage("status", "submitted");
+              } else {
+                thisClass.sendMessage("status", "loading");
+              }
+            });
+            document.querySelector("form.en__component").target = "_blank";
+          }
+
+          document.querySelector("form.en__component").submit();
+        }
+      });
+      section.querySelector(".en__component").append(sectionNavigation);
+      section.querySelector(".en__component").append(sectionCount);
+    });
+  } // Scroll to a section
+
+
+  scrollToSection(sectionId) {
+    console.log("DonationLightboxForm: scrollToSection", sectionId);
+    const section = document.querySelector(`[data-section-id="${sectionId}"]`);
+
+    if (this.sections[sectionId]) {
+      console.log(section);
+      elementScrollIntoView(this.sections[sectionId], {
+        behavior: "smooth",
+        block: "start",
+        inline: "start"
+      });
+    }
+  } // Scroll to an element's section
+
+
+  scrollToElement(element) {
+    if (element) {
+      const sectionId = this.getSectionId(element);
+
+      if (sectionId) {
+        this.scrollToSection(sectionId);
+      }
+    }
+  } // Get Element's section id
+
+
+  getSectionId(element) {
+    if (element) {
+      return element.closest("[data-section-id]").dataset.sectionId;
+    }
+
+    return false;
+  } // Validate the form
+
+
+  validateForm(sectionId = false) {
+    const form = document.querySelector("form.en__component"); // Validate Frequency
+
+    const frequency = form.querySelector("[name='transaction.recurrfreq']:checked");
+    const frequencyBlock = form.querySelector(".en__field--recurrfreq");
+    const frequencySection = this.getSectionId(frequencyBlock);
+
+    if (sectionId === false || sectionId == frequencySection) {
+      if (!frequency || !frequency.value) {
+        this.scrollToElement(form.querySelector("[name='transaction.recurrfreq']:checked"));
+        this.sendMessage("error", "Please select a frequency");
+
+        if (frequencyBlock) {
+          frequencyBlock.classList.add("has-error");
+        }
+
+        return false;
+      } else {
+        if (frequencyBlock) {
+          frequencyBlock.classList.remove("has-error");
+        }
+      }
+    } // Validate Amount
+
+
+    const amount = EngagingNetworks.require._defined.enjs.getDonationTotal();
+
+    const amountBlock = form.querySelector(".en__field--donationAmt");
+    const amountSection = this.getSectionId(amountBlock);
+
+    if (sectionId === false || sectionId == amountSection) {
+      if (!amount || amount <= 0) {
+        this.scrollToElement(amountBlock);
+        this.sendMessage("error", "Please enter a valid amount");
+
+        if (amountBlock) {
+          amountBlock.classList.add("has-error");
+        }
+
+        return false;
+      } else {
+        if (amountBlock) {
+          amountBlock.classList.remove("has-error");
+        }
+      }
+    } // Validate Payment Method
+
+
+    const paymentType = form.querySelector("#en__field_transaction_paymenttype");
+    const ccnumber = form.querySelector("#en__field_transaction_ccnumber");
+    const ccnumberBlock = form.querySelector(".en__field--ccnumber");
+    const ccnumberSection = this.getSectionId(ccnumberBlock);
+    console.log("DonationLightboxForm: validateForm", ccnumberBlock, ccnumberSection);
+
+    if (sectionId === false || sectionId == ccnumberSection) {
+      if (!paymentType || !paymentType.value) {
+        this.scrollToElement(paymentType);
+        this.sendMessage("error", "Please add your credit card information");
+
+        if (ccnumberBlock) {
+          ccnumberBlock.classList.add("has-error");
+        }
+
+        return false;
+      } // If payment type is not paypal, check credit card expiration and cvv
+
+
+      if (paymentType.value !== "paypal") {
+        if (!ccnumber || !ccnumber.value) {
+          this.scrollToElement(ccnumber);
+          this.sendMessage("error", "Please add your credit card information");
+
+          if (ccnumberBlock) {
+            ccnumberBlock.classList.add("has-error");
+          }
+
+          return false;
+        } else {
+          if (ccnumberBlock) {
+            ccnumberBlock.classList.remove("has-error");
+          }
+        }
+
+        if (/^\d+$/.test(ccnumber.value) === false) {
+          this.scrollToElement(ccnumber);
+          this.sendMessage("error", "Only numbers are allowed on credit card");
+
+          if (ccnumberBlock) {
+            ccnumberBlock.classList.add("has-error");
+          }
+
+          return false;
+        } else {
+          if (ccnumberBlock) {
+            ccnumberBlock.classList.remove("has-error");
+          }
+        }
+
+        const ccexpire = form.querySelectorAll("[name='transaction.ccexpire']");
+        const ccexpireBlock = form.querySelector(".en__field--ccexpire");
+        let ccexpireValid = true;
+        ccexpire.forEach(e => {
+          if (!e.value) {
+            this.scrollToElement(ccexpireBlock);
+            this.sendMessage("error", "Please enter a valid expiration date");
+
+            if (ccexpireBlock) {
+              ccexpireBlock.classList.add("has-error");
+            }
+
+            ccexpireValid = false;
+            return false;
+          }
+        });
+
+        if (!ccexpireValid && ccexpireBlock) {
+          return false;
+        } else {
+          if (ccexpireBlock) {
+            ccexpireBlock.classList.remove("has-error");
+          }
+        }
+
+        const cvv = form.querySelector("#en__field_transaction_ccvv");
+        const cvvBlock = form.querySelector(".en__field--ccvv");
+
+        if (!cvv || !cvv.value) {
+          this.scrollToElement(cvv);
+          this.sendMessage("error", "Please enter a valid CVV");
+
+          if (cvvBlock) {
+            cvvBlock.classList.add("has-error");
+          }
+
+          return false;
+        } else {
+          if (cvvBlock) {
+            cvvBlock.classList.remove("has-error");
+          }
+        }
+      }
+    } // Validate Everything else
+
+
+    const mandatoryFields = form.querySelectorAll(".en__mandatory");
+    let hasError = false;
+    mandatoryFields.forEach(field => {
+      if (hasError) {
+        return;
+      }
+
+      const fieldElement = field.querySelector(".en__field__input");
+      const fieldLabel = field.querySelector(".en__field__label");
+      const fieldSection = this.getSectionId(fieldElement);
+
+      if (sectionId === false || sectionId == fieldSection) {
+        if (!fieldElement.value) {
+          this.scrollToElement(fieldElement);
+          this.sendMessage("error", "Please enter " + fieldLabel.textContent);
+          field.classList.add("has-error");
+          hasError = true;
+          return false;
+        } else {
+          field.classList.remove("has-error");
+        } // If it's the e-mail field, check if it's a valid email
+
+
+        if (fieldElement.name === "supporter.emailAddress" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(fieldElement.value) === false) {
+          this.scrollToElement(fieldElement);
+          this.sendMessage("error", "Please enter a valid email address");
+          field.classList.add("has-error");
+          hasError = true;
+          return false;
+        }
+      }
+    });
+
+    if (hasError) {
+      return false;
+    } // Validate City Characters Limit
+
+
+    const city = form.querySelector("#en__field_supporter_city");
+    const cityBlock = form.querySelector(".en__field--city");
+
+    if (!this.checkCharsLimit("#en__field_supporter_city", 100)) {
+      this.scrollToElement(city);
+      this.sendMessage("error", "This field only allows up to 100 characters");
+
+      if (cityBlock) {
+        cityBlock.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (cityBlock) {
+        cityBlock.classList.remove("has-error");
+      }
+    } // Validate Street Address line 1 Characters Limit
+
+
+    const streetAddress1 = form.querySelector("#en__field_supporter_address1");
+    const streetAddress1Block = form.querySelector(".en__field--address1");
+
+    if (!this.checkCharsLimit("#en__field_supporter_address1", 35)) {
+      this.scrollToElement(streetAddress1);
+      this.sendMessage("error", "This field only allows up to 35 characters. Longer street addresses can be broken up between Lines 1 and 2.");
+
+      if (streetAddress1Block) {
+        streetAddress1Block.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (streetAddress1Block) {
+        streetAddress1Block.classList.remove("has-error");
+      }
+    } // Validate Street Address line 2 Characters Limit
+
+
+    const streetAddress2 = form.querySelector("#en__field_supporter_address2");
+    const streetAddress2Block = form.querySelector(".en__field--address2");
+
+    if (!this.checkCharsLimit("#en__field_supporter_address2", 35)) {
+      this.scrollToElement(streetAddress2);
+      this.sendMessage("error", "This field only allows up to 35 characters. Longer street addresses can be broken up between Lines 1 and 2.");
+
+      if (streetAddress2Block) {
+        streetAddress2Block.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (streetAddress2Block) {
+        streetAddress2Block.classList.remove("has-error");
+      }
+    } // Validate Zip Code Characters Limit
+
+
+    const zipCode = form.querySelector("#en__field_supporter_postcode");
+    const zipCodeBlock = form.querySelector(".en__field--postcode");
+
+    if (!this.checkCharsLimit("#en__field_supporter_postcode", 20)) {
+      this.scrollToElement(zipCode);
+      this.sendMessage("error", "This field only allows up to 20 characters");
+
+      if (zipCodeBlock) {
+        zipCodeBlock.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (zipCodeBlock) {
+        zipCodeBlock.classList.remove("has-error");
+      }
+    } // Validate First Name Characters Limit
+
+
+    const firstName = form.querySelector("#en__field_supporter_firstName");
+    const firstNameBlock = form.querySelector(".en__field--firstName");
+
+    if (!this.checkCharsLimit("#en__field_supporter_firstName", 100)) {
+      this.scrollToElement(firstName);
+      this.sendMessage("error", "This field only allows up to 100 characters");
+
+      if (firstNameBlock) {
+        firstNameBlock.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (firstNameBlock) {
+        firstNameBlock.classList.remove("has-error");
+      }
+    } // Validate Last Name Characters Limit
+
+
+    const lastName = form.querySelector("#en__field_supporter_lastName");
+    const lastNameBlock = form.querySelector(".en__field--lastName");
+
+    if (!this.checkCharsLimit("#en__field_supporter_lastName", 100)) {
+      this.scrollToElement(lastName);
+      this.sendMessage("error", "This field only allows up to 100 characters");
+
+      if (lastNameBlock) {
+        lastNameBlock.classList.add("has-error");
+      }
+
+      return false;
+    } else {
+      if (lastNameBlock) {
+        lastNameBlock.classList.remove("has-error");
+      }
+    }
+
+    console.log("DonationLightboxForm: validateForm PASSED");
+    return true;
+  }
+
+  checkCharsLimit(field, max) {
+    const fieldElement = document.querySelector(field);
+
+    if (fieldElement && fieldElement.value.length > max) {
+      return false;
+    }
+
+    return true;
+  } // Bounce Arrow Up and Down
+
+
+  bounceArrow(freq) {
+    const arrow = document.querySelector(".monthly-upsell-message");
+
+    if (arrow && freq === "onetime") {
+      arrow.classList.add("bounce");
+      setTimeout(() => {
+        arrow.classList.remove("bounce");
+      }, 1000);
+    }
+  }
+
+  changeSubmitButton() {
+    const submit = document.querySelector(".section-navigation__submit");
+
+    const amount = "$" + EngagingNetworks.require._defined.enjs.getDonationTotal();
+
+    let frequency = this.frequency.getInstance().frequency;
+    let label = submit.dataset.label;
+    frequency = frequency === "onetime" ? "" : "<small>/mo</small>";
+
+    if (amount) {
+      label = label.replace("$AMOUNT", amount);
+      label = label.replace("$FREQUENCY", frequency);
+    } else {
+      label = label.replace("$AMOUNT", "");
+      label = label.replace("$FREQUENCY", "");
+    }
+
+    if (submit && label) {
+      submit.innerHTML = `<span>${label}</span>`;
+    }
+  }
+
+  clickPaymentOptions(opts) {
+    opts.querySelectorAll("button").forEach(btn => {
+      btn.addEventListener("click", e => {
+        e.preventDefault();
+        const paymentType = document.querySelector("#en__field_transaction_paymenttype");
+
+        if (paymentType) {
+          paymentType.value = btn.className.substr(15); // Go to the next section
+
+          this.scrollToSection(parseInt(btn.closest("[data-section-id]").dataset.sectionId) + 1);
+        }
+      });
+    });
+  } // Append arrow SVG to the monthly upsell message
+
+
+  putArrowUpSVG() {
+    const arrow = document.querySelector(".monthly-upsell-message");
+
+    if (arrow) {
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox", "0 0 21 40");
+      svg.setAttribute("preserveAspectRatio", "xMidYMid");
+      svg.setAttribute("class", "monthly-upsell-message__arrow");
+      svg.innerHTML = `<path fill="currentColor" d="M16.578 4.68c-.581-.596-1.748-1.65-2.638-1.094-.553.344-.847 1.109-1.171 1.667-.371.641-.738 1.283-1.1 1.93-.695 1.248-1.365 2.51-1.99 3.794-1.206 2.492-2.228 5.146-2.825 7.855-.96 4.35-.574 9.438.985 13.607.981 2.622 2.461 5.004 4.555 6.883.39.352 1.42 1.11 1.781.354.344-.72-.748-1.92-1.182-2.322-1.37-1.266-2.264-3.404-2.693-5.502-.49-2.394-.429-4.934.037-7.327.552-2.836 1.607-5.558 2.882-8.14.703-1.425 1.457-2.825 2.252-4.199.398-.685.806-1.365 1.22-2.042.451-.738 1.168-1.555 1.31-2.41.186-1.146-.673-2.29-1.423-3.055z"/>
+        <path fill="currentColor" d="M19.44 1.424C18.95.862 17.91-.183 17.064.028c-1.897.471-3.446 1.651-4.945 2.849-1.424 1.136-2.846 2.276-4.25 3.435-2.826 2.333-5.823 4.69-7.78 7.84-.654 1.056 2.438 4.04 3.053 3.117 1.984-2.983 5.07-5.029 8.061-6.895 1.422-.886 2.875-1.734 4.169-2.807.22-.183.442-.372.666-.564-.062 1.105-.104 2.214-.12 3.33-.019 1.621-.017 3.246.002 4.867.02 1.686-.054 3.421.107 5.1.11 1.153 1.024 2.277 1.905 2.955.33.255 2.036 1.328 2.15.269.347-3.215-.033-6.574-.072-9.806-.039-3.224-.087-6.564.48-9.75.165-.915-.482-1.889-1.052-2.544z"/>`;
+      arrow.appendChild(svg);
+    }
+  } // Return true if you are in Canada, checking 3 conditions
+  // 1 - You are using a Canadian ip address
+  // 2 - You choose Canada as your country
+  // 3 - Your browser language is en-CA
+
+
+  isCanada() {
+    const country = document.querySelector("#en__field_supporter_country");
+
+    if (country) {
+      if (country.value === "CA") {
+        return true;
+      }
+    }
+
+    const lang = window.navigator.userLanguage || window.navigator.language;
+
+    if (lang === "en-CA" || this.ipCountry === "CA") {
+      return true;
+    }
+
+    return false;
+  } // Display and check the class canada-only if you are in Canada
+
+
+  canadaOnly() {
+    const canadaOnly = document.querySelectorAll(".canada-only");
+
+    if (canadaOnly.length) {
+      if (this.isCanada()) {
+        canadaOnly.forEach(item => {
+          item.style.display = "";
+          const input = item.querySelectorAll("input[type='checkbox']");
+
+          if (input.length) {
+            input.forEach(input => {
+              input.checked = false;
+            });
+          }
+        });
+      } else {
+        canadaOnly.forEach(item => {
+          item.style.display = "none";
+          const input = item.querySelectorAll("input[type='checkbox']");
+
+          if (input.length) {
+            input.forEach(input => {
+              input.checked = true;
+            });
+          }
+        });
+      }
+    }
+  }
+
+}
 // EXTERNAL MODULE: ./src/scripts/main.js
 var main = __webpack_require__(4747);
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
 // import { Options, App } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+
 
 
 
@@ -13881,6 +15432,10 @@ const options = {
   onResize: () => console.log("Starter Theme Window Resized")
 };
 new App(options);
+window.addEventListener("load", function () {
+  window.DonationLightboxForm = DonationLightboxForm;
+  new DonationLightboxForm(DonationAmount, DonationFrequency);
+});
 })();
 
 /******/ })()
