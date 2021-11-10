@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, November 5, 2021 @ 13:09:23 ET
+ *  Date: Wednesday, November 10, 2021 @ 17:20:00 ET
  *  By: fe
  *  ENGrid styles: v0.5.1
  *  ENGrid scripts: v0.5.1
@@ -14751,8 +14751,9 @@ class DonationLightboxForm {
       // If iFrame
       this.buildSectionNavigation(); // If Form Submission Failed
 
-      if (EngagingNetworks.require._defined.enjs.checkSubmissionFailed()) {
-        // Submission failed
+      if (this.checkNested(EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") && EngagingNetworks.require._defined.enjs.checkSubmissionFailed()) {
+        console.log("DonationLightboxForm: Submission Failed"); // Submission failed
+
         if (this.validateForm()) {
           // Front-End Validation Passed, get first Error Message
           const error = document.querySelector("li.en__error");
@@ -15386,6 +15387,12 @@ class DonationLightboxForm {
         });
       }
     }
+  }
+
+  checkNested(obj, level, ...rest) {
+    if (obj === undefined) return false;
+    if (rest.length == 0 && obj.hasOwnProperty(level)) return true;
+    return this.checkNested(obj[level], ...rest);
   }
 
 }
