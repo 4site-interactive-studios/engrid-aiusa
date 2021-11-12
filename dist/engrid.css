@@ -21,10 +21,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, November 10, 2021 @ 17:20:00 ET
+ *  Date: Friday, November 12, 2021 @ 16:38:05 ET
  *  By: fe
- *  ENGrid styles: v0.5.1
- *  ENGrid scripts: v0.5.1
+ *  ENGrid styles: v0.6.0
+ *  ENGrid scripts: v0.6.2
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -953,7 +953,7 @@ body[data-engrid-debug]:before{
 }
 
 .en__contactMessage,.en__contactSubject{
-  padding-top:.625rem;
+  margin-top:.625rem;
 }
 
 .en__contactMessage__htmlDisplay{
@@ -4750,36 +4750,28 @@ a.skip-link:not(:focus):not(:active){
   position:absolute !important;
   width:1px !important;
 }
-#en_custom_field_simple_country_select_long a,#en_custom_field_simple_country_select_short a{
+body:not(#en__pagebuilder)
+.simple_country_select:not(.country-select-visible)
+.en__field--country{
+  display:none;
+}
+
+.simple_country_select .en__field--address1 label{
+  flex-wrap:wrap;
+}
+
+.simple_country_select .en__field--address1 label a{
+  color:var(--a_color);
   cursor:pointer;
+  text-align:right;
 }
 
-#en_custom_field_simple_country_select_short{
+.simple_country_select .en__field--address1 label a:focus,.simple_country_select .en__field--address1 label a:hover{
+  color:var(--a_color_hover);
+}
+
+.simple_country_select.country-select-visible .en__field--address1 label label{
   display:none;
-}
-
-@media (max-width:600px){
-  #en_custom_field_simple_country_select_short{
-    display:initial;
-  }
-}
-
-.en__component--formblock.country-select-visible .en__field--address1 span,body:not(#en__pagebuilder) .simple_country_select .en__field--country{
-  display:none;
-}
-
-body:not(#en__pagebuilder) .simple_country_select.country-select-visible .en__field--country{
-  display:flex;
-}
-
-.country-select-visible #en_custom_field_simple_country_select_long,.country-select-visible #en_custom_field_simple_country_select_short{
-  display:none;
-}
-
-@media (max-width:600px){
-  #en_custom_field_simple_country_select_long{
-    display:none;
-  }
 }
 
 .en__component--socialshareblock{
@@ -5483,6 +5475,15 @@ body:not(#en__pagebuilder)[data-engrid-no-body-banner]
   }
   [data-engrid-layout=centercenter2col] form>.en__component--advrow .body-main{
     grid-row:body-header-end /  body-main-end;
+  }
+  [data-engrid-layout=centercenter2col][data-engrid-layout_banner=grid-column_bc] form>.en__component--advrow .body-banner,[data-engrid-layout=centercenter2col][data-engrid-layout_banner=grid-column_bc] form>.en__component--advrow .body-bannerOverlay{
+    grid-column:bc;
+  }
+  [data-engrid-layout=centercenter2col][data-engrid-layout_banner=grid-column_bc] form>.en__component--advrow .body-main,[data-engrid-layout=centercenter2col][data-engrid-layout_banner=grid-column_bc] form>.en__component--advrow .body-title{
+    grid-row-start:body-bannerOverlay-end;
+  }
+  [data-engrid-layout=centercenter2col][data-engrid-layout_banner=grid-column_bc] form>.en__component--advrow .body-top{
+    grid-row-start:body-title-end;
   }
   [data-engrid-layout=centercenter2col] #engrid>.en__component--advrow .en__component--column--2 .en__component--formblock,[data-engrid-layout=centercenter2col] #engrid>.en__component--advrow .en__component--column--2 .en__component--svblock{
     margin-right:0;
