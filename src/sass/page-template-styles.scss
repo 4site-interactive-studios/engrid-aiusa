@@ -871,9 +871,9 @@
     }
   }
 
-  .handwritten{
+  .handwritten {
     font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
-    font-weight: 700; 
+    font-weight: 700;
   }
 
   .en__ecarditems__button {
@@ -2169,7 +2169,10 @@
 
 [data-engrid-theme="aiusa"] {
   // Append an "upsell" arrow to the giving amount radio button that has everything defined but its "content". Content will be defined in a text block on an inline <style> tag so that the upsell text itself helps deine where to attach the arrow to.
-  .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio] + label:after{
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]
+    + label:after {
     // content: "";
     bottom: calc(-15.5px - 0.5rem);
     background-image: url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=161460392500);
@@ -2183,25 +2186,28 @@
   }
 
   &[data-engrid-transaction-recurring="y"] {
-    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value='ONETIME' i] + label:after{
-      content:var(--giving-frequency-upsell-arrow-onetime);
+    .radio-to-buttons_recurrfreq
+      .en__field--recurrfreq.en__field--radio
+      input[type="radio"][value="ONETIME" i]
+      + label:after {
+      content: var(--giving-frequency-upsell-arrow-onetime);
     }
   }
-    
-  &[data-engrid-transaction-recurring="n"] {
-    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio]{
-        &[value='MONTHLY' i] + label:after{
-          content:var(--giving-frequency-upsell-arrow-monthly);
-        }
 
-        &[value='ANNUAL' i] + label:after{
-          content:var(--giving-frequency-upsell-arrow-annual);
-        }
+  &[data-engrid-transaction-recurring="n"] {
+    .radio-to-buttons_recurrfreq
+      .en__field--recurrfreq.en__field--radio
+      input[type="radio"] {
+      &[value="MONTHLY" i] + label:after {
+        content: var(--giving-frequency-upsell-arrow-monthly);
+      }
+
+      &[value="ANNUAL" i] + label:after {
+        content: var(--giving-frequency-upsell-arrow-annual);
+      }
     }
   }
 }
-
-
 
 /*
 * ##########################################################
@@ -3173,6 +3179,11 @@ body#en__pagebuilder .content-footerSpacer {
         }
       }
     }
+  }
+  iframe[title^="recaptcha"] {
+    position: fixed;
+    left: -1px;
+    top: -1px;
   }
 }
 // END AIUSA ENGRID CUSTOM LAYOUTS
