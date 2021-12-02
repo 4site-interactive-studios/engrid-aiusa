@@ -21,7 +21,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, December 2, 2021 @ 14:33:54 ET
+ *  Date: Thursday, December 2, 2021 @ 15:49:29 ET
  *  By: fe
  *  ENGrid styles: v0.6.6
  *  ENGrid scripts: v0.6.7
@@ -7237,7 +7237,7 @@ body:not([data-engrid-debug]) #debug-bar{
   }
 }
 
-@keyframes bounce{
+@keyframes bounceRight{
   0%{
     transform:scaleX(-1) translateY(0);
   }
@@ -7246,6 +7246,18 @@ body:not([data-engrid-debug]) #debug-bar{
   }
   to{
     transform:scaleX(-1) translateY(0);
+  }
+}
+
+@keyframes bounce{
+  0%{
+    transform:translateY(0);
+  }
+  50%{
+    transform:translateY(-10px);
+  }
+  to{
+    transform:translateY(0);
   }
 }
 
@@ -9208,15 +9220,29 @@ input[type=radio][value=ANNUAL i]+label:after{
 
 [data-engrid-embedded] .monthly-upsell-message svg{
   color:var(--color_primary);
+  display:none;
   height:40px;
   position:absolute;
-  right:-30px;
   top:-30px;
-  transform:scaleX(-1);
   width:20px;
 }
 
-[data-engrid-embedded] .monthly-upsell-message.bounce svg{
+[data-engrid-embedded] .monthly-upsell-message svg.right{
+  display:block;
+  right:-30px;
+  transform:scaleX(-1);
+}
+
+[data-engrid-embedded] .monthly-upsell-message svg.left{
+  display:block;
+  left:-30px;
+}
+
+[data-engrid-embedded] .monthly-upsell-message.bounce svg.right{
+  animation:bounceRight .5s infinite;
+}
+
+[data-engrid-embedded] .monthly-upsell-message.bounce svg.left{
   animation:bounce .5s infinite;
 }
 
