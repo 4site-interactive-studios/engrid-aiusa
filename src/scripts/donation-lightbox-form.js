@@ -593,10 +593,17 @@ export default class DonationLightboxForm {
   }
   changeSubmitButton() {
     const submit = document.querySelector(".section-navigation__submit");
-    const amount =
-      "$" + EngagingNetworks.require._defined.enjs.getDonationTotal();
+    const amount = this.checkNested(
+      window.EngagingNetworks,
+      "require",
+      "_defined",
+      "enjs",
+      "getDonationTotal"
+    )
+      ? "$" + window.EngagingNetworks.require._defined.enjs.getDonationTotal()
+      : null;
     let frequency = this.frequency.getInstance().frequency;
-    let label = submit.dataset.label;
+    let label = submit ? submit.dataset.label : "";
     frequency = frequency === "onetime" ? "" : "<small>/mo</small>";
 
     if (amount) {

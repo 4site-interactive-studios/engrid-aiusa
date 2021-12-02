@@ -44,11 +44,10 @@ const options: Options = {
   //   ]
   // },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
-  onLoad: () => console.log("Starter Theme Loaded"),
+  onLoad: () => {
+    (<any>window).DonationLightboxForm = DonationLightboxForm;
+    new DonationLightboxForm(DonationAmount, DonationFrequency);
+  },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
 new App(options);
-window.addEventListener("load", function () {
-  (<any>window).DonationLightboxForm = DonationLightboxForm;
-  new DonationLightboxForm(DonationAmount, DonationFrequency);
-});
