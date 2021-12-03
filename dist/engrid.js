@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, December 2, 2021 @ 15:49:29 ET
+ *  Date: Friday, December 3, 2021 @ 13:40:22 ET
  *  By: fe
  *  ENGrid styles: v0.6.6
  *  ENGrid scripts: v0.6.7
@@ -1504,7 +1504,7 @@ __webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_p
 /***/ 4747:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-const tippy = __webpack_require__(3861)/* ["default"] */ .ZP;
+const tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 
 document.onreadystatechange = () => {
   if (document.readyState === "interactive" || document.readyState === "complete") {
@@ -2541,6 +2541,443 @@ document.onreadystatechange = () => {
     }
   }
 };
+
+/***/ }),
+
+/***/ 523:
+/***/ ((module) => {
+
+/* smoothscroll v0.4.4 - 2019 - Dustan Kasten, Jeremias Menichelli - MIT License */
+(function () {
+  'use strict';
+
+  // polyfill
+  function polyfill() {
+    // aliases
+    var w = window;
+    var d = document;
+
+    // return if scroll behavior is supported and polyfill is not forced
+    if (
+      'scrollBehavior' in d.documentElement.style &&
+      w.__forceSmoothScrollPolyfill__ !== true
+    ) {
+      return;
+    }
+
+    // globals
+    var Element = w.HTMLElement || w.Element;
+    var SCROLL_TIME = 468;
+
+    // object gathering original scroll methods
+    var original = {
+      scroll: w.scroll || w.scrollTo,
+      scrollBy: w.scrollBy,
+      elementScroll: Element.prototype.scroll || scrollElement,
+      scrollIntoView: Element.prototype.scrollIntoView
+    };
+
+    // define timing method
+    var now =
+      w.performance && w.performance.now
+        ? w.performance.now.bind(w.performance)
+        : Date.now;
+
+    /**
+     * indicates if a the current browser is made by Microsoft
+     * @method isMicrosoftBrowser
+     * @param {String} userAgent
+     * @returns {Boolean}
+     */
+    function isMicrosoftBrowser(userAgent) {
+      var userAgentPatterns = ['MSIE ', 'Trident/', 'Edge/'];
+
+      return new RegExp(userAgentPatterns.join('|')).test(userAgent);
+    }
+
+    /*
+     * IE has rounding bug rounding down clientHeight and clientWidth and
+     * rounding up scrollHeight and scrollWidth causing false positives
+     * on hasScrollableSpace
+     */
+    var ROUNDING_TOLERANCE = isMicrosoftBrowser(w.navigator.userAgent) ? 1 : 0;
+
+    /**
+     * changes scroll position inside an element
+     * @method scrollElement
+     * @param {Number} x
+     * @param {Number} y
+     * @returns {undefined}
+     */
+    function scrollElement(x, y) {
+      this.scrollLeft = x;
+      this.scrollTop = y;
+    }
+
+    /**
+     * returns result of applying ease math function to a number
+     * @method ease
+     * @param {Number} k
+     * @returns {Number}
+     */
+    function ease(k) {
+      return 0.5 * (1 - Math.cos(Math.PI * k));
+    }
+
+    /**
+     * indicates if a smooth behavior should be applied
+     * @method shouldBailOut
+     * @param {Number|Object} firstArg
+     * @returns {Boolean}
+     */
+    function shouldBailOut(firstArg) {
+      if (
+        firstArg === null ||
+        typeof firstArg !== 'object' ||
+        firstArg.behavior === undefined ||
+        firstArg.behavior === 'auto' ||
+        firstArg.behavior === 'instant'
+      ) {
+        // first argument is not an object/null
+        // or behavior is auto, instant or undefined
+        return true;
+      }
+
+      if (typeof firstArg === 'object' && firstArg.behavior === 'smooth') {
+        // first argument is an object and behavior is smooth
+        return false;
+      }
+
+      // throw error when behavior is not supported
+      throw new TypeError(
+        'behavior member of ScrollOptions ' +
+          firstArg.behavior +
+          ' is not a valid value for enumeration ScrollBehavior.'
+      );
+    }
+
+    /**
+     * indicates if an element has scrollable space in the provided axis
+     * @method hasScrollableSpace
+     * @param {Node} el
+     * @param {String} axis
+     * @returns {Boolean}
+     */
+    function hasScrollableSpace(el, axis) {
+      if (axis === 'Y') {
+        return el.clientHeight + ROUNDING_TOLERANCE < el.scrollHeight;
+      }
+
+      if (axis === 'X') {
+        return el.clientWidth + ROUNDING_TOLERANCE < el.scrollWidth;
+      }
+    }
+
+    /**
+     * indicates if an element has a scrollable overflow property in the axis
+     * @method canOverflow
+     * @param {Node} el
+     * @param {String} axis
+     * @returns {Boolean}
+     */
+    function canOverflow(el, axis) {
+      var overflowValue = w.getComputedStyle(el, null)['overflow' + axis];
+
+      return overflowValue === 'auto' || overflowValue === 'scroll';
+    }
+
+    /**
+     * indicates if an element can be scrolled in either axis
+     * @method isScrollable
+     * @param {Node} el
+     * @param {String} axis
+     * @returns {Boolean}
+     */
+    function isScrollable(el) {
+      var isScrollableY = hasScrollableSpace(el, 'Y') && canOverflow(el, 'Y');
+      var isScrollableX = hasScrollableSpace(el, 'X') && canOverflow(el, 'X');
+
+      return isScrollableY || isScrollableX;
+    }
+
+    /**
+     * finds scrollable parent of an element
+     * @method findScrollableParent
+     * @param {Node} el
+     * @returns {Node} el
+     */
+    function findScrollableParent(el) {
+      while (el !== d.body && isScrollable(el) === false) {
+        el = el.parentNode || el.host;
+      }
+
+      return el;
+    }
+
+    /**
+     * self invoked function that, given a context, steps through scrolling
+     * @method step
+     * @param {Object} context
+     * @returns {undefined}
+     */
+    function step(context) {
+      var time = now();
+      var value;
+      var currentX;
+      var currentY;
+      var elapsed = (time - context.startTime) / SCROLL_TIME;
+
+      // avoid elapsed times higher than one
+      elapsed = elapsed > 1 ? 1 : elapsed;
+
+      // apply easing to elapsed time
+      value = ease(elapsed);
+
+      currentX = context.startX + (context.x - context.startX) * value;
+      currentY = context.startY + (context.y - context.startY) * value;
+
+      context.method.call(context.scrollable, currentX, currentY);
+
+      // scroll more if we have not reached our destination
+      if (currentX !== context.x || currentY !== context.y) {
+        w.requestAnimationFrame(step.bind(w, context));
+      }
+    }
+
+    /**
+     * scrolls window or element with a smooth behavior
+     * @method smoothScroll
+     * @param {Object|Node} el
+     * @param {Number} x
+     * @param {Number} y
+     * @returns {undefined}
+     */
+    function smoothScroll(el, x, y) {
+      var scrollable;
+      var startX;
+      var startY;
+      var method;
+      var startTime = now();
+
+      // define scroll context
+      if (el === d.body) {
+        scrollable = w;
+        startX = w.scrollX || w.pageXOffset;
+        startY = w.scrollY || w.pageYOffset;
+        method = original.scroll;
+      } else {
+        scrollable = el;
+        startX = el.scrollLeft;
+        startY = el.scrollTop;
+        method = scrollElement;
+      }
+
+      // scroll looping over a frame
+      step({
+        scrollable: scrollable,
+        method: method,
+        startTime: startTime,
+        startX: startX,
+        startY: startY,
+        x: x,
+        y: y
+      });
+    }
+
+    // ORIGINAL METHODS OVERRIDES
+    // w.scroll and w.scrollTo
+    w.scroll = w.scrollTo = function() {
+      // avoid action when no arguments are passed
+      if (arguments[0] === undefined) {
+        return;
+      }
+
+      // avoid smooth behavior if not required
+      if (shouldBailOut(arguments[0]) === true) {
+        original.scroll.call(
+          w,
+          arguments[0].left !== undefined
+            ? arguments[0].left
+            : typeof arguments[0] !== 'object'
+              ? arguments[0]
+              : w.scrollX || w.pageXOffset,
+          // use top prop, second argument if present or fallback to scrollY
+          arguments[0].top !== undefined
+            ? arguments[0].top
+            : arguments[1] !== undefined
+              ? arguments[1]
+              : w.scrollY || w.pageYOffset
+        );
+
+        return;
+      }
+
+      // LET THE SMOOTHNESS BEGIN!
+      smoothScroll.call(
+        w,
+        d.body,
+        arguments[0].left !== undefined
+          ? ~~arguments[0].left
+          : w.scrollX || w.pageXOffset,
+        arguments[0].top !== undefined
+          ? ~~arguments[0].top
+          : w.scrollY || w.pageYOffset
+      );
+    };
+
+    // w.scrollBy
+    w.scrollBy = function() {
+      // avoid action when no arguments are passed
+      if (arguments[0] === undefined) {
+        return;
+      }
+
+      // avoid smooth behavior if not required
+      if (shouldBailOut(arguments[0])) {
+        original.scrollBy.call(
+          w,
+          arguments[0].left !== undefined
+            ? arguments[0].left
+            : typeof arguments[0] !== 'object' ? arguments[0] : 0,
+          arguments[0].top !== undefined
+            ? arguments[0].top
+            : arguments[1] !== undefined ? arguments[1] : 0
+        );
+
+        return;
+      }
+
+      // LET THE SMOOTHNESS BEGIN!
+      smoothScroll.call(
+        w,
+        d.body,
+        ~~arguments[0].left + (w.scrollX || w.pageXOffset),
+        ~~arguments[0].top + (w.scrollY || w.pageYOffset)
+      );
+    };
+
+    // Element.prototype.scroll and Element.prototype.scrollTo
+    Element.prototype.scroll = Element.prototype.scrollTo = function() {
+      // avoid action when no arguments are passed
+      if (arguments[0] === undefined) {
+        return;
+      }
+
+      // avoid smooth behavior if not required
+      if (shouldBailOut(arguments[0]) === true) {
+        // if one number is passed, throw error to match Firefox implementation
+        if (typeof arguments[0] === 'number' && arguments[1] === undefined) {
+          throw new SyntaxError('Value could not be converted');
+        }
+
+        original.elementScroll.call(
+          this,
+          // use left prop, first number argument or fallback to scrollLeft
+          arguments[0].left !== undefined
+            ? ~~arguments[0].left
+            : typeof arguments[0] !== 'object' ? ~~arguments[0] : this.scrollLeft,
+          // use top prop, second argument or fallback to scrollTop
+          arguments[0].top !== undefined
+            ? ~~arguments[0].top
+            : arguments[1] !== undefined ? ~~arguments[1] : this.scrollTop
+        );
+
+        return;
+      }
+
+      var left = arguments[0].left;
+      var top = arguments[0].top;
+
+      // LET THE SMOOTHNESS BEGIN!
+      smoothScroll.call(
+        this,
+        this,
+        typeof left === 'undefined' ? this.scrollLeft : ~~left,
+        typeof top === 'undefined' ? this.scrollTop : ~~top
+      );
+    };
+
+    // Element.prototype.scrollBy
+    Element.prototype.scrollBy = function() {
+      // avoid action when no arguments are passed
+      if (arguments[0] === undefined) {
+        return;
+      }
+
+      // avoid smooth behavior if not required
+      if (shouldBailOut(arguments[0]) === true) {
+        original.elementScroll.call(
+          this,
+          arguments[0].left !== undefined
+            ? ~~arguments[0].left + this.scrollLeft
+            : ~~arguments[0] + this.scrollLeft,
+          arguments[0].top !== undefined
+            ? ~~arguments[0].top + this.scrollTop
+            : ~~arguments[1] + this.scrollTop
+        );
+
+        return;
+      }
+
+      this.scroll({
+        left: ~~arguments[0].left + this.scrollLeft,
+        top: ~~arguments[0].top + this.scrollTop,
+        behavior: arguments[0].behavior
+      });
+    };
+
+    // Element.prototype.scrollIntoView
+    Element.prototype.scrollIntoView = function() {
+      // avoid smooth behavior if not required
+      if (shouldBailOut(arguments[0]) === true) {
+        original.scrollIntoView.call(
+          this,
+          arguments[0] === undefined ? true : arguments[0]
+        );
+
+        return;
+      }
+
+      // LET THE SMOOTHNESS BEGIN!
+      var scrollableParent = findScrollableParent(this);
+      var parentRects = scrollableParent.getBoundingClientRect();
+      var clientRects = this.getBoundingClientRect();
+
+      if (scrollableParent !== d.body) {
+        // reveal element inside parent
+        smoothScroll.call(
+          this,
+          scrollableParent,
+          scrollableParent.scrollLeft + clientRects.left - parentRects.left,
+          scrollableParent.scrollTop + clientRects.top - parentRects.top
+        );
+
+        // reveal parent in viewport unless is fixed
+        if (w.getComputedStyle(scrollableParent).position !== 'fixed') {
+          w.scrollBy({
+            left: parentRects.left,
+            top: parentRects.top,
+            behavior: 'smooth'
+          });
+        }
+      } else {
+        // reveal element in viewport
+        w.scrollBy({
+          left: clientRects.left,
+          top: clientRects.top,
+          behavior: 'smooth'
+        });
+      }
+    };
+  }
+
+  if (true) {
+    // commonjs
+    module.exports = { polyfill: polyfill };
+  } else {}
+
+}());
+
 
 /***/ }),
 
@@ -5703,9 +6140,13 @@ function isShadowRoot(node) {
 }
 
 
+;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/math.js
+var math_max = Math.max;
+var math_min = Math.min;
+var round = Math.round;
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getBoundingClientRect.js
 
-var round = Math.round;
+
 function getBoundingClientRect(element, includeScale) {
   if (includeScale === void 0) {
     includeScale = false;
@@ -5721,23 +6162,23 @@ function getBoundingClientRect(element, includeScale) {
     // Fallback to 1 in case both values are `0`
 
     if (offsetWidth > 0) {
-      scaleX = rect.width / offsetWidth || 1;
+      scaleX = round(rect.width) / offsetWidth || 1;
     }
 
     if (offsetHeight > 0) {
-      scaleY = rect.height / offsetHeight || 1;
+      scaleY = round(rect.height) / offsetHeight || 1;
     }
   }
 
   return {
-    width: round(rect.width / scaleX),
-    height: round(rect.height / scaleY),
-    top: round(rect.top / scaleY),
-    right: round(rect.right / scaleX),
-    bottom: round(rect.bottom / scaleY),
-    left: round(rect.left / scaleX),
-    x: round(rect.left / scaleX),
-    y: round(rect.top / scaleY)
+    width: rect.width / scaleX,
+    height: rect.height / scaleY,
+    top: rect.top / scaleY,
+    right: rect.right / scaleX,
+    bottom: rect.bottom / scaleY,
+    left: rect.left / scaleX,
+    x: rect.left / scaleX,
+    y: rect.top / scaleY
   };
 }
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/dom-utils/getWindowScroll.js
@@ -5820,10 +6261,11 @@ function isScrollParent(element) {
 
 
 
+
 function isElementScaled(element) {
   var rect = element.getBoundingClientRect();
-  var scaleX = rect.width / element.offsetWidth || 1;
-  var scaleY = rect.height / element.offsetHeight || 1;
+  var scaleX = round(rect.width) / element.offsetWidth || 1;
+  var scaleY = round(rect.height) / element.offsetHeight || 1;
   return scaleX !== 1 || scaleY !== 1;
 } // Returns the composite rect of an element relative to its offsetParent.
 // Composite means it takes into account transforms as well as layout.
@@ -6515,10 +6957,6 @@ function popperOffsets(_ref) {
   fn: popperOffsets,
   data: {}
 });
-;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/utils/math.js
-var math_max = Math.max;
-var math_min = Math.min;
-var math_round = Math.round;
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/computeStyles.js
 
 
@@ -6544,8 +6982,8 @@ function roundOffsetsByDPR(_ref) {
   var win = window;
   var dpr = win.devicePixelRatio || 1;
   return {
-    x: math_round(math_round(x * dpr) / dpr) || 0,
-    y: math_round(math_round(y * dpr) / dpr) || 0
+    x: round(x * dpr) / dpr || 0,
+    y: round(y * dpr) / dpr || 0
   };
 }
 
@@ -6560,7 +6998,8 @@ function mapToStyles(_ref2) {
       position = _ref2.position,
       gpuAcceleration = _ref2.gpuAcceleration,
       adaptive = _ref2.adaptive,
-      roundOffsets = _ref2.roundOffsets;
+      roundOffsets = _ref2.roundOffsets,
+      isFixed = _ref2.isFixed;
 
   var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
       _ref3$x = _ref3.x,
@@ -6592,16 +7031,18 @@ function mapToStyles(_ref2) {
     offsetParent = offsetParent;
 
     if (placement === enums_top || (placement === left || placement === right) && variation === end) {
-      sideY = bottom; // $FlowFixMe[prop-missing]
-
-      y -= offsetParent[heightProp] - popperRect.height;
+      sideY = bottom;
+      var offsetY = isFixed && win.visualViewport ? win.visualViewport.height : // $FlowFixMe[prop-missing]
+      offsetParent[heightProp];
+      y -= offsetY - popperRect.height;
       y *= gpuAcceleration ? 1 : -1;
     }
 
     if (placement === left || (placement === enums_top || placement === bottom) && variation === end) {
-      sideX = right; // $FlowFixMe[prop-missing]
-
-      x -= offsetParent[widthProp] - popperRect.width;
+      sideX = right;
+      var offsetX = isFixed && win.visualViewport ? win.visualViewport.width : // $FlowFixMe[prop-missing]
+      offsetParent[widthProp];
+      x -= offsetX - popperRect.width;
       x *= gpuAcceleration ? 1 : -1;
     }
   }
@@ -6636,7 +7077,8 @@ function computeStyles(_ref4) {
     variation: getVariation(state.placement),
     popper: state.elements.popper,
     popperRect: state.rects.popper,
-    gpuAcceleration: gpuAcceleration
+    gpuAcceleration: gpuAcceleration,
+    isFixed: state.options.strategy === 'fixed'
   };
 
   if (state.modifiersData.popperOffsets != null) {
@@ -6757,6 +7199,7 @@ function applyStyles_effect(_ref2) {
 });
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/offset.js
 
+ // eslint-disable-next-line import/no-unused-modules
 
 function distanceAndSkiddingToXY(placement, rects, offset) {
   var basePlacement = getBasePlacement(placement);
@@ -6965,7 +7408,7 @@ function getInnerBoundingClientRect(element) {
 }
 
 function getClientRectFromMixedType(element, clippingParent) {
-  return clippingParent === viewport ? rectToClientRect(getViewportRect(element)) : isHTMLElement(clippingParent) ? getInnerBoundingClientRect(clippingParent) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+  return clippingParent === viewport ? rectToClientRect(getViewportRect(element)) : isElement(clippingParent) ? getInnerBoundingClientRect(clippingParent) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
 } // A "clipping parent" is an overflowable container with the characteristic of
 // clipping (or hiding) overflowing elements with a position different from
 // `initial`
@@ -6982,7 +7425,7 @@ function getClippingParents(element) {
 
 
   return clippingParents.filter(function (clippingParent) {
-    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
+    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body' && (canEscapeClipping ? getComputedStyle(clippingParent).position !== 'static' : true);
   });
 } // Gets the maximum area that the element is visible in due to any number of
 // clipping parents
@@ -7294,6 +7737,10 @@ function getAltAxis(axis) {
 function within(min, value, max) {
   return math_max(min, math_min(value, max));
 }
+function withinMaxClamp(min, value, max) {
+  var v = within(min, value, max);
+  return v > max ? max : v;
+}
 ;// CONCATENATED MODULE: ./node_modules/@popperjs/core/lib/modifiers/preventOverflow.js
 
 
@@ -7340,6 +7787,14 @@ function preventOverflow(_ref) {
   var tetherOffsetValue = typeof tetherOffset === 'function' ? tetherOffset(Object.assign({}, state.rects, {
     placement: state.placement
   })) : tetherOffset;
+  var normalizedTetherOffsetValue = typeof tetherOffsetValue === 'number' ? {
+    mainAxis: tetherOffsetValue,
+    altAxis: tetherOffsetValue
+  } : Object.assign({
+    mainAxis: 0,
+    altAxis: 0
+  }, tetherOffsetValue);
+  var offsetModifierState = state.modifiersData.offset ? state.modifiersData.offset[state.placement] : null;
   var data = {
     x: 0,
     y: 0
@@ -7349,13 +7804,15 @@ function preventOverflow(_ref) {
     return;
   }
 
-  if (checkMainAxis || checkAltAxis) {
+  if (checkMainAxis) {
+    var _offsetModifierState$;
+
     var mainSide = mainAxis === 'y' ? enums_top : left;
     var altSide = mainAxis === 'y' ? bottom : right;
     var len = mainAxis === 'y' ? 'height' : 'width';
     var offset = popperOffsets[mainAxis];
-    var min = popperOffsets[mainAxis] + overflow[mainSide];
-    var max = popperOffsets[mainAxis] - overflow[altSide];
+    var min = offset + overflow[mainSide];
+    var max = offset - overflow[altSide];
     var additive = tether ? -popperRect[len] / 2 : 0;
     var minLen = variation === start ? referenceRect[len] : popperRect[len];
     var maxLen = variation === start ? -popperRect[len] : -referenceRect[len]; // We need to include the arrow in the calculation so the arrow doesn't go
@@ -7375,36 +7832,45 @@ function preventOverflow(_ref) {
     // width or height)
 
     var arrowLen = within(0, referenceRect[len], arrowRect[len]);
-    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - tetherOffsetValue : minLen - arrowLen - arrowPaddingMin - tetherOffsetValue;
-    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + tetherOffsetValue : maxLen + arrowLen + arrowPaddingMax + tetherOffsetValue;
+    var minOffset = isBasePlacement ? referenceRect[len] / 2 - additive - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis : minLen - arrowLen - arrowPaddingMin - normalizedTetherOffsetValue.mainAxis;
+    var maxOffset = isBasePlacement ? -referenceRect[len] / 2 + additive + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis : maxLen + arrowLen + arrowPaddingMax + normalizedTetherOffsetValue.mainAxis;
     var arrowOffsetParent = state.elements.arrow && getOffsetParent(state.elements.arrow);
     var clientOffset = arrowOffsetParent ? mainAxis === 'y' ? arrowOffsetParent.clientTop || 0 : arrowOffsetParent.clientLeft || 0 : 0;
-    var offsetModifierValue = state.modifiersData.offset ? state.modifiersData.offset[state.placement][mainAxis] : 0;
-    var tetherMin = popperOffsets[mainAxis] + minOffset - offsetModifierValue - clientOffset;
-    var tetherMax = popperOffsets[mainAxis] + maxOffset - offsetModifierValue;
+    var offsetModifierValue = (_offsetModifierState$ = offsetModifierState == null ? void 0 : offsetModifierState[mainAxis]) != null ? _offsetModifierState$ : 0;
+    var tetherMin = offset + minOffset - offsetModifierValue - clientOffset;
+    var tetherMax = offset + maxOffset - offsetModifierValue;
+    var preventedOffset = within(tether ? math_min(min, tetherMin) : min, offset, tether ? math_max(max, tetherMax) : max);
+    popperOffsets[mainAxis] = preventedOffset;
+    data[mainAxis] = preventedOffset - offset;
+  }
 
-    if (checkMainAxis) {
-      var preventedOffset = within(tether ? math_min(min, tetherMin) : min, offset, tether ? math_max(max, tetherMax) : max);
-      popperOffsets[mainAxis] = preventedOffset;
-      data[mainAxis] = preventedOffset - offset;
-    }
+  if (checkAltAxis) {
+    var _offsetModifierState$2;
 
-    if (checkAltAxis) {
-      var _mainSide = mainAxis === 'x' ? enums_top : left;
+    var _mainSide = mainAxis === 'x' ? enums_top : left;
 
-      var _altSide = mainAxis === 'x' ? bottom : right;
+    var _altSide = mainAxis === 'x' ? bottom : right;
 
-      var _offset = popperOffsets[altAxis];
+    var _offset = popperOffsets[altAxis];
 
-      var _min = _offset + overflow[_mainSide];
+    var _len = altAxis === 'y' ? 'height' : 'width';
 
-      var _max = _offset - overflow[_altSide];
+    var _min = _offset + overflow[_mainSide];
 
-      var _preventedOffset = within(tether ? math_min(_min, tetherMin) : _min, _offset, tether ? math_max(_max, tetherMax) : _max);
+    var _max = _offset - overflow[_altSide];
 
-      popperOffsets[altAxis] = _preventedOffset;
-      data[altAxis] = _preventedOffset - _offset;
-    }
+    var isOriginSide = [enums_top, left].indexOf(basePlacement) !== -1;
+
+    var _offsetModifierValue = (_offsetModifierState$2 = offsetModifierState == null ? void 0 : offsetModifierState[altAxis]) != null ? _offsetModifierState$2 : 0;
+
+    var _tetherMin = isOriginSide ? _min : _offset - referenceRect[_len] - popperRect[_len] - _offsetModifierValue + normalizedTetherOffsetValue.altAxis;
+
+    var _tetherMax = isOriginSide ? _offset + referenceRect[_len] + popperRect[_len] - _offsetModifierValue - normalizedTetherOffsetValue.altAxis : _max;
+
+    var _preventedOffset = tether && isOriginSide ? withinMaxClamp(_tetherMin, _offset, _tetherMax) : within(tether ? _tetherMin : _min, _offset, tether ? _tetherMax : _max);
+
+    popperOffsets[altAxis] = _preventedOffset;
+    data[altAxis] = _preventedOffset - _offset;
   }
 
   state.modifiersData[name] = data;
@@ -7599,7 +8065,7 @@ var popper_createPopper = /*#__PURE__*/popperGenerator({
 
 ;// CONCATENATED MODULE: ./node_modules/tippy.js/dist/tippy.esm.js
 /**!
-* tippy.js v6.3.1
+* tippy.js v6.3.7
 * (c) 2017-2021 atomiks
 * MIT License
 */
@@ -7614,6 +8080,9 @@ var SVG_ARROW_CLASS = "tippy-svg-arrow";
 var TOUCH_OPTIONS = {
   passive: true,
   capture: true
+};
+var TIPPY_DEFAULT_APPEND_TO = function TIPPY_DEFAULT_APPEND_TO() {
+  return document.body;
 };
 
 function tippy_esm_hasOwnProperty(obj, key) {
@@ -7740,7 +8209,7 @@ function getOwnerDocument(elementOrElements) {
       element = _normalizeToArray[0]; // Elements created via a <template> have an ownerDocument with no reference to the body
 
 
-  return (element == null ? void 0 : (_element$ownerDocumen = element.ownerDocument) == null ? void 0 : _element$ownerDocumen.body) ? element.ownerDocument : document;
+  return element != null && (_element$ownerDocumen = element.ownerDocument) != null && _element$ownerDocumen.body ? element.ownerDocument : document;
 }
 function isCursorOutsideInteractiveBorder(popperTreeData, event) {
   var clientX = event.clientX,
@@ -7775,6 +8244,26 @@ function updateTransitionEndListener(box, action, listener) {
   ['transitionend', 'webkitTransitionEnd'].forEach(function (event) {
     box[method](event, listener);
   });
+}
+/**
+ * Compared to xxx.contains, this function works for dom structures with shadow
+ * dom
+ */
+
+function actualContains(parent, child) {
+  var target = child;
+
+  while (target) {
+    var _target$getRootNode;
+
+    if (parent.contains(target)) {
+      return true;
+    }
+
+    target = target.getRootNode == null ? void 0 : (_target$getRootNode = target.getRootNode()) == null ? void 0 : _target$getRootNode.host;
+  }
+
+  return false;
 }
 
 var currentInput = {
@@ -7839,8 +8328,8 @@ function bindGlobalEventListeners() {
 }
 
 var isBrowser = typeof window !== 'undefined' && typeof document !== 'undefined';
-var ua = isBrowser ? navigator.userAgent : '';
-var isIE = /MSIE |Trident\//.test(ua);
+var isIE11 = isBrowser ? // @ts-ignore
+!!window.msCrypto : false;
 
 function createMemoryLeakWarning(method) {
   var txt = method === 'destroy' ? 'n already-' : ' ';
@@ -7913,9 +8402,7 @@ var renderProps = {
   zIndex: 9999
 };
 var defaultProps = Object.assign({
-  appendTo: function appendTo() {
-    return document.body;
-  },
+  appendTo: TIPPY_DEFAULT_APPEND_TO,
   aria: {
     content: 'auto',
     expanded: 'auto'
@@ -7950,7 +8437,7 @@ var defaultProps = Object.assign({
   touch: true,
   trigger: 'mouseenter focus',
   triggerTarget: null
-}, pluginProps, {}, renderProps);
+}, pluginProps, renderProps);
 var defaultKeys = Object.keys(defaultProps);
 var setDefaultProps = function setDefaultProps(partialProps) {
   /* istanbul ignore else */
@@ -7968,12 +8455,14 @@ function getExtendedPassedProps(passedProps) {
         defaultValue = plugin.defaultValue;
 
     if (name) {
-      acc[name] = passedProps[name] !== undefined ? passedProps[name] : defaultValue;
+      var _name;
+
+      acc[name] = passedProps[name] !== undefined ? passedProps[name] : (_name = defaultProps[name]) != null ? _name : defaultValue;
     }
 
     return acc;
   }, {});
-  return Object.assign({}, passedProps, {}, pluginProps);
+  return Object.assign({}, passedProps, pluginProps);
 }
 function getDataAttributeProps(reference, plugins) {
   var propKeys = plugins ? Object.keys(getExtendedPassedProps(Object.assign({}, defaultProps, {
@@ -8004,7 +8493,7 @@ function evaluateProps(reference, props) {
   var out = Object.assign({}, props, {
     content: invokeWithArgsOrReturn(props.content, [reference])
   }, props.ignoreAttributes ? {} : getDataAttributeProps(reference, props.plugins));
-  out.aria = Object.assign({}, defaultProps.aria, {}, out.aria);
+  out.aria = Object.assign({}, defaultProps.aria, out.aria);
   out.aria = {
     expanded: out.aria.expanded === 'auto' ? props.interactive : out.aria.expanded,
     content: out.aria.content === 'auto' ? props.interactive ? null : 'describedby' : out.aria.content
@@ -8165,7 +8654,7 @@ var mouseMoveListeners = []; // Used by `hideAll()`
 
 var mountedInstances = [];
 function createTippy(reference, passedProps) {
-  var props = evaluateProps(reference, Object.assign({}, defaultProps, {}, getExtendedPassedProps(removeUndefinedProps(passedProps)))); // ===========================================================================
+  var props = evaluateProps(reference, Object.assign({}, defaultProps, getExtendedPassedProps(removeUndefinedProps(passedProps)))); // ===========================================================================
   // 🔒 Private members
   // ===========================================================================
 
@@ -8263,10 +8752,9 @@ function createTippy(reference, passedProps) {
       instance.clearDelayTimeouts();
     }
   });
-  popper.addEventListener('mouseleave', function (event) {
+  popper.addEventListener('mouseleave', function () {
     if (instance.props.interactive && instance.props.trigger.indexOf('mouseenter') >= 0) {
       getDocument().addEventListener('mousemove', debouncedOnMouseMove);
-      debouncedOnMouseMove(event);
     }
   });
   return instance; // ===========================================================================
@@ -8286,7 +8774,7 @@ function createTippy(reference, passedProps) {
     var _instance$props$rende;
 
     // @ts-ignore
-    return !!((_instance$props$rende = instance.props.render) == null ? void 0 : _instance$props$rende.$$tippy);
+    return !!((_instance$props$rende = instance.props.render) != null && _instance$props$rende.$$tippy);
   }
 
   function getCurrentTarget() {
@@ -8313,8 +8801,12 @@ function createTippy(reference, passedProps) {
     return getValueAtIndexOrReturn(instance.props.delay, isShow ? 0 : 1, defaultProps.delay);
   }
 
-  function handleStyles() {
-    popper.style.pointerEvents = instance.props.interactive && instance.state.isVisible ? '' : 'none';
+  function handleStyles(fromHide) {
+    if (fromHide === void 0) {
+      fromHide = false;
+    }
+
+    popper.style.pointerEvents = instance.props.interactive && !fromHide ? '' : 'none';
     popper.style.zIndex = "" + instance.props.zIndex;
   }
 
@@ -8325,7 +8817,7 @@ function createTippy(reference, passedProps) {
 
     pluginsHooks.forEach(function (pluginHooks) {
       if (pluginHooks[hook]) {
-        pluginHooks[hook].apply(void 0, args);
+        pluginHooks[hook].apply(pluginHooks, args);
       }
     });
 
@@ -8391,15 +8883,18 @@ function createTippy(reference, passedProps) {
       if (didTouchMove || event.type === 'mousedown') {
         return;
       }
-    } // Clicked on interactive popper
+    }
 
+    var actualTarget = event.composedPath && event.composedPath()[0] || event.target; // Clicked on interactive popper
 
-    if (instance.props.interactive && popper.contains(event.target)) {
+    if (instance.props.interactive && actualContains(popper, actualTarget)) {
       return;
     } // Clicked on the event listeners target
 
 
-    if (getCurrentTarget().contains(event.target)) {
+    if (normalizeToArray(instance.props.triggerTarget || reference).some(function (el) {
+      return actualContains(el, actualTarget);
+    })) {
       if (currentInput.isTouch) {
         return;
       }
@@ -8527,7 +9022,7 @@ function createTippy(reference, passedProps) {
           break;
 
         case 'focus':
-          on(isIE ? 'focusout' : 'blur', onBlurOrFocusOut);
+          on(isIE11 ? 'focusout' : 'blur', onBlurOrFocusOut);
           break;
 
         case 'focusin':
@@ -8753,7 +9248,7 @@ function createTippy(reference, passedProps) {
 
     var node = getCurrentTarget();
 
-    if (instance.props.interactive && appendTo === defaultProps.appendTo || appendTo === 'parent') {
+    if (instance.props.interactive && appendTo === TIPPY_DEFAULT_APPEND_TO || appendTo === 'parent') {
       parentNode = node.parentNode;
     } else {
       parentNode = invokeWithArgsOrReturn(appendTo, [node]);
@@ -8765,6 +9260,7 @@ function createTippy(reference, passedProps) {
       parentNode.appendChild(popper);
     }
 
+    instance.state.isMounted = true;
     createPopperInstance();
     /* istanbul ignore else */
 
@@ -8867,7 +9363,7 @@ function createTippy(reference, passedProps) {
     invokeHook('onBeforeUpdate', [instance, partialProps]);
     removeListeners();
     var prevProps = instance.props;
-    var nextProps = evaluateProps(reference, Object.assign({}, instance.props, {}, partialProps, {
+    var nextProps = evaluateProps(reference, Object.assign({}, prevProps, removeUndefinedProps(partialProps), {
       ignoreAttributes: true
     }));
     instance.props = nextProps;
@@ -8994,7 +9490,6 @@ function createTippy(reference, passedProps) {
       // popper has been positioned for the first time
 
       (_instance$popperInsta2 = instance.popperInstance) == null ? void 0 : _instance$popperInsta2.forceUpdate();
-      instance.state.isMounted = true;
       invokeHook('onMount', [instance]);
 
       if (instance.props.animation && getIsDefaultRenderFn()) {
@@ -9039,7 +9534,7 @@ function createTippy(reference, passedProps) {
 
     cleanupInteractiveMouseListeners();
     removeDocumentPress();
-    handleStyles();
+    handleStyles(true);
 
     if (getIsDefaultRenderFn()) {
       var _getDefaultTemplateCh4 = getDefaultTemplateChildren(),
@@ -9225,10 +9720,19 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
 
   var individualInstances = tippyInstances;
   var references = [];
+  var triggerTargets = [];
   var currentTarget;
   var overrides = optionalProps.overrides;
   var interceptSetPropsCleanups = [];
   var shownOnCreate = false;
+
+  function setTriggerTargets() {
+    triggerTargets = individualInstances.map(function (instance) {
+      return normalizeToArray(instance.props.triggerTarget || instance.reference);
+    }).reduce(function (acc, item) {
+      return acc.concat(item);
+    }, []);
+  }
 
   function setReferences() {
     references = individualInstances.map(function (instance) {
@@ -9266,7 +9770,7 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
 
 
   function prepareInstance(singleton, target) {
-    var index = references.indexOf(target); // bail-out
+    var index = triggerTargets.indexOf(target); // bail-out
 
     if (target === currentTarget) {
       return;
@@ -9279,13 +9783,16 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
     }, {});
     singleton.setProps(Object.assign({}, overrideProps, {
       getReferenceClientRect: typeof overrideProps.getReferenceClientRect === 'function' ? overrideProps.getReferenceClientRect : function () {
-        return target.getBoundingClientRect();
+        var _references$index;
+
+        return (_references$index = references[index]) == null ? void 0 : _references$index.getBoundingClientRect();
       }
     }));
   }
 
   enableInstances(false);
   setReferences();
+  setTriggerTargets();
   var plugin = {
     fn: function fn() {
       return {
@@ -9315,7 +9822,7 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
   };
   var singleton = tippy(div(), Object.assign({}, removeProperties(optionalProps, ['overrides']), {
     plugins: [plugin].concat(optionalProps.plugins || []),
-    triggerTarget: references,
+    triggerTarget: triggerTargets,
     popperOptions: Object.assign({}, optionalProps.popperOptions, {
       modifiers: [].concat(((_optionalProps$popper = optionalProps.popperOptions) == null ? void 0 : _optionalProps$popper.modifiers) || [], [applyStylesModifier])
     })
@@ -9342,13 +9849,13 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
     } // target is a child tippy instance
 
 
-    if (individualInstances.includes(target)) {
+    if (individualInstances.indexOf(target) >= 0) {
       var ref = target.reference;
       return prepareInstance(singleton, ref);
     } // target is a ReferenceElement
 
 
-    if (references.includes(target)) {
+    if (references.indexOf(target) >= 0) {
       return prepareInstance(singleton, target);
     }
   };
@@ -9391,9 +9898,10 @@ var createSingleton = function createSingleton(tippyInstances, optionalProps) {
     individualInstances = nextInstances;
     enableInstances(false);
     setReferences();
-    interceptSetProps(singleton);
+    setTriggerTargets();
+    interceptSetPropsCleanups = interceptSetProps(singleton);
     singleton.setProps({
-      triggerTarget: references
+      triggerTarget: triggerTargets
     });
   };
 
@@ -9424,7 +9932,9 @@ function delegate(targets, props) {
     trigger: 'manual',
     touch: false
   });
-  var childProps = Object.assign({}, nativeProps, {
+  var childProps = Object.assign({
+    touch: defaultProps.touch
+  }, nativeProps, {
     showOnCreate: true
   });
   var returnValue = tippy(targets, parentProps);
@@ -9550,7 +10060,7 @@ var animateFill = {
     var _instance$props$rende;
 
     // @ts-ignore
-    if (!((_instance$props$rende = instance.props.render) == null ? void 0 : _instance$props$rende.$$tippy)) {
+    if (!((_instance$props$rende = instance.props.render) != null && _instance$props$rende.$$tippy)) {
       if (false) {}
 
       return {};
@@ -9673,6 +10183,7 @@ var followCursor = {
 
       if (isCursorOverReference || !instance.props.interactive) {
         instance.setProps({
+          // @ts-ignore - unneeded DOMRect properties
           getReferenceClientRect: function getReferenceClientRect() {
             var rect = reference.getBoundingClientRect();
             var x = clientX;
@@ -9809,6 +10320,7 @@ var inlinePositioning = {
     var placement;
     var cursorRectIndex = -1;
     var isInternalUpdate = false;
+    var triedPlacements = [];
     var modifier = {
       name: 'tippyInlinePositioning',
       enabled: true,
@@ -9817,8 +10329,14 @@ var inlinePositioning = {
         var state = _ref2.state;
 
         if (isEnabled()) {
-          if (placement !== state.placement) {
+          if (triedPlacements.indexOf(state.placement) !== -1) {
+            triedPlacements = [];
+          }
+
+          if (placement !== state.placement && triedPlacements.indexOf(state.placement) === -1) {
+            triedPlacements.push(state.placement);
             instance.setProps({
+              // @ts-ignore - unneeded DOMRect properties
               getReferenceClientRect: function getReferenceClientRect() {
                 return _getReferenceClientRect(state.placement);
               }
@@ -9855,10 +10373,11 @@ var inlinePositioning = {
           var cursorRect = rects.find(function (rect) {
             return rect.left - 2 <= event.clientX && rect.right + 2 >= event.clientX && rect.top - 2 <= event.clientY && rect.bottom + 2 >= event.clientY;
           });
-          cursorRectIndex = rects.indexOf(cursorRect);
+          var index = rects.indexOf(cursorRect);
+          cursorRectIndex = index > -1 ? index : cursorRectIndex;
         }
       },
-      onUntrigger: function onUntrigger() {
+      onHidden: function onHidden() {
         cursorRectIndex = -1;
       }
     };
@@ -10028,6 +10547,18 @@ tippy.setDefaultProps({
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -14083,7 +14614,7 @@ class ProgressBar {
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/remember-me.js
 
 
-const tippy = __webpack_require__(3861)/* ["default"] */ .ZP;
+const tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 class RememberMe {
     constructor(options) {
         this._form = EnForm.getInstance();
@@ -14516,557 +15047,12 @@ class ShowIfAmount {
 // Events
 
 
-;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/common.js
-const checkBehavior = (behavior) => {
-    return behavior === undefined || behavior === "auto" || behavior === "instant" || behavior === "smooth";
-};
-function elementScrollXY(x, y) {
-    this.scrollLeft = x;
-    this.scrollTop = y;
-}
-const failedExecute = (method, object, reason = "cannot convert to dictionary.") => `Failed to execute '${method}' on '${object}': ${reason}`;
-const failedExecuteInvalidEnumValue = (method, object, value) => failedExecute(method, object, `The provided value '${value}' is not a valid enum value of type ScrollBehavior.`);
-/* eslint-disable */
-const backupMethod = (proto, method, fallback) => {
-    const backup = `__SEAMLESS.BACKUP$${method}`;
-    if (proto[method] && !proto[method]?.__isPolyfill) {
-        proto[backup] ||= proto[method];
-    }
-    return proto[backup] || fallback;
-};
-/* eslint-enable */
-const isObject = (value) => {
-    const type = typeof value;
-    return value !== null && (type === "object" || type === "function");
-};
-const isScrollBehaviorSupported = () => "scrollBehavior" in window.document.documentElement.style;
-const markPolyfill = (method) => {
-    Object.defineProperty(method, "__isPolyfill", { value: true });
-};
-const modifyPrototypes = (prop, func) => {
-    markPolyfill(func);
-    [HTMLElement.prototype, SVGElement.prototype, Element.prototype].forEach((prototype) => {
-        backupMethod(prototype, prop);
-        prototype[prop] = func;
-    });
-};
-/**
- * - On Chrome and Firefox, document.scrollingElement will return the <html> element.
- * - Safari, document.scrollingElement will return the <body> element.
- * - On Edge, document.scrollingElement will return the <body> element.
- * - IE11 does not support document.scrollingElement, but you can assume its <html>.
- */
-const scrollingElement = (element) => element.ownerDocument.scrollingElement || element.ownerDocument.documentElement;
-//# sourceMappingURL=common.js.map
-;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scroll-step.js
-const ease = (k) => {
-    return 0.5 * (1 - Math.cos(Math.PI * k));
-};
-const now = () => window.performance?.now?.() ?? window.Date.now();
-const DURATION = 500;
-const step = (context) => {
-    const currentTime = now();
-    const elapsed = (currentTime - context.timeStamp) / (context.duration || DURATION);
-    if (elapsed > 1) {
-        context.method(context.targetX, context.targetY);
-        context.callback();
-        return;
-    }
-    const value = (context.timingFunc || ease)(elapsed);
-    const currentX = context.startX + (context.targetX - context.startX) * value;
-    const currentY = context.startY + (context.targetY - context.startY) * value;
-    context.method(currentX, currentY);
-    context.rafId = window.requestAnimationFrame(() => {
-        step(context);
-    });
-};
-//# sourceMappingURL=scroll-step.js.map
-;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scroll.js
-
-
-// https://drafts.csswg.org/cssom-view/#normalize-non-finite-values
-const nonFinite = (value) => {
-    if (!isFinite(value)) {
-        return 0;
-    }
-    return Number(value);
-};
-const isConnected = (node) => {
-    return (node.isConnected ??
-        (!node.ownerDocument ||
-            // eslint-disable-next-line no-bitwise
-            !(node.ownerDocument.compareDocumentPosition(node) & /** DOCUMENT_POSITION_DISCONNECTED */ 1)));
-};
-const scrollWithOptions = (element, options, config) => {
-    if (!isConnected(element)) {
-        return;
-    }
-    const startX = element.scrollLeft;
-    const startY = element.scrollTop;
-    const targetX = nonFinite(options.left ?? startX);
-    const targetY = nonFinite(options.top ?? startY);
-    if (targetX === startX && targetY === startY) {
-        return;
-    }
-    const fallback = backupMethod(HTMLElement.prototype, "scroll", elementScrollXY);
-    const method = backupMethod(Object.getPrototypeOf(element), "scroll", fallback).bind(element);
-    if (options.behavior !== "smooth") {
-        method(targetX, targetY);
-        return;
-    }
-    const removeEventListener = () => {
-        window.removeEventListener("wheel", cancelScroll);
-        window.removeEventListener("touchmove", cancelScroll);
-    };
-    const context = {
-        ...config,
-        timeStamp: now(),
-        startX,
-        startY,
-        targetX,
-        targetY,
-        rafId: 0,
-        method,
-        callback: removeEventListener,
-    };
-    const cancelScroll = () => {
-        window.cancelAnimationFrame(context.rafId);
-        removeEventListener();
-    };
-    window.addEventListener("wheel", cancelScroll, {
-        passive: true,
-        once: true,
-    });
-    window.addEventListener("touchmove", cancelScroll, {
-        passive: true,
-        once: true,
-    });
-    step(context);
-};
-const isWindow = (obj) => obj.window === obj;
-const createScroll = (scrollName) => (target, scrollOptions, config) => {
-    const [element, scrollType] = isWindow(target)
-        ? [scrollingElement(target.document.documentElement), "Window"]
-        : [target, "Element"];
-    const options = scrollOptions ?? {};
-    if (!isObject(options)) {
-        throw new TypeError(failedExecute(scrollName, scrollType));
-    }
-    if (!checkBehavior(options.behavior)) {
-        throw new TypeError(failedExecuteInvalidEnumValue(scrollName, scrollType, options.behavior));
-    }
-    if (scrollName === "scrollBy") {
-        options.left = nonFinite(options.left) + element.scrollLeft;
-        options.top = nonFinite(options.top) + element.scrollTop;
-    }
-    scrollWithOptions(element, options, config);
-};
-const scroll_scroll = createScroll("scroll");
-const scrollTo = createScroll("scrollTo");
-const scrollBy = createScroll("scrollBy");
-const elementScroll = scroll_scroll;
-const elementScrollTo = (/* unused pure expression or super */ null && (scrollTo));
-const elementScrollBy = (/* unused pure expression or super */ null && (scrollBy));
-const windowScroll = (/* unused pure expression or super */ null && (scroll_scroll));
-const windowScrollTo = (/* unused pure expression or super */ null && (scrollTo));
-const windowScrollBy = (/* unused pure expression or super */ null && (scrollBy));
-//# sourceMappingURL=scroll.js.map
-;// CONCATENATED MODULE: ./node_modules/seamless-scroll-polyfill/lib/scrollIntoView.js
-/* eslint-disable no-bitwise */
-
-
-// https://drafts.csswg.org/css-writing-modes-4/#block-flow
-const normalizeWritingMode = (writingMode) => {
-    switch (writingMode) {
-        case "horizontal-tb":
-        case "lr":
-        case "lr-tb":
-        case "rl":
-        case "rl-tb":
-            return 0 /* HorizontalTb */;
-        case "vertical-rl":
-        case "tb":
-        case "tb-rl":
-            return 1 /* VerticalRl */;
-        case "vertical-lr":
-        case "tb-lr":
-            return 2 /* VerticalLr */;
-        case "sideways-rl":
-            return 3 /* SidewaysRl */;
-        case "sideways-lr":
-            return 4 /* SidewaysLr */;
-    }
-    return 0 /* HorizontalTb */;
-};
-const calcPhysicalAxis = (writingMode, isLTR, hPos, vPos) => {
-    /**  0b{vertical}{horizontal}  0: normal, 1: reverse */
-    let layout = 0b00;
-    /**
-     * WritingMode.VerticalLr: ↓→
-     * | 1 | 4 |   |
-     * | 2 | 5 |   |
-     * | 3 |   |   |
-     *
-     * RTL: ↑→
-     * | 3 |   |   |
-     * | 2 | 5 |   |
-     * | 1 | 4 |   |
-     */
-    if (!isLTR) {
-        layout ^= 2 /* ReverseVertical */;
-    }
-    switch (writingMode) {
-        /**
-         * ↓→
-         * | 1 | 2 | 3 |
-         * | 4 | 5 |   |
-         * |   |   |   |
-         *
-         * RTL: ↓←
-         * | 3 | 2 | 1 |
-         * |   | 5 | 4 |
-         * |   |   |   |
-         */
-        case 0 /* HorizontalTb */:
-            // swap horizontal and vertical
-            layout = (layout >> 1) | ((layout & 1) << 1);
-            [hPos, vPos] = [vPos, hPos];
-            break;
-        /**
-         * ↓←
-         * |   | 4 | 1 |
-         * |   | 5 | 2 |
-         * |   |   | 3 |
-         *
-         * RTL: ↑←
-         * |   |   | 3 |
-         * |   | 5 | 2 |
-         * |   | 4 | 1 |
-         */
-        case 1 /* VerticalRl */:
-        case 3 /* SidewaysRl */:
-            //  reverse horizontal
-            layout ^= 1 /* ReverseHorizontal */;
-            break;
-        /**
-         * ↑→
-         * | 3 |   |   |
-         * | 2 | 5 |   |
-         * | 1 | 4 |   |
-         *
-         * RTL: ↓→
-         * | 1 | 4 |   |
-         * | 2 | 5 |   |
-         * | 3 |   |   |
-         */
-        case 4 /* SidewaysLr */:
-            // reverse vertical
-            layout ^= 2 /* ReverseVertical */;
-            break;
-    }
-    return [layout, hPos, vPos];
-};
-const isXReversed = (computedStyle) => {
-    const layout = calcPhysicalAxis(normalizeWritingMode(computedStyle.writingMode), computedStyle.direction !== "rtl", undefined, undefined)[0];
-    return (layout & 1) === 1;
-};
-// https://source.chromium.org/chromium/chromium/src/+/main:third_party/blink/renderer/core/dom/element.cc;l=1097-1189;drc=6a7533d4a1e9f2372223a9d912a9e53a6fa35ae0
-const toPhysicalAlignment = (options, writingMode, isLTR) => {
-    const [layout, hPos, vPos] = calcPhysicalAxis(writingMode, isLTR, options.block || "start", options.inline || "nearest");
-    return [hPos, vPos].map((value, index) => {
-        switch (value) {
-            case "center":
-                return 1 /* CenterAlways */;
-            case "nearest":
-                return 0 /* ToEdgeIfNeeded */;
-            default: {
-                const reverse = (layout >> index) & 1;
-                return (value === "start") === !reverse ? 2 /* LeftOrTop */ : 3 /* RightOrBottom */;
-            }
-        }
-    });
-};
-// code from stipsan/compute-scroll-into-view
-// https://github.com/stipsan/compute-scroll-into-view/blob/5396c6b78af5d0bbce11a7c4e93cc3146546fcd3/src/index.ts
-/**
- * Find out which edge to align against when logical scroll position is "nearest"
- * Interesting fact: "nearest" works similarily to "if-needed", if the element is fully visible it will not scroll it
- *
- * Legends:
- * ┌────────┐ ┏ ━ ━ ━ ┓
- * │ target │   frame
- * └────────┘ ┗ ━ ━ ━ ┛
- */
-const mapNearest = (align, scrollingEdgeStart, scrollingEdgeEnd, scrollingSize, elementEdgeStart, elementEdgeEnd, elementSize) => {
-    if (align !== 0 /* ToEdgeIfNeeded */) {
-        return align;
-    }
-    /**
-     * If element edge A and element edge B are both outside scrolling box edge A and scrolling box edge B
-     *
-     *          ┌──┐
-     *        ┏━│━━│━┓
-     *          │  │
-     *        ┃ │  │ ┃        do nothing
-     *          │  │
-     *        ┗━│━━│━┛
-     *          └──┘
-     *
-     *  If element edge C and element edge D are both outside scrolling box edge C and scrolling box edge D
-     *
-     *    ┏ ━ ━ ━ ━ ┓
-     *   ┌───────────┐
-     *   │┃         ┃│        do nothing
-     *   └───────────┘
-     *    ┗ ━ ━ ━ ━ ┛
-     */
-    if ((elementEdgeStart < scrollingEdgeStart && elementEdgeEnd > scrollingEdgeEnd) ||
-        (elementEdgeStart > scrollingEdgeStart && elementEdgeEnd < scrollingEdgeEnd)) {
-        return null;
-    }
-    /**
-     * If element edge A is outside scrolling box edge A and element height is less than scrolling box height
-     *
-     *          ┌──┐
-     *        ┏━│━━│━┓         ┏━┌━━┐━┓
-     *          └──┘             │  │
-     *  from  ┃      ┃     to  ┃ └──┘ ┃
-     *
-     *        ┗━ ━━ ━┛         ┗━ ━━ ━┛
-     *
-     * If element edge B is outside scrolling box edge B and element height is greater than scrolling box height
-     *
-     *        ┏━ ━━ ━┓         ┏━┌━━┐━┓
-     *                           │  │
-     *  from  ┃ ┌──┐ ┃     to  ┃ │  │ ┃
-     *          │  │             │  │
-     *        ┗━│━━│━┛         ┗━│━━│━┛
-     *          │  │             └──┘
-     *          │  │
-     *          └──┘
-     *
-     * If element edge C is outside scrolling box edge C and element width is less than scrolling box width
-     *
-     *       from                 to
-     *    ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
-     *  ┌───┐                 ┌───┐
-     *  │ ┃ │       ┃         ┃   │     ┃
-     *  └───┘                 └───┘
-     *    ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
-     *
-     * If element edge D is outside scrolling box edge D and element width is greater than scrolling box width
-     *
-     *       from                 to
-     *    ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
-     *        ┌───────────┐   ┌───────────┐
-     *    ┃   │     ┃     │   ┃         ┃ │
-     *        └───────────┘   └───────────┘
-     *    ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
-     */
-    if ((elementEdgeStart <= scrollingEdgeStart && elementSize <= scrollingSize) ||
-        (elementEdgeEnd >= scrollingEdgeEnd && elementSize >= scrollingSize)) {
-        return 2 /* LeftOrTop */;
-    }
-    /**
-     * If element edge B is outside scrolling box edge B and element height is less than scrolling box height
-     *
-     *        ┏━ ━━ ━┓         ┏━ ━━ ━┓
-     *
-     *  from  ┃      ┃     to  ┃ ┌──┐ ┃
-     *          ┌──┐             │  │
-     *        ┗━│━━│━┛         ┗━└━━┘━┛
-     *          └──┘
-     *
-     * If element edge A is outside scrolling box edge A and element height is greater than scrolling box height
-     *
-     *          ┌──┐
-     *          │  │
-     *          │  │             ┌──┐
-     *        ┏━│━━│━┓         ┏━│━━│━┓
-     *          │  │             │  │
-     *  from  ┃ └──┘ ┃     to  ┃ │  │ ┃
-     *                           │  │
-     *        ┗━ ━━ ━┛         ┗━└━━┘━┛
-     *
-     * If element edge C is outside scrolling box edge C and element width is greater than scrolling box width
-     *
-     *           from                 to
-     *        ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
-     *  ┌───────────┐           ┌───────────┐
-     *  │     ┃     │   ┃       │ ┃         ┃
-     *  └───────────┘           └───────────┘
-     *        ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
-     *
-     * If element edge D is outside scrolling box edge D and element width is less than scrolling box width
-     *
-     *           from                 to
-     *        ┏ ━ ━ ━ ━ ┓         ┏ ━ ━ ━ ━ ┓
-     *                ┌───┐             ┌───┐
-     *        ┃       │ ┃ │       ┃     │   ┃
-     *                └───┘             └───┘
-     *        ┗ ━ ━ ━ ━ ┛         ┗ ━ ━ ━ ━ ┛
-     *
-     */
-    if ((elementEdgeEnd > scrollingEdgeEnd && elementSize < scrollingSize) ||
-        (elementEdgeStart < scrollingEdgeStart && elementSize > scrollingSize)) {
-        return 3 /* RightOrBottom */;
-    }
-    return null;
-};
-const canOverflow = (overflow) => {
-    return overflow !== "visible" && overflow !== "clip";
-};
-const getFrameElement = (element) => {
-    try {
-        return element.ownerDocument.defaultView?.frameElement || null;
-    }
-    catch {
-        return null;
-    }
-};
-const isScrollable = (element, computedStyle) => {
-    if (element.clientHeight < element.scrollHeight || element.clientWidth < element.scrollWidth) {
-        return (canOverflow(computedStyle.overflowY) ||
-            canOverflow(computedStyle.overflowX) ||
-            element === scrollingElement(element));
-    }
-    return false;
-};
-const parentElement = (element) => {
-    const pNode = element.parentNode;
-    const pElement = element.parentElement;
-    if (pElement === null && pNode !== null) {
-        if (pNode.nodeType === /** Node.DOCUMENT_FRAGMENT_NODE */ 11) {
-            return pNode.host;
-        }
-        if (pNode.nodeType === /** Node.DOCUMENT_NODE */ 9) {
-            return getFrameElement(element);
-        }
-    }
-    return pElement;
-};
-const clamp = (value, min, max) => {
-    if (value < min) {
-        return min;
-    }
-    if (value > max) {
-        return max;
-    }
-    return value;
-};
-const getSupportedScrollMarginProperty = (ownerDocument) => {
-    // Webkit uses "scroll-snap-margin" https://bugs.webkit.org/show_bug.cgi?id=189265.
-    return ["scroll-margin", "scroll-snap-margin"].filter((property) => property in ownerDocument.documentElement.style)[0];
-};
-const getElementScrollSnapArea = (element, elementRect, computedStyle) => {
-    const { top, right, bottom, left } = elementRect;
-    const scrollProperty = getSupportedScrollMarginProperty(element.ownerDocument);
-    if (!scrollProperty) {
-        return [top, right, bottom, left];
-    }
-    const scrollMarginValue = (edge) => {
-        const value = computedStyle.getPropertyValue(`${scrollProperty}-${edge}`);
-        return parseInt(value, 10) || 0;
-    };
-    return [
-        top - scrollMarginValue("top"),
-        right + scrollMarginValue("right"),
-        bottom + scrollMarginValue("bottom"),
-        left - scrollMarginValue("left"),
-    ];
-};
-const calcAlignEdge = (align, start, end) => {
-    switch (align) {
-        case 1 /* CenterAlways */:
-            return (start + end) / 2;
-        case 3 /* RightOrBottom */:
-            return end;
-        case 2 /* LeftOrTop */:
-        case 0 /* ToEdgeIfNeeded */:
-            return start;
-    }
-};
-const getFrameViewport = (frame, frameRect) => {
-    const visualViewport = frame.ownerDocument.defaultView?.visualViewport;
-    const [x, y, width, height] = frame === scrollingElement(frame)
-        ? [0, 0, visualViewport?.width ?? frame.clientWidth, visualViewport?.height ?? frame.clientHeight]
-        : [frameRect.left, frameRect.top, frame.clientWidth, frame.clientHeight];
-    const left = x + frame.clientLeft;
-    const top = y + frame.clientTop;
-    const right = left + width;
-    const bottom = top + height;
-    return [top, right, bottom, left];
-};
-const computeScrollIntoView = (element, options) => {
-    // Collect all the scrolling boxes, as defined in the spec: https://drafts.csswg.org/cssom-view/#scrolling-box
-    const actions = [];
-    let ownerDocument = element.ownerDocument;
-    let ownerWindow = ownerDocument.defaultView;
-    if (!ownerWindow) {
-        return actions;
-    }
-    const computedStyle = window.getComputedStyle(element);
-    const isLTR = computedStyle.direction !== "rtl";
-    const writingMode = normalizeWritingMode(computedStyle.writingMode ||
-        computedStyle.getPropertyValue("-webkit-writing-mode") ||
-        computedStyle.getPropertyValue("-ms-writing-mode"));
-    const [alignH, alignV] = toPhysicalAlignment(options, writingMode, isLTR);
-    let [top, right, bottom, left] = getElementScrollSnapArea(element, element.getBoundingClientRect(), computedStyle);
-    for (let frame = parentElement(element); frame !== null; frame = parentElement(frame)) {
-        if (ownerDocument !== frame.ownerDocument) {
-            ownerDocument = frame.ownerDocument;
-            ownerWindow = ownerDocument.defaultView;
-            if (!ownerWindow) {
-                break;
-            }
-            const { left: dX, top: dY } = frame.getBoundingClientRect();
-            top += dY;
-            right += dX;
-            bottom += dY;
-            left += dX;
-        }
-        const frameStyle = ownerWindow.getComputedStyle(frame);
-        if (frameStyle.position === "fixed") {
-            break;
-        }
-        if (!isScrollable(frame, frameStyle)) {
-            continue;
-        }
-        const frameRect = frame.getBoundingClientRect();
-        const [frameTop, frameRight, frameBottom, frameLeft] = getFrameViewport(frame, frameRect);
-        const eAlignH = mapNearest(alignH, frameLeft, frameRight, frame.clientWidth, left, right, right - left);
-        const eAlignV = mapNearest(alignV, frameTop, frameBottom, frame.clientHeight, top, bottom, bottom - top);
-        const diffX = eAlignH === null ? 0 : calcAlignEdge(eAlignH, left, right) - calcAlignEdge(eAlignH, frameLeft, frameRight);
-        const diffY = eAlignV === null ? 0 : calcAlignEdge(eAlignV, top, bottom) - calcAlignEdge(eAlignV, frameTop, frameBottom);
-        const moveX = isXReversed(frameStyle)
-            ? clamp(diffX, -frame.scrollWidth + frame.clientWidth - frame.scrollLeft, -frame.scrollLeft)
-            : clamp(diffX, -frame.scrollLeft, frame.scrollWidth - frame.clientWidth - frame.scrollLeft);
-        const moveY = clamp(diffY, -frame.scrollTop, frame.scrollHeight - frame.clientHeight - frame.scrollTop);
-        actions.push([
-            frame,
-            { left: frame.scrollLeft + moveX, top: frame.scrollTop + moveY, behavior: options.behavior },
-        ]);
-        top = Math.max(top - moveY, frameTop);
-        right = Math.min(right - moveX, frameRight);
-        bottom = Math.min(bottom - moveY, frameBottom);
-        left = Math.max(left - moveX, frameLeft);
-    }
-    return actions;
-};
-const scrollIntoView = (element, scrollIntoViewOptions, config) => {
-    const options = scrollIntoViewOptions || {};
-    if (!checkBehavior(options.behavior)) {
-        throw new TypeError(failedExecuteInvalidEnumValue("scrollIntoView", "Element", options.behavior));
-    }
-    const actions = computeScrollIntoView(element, options);
-    actions.forEach(([frame, scrollToOptions]) => {
-        elementScroll(frame, scrollToOptions, config);
-    });
-};
-const elementScrollIntoView = scrollIntoView;
-//# sourceMappingURL=scrollIntoView.js.map
+// EXTERNAL MODULE: ./node_modules/smoothscroll-polyfill/dist/smoothscroll.js
+var smoothscroll = __webpack_require__(523);
+var smoothscroll_default = /*#__PURE__*/__webpack_require__.n(smoothscroll);
 ;// CONCATENATED MODULE: ./src/scripts/donation-lightbox-form.js
 
+smoothscroll_default().polyfill();
 class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
     if (!this.isIframe()) return;
@@ -15311,7 +15297,7 @@ class DonationLightboxForm {
 
     if (this.sections[sectionId]) {
       console.log(section);
-      elementScrollIntoView(this.sections[sectionId], {
+      this.sections[sectionId].scrollIntoView({
         behavior: "smooth",
         block: "start",
         inline: "start"
@@ -15340,7 +15326,8 @@ class DonationLightboxForm {
   } // Validate the form
 
 
-  validateForm(sectionId = false) {
+  validateForm() {
+    let sectionId = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
     const form = document.querySelector("form.en__component"); // Validate Frequency
 
     const frequency = form.querySelector("[name='transaction.recurrfreq']:checked");
@@ -15785,8 +15772,13 @@ class DonationLightboxForm {
     }
   }
 
-  checkNested(obj, level, ...rest) {
+  checkNested(obj, level) {
     if (obj === undefined) return false;
+
+    for (var _len = arguments.length, rest = new Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+      rest[_key - 2] = arguments[_key];
+    }
+
     if (rest.length == 0 && obj.hasOwnProperty(level)) return true;
     return this.checkNested(obj[level], ...rest);
   }
