@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, January 4, 2022 @ 15:35:31 ET
+ *  Date: Friday, January 14, 2022 @ 15:34:58 ET
  *  By: fe
- *  ENGrid styles: v0.7.0
- *  ENGrid scripts: v0.7.0
+ *  ENGrid styles: v0.8.3
+ *  ENGrid scripts: v0.8.3
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -7000,13 +7000,21 @@ function mapToStyles(_ref2) {
       adaptive = _ref2.adaptive,
       roundOffsets = _ref2.roundOffsets,
       isFixed = _ref2.isFixed;
+  var _offsets$x = offsets.x,
+      x = _offsets$x === void 0 ? 0 : _offsets$x,
+      _offsets$y = offsets.y,
+      y = _offsets$y === void 0 ? 0 : _offsets$y;
 
-  var _ref3 = roundOffsets === true ? roundOffsetsByDPR(offsets) : typeof roundOffsets === 'function' ? roundOffsets(offsets) : offsets,
-      _ref3$x = _ref3.x,
-      x = _ref3$x === void 0 ? 0 : _ref3$x,
-      _ref3$y = _ref3.y,
-      y = _ref3$y === void 0 ? 0 : _ref3$y;
+  var _ref3 = typeof roundOffsets === 'function' ? roundOffsets({
+    x: x,
+    y: y
+  }) : {
+    x: x,
+    y: y
+  };
 
+  x = _ref3.x;
+  y = _ref3.y;
   var hasX = offsets.hasOwnProperty('x');
   var hasY = offsets.hasOwnProperty('y');
   var sideX = left;
@@ -7051,6 +7059,17 @@ function mapToStyles(_ref2) {
     position: position
   }, adaptive && unsetSides);
 
+  var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
+    x: x,
+    y: y
+  }) : {
+    x: x,
+    y: y
+  };
+
+  x = _ref4.x;
+  y = _ref4.y;
+
   if (gpuAcceleration) {
     var _Object$assign;
 
@@ -7060,9 +7079,9 @@ function mapToStyles(_ref2) {
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
 }
 
-function computeStyles(_ref4) {
-  var state = _ref4.state,
-      options = _ref4.options;
+function computeStyles(_ref5) {
+  var state = _ref5.state,
+      options = _ref5.options;
   var _options$gpuAccelerat = options.gpuAcceleration,
       gpuAcceleration = _options$gpuAccelerat === void 0 ? true : _options$gpuAccelerat,
       _options$adaptive = options.adaptive,
@@ -7425,7 +7444,7 @@ function getClippingParents(element) {
 
 
   return clippingParents.filter(function (clippingParent) {
-    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body' && (canEscapeClipping ? getComputedStyle(clippingParent).position !== 'static' : true);
+    return isElement(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
   });
 } // Gets the maximum area that the element is visible in due to any number of
 // clipping parents
@@ -11055,6 +11074,18 @@ class engrid_ENGrid {
         this.enParseDependencies();
         return;
     }
+    // Create a hidden input field
+    static createHiddenInput(name, value = "") {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = name;
+        input.classList.add("en__field__input");
+        input.classList.add("en__field__input--text");
+        input.classList.add("engrid-added-input");
+        input.value = value;
+        engrid_ENGrid.enForm.appendChild(input);
+        return input;
+    }
     // Trigger EN Dependencies
     static enParseDependencies() {
         var _a, _b, _c, _d, _e;
@@ -11105,6 +11136,9 @@ class engrid_ENGrid {
                     break;
                 case "emailsubscribeform":
                     return "SUBSCRIBEFORM";
+                    break;
+                case "supporterhub":
+                    return "SUPPORTERHUB";
                     break;
                 default:
                     return "DONATION";
@@ -11595,6 +11629,7 @@ class App extends engrid_ENGrid {
         if (this.options.NeverBounceAPI)
             new NeverBounce(this.options.NeverBounceAPI, this.options.NeverBounceDateField, this.options.NeverBounceStatusField, this.options.NeverBounceDateFormat);
         new ShowIfAmount();
+        new OtherAmount();
         this.setDataAttributes();
     }
     onLoad() {
@@ -11666,6 +11701,14 @@ class App extends engrid_ENGrid {
     }
     // Use this function to add any Data Attributes to the Body tag
     setDataAttributes() {
+        // Add the Page Type as a Data Attribute on the video
+        if (engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
+            App.setBodyData("page-type", window.pageJson.pageType);
+            this.logger.log("Page Type: " + window.pageJson.pageType);
+        }
+        else {
+            this.logger.log("Page Type: Not Found");
+        }
         // Add a body banner data attribute if the banner contains no image
         // @TODO Should this account for video?
         // @TODO Should we merge this with the script that checks the background image?
@@ -12132,7 +12175,6 @@ const enInput = (() => {
     // get DOM elements
     const init = () => {
         const formInput = document.querySelectorAll(".en__field--text, .en__field--email:not(.en__field--checkbox), .en__field--telephone, .en__field--number, .en__field--textarea, .en__field--select, .en__field--checkbox");
-        const otherInputs = document.querySelectorAll(".en__field__input--other");
         Array.from(formInput).forEach((e) => {
             // @TODO Currently checkboxes always return as having a value, since they do but they're just not checked. Need to update and account for that, should also do Radio's while we're at it
             let element = e.querySelector("input, textarea, select");
@@ -12140,25 +12182,6 @@ const enInput = (() => {
                 e.classList.add("has-value");
             }
             bindEvents(e);
-        });
-        /* @TODO Review Engaging Networks to see if this is still needed */
-        /************************************
-         * Automatically select other radio input when an amount is entered into it.
-         ***********************************/
-        Array.from(otherInputs).forEach((e) => {
-            ["focus", "input"].forEach((evt) => {
-                e.addEventListener(evt, (ev) => {
-                    const target = ev.target;
-                    if (target && target.parentNode && target.parentNode.parentNode) {
-                        const targetWrapper = target.parentNode;
-                        targetWrapper.classList.remove("en__field__item--hidden");
-                        if (targetWrapper.parentNode) {
-                            const lastRadioInput = targetWrapper.parentNode.querySelector(".en__field__item:nth-last-child(2) input");
-                            lastRadioInput.checked = !0;
-                        }
-                    }
-                }, false);
-            });
         });
     };
     return {
@@ -15007,6 +15030,35 @@ class ShowIfAmount {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/other-amount.js
+// This class automatically select other radio input when an amount is entered into it.
+class OtherAmount {
+    constructor() {
+        "focus input".split(" ").forEach((e) => {
+            var _a;
+            // We're attaching this event to the body because sometimes the other amount input is not in the DOM yet and comes via AJAX.
+            (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.addEventListener(e, (event) => {
+                const target = event.target;
+                if (target.classList.contains("en__field__input--other")) {
+                    console.log("Other Amount Field Focused");
+                    this.setRadioInput();
+                }
+            });
+        });
+    }
+    setRadioInput() {
+        const target = document.querySelector(".en__field__input--other");
+        if (target && target.parentNode && target.parentNode.parentNode) {
+            const targetWrapper = target.parentNode;
+            targetWrapper.classList.remove("en__field__item--hidden");
+            if (targetWrapper.parentNode) {
+                const lastRadioInput = targetWrapper.parentNode.querySelector(".en__field__item:nth-last-child(2) input");
+                lastRadioInput.checked = !0;
+            }
+        }
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/logger.js
 
 /**
@@ -15095,6 +15147,7 @@ class EngridLogger {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
@@ -15277,8 +15330,6 @@ class DonationLightboxForm {
   buildSectionNavigation() {
     console.log("DonationLightboxForm: buildSectionNavigation");
     this.sections.forEach((section, key) => {
-      var _sectionNavigation$qu, _sectionNavigation$qu2, _sectionNavigation$qu3;
-
       section.dataset.sectionId = key;
       const sectionNavigation = document.createElement("div");
       sectionNavigation.classList.add("section-navigation");
@@ -15326,18 +15377,18 @@ class DonationLightboxForm {
         <span class="section-count__current">${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
-      (_sectionNavigation$qu = sectionNavigation.querySelector(".section-navigation__previous")) === null || _sectionNavigation$qu === void 0 ? void 0 : _sectionNavigation$qu.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {
         e.preventDefault();
         this.scrollToSection(key - 1);
       });
-      (_sectionNavigation$qu2 = sectionNavigation.querySelector(".section-navigation__next")) === null || _sectionNavigation$qu2 === void 0 ? void 0 : _sectionNavigation$qu2.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__next")?.addEventListener("click", e => {
         e.preventDefault();
 
         if (this.validateForm(key)) {
           this.scrollToSection(key + 1);
         }
       });
-      (_sectionNavigation$qu3 = sectionNavigation.querySelector(".section-navigation__submit")) === null || _sectionNavigation$qu3 === void 0 ? void 0 : _sectionNavigation$qu3.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__submit")?.addEventListener("click", e => {
         e.preventDefault(); // Validate the entire form again
 
         if (this.validateForm()) {
