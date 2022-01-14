@@ -959,7 +959,7 @@
     --donation-amount__button_border-color_checked: var(
       --input_background-color_hover
     );
-    --donation-amount__button_color_checked: var(--input_color);
+    --donation-amount__button_color_checked: initial;
   }
 
   /*
