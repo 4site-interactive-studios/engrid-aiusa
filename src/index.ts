@@ -12,7 +12,7 @@ import {
 // } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
 import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
-import "./scripts/main";
+import { customScript } from "./scripts/main";
 
 const options: Options = {
   applePay: false,
@@ -47,6 +47,7 @@ const options: Options = {
   onLoad: () => {
     (<any>window).DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
+    customScript();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
