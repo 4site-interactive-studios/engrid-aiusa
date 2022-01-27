@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, January 17, 2022 @ 11:36:00 ET
- *  By: fe
+ *  Date: Thursday, January 27, 2022 @ 15:55:41 ET
+ *  By: fernando
  *  ENGrid styles: v0.8.3
- *  ENGrid scripts: v0.8.3
+ *  ENGrid scripts: v0.8.4
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -12014,6 +12014,10 @@ class LiveVariables {
     }
     loadingSubmitButton() {
         const submit = document.querySelector(".en__submit button");
+        // Don't add the Loading element if the button is from an Ajax form (like the supporter hub)
+        if (submit.hasAttribute("data-action")) {
+            return true;
+        }
         let submitButtonOriginalHTML = submit.innerHTML;
         let submitButtonProcessingHTML = "<span class='loader-wrapper'><span class='loader loader-quart'></span><span class='submit-button-text-wrapper'>" +
             submitButtonOriginalHTML +
