@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, February 17, 2022 @ 21:10:29 ET
- *  By: fernando
+ *  Date: Sunday, February 20, 2022 @ 15:37:30 ET
+ *  By: bryancasler
  *  ENGrid styles: v0.8.3
  *  ENGrid scripts: v0.8.4
  *
@@ -7281,6 +7281,127 @@ body:not([data-engrid-debug]) #debug-bar{
     --input_background-color_hover
   );
   --donation-amount__button_color_checked:initial;
+}
+[data-engrid-theme=aiusa] #dd-container .dtd-callout,[data-engrid-theme=aiusa] .dtd-plugin .dtd-callout{
+  background-color:initial;
+  border:none;
+  box-shadow:none;
+  color:var(--default_color);
+  font-family:var(--default_font-family);
+  font-size:var(--default_font-size);
+  font-weight:var(--default_font-weight);
+  line-height:var(--default_line-height);
+  padding:0;
+}
+[data-engrid-theme=aiusa] #dd-container .heading[aria-level="1"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="1"]{
+  color:var(--h1_color);
+  font-family:var(--h1_font-family);
+  font-size:var(--h1_font-size);
+  font-weight:var(--h1_font-weight);
+  line-height:var(--h1_line-height);
+  margin-bottom:1rem;
+  margin-top:2rem;
+  text-transform:var(--h1_text-transform);
+}
+[data-engrid-theme=aiusa] #dd-container .heading[aria-level="2"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="2"]{
+  color:var(--h2_color);
+  font-family:var(--h2_font-family);
+  font-size:var(--h2_font-size);
+  font-weight:var(--h2_font-weight);
+  line-height:var(--h2_line-height);
+  margin-bottom:calc(1rem*var(--scale-down_20pct));
+  margin-top:calc(2rem*var(--scale-down_20pct));
+  text-transform:var(--h2_text-transform);
+}
+[data-engrid-theme=aiusa] #dd-container .heading[aria-level="3"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="3"]{
+  color:var(--h3_color);
+  font-family:var(--h3_font-family);
+  font-size:var(--h3_font-size);
+  font-weight:var(--h3_font-weight);
+  line-height:var(--h3_line-height);
+  margin-bottom:calc(1rem*var(--scale-down_40pct));
+  margin-top:calc(2rem*var(--scale-down_40pct));
+  text-transform:var(--h3_text-transform);
+}
+[data-engrid-theme=aiusa] #dd-container .heading[aria-level="4"],[data-engrid-theme=aiusa] #dd-container .heading[aria-level="5"],[data-engrid-theme=aiusa] #dd-container .heading[aria-level="6"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="4"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="5"],[data-engrid-theme=aiusa] .dtd-plugin .heading[aria-level="6"]{
+  color:var(--h3_color);
+  font-family:var(--h3_font-family);
+  font-size:calc(var(--h3_font-size)*var(--scale-down_20pct));
+  font-weight:var(--h3_font-weight);
+  line-height:var(--h3_line-height);
+  margin-bottom:calc(1rem*var(--scale-down_80pct));
+  margin-top:calc(2rem*var(--scale-down_80pct));
+  text-transform:var(--h4_text-transform);
+}
+[data-engrid-theme=aiusa] #dd-container .eligibility-status,[data-engrid-theme=aiusa] .dtd-plugin .eligibility-status{
+  font-size:var(--default_font-size);
+}
+[data-engrid-theme=aiusa] #dd-container .dtd-search-box,[data-engrid-theme=aiusa] .dtd-plugin .dtd-search-box{
+  border:none;
+  box-shadow:none;
+}
+[data-engrid-theme=aiusa] #dd-container .dtd-search-input,[data-engrid-theme=aiusa] .dtd-plugin .dtd-search-input{
+  background-color:var(--input_background-color) !important;
+  border:var(--input_border-width) solid var(--input_border-color) !important;
+  border-radius:var(--input_border-radius) !important;
+  box-sizing:border-box;
+  color:var(--input_color) !important;
+  display:block !important;
+  font-family:var(--input_font-family) !important;
+  font-size:var(--input_font-size) !important;
+  font-weight:var(--input_font-weight) !important;
+  height:auto !important;
+  line-height:var(--input_line-height) !important;
+  margin:0 !important;
+  max-width:100% !important;
+  min-width:auto !important;
+  padding:var(--input_padding) !important;
+  transition:box-shadow .25s,border-color .25s ease-in-out !important;
+  width:100% !important;
+}
+[data-engrid-theme=aiusa] #dd-container .dtd-search-input:focus,[data-engrid-theme=aiusa] #dd-container .dtd-search-input:hover,[data-engrid-theme=aiusa] .dtd-plugin .dtd-search-input:focus,[data-engrid-theme=aiusa] .dtd-plugin .dtd-search-input:hover{
+  background-color:var(--input_background-color_hover) !important;
+  border-bottom-color:var(--input_border-color_hover) !important;
+  border-color:var(--input_border-color_hover) var(--input_border-color_hover) var(--input_border-bottom-color_hover) !important;
+  color:var(--input_color_hover) !important;
+}
+[data-engrid-theme=aiusa] #dd-container .dtd-search-input,[data-engrid-theme=aiusa] .dtd-plugin .dtd-search-input{
+  padding-left:40px !important;
+}
+[data-engrid-theme=aiusa] #dd-container .button,[data-engrid-theme=aiusa] #dd-container .button.disabled,[data-engrid-theme=aiusa] #dd-container .button.disabled:focus,[data-engrid-theme=aiusa] #dd-container .button.disabled:hover,[data-engrid-theme=aiusa] #dd-container .button[disabled],[data-engrid-theme=aiusa] #dd-container .button[disabled]:focus,[data-engrid-theme=aiusa] #dd-container .button[disabled]:hover,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button],[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button].disabled,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button].disabled:focus,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button].disabled:hover,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button][disabled],[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button][disabled]:focus,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button][disabled]:hover,[data-engrid-theme=aiusa] #dd-container button,[data-engrid-theme=aiusa] #dd-container button.disabled,[data-engrid-theme=aiusa] #dd-container button.disabled:focus,[data-engrid-theme=aiusa] #dd-container button.disabled:hover,[data-engrid-theme=aiusa] #dd-container button[disabled],[data-engrid-theme=aiusa] #dd-container button[disabled]:focus,[data-engrid-theme=aiusa] #dd-container button[disabled]:hover,[data-engrid-theme=aiusa] .dtd-plugin .button,[data-engrid-theme=aiusa] .dtd-plugin .button.disabled,[data-engrid-theme=aiusa] .dtd-plugin .button.disabled:focus,[data-engrid-theme=aiusa] .dtd-plugin .button.disabled:hover,[data-engrid-theme=aiusa] .dtd-plugin .button[disabled],[data-engrid-theme=aiusa] .dtd-plugin .button[disabled]:focus,[data-engrid-theme=aiusa] .dtd-plugin .button[disabled]:hover,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button],[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button].disabled,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button].disabled:focus,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button].disabled:hover,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button][disabled],[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button][disabled]:focus,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button][disabled]:hover,[data-engrid-theme=aiusa] .dtd-plugin button,[data-engrid-theme=aiusa] .dtd-plugin button.disabled,[data-engrid-theme=aiusa] .dtd-plugin button.disabled:focus,[data-engrid-theme=aiusa] .dtd-plugin button.disabled:hover,[data-engrid-theme=aiusa] .dtd-plugin button[disabled],[data-engrid-theme=aiusa] .dtd-plugin button[disabled]:focus,[data-engrid-theme=aiusa] .dtd-plugin button[disabled]:hover{
+  background-color:var(--submit__button_background-color);
+  border-color:var(--submit__button_border-color);
+  color:var(--submit__button_color);
+}
+[data-engrid-theme=aiusa] #dd-container .button:focus,[data-engrid-theme=aiusa] #dd-container .button:hover,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button]:focus,[data-engrid-theme=aiusa] #dd-container a[class*=mg-][class*=-button]:hover,[data-engrid-theme=aiusa] #dd-container button:focus,[data-engrid-theme=aiusa] #dd-container button:hover,[data-engrid-theme=aiusa] .dtd-plugin .button:focus,[data-engrid-theme=aiusa] .dtd-plugin .button:hover,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button]:focus,[data-engrid-theme=aiusa] .dtd-plugin a[class*=mg-][class*=-button]:hover,[data-engrid-theme=aiusa] .dtd-plugin button:focus,[data-engrid-theme=aiusa] .dtd-plugin button:hover{
+  background-color:var(--submit__button_background-color_hover);
+  border-color:var(--submit__button_border-color_hover);
+  color:var(--submit__button_color_hover);
+}
+[data-engrid-theme=aiusa] #dd-company-name-input .dtd-search-input,[data-engrid-theme=aiusa] .dtd-streamlined-plugin .dtd-search-input{
+  background-color:var(--input_background-color) !important;
+  border:var(--input_border-width) solid var(--input_border-color) !important;
+  border-radius:var(--input_border-radius) !important;
+  box-sizing:border-box;
+  color:var(--input_color) !important;
+  display:block !important;
+  font-family:var(--input_font-family) !important;
+  font-size:var(--input_font-size) !important;
+  font-weight:var(--input_font-weight) !important;
+  height:auto !important;
+  line-height:var(--input_line-height) !important;
+  margin:0 !important;
+  max-width:100% !important;
+  min-width:auto !important;
+  padding:var(--input_padding) !important;
+  transition:box-shadow .25s,border-color .25s ease-in-out !important;
+  width:100% !important;
+}
+[data-engrid-theme=aiusa] #dd-company-name-input .dtd-search-input:focus,[data-engrid-theme=aiusa] #dd-company-name-input .dtd-search-input:hover,[data-engrid-theme=aiusa] .dtd-streamlined-plugin .dtd-search-input:focus,[data-engrid-theme=aiusa] .dtd-streamlined-plugin .dtd-search-input:hover{
+  background-color:var(--input_background-color_hover) !important;
+  border-bottom-color:var(--input_border-color_hover) !important;
+  border-color:var(--input_border-color_hover) var(--input_border-color_hover) var(--input_border-bottom-color_hover) !important;
+  color:var(--input_color_hover) !important;
 }
 [data-engrid-theme=aiusa] #menu-wrapper{
   display:flex;
