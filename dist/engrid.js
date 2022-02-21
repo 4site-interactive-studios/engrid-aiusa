@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Sunday, February 20, 2022 @ 16:05:20 ET
+ *  Date: Monday, February 21, 2022 @ 11:21:49 ET
  *  By: bryancasler
  *  ENGrid styles: v0.8.3
  *  ENGrid scripts: v0.8.4
@@ -15951,25 +15951,15 @@ const options = {
   SkipToMainContentLink: true,
   SrcDefer: true,
   ProgressBar: true,
-  // RememberMe: {
-  //   checked: true,
-  //   remoteUrl: 'https://amnestyusa.org/en_cookies_4676876234786091256.html',
-  //   fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
-  //   fieldOptInSelectorTargetLocation: 'after',
-  //   fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
-  //   fieldClearSelectorTargetLocation: 'after',
-  //   fieldNames: [
-  //     'supporter.firstName',
-  //     'supporter.lastName',
-  //     'supporter.address1',
-  //     'supporter.address2',
-  //     'supporter.city',
-  //     'supporter.country',
-  //     'supporter.region',
-  //     'supporter.postcode',
-  //     'supporter.emailAddress'
-  //   ]
-  // },
+  RememberMe: {
+    checked: true,
+    remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
+    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
+    fieldOptInSelectorTargetLocation: "after",
+    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
+    fieldClearSelectorTargetLocation: "after",
+    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.address1", "supporter.address2", "supporter.city", "supporter.country", "supporter.region", "supporter.postcode", "supporter.emailAddress"]
+  },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     window.DonationLightboxForm = DonationLightboxForm;
