@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, February 21, 2022 @ 11:21:49 ET
+ *  Date: Monday, February 21, 2022 @ 11:52:55 ET
  *  By: bryancasler
  *  ENGrid styles: v0.8.3
  *  ENGrid scripts: v0.8.4
@@ -15958,7 +15958,7 @@ const options = {
     fieldOptInSelectorTargetLocation: "after",
     fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
     fieldClearSelectorTargetLocation: "after",
-    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.address1", "supporter.address2", "supporter.city", "supporter.country", "supporter.region", "supporter.postcode", "supporter.emailAddress"]
+    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.emailAddress", "supporter.phoneNumber", "supporter.address1", "supporter.address2", "supporter.city", "supporter.region", "supporter.postcode", "supporter.country"]
   },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
