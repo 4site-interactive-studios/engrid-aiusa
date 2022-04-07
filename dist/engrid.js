@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, April 5, 2022 @ 12:59:23 ET
+ *  Date: Thursday, April 7, 2022 @ 10:39:45 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.10.12
  *  ENGrid scripts: v0.10.19
@@ -13203,6 +13203,9 @@ class engrid_ENGrid {
           break;
 
         case "emailtotarget":
+          return "EMAILTOTARGET";
+          break;
+
         case "advocacypetition":
           return "ADVOCACY";
           break;
@@ -13676,9 +13679,7 @@ class App extends engrid_ENGrid {
     }
 
     if (this.options.Debug || App.getUrlParameter("debug") == "true") // Enable debug if available is the first thing
-      App.setBodyData("debug", ""); // Page Background
-
-    new PageBackground(); // TODO: Abstract everything to the App class so we can remove custom-methods
+      App.setBodyData("debug", ""); // TODO: Abstract everything to the App class so we can remove custom-methods
 
     inputPlaceholder();
     preventAutocomplete();
@@ -13801,7 +13802,9 @@ class App extends engrid_ENGrid {
     new ShowIfAmount();
     new OtherAmount();
     new MinMaxAmount();
-    new Ticker();
+    new Ticker(); // Page Background
+
+    new PageBackground();
     this.setDataAttributes();
     engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
   }
@@ -18412,11 +18415,10 @@ class Ticker {
 
     this.logger.log("Rendering");
     const items = this.getItems();
-    const listDuration = items.length * 5;
     let ticker = document.createElement("div");
     ticker.classList.add("en__component");
     ticker.classList.add("en__component--ticker");
-    let str = `<div class="ticker" style="animation-duration: ${listDuration}s">`;
+    let str = '<div class="ticker">';
 
     for (let i = 0; i < items.length; i++) {
       str += '<div class="ticker__item">' + items[i] + "</div>";
@@ -18447,7 +18449,11 @@ class DataReplace {
   }
 
   searchElements() {
-    const enElements = document.querySelectorAll(".en__component--copyblock, .en__field");
+    const enElements = document.querySelectorAll(`
+      .en__component--copyblock,
+      .en__component--codeblock,
+      .en__field
+      `);
 
     if (enElements.length > 0) {
       enElements.forEach(item => {
