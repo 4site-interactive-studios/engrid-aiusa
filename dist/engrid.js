@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 7, 2022 @ 11:07:06 ET
+ *  Date: Thursday, April 7, 2022 @ 11:13:39 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.10.12
  *  ENGrid scripts: v0.10.19
@@ -18575,7 +18575,7 @@ class nameShortcode {
     let addedFirstName = false;
     let addedLastName = false;
 
-    if (engrid_ENGrid.getPageType() == "ADVOCACY" && message) {
+    if (engrid_ENGrid.getPageType() == "EMAILTOTARGET" && message) {
       if (message.value.includes("{user_data~First Name") || message.value.includes("{user_data~Last Name")) {
         return;
       } else {
