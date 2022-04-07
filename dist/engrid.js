@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 7, 2022 @ 10:39:45 ET
+ *  Date: Thursday, April 7, 2022 @ 11:07:06 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.10.12
  *  ENGrid scripts: v0.10.19
@@ -13802,7 +13802,8 @@ class App extends engrid_ENGrid {
     new ShowIfAmount();
     new OtherAmount();
     new MinMaxAmount();
-    new Ticker(); // Page Background
+    new Ticker();
+    new nameShortcode(); // Page Background
 
     new PageBackground();
     this.setDataAttributes();
@@ -18560,8 +18561,53 @@ class DataHide {
   }
 
 }
+;// CONCATENATED MODULE: ../engrid-scripts/packages/common/dist/name-shortcode.js
+
+class nameShortcode {
+  constructor() {
+    this.replaceNameShortcode("#en__field_supporter_firstName", "#en__field_supporter_lastName");
+  }
+
+  replaceNameShortcode(fName, lName) {
+    let message = document.querySelector('[name="contact.message"]');
+    let firstName = document.querySelector(fName);
+    let lastName = document.querySelector(lName);
+    let addedFirstName = false;
+    let addedLastName = false;
+
+    if (engrid_ENGrid.getPageType() == "ADVOCACY" && message) {
+      if (message.value.includes("{user_data~First Name") || message.value.includes("{user_data~Last Name")) {
+        return;
+      } else {
+        if (!message.value.includes("{user_data~First Name") && firstName) {
+          firstName.addEventListener("blur", function (e) {
+            const target = e.target;
+
+            if (message && !addedFirstName) {
+              addedFirstName = true;
+              message.value = message.value.concat("\n" + target.value);
+            }
+          });
+        }
+
+        if (!message.value.includes("{user_data~Last Name") && lastName) {
+          lastName.addEventListener("blur", function (e) {
+            const target = e.target;
+
+            if (message && !addedLastName) {
+              addedLastName = true;
+              message.value = message.value.concat(" " + target.value);
+            }
+          });
+        }
+      }
+    }
+  }
+
+}
 ;// CONCATENATED MODULE: ../engrid-scripts/packages/common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
