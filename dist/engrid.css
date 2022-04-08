@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, April 8, 2022 @ 14:34:20 ET
+ *  Date: Friday, April 8, 2022 @ 17:08:35 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.10.12
  *  ENGrid scripts: v0.10.19
@@ -4959,8 +4959,7 @@ div.en__component.engrid-ticker{
   width:100%;
 }
 #engrid-ticker .ticker{
-  --character-count:208;
-  --calculated-speed:calc(1s*(var(--character-count)/5)*(1 - var(--speed-modifier)));
+  --calculated-speed:calc(1s*(var(--character-count)/5)*var(--speed-modifier));
   animation-duration:var(--calculated-speed);
   animation-iteration-count:infinite;
   animation-name:tickerScroll;
