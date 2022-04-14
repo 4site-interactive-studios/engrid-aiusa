@@ -631,6 +631,7 @@
 
   // LABEL APPENDED TO DONTIONAL GIVING AMOUNTS BASED ON GIVING FREQUENCY
   --give-monthly-donation-amount-appended-label: " Monthly";
+  --give-quarterly-donation-amount-appended-label: " Quarterly";
   --give-annual-donation-amount-appended-label: " Annually";
 
   // IMAGE ATTRIBUTION OVERLAY
@@ -2226,7 +2227,7 @@
     .radio-to-buttons_recurrfreq
       .en__field--recurrfreq.en__field--radio
       input[type="radio"] {
-      &[value="MONTHLY" i] + label:after {
+      monthly &[value="MONTHLY" i] + label:after {
         content: var(--giving-frequency-upsell-arrow-monthly);
       }
 
