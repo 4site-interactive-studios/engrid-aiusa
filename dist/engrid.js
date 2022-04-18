@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, April 8, 2022 @ 17:08:35 ET
+ *  Date: Monday, April 18, 2022 @ 19:37:33 ET
  *  By: ryanoliver
- *  ENGrid styles: v0.10.12
- *  ENGrid scripts: v0.10.19
+ *  ENGrid styles: v0.11.6
+ *  ENGrid scripts: v0.11.5
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -816,6 +816,10 @@ function getContainingBlock(element) {
 
   var currentNode = getParentNode(element);
 
+  if (isShadowRoot(currentNode)) {
+    currentNode = currentNode.host;
+  }
+
   while (isHTMLElement(currentNode) && ['html', 'body'].indexOf(getNodeName(currentNode)) < 0) {
     var css = getComputedStyle(currentNode); // This is non-exhaustive but covers the most common CSS properties that
     // create a containing block.
@@ -1416,7 +1420,7 @@ function mapToStyles(_ref2) {
 
     if (placement === enums_top || (placement === left || placement === right) && variation === end) {
       sideY = bottom;
-      var offsetY = isFixed && win.visualViewport ? win.visualViewport.height : // $FlowFixMe[prop-missing]
+      var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height : // $FlowFixMe[prop-missing]
       offsetParent[heightProp];
       y -= offsetY - popperRect.height;
       y *= gpuAcceleration ? 1 : -1;
@@ -1424,7 +1428,7 @@ function mapToStyles(_ref2) {
 
     if (placement === left || (placement === enums_top || placement === bottom) && variation === end) {
       sideX = right;
-      var offsetX = isFixed && win.visualViewport ? win.visualViewport.width : // $FlowFixMe[prop-missing]
+      var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width : // $FlowFixMe[prop-missing]
       offsetParent[widthProp];
       x -= offsetX - popperRect.width;
       x *= gpuAcceleration ? 1 : -1;
@@ -18413,21 +18417,24 @@ class Ticker {
     this.logger.log("Rendering");
     const items = this.getItems();
     let ticker = document.createElement("div");
-    let charCount = 0;
     ticker.classList.add("en__component");
     ticker.classList.add("en__component--ticker");
     let str = `<div class="ticker">`;
 
     for (let i = 0; i < items.length; i++) {
       str += '<div class="ticker__item">' + items[i] + "</div>";
-      charCount += items[i].length;
     }
 
     str = '<div id="engrid-ticker">' + str + "</div></div>";
-    ticker.style.setProperty("--character-count", charCount.toString());
     ticker.innerHTML = str;
     (_b = (_a = this.tickerElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.insertBefore(ticker, this.tickerElement);
     (_c = this.tickerElement) === null || _c === void 0 ? void 0 : _c.remove();
+    let tickerSelect = document.querySelector(".ticker");
+    console.log(tickerSelect);
+    let tickerWidth = tickerSelect ? getComputedStyle(tickerSelect).width : '1000';
+    tickerWidth = Math.round(parseInt(tickerWidth)).toString();
+    console.log(tickerWidth);
+    ticker.style.setProperty("--ticker-size", tickerWidth.toString());
   }
 
 }
