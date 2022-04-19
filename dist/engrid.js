@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, April 18, 2022 @ 19:37:33 ET
+ *  Date: Tuesday, April 19, 2022 @ 18:31:34 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.11.6
  *  ENGrid scripts: v0.11.5
@@ -18394,7 +18394,7 @@ class Ticker {
 
   getItems() {
     const total = this.tickerElement.getAttribute("data-total") || "50";
-    this.logger.log("Getting " + total + "items");
+    this.logger.log("Getting " + total + " items");
     const seed = this.getSeed();
     const items = this.shuffleSeed.shuffle(this.items, seed);
     const now = new Date();
@@ -18429,12 +18429,13 @@ class Ticker {
     ticker.innerHTML = str;
     (_b = (_a = this.tickerElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.insertBefore(ticker, this.tickerElement);
     (_c = this.tickerElement) === null || _c === void 0 ? void 0 : _c.remove();
-    let tickerSelect = document.querySelector(".ticker");
-    console.log(tickerSelect);
-    let tickerWidth = tickerSelect ? getComputedStyle(tickerSelect).width : '1000';
-    tickerWidth = Math.round(parseInt(tickerWidth)).toString();
-    console.log(tickerWidth);
-    ticker.style.setProperty("--ticker-size", tickerWidth.toString());
+    const tickerWidth = document.querySelector(".ticker").offsetWidth.toString();
+    ticker.style.setProperty("--ticker-size", tickerWidth);
+
+    if (engrid_ENGrid.debug) {
+      this.logger.log("Ticker Size: " + ticker.style.getPropertyValue("--ticker-size"));
+      this.logger.log("Ticker Width: " + tickerWidth);
+    }
   }
 
 }
