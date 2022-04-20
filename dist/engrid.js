@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, April 19, 2022 @ 18:31:34 ET
+ *  Date: Wednesday, April 20, 2022 @ 09:58:22 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.11.6
  *  ENGrid scripts: v0.11.5
@@ -13680,9 +13680,7 @@ class App extends engrid_ENGrid {
     }
 
     if (this.options.Debug || App.getUrlParameter("debug") == "true") // Enable debug if available is the first thing
-      App.setBodyData("debug", ""); // Page Background
-
-    new PageBackground(); // TODO: Abstract everything to the App class so we can remove custom-methods
+      App.setBodyData("debug", ""); // TODO: Abstract everything to the App class so we can remove custom-methods
 
     inputPlaceholder();
     preventAutocomplete();
@@ -13805,7 +13803,9 @@ class App extends engrid_ENGrid {
     new ShowIfAmount();
     new OtherAmount();
     new MinMaxAmount();
-    new Ticker();
+    new Ticker(); // Page Background
+
+    new PageBackground();
     this.setDataAttributes();
     engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
   }
@@ -18457,7 +18457,11 @@ class DataReplace {
   }
 
   searchElements() {
-    const enElements = document.querySelectorAll(".en__component--copyblock, .en__field");
+    const enElements = document.querySelectorAll(`
+      .en__component--copyblock,
+      .en__component--codeblock,
+      .en__field
+      `);
 
     if (enElements.length > 0) {
       enElements.forEach(item => {
