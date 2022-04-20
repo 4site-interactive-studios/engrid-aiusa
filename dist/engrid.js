@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 14, 2022 @ 15:35:03 ET
- *  By: bryancasler
+ *  Date: Wednesday, April 20, 2022 @ 14:55:57 ET
+ *  By: fernando
  *  ENGrid styles: v0.11.6
- *  ENGrid scripts: v0.11.5
+ *  ENGrid scripts: v0.11.7
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -10755,6 +10755,7 @@ const OptionsDefaults = {
     TranslateFields: true,
     Debug: false,
     RememberMe: false,
+    RegionLongFormat: "",
 };
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/upsell-options.js
@@ -11229,10 +11230,15 @@ class engrid_ENGrid {
     static getPageType() {
         if ("pageJson" in window && "pageType" in window.pageJson) {
             switch (window.pageJson.pageType) {
+                case "donation":
+                case "premiumgift":
+                    return "DONATION";
+                    break;
                 case "e-card":
                     return "ECARD";
                     break;
                 case "otherdatacapture":
+                case "survey":
                     return "SURVEY";
                     break;
                 case "emailtotarget":
@@ -11249,11 +11255,11 @@ class engrid_ENGrid {
                     return "UNSUBSCRIBE";
                     break;
                 default:
-                    return "DONATION";
+                    return "UNKNOWN";
             }
         }
         else {
-            return "DONATION";
+            return "UNKNOWN";
         }
     }
     // Set body engrid data attributes
@@ -11764,6 +11770,7 @@ class App extends engrid_ENGrid {
         new OtherAmount();
         new MinMaxAmount();
         new Ticker();
+        new ExpandRegionName();
         // Page Background
         new PageBackground();
         this.setDataAttributes();
@@ -15715,8 +15722,48 @@ class DataHide {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/expand-region-name.js
+// Populates hidden supporter field "Region Long Format" with expanded name (e.g FL becomes Florida)
+
+
+class ExpandRegionName {
+    constructor() {
+        this._form = EnForm.getInstance();
+        if (this.shouldRun()) {
+            this._form.onSubmit.subscribe(() => this.expandRegion());
+        }
+    }
+    shouldRun() {
+        return engrid_ENGrid.getOption("RegionLongFormat") !== "";
+    }
+    expandRegion() {
+        const userRegion = document.querySelector('[name="supporter.region"]'); // User entered region on the page
+        const expandedRegionField = engrid_ENGrid.getOption("RegionLongFormat");
+        const hiddenRegion = document.querySelector(expandedRegionField); // Hidden region long form field
+        if (!userRegion) {
+            if (engrid_ENGrid.debug)
+                console.log("No region field to populate the hidden region field with");
+            return; // Don't populate hidden region field if user region field isn't on page
+        }
+        if (userRegion.tagName === "SELECT" && "options" in userRegion && hiddenRegion && "value" in hiddenRegion) {
+            const regionValue = userRegion.options[userRegion.selectedIndex].innerText;
+            hiddenRegion.value = regionValue;
+            if (engrid_ENGrid.debug)
+                console.log("Populated 'Region Long Format' field", hiddenRegion.value);
+        }
+        else if (userRegion.tagName === "INPUT" && hiddenRegion && "value" in hiddenRegion) {
+            const regionValue = userRegion.value;
+            hiddenRegion.value = regionValue;
+            if (engrid_ENGrid.debug)
+                console.log("Populated 'Region Long Format' field", hiddenRegion.value);
+        }
+        return;
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
