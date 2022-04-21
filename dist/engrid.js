@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, April 20, 2022 @ 14:55:57 ET
+ *  Date: Wednesday, April 20, 2022 @ 20:14:15 ET
  *  By: fernando
- *  ENGrid styles: v0.11.6
- *  ENGrid scripts: v0.11.7
+ *  ENGrid styles: v0.11.9
+ *  ENGrid scripts: v0.11.9
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11242,6 +11242,8 @@ class engrid_ENGrid {
                     return "SURVEY";
                     break;
                 case "emailtotarget":
+                    return "EMAILTOTARGET";
+                    break;
                 case "advocacypetition":
                     return "ADVOCACY";
                     break;
@@ -11770,6 +11772,7 @@ class App extends engrid_ENGrid {
         new OtherAmount();
         new MinMaxAmount();
         new Ticker();
+        new AddNameToMessage();
         new ExpandRegionName();
         // Page Background
         new PageBackground();
@@ -15580,7 +15583,7 @@ class Ticker {
     // Get Items
     getItems() {
         const total = this.tickerElement.getAttribute("data-total") || "50";
-        this.logger.log("Getting " + total + "items");
+        this.logger.log("Getting " + total + " items");
         const seed = this.getSeed();
         const items = this.shuffleSeed.shuffle(this.items, seed);
         const now = new Date();
@@ -15601,7 +15604,7 @@ class Ticker {
         let ticker = document.createElement("div");
         ticker.classList.add("en__component");
         ticker.classList.add("en__component--ticker");
-        let str = '<div class="ticker">';
+        let str = `<div class="ticker">`;
         for (let i = 0; i < items.length; i++) {
             str += '<div class="ticker__item">' + items[i] + "</div>";
         }
@@ -15609,6 +15612,10 @@ class Ticker {
         ticker.innerHTML = str;
         (_b = (_a = this.tickerElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.insertBefore(ticker, this.tickerElement);
         (_c = this.tickerElement) === null || _c === void 0 ? void 0 : _c.remove();
+        const tickerWidth = document.querySelector(".ticker").offsetWidth.toString();
+        ticker.style.setProperty("--ticker-size", tickerWidth);
+        this.logger.log("Ticker Size: " + ticker.style.getPropertyValue("--ticker-size"));
+        this.logger.log("Ticker Width: " + tickerWidth);
     }
 }
 
@@ -15722,6 +15729,56 @@ class DataHide {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/add-name-to-message.js
+/*
+ Adds first and last name when First Name and Last Name fields lose focus if name shortcodes aren't present
+*/
+
+class AddNameToMessage {
+    constructor() {
+        if (!this.shouldRun()) {
+            // Don't run the script if the page isn't email to target
+            return;
+        }
+        this.replaceNameShortcode("#en__field_supporter_firstName", "#en__field_supporter_lastName");
+    }
+    shouldRun() {
+        return engrid_ENGrid.getPageType() === "EMAILTOTARGET";
+    }
+    replaceNameShortcode(fName, lName) {
+        const firstName = document.querySelector(fName);
+        const lastName = document.querySelector(lName);
+        let message = document.querySelector('[name="contact.message"]');
+        let addedFirstName = false;
+        let addedLastName = false;
+        if (message) {
+            if (message.value.includes("{user_data~First Name") || message.value.includes("{user_data~Last Name")) {
+                return;
+            }
+            else {
+                if (!message.value.includes("{user_data~First Name") && firstName) {
+                    firstName.addEventListener("blur", (e) => {
+                        const target = e.target;
+                        if (message && !addedFirstName) {
+                            addedFirstName = true;
+                            message.value = message.value.concat("\n" + target.value);
+                        }
+                    });
+                }
+                if (!message.value.includes("{user_data~Last Name") && lastName) {
+                    lastName.addEventListener("blur", (e) => {
+                        const target = e.target;
+                        if (message && !addedLastName) {
+                            addedLastName = true;
+                            message.value = message.value.concat(" " + target.value);
+                        }
+                    });
+                }
+            }
+        }
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/expand-region-name.js
 // Populates hidden supporter field "Region Long Format" with expanded name (e.g FL becomes Florida)
 
@@ -15763,6 +15820,7 @@ class ExpandRegionName {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
