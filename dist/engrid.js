@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 21, 2022 @ 15:33:10 ET
+ *  Date: Monday, May 16, 2022 @ 20:07:17 ET
  *  By: fernando
  *  ENGrid styles: v0.11.9
- *  ENGrid scripts: v0.11.13
+ *  ENGrid scripts: v0.11.15
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11175,6 +11175,7 @@ class engrid_ENGrid {
                     default:
                         field.value = value;
                 }
+                field.setAttribute("engrid-value-changed", "");
             }
         });
         this.enParseDependencies();
@@ -11199,7 +11200,7 @@ class engrid_ENGrid {
             typeof ((_e = (_d = (_c = (_b = (_a = window.EngagingNetworks) === null || _a === void 0 ? void 0 : _a.require) === null || _b === void 0 ? void 0 : _b._defined) === null || _c === void 0 ? void 0 : _c.enDependencies) === null || _d === void 0 ? void 0 : _d.dependencies) === null || _e === void 0 ? void 0 : _e.parseDependencies) === "function") {
             window.EngagingNetworks.require._defined.enDependencies.dependencies.parseDependencies(window.EngagingNetworks.dependencies);
             if (engrid_ENGrid.getOption("Debug"))
-                console.trace("EN Dependencies Triggered");
+                console.log("EN Dependencies Triggered");
         }
     }
     // Return the status of the gift process (true if a donation has been made, otherwise false)
@@ -11776,6 +11777,8 @@ class App extends engrid_ENGrid {
         new ExpandRegionName();
         // Page Background
         new PageBackground();
+        // Url Params to Form Fields
+        new UrlToForm();
         this.setDataAttributes();
         engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
         window.EngridVersion = AppVersion;
@@ -15627,12 +15630,10 @@ class DataReplace {
     constructor() {
         this.logger = new EngridLogger("DataReplace", "#333333", "#00f3ff", "⤵️");
         this.enElements = new Array();
-        this.logger.log("Constructor");
         this.searchElements();
-        if (!this.shouldRun()) {
-            this.logger.error("No Elements Found");
+        if (!this.shouldRun())
             return;
-        }
+        this.logger.log("Elements Found:", this.enElements);
         this.replaceAll();
     }
     searchElements() {
@@ -15651,7 +15652,6 @@ class DataReplace {
         }
     }
     shouldRun() {
-        this.logger.log("Elements Found:", this.enElements);
         return this.enElements.length > 0;
     }
     replaceAll() {
@@ -15788,43 +15788,83 @@ class AddNameToMessage {
 class ExpandRegionName {
     constructor() {
         this._form = EnForm.getInstance();
+        this.logger = new EngridLogger("ExpandRegionName", "#333333", "#00eb65", "🌍");
         if (this.shouldRun()) {
+            const expandedRegionField = engrid_ENGrid.getOption("RegionLongFormat");
+            console.log("expandedRegionField", expandedRegionField);
+            const hiddenRegion = document.querySelector(`[name="${expandedRegionField}"]`);
+            if (!hiddenRegion) {
+                this.logger.log(`CREATED field ${expandedRegionField}`);
+                engrid_ENGrid.createHiddenInput(expandedRegionField);
+            }
             this._form.onSubmit.subscribe(() => this.expandRegion());
         }
     }
     shouldRun() {
-        return engrid_ENGrid.getOption("RegionLongFormat") !== "";
+        return !!engrid_ENGrid.getOption("RegionLongFormat");
     }
     expandRegion() {
         const userRegion = document.querySelector('[name="supporter.region"]'); // User entered region on the page
         const expandedRegionField = engrid_ENGrid.getOption("RegionLongFormat");
-        const hiddenRegion = document.querySelector(expandedRegionField); // Hidden region long form field
+        const hiddenRegion = document.querySelector(`[name="${expandedRegionField}"]`); // Hidden region long form field
         if (!userRegion) {
-            if (engrid_ENGrid.debug)
-                console.log("No region field to populate the hidden region field with");
+            this.logger.log("No region field to populate the hidden region field with");
             return; // Don't populate hidden region field if user region field isn't on page
         }
-        if (userRegion.tagName === "SELECT" && "options" in userRegion && hiddenRegion && "value" in hiddenRegion) {
+        if (userRegion.tagName === "SELECT" && "options" in userRegion) {
             const regionValue = userRegion.options[userRegion.selectedIndex].innerText;
             hiddenRegion.value = regionValue;
-            if (engrid_ENGrid.debug)
-                console.log("Populated 'Region Long Format' field", hiddenRegion.value);
+            this.logger.log("Populated field", hiddenRegion.value);
         }
-        else if (userRegion.tagName === "INPUT" && hiddenRegion && "value" in hiddenRegion) {
+        else if (userRegion.tagName === "INPUT") {
             const regionValue = userRegion.value;
             hiddenRegion.value = regionValue;
-            if (engrid_ENGrid.debug)
-                console.log("Populated 'Region Long Format' field", hiddenRegion.value);
+            this.logger.log("Populated field", hiddenRegion.value);
         }
-        return;
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/url-to-form.js
+// Component that allows to set a field value from URL parameters
+// Workflow:
+// 1. Loop through all the URL parameters
+// 2. Check if there's a match with the field name
+// 3. If there's a match AND the field is empty, set the value
+
+class UrlToForm {
+    constructor() {
+        this.logger = new EngridLogger("UrlToForm", "white", "magenta", "🔗");
+        this.urlParams = new URLSearchParams(document.location.search);
+        if (!this.shouldRun())
+            return;
+        this.urlParams.forEach((value, key) => {
+            const field = document.getElementsByName(key)[0];
+            if (field) {
+                if (!["text", "textarea"].includes(field.type) || !field.value) {
+                    engrid_ENGrid.setFieldValue(key, value);
+                    this.logger.log(`Set: ${key} to ${value}`);
+                }
+            }
+        });
+    }
+    shouldRun() {
+        return !!document.location.search && this.hasFields();
+    }
+    hasFields() {
+        const ret = [...this.urlParams.keys()].map((key) => {
+            return document.getElementsByName(key).length > 0;
+        });
+        return ret.includes(true);
     }
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.11.13";
+const AppVersion = "0.11.15";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
