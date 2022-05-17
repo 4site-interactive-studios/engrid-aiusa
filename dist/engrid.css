@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, May 16, 2022 @ 20:07:17 ET
- *  By: fernando
+ *  Date: Tuesday, May 17, 2022 @ 13:52:53 ET
+ *  By: bryancasler
  *  ENGrid styles: v0.11.9
  *  ENGrid scripts: v0.11.15
  *
@@ -7308,7 +7308,7 @@ body:not([data-engrid-debug]) #debug-bar{
   --a_text-decoration_checked:initial;
   --color_cta:#ff0;
   --color_cta_hover:#ff0;
-  --engrid__page_background-color:var(--color_transparent);
+  --engrid__page_background-color:#f0f0f0;
   --engrid__content_background-color:var(--color_transparent);
   --engrid__body_background-color:var(--color_white);
   --engrid__page-alert_background-color:var(--engrid__page_background-color);
