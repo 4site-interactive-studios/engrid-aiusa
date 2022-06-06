@@ -2047,6 +2047,13 @@
       top: 0px !important;
     }
   }
+
+  // Chrome introduced a visual regression causing accessible focus outlines to outline the candle embers. There is no way to remove them just from the embers so we remove it from the root label
+  // REF: https://app.productive.io/2650-4site-interactive-studios-inc/tasks/2821791
+  .radio-to-buttons_recurrfreq .en__field__input--radio + label {
+    outline: none;
+  }
+
   .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
     input[type="radio"]
