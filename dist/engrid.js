@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, June 6, 2022 @ 11:57:28 ET
- *  By: bryancasler
- *  ENGrid styles: v0.11.9
- *  ENGrid scripts: v0.11.15
+ *  Date: Thursday, June 9, 2022 @ 13:04:00 ET
+ *  By: fernando
+ *  ENGrid styles: v0.12.0
+ *  ENGrid scripts: v0.12.10
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -10755,6 +10755,7 @@ const OptionsDefaults = {
     TranslateFields: true,
     Debug: false,
     RememberMe: false,
+    TidyContact: false,
     RegionLongFormat: "",
 };
 
@@ -10863,6 +10864,7 @@ class Loader {
         switch (assets) {
             case "local":
                 this.logger.log("LOADING LOCAL");
+                engrid_ENGrid.setBodyData("assets", "local");
                 engrid_js_url = `https://${engrid_repo}.test/dist/engrid.js`;
                 engrid_css_url = `https://${engrid_repo}.test/dist/engrid.css`;
                 break;
@@ -10946,7 +10948,9 @@ class EnForm {
         this._onValidate = new dist/* SignalDispatcher */.nz();
         this._onError = new dist/* SignalDispatcher */.nz();
         this.submit = true;
+        this.submitPromise = false;
         this.validate = true;
+        this.validatePromise = false;
     }
     static getInstance() {
         if (!EnForm.instance) {
@@ -11144,6 +11148,10 @@ class engrid_ENGrid {
         }
         return null;
     }
+    static getField(name) {
+        // Get the field by name
+        return document.querySelector(`[name="${name}"]`);
+    }
     // Return the field value from its name. It works on any field type.
     // Multiple values (from checkboxes or multi-select) are returned as single string
     // Separated by ,
@@ -11152,6 +11160,8 @@ class engrid_ENGrid {
     }
     // Set a value to any field. If it's a dropdown, radio or checkbox, it selects the proper option matching the value
     static setFieldValue(name, value) {
+        if (value === engrid_ENGrid.getFieldValue(name))
+            return;
         document.getElementsByName(name).forEach((field) => {
             if ("type" in field) {
                 switch (field.type) {
@@ -11372,8 +11382,8 @@ class engrid_ENGrid {
         }
         return true;
     }
-    static setError(querySelector, errorMessage) {
-        const errorElement = document.querySelector(querySelector);
+    static setError(element, errorMessage) {
+        const errorElement = typeof element === "string" ? document.querySelector(element) : element;
         if (errorElement) {
             errorElement.classList.add("en__field--validationFailed");
             let errorMessageElement = errorElement.querySelector(".en__field__error");
@@ -11388,8 +11398,8 @@ class engrid_ENGrid {
             }
         }
     }
-    static removeError(querySelector) {
-        const errorElement = document.querySelector(querySelector);
+    static removeError(element) {
+        const errorElement = typeof element === "string" ? document.querySelector(element) : element;
         if (errorElement) {
             errorElement.classList.remove("en__field--validationFailed");
             const errorMessageElement = errorElement.querySelector(".en__field__error");
@@ -11397,6 +11407,11 @@ class engrid_ENGrid {
                 errorElement.removeChild(errorMessageElement);
             }
         }
+    }
+    static isVisible(element) {
+        return !!(element.offsetWidth ||
+            element.offsetHeight ||
+            element.getClientRects().length);
     }
 }
 
@@ -11616,6 +11631,11 @@ class App extends engrid_ENGrid {
         window.EngridOptions = this.options;
         if (loader.reload())
             return;
+        // Turn Debug ON if you use local assets
+        if (engrid_ENGrid.getBodyData("assets") === "local" &&
+            engrid_ENGrid.getUrlParameter("debug") !== "false") {
+            window.EngridOptions.Debug = true;
+        }
         // Document Load
         if (document.readyState !== "loading") {
             this.run();
@@ -11703,16 +11723,26 @@ class App extends engrid_ENGrid {
         this._form.onError.subscribe((s) => this.logger.danger("Error: " + s));
         window.enOnSubmit = () => {
             this._form.submit = true;
+            this._form.submitPromise = false;
             this._form.dispatchSubmit();
-            return this._form.submit;
+            if (!this._form.submit)
+                return false;
+            if (this._form.submitPromise)
+                return this._form.submitPromise;
+            return true;
         };
         window.enOnError = () => {
             this._form.dispatchError();
         };
         window.enOnValidate = () => {
             this._form.validate = true;
+            this._form.validatePromise = false;
             this._form.dispatchValidate();
-            return this._form.validate;
+            if (!this._form.validate)
+                return false;
+            if (this._form.validatePromise)
+                return this._form.validatePromise;
+            return true;
         };
         // iFrame Logic
         new iFrame();
@@ -11731,9 +11761,6 @@ class App extends engrid_ENGrid {
         // On the end of the script, after all subscribers defined, let's load the current value
         this._amount.load();
         this._frequency.load();
-        // Translate Fields
-        if (this.options.TranslateFields)
-            new TranslateFields();
         // Simple Country Select
         new SimpleCountrySelect();
         // Add Image Attribution
@@ -11779,6 +11806,14 @@ class App extends engrid_ENGrid {
         new PageBackground();
         // Url Params to Form Fields
         new UrlToForm();
+        // Required if Visible Fields
+        new RequiredIfVisible();
+        // TidyContact
+        if (this.options.TidyContact)
+            new TidyContact();
+        // Translate Fields
+        if (this.options.TranslateFields)
+            new TranslateFields();
         this.setDataAttributes();
         engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
         window.EngridVersion = AppVersion;
@@ -13790,8 +13825,8 @@ class ShowHideRadioCheckboxes {
         this.logger = new EngridLogger("ShowHideRadioCheckboxes", "black", "lightblue", "👁");
         this.elements = document.getElementsByName(elements);
         this.classes = classes;
+        this.createDataAttributes();
         this.hideAll();
-        this.logger.log("New:", this.classes, this.elements);
         for (let i = 0; i < this.elements.length; i++) {
             let element = this.elements[i];
             if (element.checked) {
@@ -13802,6 +13837,35 @@ class ShowHideRadioCheckboxes {
                 this.show(element);
             });
         }
+    }
+    // Create default data attributes on all fields
+    createDataAttributes() {
+        this.elements.forEach((item) => {
+            if (item instanceof HTMLInputElement) {
+                let inputValue = item.value.replace(/\s/g, "");
+                document
+                    .querySelectorAll("." + this.classes + inputValue)
+                    .forEach((el) => {
+                    // Consider toggling "hide" class so these fields can be displayed when in a debug state
+                    if (el instanceof HTMLElement) {
+                        const fields = el.querySelectorAll("input[type='text'], input[type='number'], input[type='email'], select, textarea");
+                        if (fields.length > 0) {
+                            fields.forEach((field) => {
+                                if (field instanceof HTMLInputElement ||
+                                    field instanceof HTMLSelectElement) {
+                                    if (!field.hasAttribute("data-original-value")) {
+                                        field.setAttribute("data-original-value", field.value);
+                                    }
+                                    if (!field.hasAttribute("data-value")) {
+                                        field.setAttribute("data-value", field.value);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
     }
     // Hide All Divs
     hideAll() {
@@ -13816,6 +13880,7 @@ class ShowHideRadioCheckboxes {
         document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
             // Consider toggling "hide" class so these fields can be displayed when in a debug state
             if (el instanceof HTMLElement) {
+                this.toggleValue(el, "hide");
                 el.style.display = "none";
                 this.logger.log("Hiding", el);
             }
@@ -13827,12 +13892,40 @@ class ShowHideRadioCheckboxes {
         document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
             // Consider toggling "hide" class so these fields can be displayed when in a debug state
             if (el instanceof HTMLElement) {
+                this.toggleValue(el, "show");
                 el.style.display = "";
                 this.logger.log("Showing", el);
             }
         });
         if (item.type == "checkbox" && !item.checked) {
             this.hide(item);
+        }
+    }
+    // Take the field values and add to a data attribute on the field
+    toggleValue(item, type) {
+        if (type == "hide" && !engrid_ENGrid.isVisible(item))
+            return;
+        this.logger.log(`toggleValue: ${type}`);
+        const fields = item.querySelectorAll("input[type='text'], input[type='number'], input[type='email'], select, textarea");
+        if (fields.length > 0) {
+            fields.forEach((field) => {
+                var _a;
+                if (field instanceof HTMLInputElement ||
+                    field instanceof HTMLSelectElement) {
+                    if (field.name) {
+                        const fieldValue = engrid_ENGrid.getFieldValue(field.name);
+                        const originalValue = field.getAttribute("data-original-value");
+                        const dataValue = (_a = field.getAttribute("data-value")) !== null && _a !== void 0 ? _a : "";
+                        if (type === "hide") {
+                            field.setAttribute("data-value", fieldValue);
+                            engrid_ENGrid.setFieldValue(field.name, originalValue);
+                        }
+                        else {
+                            engrid_ENGrid.setFieldValue(field.name, dataValue);
+                        }
+                    }
+                }
+            });
         }
     }
 }
@@ -14994,24 +15087,48 @@ class RememberMe {
     constructor(options) {
         this._form = EnForm.getInstance();
         this.iframe = null;
-        this.remoteUrl = (options.remoteUrl) ? options.remoteUrl : null;
-        this.cookieName = (options.cookieName) ? options.cookieName : 'engrid-autofill';
-        this.cookieExpirationDays = (options.cookieExpirationDays) ? options.cookieExpirationDays : 365;
-        this.rememberMeOptIn = (options.checked) ? options.checked : false;
-        this.fieldNames = (options.fieldNames) ? options.fieldNames : [];
-        this.fieldDonationAmountRadioName = (options.fieldDonationAmountRadioName) ? options.fieldDonationAmountRadioName : 'transaction.donationAmt';
-        this.fieldDonationAmountOtherName = (options.fieldDonationAmountOtherName) ? options.fieldDonationAmountOtherName : 'transaction.donationAmt.other';
-        this.fieldDonationRecurrPayRadioName = (options.fieldDonationRecurrPayRadioName) ? options.fieldDonationRecurrPayRadioName : 'transaction.recurrpay';
-        this.fieldDonationAmountOtherCheckboxID = (options.fieldDonationAmountOtherCheckboxID) ? options.fieldDonationAmountOtherCheckboxID : '#en__field_transaction_donationAmt4';
-        this.fieldOptInSelectorTarget = (options.fieldOptInSelectorTarget) ? options.fieldOptInSelectorTarget : '.en__field--emailAddress.en__field';
-        this.fieldOptInSelectorTargetLocation = (options.fieldOptInSelectorTargetLocation) ? options.fieldOptInSelectorTargetLocation : 'after';
-        this.fieldClearSelectorTarget = (options.fieldClearSelectorTarget) ? options.fieldClearSelectorTarget : 'label[for="en__field_supporter_firstName"]';
-        this.fieldClearSelectorTargetLocation = (options.fieldClearSelectorTargetLocation) ? options.fieldClearSelectorTargetLocation : 'before';
+        this.remoteUrl = options.remoteUrl ? options.remoteUrl : null;
+        this.cookieName = options.cookieName
+            ? options.cookieName
+            : "engrid-autofill";
+        this.cookieExpirationDays = options.cookieExpirationDays
+            ? options.cookieExpirationDays
+            : 365;
+        this.rememberMeOptIn = options.checked ? options.checked : false;
+        this.fieldNames = options.fieldNames ? options.fieldNames : [];
+        this.fieldDonationAmountRadioName = options.fieldDonationAmountRadioName
+            ? options.fieldDonationAmountRadioName
+            : "transaction.donationAmt";
+        this.fieldDonationAmountOtherName = options.fieldDonationAmountOtherName
+            ? options.fieldDonationAmountOtherName
+            : "transaction.donationAmt.other";
+        this.fieldDonationRecurrPayRadioName =
+            options.fieldDonationRecurrPayRadioName
+                ? options.fieldDonationRecurrPayRadioName
+                : "transaction.recurrpay";
+        this.fieldDonationAmountOtherCheckboxID =
+            options.fieldDonationAmountOtherCheckboxID
+                ? options.fieldDonationAmountOtherCheckboxID
+                : "#en__field_transaction_donationAmt4";
+        this.fieldOptInSelectorTarget = options.fieldOptInSelectorTarget
+            ? options.fieldOptInSelectorTarget
+            : ".en__field--emailAddress.en__field";
+        this.fieldOptInSelectorTargetLocation =
+            options.fieldOptInSelectorTargetLocation
+                ? options.fieldOptInSelectorTargetLocation
+                : "after";
+        this.fieldClearSelectorTarget = options.fieldClearSelectorTarget
+            ? options.fieldClearSelectorTarget
+            : 'label[for="en__field_supporter_firstName"]';
+        this.fieldClearSelectorTargetLocation =
+            options.fieldClearSelectorTargetLocation
+                ? options.fieldClearSelectorTargetLocation
+                : "before";
         this.fieldData = {};
         if (this.useRemote()) {
             this.createIframe(() => {
                 if (this.iframe && this.iframe.contentWindow) {
-                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: 'read' }, '*');
+                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: "read" }, "*");
                     this._form.onSubmit.subscribe(() => {
                         if (this.rememberMeOptIn) {
                             this.readFields();
@@ -15020,7 +15137,10 @@ class RememberMe {
                     });
                 }
             }, (event) => {
-                if (event.data && event.data.key && event.data.value !== undefined && event.data.key === this.cookieName) {
+                if (event.data &&
+                    event.data.key &&
+                    event.data.value !== undefined &&
+                    event.data.key === this.cookieName) {
                     this.updateFieldData(event.data.value);
                     this.writeFields();
                     let hasFieldData = Object.keys(this.fieldData).length > 0;
@@ -15064,33 +15184,35 @@ class RememberMe {
         }
     }
     insertClearRememberMeLink() {
-        if (!document.getElementById('clear-autofill-data')) {
-            const clearAutofillLabel = 'clear autofill';
-            const clearRememberMeField = document.createElement('a');
-            clearRememberMeField.setAttribute('id', 'clear-autofill-data');
-            clearRememberMeField.classList.add('label-tooltip');
-            clearRememberMeField.setAttribute('style', 'cursor: pointer;');
+        if (!document.getElementById("clear-autofill-data")) {
+            const clearAutofillLabel = "clear autofill";
+            const clearRememberMeField = document.createElement("a");
+            clearRememberMeField.setAttribute("id", "clear-autofill-data");
+            clearRememberMeField.classList.add("label-tooltip");
+            clearRememberMeField.setAttribute("style", "cursor: pointer;");
             clearRememberMeField.innerHTML = `(${clearAutofillLabel})`;
             const targetField = this.getElementByFirstSelector(this.fieldClearSelectorTarget);
             if (targetField) {
-                if (this.fieldClearSelectorTargetLocation === 'after') {
+                if (this.fieldClearSelectorTargetLocation === "after") {
                     targetField.appendChild(clearRememberMeField);
                 }
                 else {
                     targetField.prepend(clearRememberMeField);
                 }
-                clearRememberMeField.addEventListener('click', (e) => {
+                clearRememberMeField.addEventListener("click", (e) => {
                     e.preventDefault();
-                    this.clearFields(['supporter.country' /*, 'supporter.emailAddress'*/]);
+                    this.clearFields([
+                        "supporter.country" /*, 'supporter.emailAddress'*/,
+                    ]);
                     if (this.useRemote()) {
                         this.clearCookieOnRemote();
                     }
                     else {
                         this.clearCookie();
                     }
-                    let clearAutofillLink = document.getElementById('clear-autofill-data');
+                    let clearAutofillLink = document.getElementById("clear-autofill-data");
                     if (clearAutofillLink) {
-                        clearAutofillLink.style.display = 'none';
+                        clearAutofillLink.style.display = "none";
                     }
                     this.rememberMeOptIn = false;
                 });
@@ -15100,7 +15222,7 @@ class RememberMe {
     getElementByFirstSelector(selectorsString) {
         // iterate through the selectors until we find one that exists
         let targetField = null;
-        const selectorTargets = selectorsString.split(',');
+        const selectorTargets = selectorsString.split(",");
         for (let i = 0; i < selectorTargets.length; i++) {
             targetField = document.querySelector(selectorTargets[i]);
             if (targetField) {
@@ -15110,19 +15232,19 @@ class RememberMe {
         return targetField;
     }
     insertRememberMeOptin() {
-        let rememberMeOptInField = document.getElementById('remember-me-opt-in');
+        let rememberMeOptInField = document.getElementById("remember-me-opt-in");
         if (!rememberMeOptInField) {
-            const rememberMeLabel = 'Remember Me';
+            const rememberMeLabel = "Remember Me";
             const rememberMeInfo = `
 				Check “Remember me” to complete forms on this device faster. 
 				While your financial information won’t be stored, you should only check this box from a personal device. 
 				Click “Clear autofill” to remove the information from your device at any time.
 			`;
-            const rememberMeOptInFieldChecked = (this.rememberMeOptIn) ? 'checked' : '';
-            const rememberMeOptInField = document.createElement('div');
-            rememberMeOptInField.classList.add('en__field', 'en__field--checkbox');
-            rememberMeOptInField.setAttribute('id', 'remember-me-opt-in');
-            rememberMeOptInField.setAttribute('style', 'overflow-x: hidden;');
+            const rememberMeOptInFieldChecked = this.rememberMeOptIn ? "checked" : "";
+            const rememberMeOptInField = document.createElement("div");
+            rememberMeOptInField.classList.add("en__field", "en__field--checkbox");
+            rememberMeOptInField.setAttribute("id", "remember-me-opt-in");
+            rememberMeOptInField.setAttribute("style", "overflow-x: hidden;");
             rememberMeOptInField.innerHTML = `
 				<div class="en__field__item rememberme-wrapper">
 					<input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${rememberMeOptInFieldChecked} />
@@ -15138,10 +15260,12 @@ class RememberMe {
 			`;
             const targetField = this.getElementByFirstSelector(this.fieldOptInSelectorTarget);
             if (targetField && targetField.parentNode) {
-                targetField.parentNode.insertBefore(rememberMeOptInField, (this.fieldOptInSelectorTargetLocation == 'before') ? targetField : targetField.nextSibling);
-                const rememberMeCheckbox = document.getElementById('remember-me-checkbox');
+                targetField.parentNode.insertBefore(rememberMeOptInField, this.fieldOptInSelectorTargetLocation == "before"
+                    ? targetField
+                    : targetField.nextSibling);
+                const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
                 if (rememberMeCheckbox) {
-                    rememberMeCheckbox.addEventListener('change', () => {
+                    rememberMeCheckbox.addEventListener("change", () => {
                         if (rememberMeCheckbox.checked) {
                             this.rememberMeOptIn = true;
                         }
@@ -15150,7 +15274,7 @@ class RememberMe {
                         }
                     });
                 }
-                tippy('#rememberme-learn-more-toggle', { content: rememberMeInfo });
+                tippy("#rememberme-learn-more-toggle", { content: rememberMeInfo });
             }
         }
         else if (this.rememberMeOptIn) {
@@ -15158,18 +15282,22 @@ class RememberMe {
         }
     }
     useRemote() {
-        return (this.remoteUrl && window.postMessage && window.JSON && window.localStorage);
+        return (!!this.remoteUrl &&
+            typeof window.postMessage === "function" &&
+            window.JSON &&
+            window.localStorage);
     }
     createIframe(iframeLoaded, messageReceived) {
         if (this.remoteUrl) {
-            let iframe = document.createElement('iframe');
-            iframe.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;';
+            let iframe = document.createElement("iframe");
+            iframe.style.cssText =
+                "position:absolute;width:1px;height:1px;left:-9999px;";
             iframe.src = this.remoteUrl;
-            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts');
+            iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
             this.iframe = iframe;
             document.body.appendChild(this.iframe);
-            this.iframe.addEventListener('load', () => iframeLoaded(), false);
-            window.addEventListener('message', (event) => messageReceived(event), false);
+            this.iframe.addEventListener("load", () => iframeLoaded(), false);
+            window.addEventListener("message", (event) => messageReceived(event), false);
         }
     }
     clearCookie() {
@@ -15182,28 +15310,35 @@ class RememberMe {
     }
     saveCookieToRemote() {
         if (this.iframe && this.iframe.contentWindow) {
-            this.iframe.contentWindow.postMessage({ key: this.cookieName, value: JSON.stringify(this.fieldData), operation: 'write', expires: this.cookieExpirationDays }, '*');
+            this.iframe.contentWindow.postMessage({
+                key: this.cookieName,
+                value: JSON.stringify(this.fieldData),
+                operation: "write",
+                expires: this.cookieExpirationDays,
+            }, "*");
         }
     }
     readCookie() {
-        this.updateFieldData(get(this.cookieName) || '');
+        this.updateFieldData(get(this.cookieName) || "");
     }
     saveCookie() {
-        set(this.cookieName, JSON.stringify(this.fieldData), { expires: this.cookieExpirationDays });
+        set(this.cookieName, JSON.stringify(this.fieldData), {
+            expires: this.cookieExpirationDays,
+        });
     }
     readFields() {
         for (let i = 0; i < this.fieldNames.length; i++) {
             let fieldSelector = "[name='" + this.fieldNames[i] + "']";
             let field = document.querySelector(fieldSelector);
             if (field) {
-                if (field.tagName === 'INPUT') {
-                    let type = field.getAttribute('type');
-                    if (type === 'radio' || type === 'checkbox') {
+                if (field.tagName === "INPUT") {
+                    let type = field.getAttribute("type");
+                    if (type === "radio" || type === "checkbox") {
                         field = document.querySelector(fieldSelector + ":checked");
                     }
                     this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
                 }
-                else if (field.tagName === 'SELECT') {
+                else if (field.tagName === "SELECT") {
                     this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
                 }
             }
@@ -15211,7 +15346,7 @@ class RememberMe {
     }
     setFieldValue(field, value, overwrite = false) {
         if (field && value !== undefined) {
-            if (field.value && overwrite || !field.value) {
+            if ((field.value && overwrite) || !field.value) {
                 field.value = value;
             }
         }
@@ -15221,11 +15356,11 @@ class RememberMe {
             if (skipFields.includes(key)) {
                 delete this.fieldData[key];
             }
-            else if (this.fieldData[key] === '') {
+            else if (this.fieldData[key] === "") {
                 delete this.fieldData[key];
             }
             else {
-                this.fieldData[key] = '';
+                this.fieldData[key] = "";
             }
         }
         this.writeFields(true);
@@ -15235,14 +15370,17 @@ class RememberMe {
             let fieldSelector = "[name='" + this.fieldNames[i] + "']";
             let field = document.querySelector(fieldSelector);
             if (field) {
-                if (field.tagName === 'INPUT') {
+                if (field.tagName === "INPUT") {
                     if (this.fieldNames[i] === this.fieldDonationRecurrPayRadioName) {
-                        if (this.fieldData[this.fieldNames[i]] === 'Y') {
+                        if (this.fieldData[this.fieldNames[i]] === "Y") {
                             field.click();
                         }
                     }
                     else if (this.fieldDonationAmountRadioName === this.fieldNames[i]) {
-                        field = document.querySelector(fieldSelector + "[value='" + this.fieldData[this.fieldNames[i]] + "']");
+                        field = document.querySelector(fieldSelector +
+                            "[value='" +
+                            this.fieldData[this.fieldNames[i]] +
+                            "']");
                         if (field) {
                             field.click();
                         }
@@ -15255,7 +15393,7 @@ class RememberMe {
                         this.setFieldValue(field, this.fieldData[this.fieldNames[i]], overwrite);
                     }
                 }
-                else if (field.tagName === 'SELECT') {
+                else if (field.tagName === "SELECT") {
                     this.setFieldValue(field, this.fieldData[this.fieldNames[i]], true);
                 }
             }
@@ -15859,11 +15997,492 @@ class UrlToForm {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/required-if-visible.js
+
+class RequiredIfVisible {
+    constructor() {
+        this.logger = new EngridLogger("RequiredIfVisible", "#FFFFFF", "#811212", "🚥");
+        this._form = EnForm.getInstance();
+        this.requiredIfVisibleElements = document.querySelectorAll(`
+    .i-required .en__field,
+    .i1-required .en__field:nth-of-type(1),
+    .i2-required .en__field:nth-of-type(2),
+    .i3-required .en__field:nth-of-type(3),
+    .i4-required .en__field:nth-of-type(4),
+    .i5-required .en__field:nth-of-type(5),
+    .i6-required .en__field:nth-of-type(6),
+    .i7-required .en__field:nth-of-type(7),
+    .i8-required .en__field:nth-of-type(8),
+    .i9-required .en__field:nth-of-type(9),
+    .i10-required .en__field:nth-of-type(10),
+    .i11-required .en__field:nth-of-type(11)
+    `);
+        if (!this.shouldRun())
+            return;
+        this._form.onValidate.subscribe(this.validate.bind(this));
+    }
+    shouldRun() {
+        return this.requiredIfVisibleElements.length > 0;
+    }
+    validate() {
+        // We're converting the NodeListOf<HTMLElement> to an Array<HTMLElement>
+        // because we need to reverse the order of the elements so the last error
+        // is the highest element to get focus()
+        Array.from(this.requiredIfVisibleElements)
+            .reverse()
+            .forEach((field) => {
+            engrid_ENGrid.removeError(field);
+            if (engrid_ENGrid.isVisible(field)) {
+                this.logger.log(`${field.getAttribute("class")} is visible`);
+                const fieldElement = field.querySelector("input, select, textarea");
+                if (fieldElement &&
+                    !engrid_ENGrid.getFieldValue(fieldElement.getAttribute("name"))) {
+                    const fieldLabel = field.querySelector(".en__field__label");
+                    if (fieldLabel) {
+                        this.logger.log(`${fieldLabel.innerText} is required`);
+                        engrid_ENGrid.setError(field, `${fieldLabel.innerText} is required`);
+                    }
+                    else {
+                        this.logger.log(`${fieldElement.getAttribute("name")} is required`);
+                        engrid_ENGrid.setError(field, `This field is required`);
+                    }
+                    fieldElement.focus();
+                    this._form.validate = false;
+                }
+            }
+        });
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/tidycontact.js
+var tidycontact_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+class TidyContact {
+    constructor() {
+        var _a, _b;
+        this.logger = new EngridLogger("TidyContact", "#FFFFFF", "#4d9068", "📧");
+        this.endpoint = "https://api.tidycontact.io";
+        this.wasCalled = false; // True if the API endpoint was called
+        this.httpStatus = 0;
+        this.timeout = 5; // Seconds to API Timeout
+        this.isDirty = false; // True if the address was changed by the user
+        this._form = EnForm.getInstance();
+        this.options = engrid_ENGrid.getOption("TidyContact");
+        if (this.options === false)
+            return;
+        this.loadOptions();
+        if (!this.hasAddressFields()) {
+            this.logger.log("No address fields found");
+            return;
+        }
+        this.createFields();
+        this.addEventListeners();
+        if (engrid_ENGrid.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") &&
+            !window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() &&
+            engrid_ENGrid.getFieldValue((_b = (_a = this.options) === null || _a === void 0 ? void 0 : _a.address_fields) === null || _b === void 0 ? void 0 : _b.address1) !=
+                "") {
+            this.logger.log("Address Field is not empty");
+            this.isDirty = true;
+        }
+    }
+    loadOptions() {
+        if (this.options && !this.options.address_fields) {
+            this.options.address_fields = {
+                address1: "supporter.address1",
+                address2: "supporter.address2",
+                address3: "supporter.address3",
+                city: "supporter.city",
+                region: "supporter.region",
+                postalCode: "supporter.postcode",
+                country: "supporter.country", // Country field
+            };
+        }
+    }
+    createFields() {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options)
+            return;
+        // Creating Latitude and Longitude fields
+        const latitudeField = engrid_ENGrid.getField("supporter.geo.latitude");
+        const longitudeField = engrid_ENGrid.getField("supporter.geo.longitude");
+        if (!latitudeField) {
+            engrid_ENGrid.createHiddenInput("supporter.geo.latitude", "");
+            this.logger.log("Creating Hidden Field: supporter.geo.latitude");
+        }
+        if (!longitudeField) {
+            engrid_ENGrid.createHiddenInput("supporter.geo.longitude", "");
+            this.logger.log("Creating Hidden Field: supporter.geo.longitude");
+        }
+        if (this.options.record_field) {
+            const recordField = engrid_ENGrid.getField(this.options.record_field);
+            if (!recordField) {
+                engrid_ENGrid.createHiddenInput(this.options.record_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.record_field);
+            }
+        }
+        if (this.options.date_field) {
+            const dateField = engrid_ENGrid.getField(this.options.date_field);
+            if (!dateField) {
+                engrid_ENGrid.createHiddenInput(this.options.date_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.date_field);
+            }
+        }
+        if (this.options.status_field) {
+            const statusField = engrid_ENGrid.getField(this.options.status_field);
+            if (!statusField) {
+                engrid_ENGrid.createHiddenInput(this.options.status_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.status_field);
+            }
+        }
+        // If there's no Address 2 or Address 3 field, create them
+        if (!engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address2)) {
+            engrid_ENGrid.createHiddenInput((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2, "");
+            this.logger.log("Creating Hidden Field: " + ((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.address2));
+        }
+        if (!engrid_ENGrid.getField((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.address3)) {
+            engrid_ENGrid.createHiddenInput((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.address3, "");
+            this.logger.log("Creating Hidden Field: " + ((_f = this.options.address_fields) === null || _f === void 0 ? void 0 : _f.address3));
+        }
+    }
+    addEventListeners() {
+        if (!this.options)
+            return;
+        // Add event listeners to fields
+        if (this.options.address_fields) {
+            for (const [key, value] of Object.entries(this.options.address_fields)) {
+                const field = engrid_ENGrid.getField(value);
+                if (!field)
+                    continue;
+                field.addEventListener("change", () => {
+                    this.logger.log("Changed " + field.name, true);
+                    this.isDirty = true;
+                });
+            }
+        }
+        // Add event listener to submit
+        this._form.onSubmit.subscribe(this.callAPI.bind(this));
+    }
+    checkSum(str) {
+        return tidycontact_awaiter(this, void 0, void 0, function* () {
+            // encode as UTF-8
+            const msgBuffer = new TextEncoder().encode(str);
+            // hash the message
+            const hashBuffer = yield crypto.subtle.digest("SHA-256", msgBuffer);
+            // convert ArrayBuffer to Array
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            // convert bytes to hex string
+            const hashHex = hashArray
+                .map((b) => ("00" + b.toString(16)).slice(-2))
+                .join("");
+            return hashHex;
+        });
+    }
+    todaysDate() {
+        return new Date()
+            .toLocaleString("en-ZA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        })
+            .replace(/\/+/g, ""); // Format date as YYYYMMDD
+    }
+    countryAllowed(country) {
+        var _a;
+        if (!this.options)
+            return false;
+        return !!((_a = this.options.countries) === null || _a === void 0 ? void 0 : _a.includes(country.toLowerCase()));
+    }
+    fetchTimeOut(url, params) {
+        const abort = new AbortController();
+        const signal = abort.signal;
+        params = Object.assign(Object.assign({}, params), { signal });
+        const promise = fetch(url, params);
+        if (signal)
+            signal.addEventListener("abort", () => abort.abort());
+        const timeout = setTimeout(() => abort.abort(), this.timeout * 1000);
+        return promise.finally(() => clearTimeout(timeout));
+    }
+    writeError(error) {
+        if (!this.options)
+            return;
+        const recordField = engrid_ENGrid.getField(this.options.record_field);
+        const dateField = engrid_ENGrid.getField(this.options.date_field);
+        const statusField = engrid_ENGrid.getField(this.options.status_field);
+        if (recordField) {
+            let errorType = "";
+            switch (this.httpStatus) {
+                case 400:
+                    errorType = "Bad Request";
+                    break;
+                case 401:
+                    errorType = "Unauthorized";
+                    break;
+                case 403:
+                    errorType = "Forbidden";
+                    break;
+                case 404:
+                    errorType = "Not Found";
+                    break;
+                case 408:
+                    errorType = "API Request Timeout";
+                    break;
+                case 500:
+                    errorType = "Internal Server Error";
+                    break;
+                case 503:
+                    errorType = "Service Unavailable";
+                    break;
+                default:
+                    errorType = "Unknown Error";
+                    break;
+            }
+            const errorData = {
+                status: this.httpStatus,
+                error: typeof error === "string" ? error : errorType.toUpperCase(),
+            };
+            recordField.value = JSON.stringify(errorData);
+        }
+        if (dateField) {
+            dateField.value = this.todaysDate();
+        }
+        if (statusField) {
+            statusField.value = "ERROR-API";
+        }
+    }
+    setFields(data) {
+        var _a, _b, _c, _d, _e;
+        if (!this.options)
+            return {};
+        let response = {};
+        const country = this.getCountry();
+        const postalCodeValue = engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.postalCode);
+        const zipDivider = (_b = this.options.us_zip_divider) !== null && _b !== void 0 ? _b : "+";
+        // Check if there's no address2 field
+        const address2Field = engrid_ENGrid.getField((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.address2);
+        if ("address2" in data && !address2Field) {
+            const address = engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.address1);
+            if (address == data.address1 + " " + data.address2) {
+                delete data.address1;
+                delete data.address2;
+            }
+            else {
+                data.address1 = data.address1 + " " + data.address2;
+                delete data.address2;
+            }
+        }
+        if ("postalCode" in data &&
+            postalCodeValue.replace("+", zipDivider) ===
+                data.postalCode.replace("+", zipDivider)) {
+            // Postal code is the same
+            delete data.postalCode;
+        }
+        // Set the fields
+        for (const key in data) {
+            const fieldKey = this.options.address_fields &&
+                Object.keys(this.options.address_fields).includes(key)
+                ? this.options.address_fields[key]
+                : key;
+            const field = engrid_ENGrid.getField(fieldKey);
+            if (field) {
+                let value = data[key];
+                if (key === "postalCode" &&
+                    ["US", "USA", "United States"].includes(country)) {
+                    value = (_e = value.replace("+", zipDivider)) !== null && _e !== void 0 ? _e : ""; // Replace the "+" with the zip divider
+                }
+                response[key] = { from: field.value, to: value };
+                this.logger.log(`Set ${field.name} to ${value} (${field.value})`);
+                engrid_ENGrid.setFieldValue(fieldKey, value);
+            }
+            else {
+                this.logger.log(`Field ${key} not found`);
+            }
+        }
+        return response;
+    }
+    hasAddressFields() {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options)
+            return false;
+        const address1 = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const address2 = engrid_ENGrid.getField((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2);
+        const city = engrid_ENGrid.getField((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.city);
+        const region = engrid_ENGrid.getField((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.region);
+        const postalCode = engrid_ENGrid.getField((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.postalCode);
+        const country = engrid_ENGrid.getField((_f = this.options.address_fields) === null || _f === void 0 ? void 0 : _f.country);
+        return !!(address1 || address2 || city || region || postalCode || country);
+    }
+    canUseAPI() {
+        var _a, _b, _c, _d;
+        if (!this.options)
+            return false;
+        const country = !!this.getCountry();
+        const address1 = !!engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const city = !!engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.city);
+        const region = !!engrid_ENGrid.getFieldValue((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.region);
+        const postalCode = !!engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.postalCode);
+        if (country && address1) {
+            return (city && region) || postalCode;
+        }
+        return false;
+    }
+    getCountry() {
+        var _a, _b;
+        if (!this.options)
+            return "";
+        const countryFallback = (_a = this.options.country_fallback) !== null && _a !== void 0 ? _a : "";
+        const country = engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.country);
+        return country || countryFallback.toUpperCase();
+    }
+    callAPI() {
+        var _a, _b, _c, _d, _e;
+        if (!this.options)
+            return;
+        if (!this.isDirty || this.wasCalled)
+            return;
+        if (!this._form.submit) {
+            this.logger.log("Form Submission Interrupted by Other Component");
+            return;
+        }
+        const recordField = engrid_ENGrid.getField(this.options.record_field);
+        const dateField = engrid_ENGrid.getField(this.options.date_field);
+        const statusField = engrid_ENGrid.getField(this.options.status_field);
+        const latitudeField = engrid_ENGrid.getField("supporter.geo.latitude");
+        const longitudeField = engrid_ENGrid.getField("supporter.geo.longitude");
+        if (!this.canUseAPI()) {
+            this.logger.log("Not Enough Data to Call API");
+            if (dateField) {
+                dateField.value = this.todaysDate();
+            }
+            if (statusField) {
+                statusField.value = "PARTIALADDRESS";
+            }
+            return true;
+        }
+        // Call the API
+        const address1 = engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const address2 = engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2);
+        const city = engrid_ENGrid.getFieldValue((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.city);
+        const region = engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.region);
+        const postalCode = engrid_ENGrid.getFieldValue((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.postalCode);
+        const country = this.getCountry();
+        if (!this.countryAllowed(country)) {
+            this.logger.log("Country not allowed: " + country);
+            if (recordField) {
+                let record = {};
+                record = Object.assign({ date: this.todaysDate(), status: "DISALLOWED" }, record);
+                recordField.value = JSON.stringify(record);
+            }
+            if (dateField) {
+                dateField.value = this.todaysDate();
+            }
+            if (statusField) {
+                statusField.value = "DISALLOWED";
+            }
+            return true;
+        }
+        const formData = {
+            address1,
+            address2,
+            city,
+            region,
+            postalCode,
+            country,
+            url: window.location.href,
+            cid: this.options.cid,
+        };
+        this.wasCalled = true;
+        this.logger.log("FormData", JSON.parse(JSON.stringify(formData)));
+        const ret = this.fetchTimeOut(this.endpoint, {
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            method: "POST",
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+            this.httpStatus = response.status;
+            return response.json();
+        })
+            .then((data) => tidycontact_awaiter(this, void 0, void 0, function* () {
+            this.logger.log("callAPI response", JSON.parse(JSON.stringify(data)));
+            if (data.valid === true) {
+                let record = {};
+                if ("changed" in data) {
+                    record = this.setFields(data.changed);
+                }
+                record["formData"] = formData;
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Checksum", checksum);
+                    record["requestId"] = data.requestId; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if ("latitude" in data) {
+                    latitudeField.value = data.latitude;
+                    record["latitude"] = data.latitude;
+                }
+                if ("longitude" in data) {
+                    longitudeField.value = data.longitude;
+                    record["longitude"] = data.longitude;
+                }
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "SUCCESS" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value = "SUCCESS";
+                }
+            }
+            else {
+                let record = {};
+                record["formData"] = formData;
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Checksum", checksum);
+                    record["requestId"] = data.requestId; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "ERROR" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value =
+                        "error" in data ? `ERROR: ` + data.error : "INVALIDADDRESS";
+                }
+            }
+        }))
+            .catch((error) => {
+            if (error.toString().includes("AbortError")) {
+                // fetch aborted due to timeout
+                this.logger.log("Fetch aborted");
+                this.httpStatus = 408;
+            }
+            // network error or json parsing error
+            this.writeError(error);
+        });
+        this._form.submitPromise = ret;
+        return ret;
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.11.15";
+const AppVersion = "0.12.10";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
+
 
 
 
