@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, June 9, 2022 @ 13:04:00 ET
+ *  Date: Friday, June 10, 2022 @ 15:26:43 ET
  *  By: fernando
  *  ENGrid styles: v0.12.0
  *  ENGrid scripts: v0.12.10
@@ -16542,13 +16542,15 @@ if (isSafari) {
 smoothscroll_default().polyfill();
 class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
-    if (!this.isIframe()) return;
+    if (!this.isIframe()) return; // Each EN Row is a Section
+
+    this.sections = document.querySelectorAll("form.en__component > .en__component"); // If there's 1 section or less, don't show the navigation
+
+    if (this.sections.length <= 1) return;
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
-    console.log("DonationLightboxForm: constructor"); // Each EN Row is a Section
-
-    this.sections = document.querySelectorAll("form.en__component > .en__component"); // Check if we're on the Thank You page
+    console.log("DonationLightboxForm: constructor"); // Check if we're on the Thank You page
 
     if (pageJson.pageNumber === pageJson.pageCount) {
       this.sendMessage("status", "loaded");
@@ -16672,7 +16674,10 @@ class DonationLightboxForm {
       countryField.addEventListener("change", e => {
         this.canadaOnly();
       });
-    }
+    } // Add a Multi-Step Data Attribute to the Body
+
+
+    document.querySelector("body").dataset.multiStep = "true";
   } // Send iframe message to parent
 
 
