@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, August 12, 2022 @ 10:54:30 ET
- *  By: fernando
+ *  Date: Friday, August 12, 2022 @ 18:53:21 ET
+ *  By: ryanoliver
  *  ENGrid styles: v0.13.13
  *  ENGrid scripts: v0.13.14
  *
@@ -19371,6 +19371,33 @@ const customScript = function () {
       }
     }
   }
+
+  const upsellLabel = document.querySelector("#upsellYesButton .label");
+  const upsellCandle = document.createElement("div");
+  upsellCandle.classList.add("candle");
+  upsellCandle.innerHTML = `
+      <div class="candle-flame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.5 24.978"><g data-name="Layer 2"><g data-name="flame b"><path d="M0 15.157c0 6.897 6.25 9.821 6.25 9.821s6.25-2.924 6.25-9.821S6.25 0 6.25 0 0 8.26 0 15.157z" style="fill:#ff4700"/><path d="M3.375 18.383a6.768 6.768 0 0 0 2.875 5.763 6.768 6.768 0 0 0 2.875-5.763c0-4.047-2.875-8.893-2.875-8.893s-2.875 4.846-2.875 8.893z" style="fill:#ffbf00"/></g></g></svg>
+      </div>
+      <div class="candle-base">
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+      </div>
+      `;
+  upsellLabel.prepend(upsellCandle);
 };
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
