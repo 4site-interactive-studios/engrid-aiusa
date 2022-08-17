@@ -2365,8 +2365,8 @@
 
     .candle {
       position: absolute;
-      top: 26px;
-      left: -30px;
+      top: 42px;
+      left: -20px;
       opacity: 1;
       z-index: 0;
       transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out, all 0.3s;
@@ -2395,11 +2395,11 @@
         }
       }
 
-      @media (min-width: 350px) {
+      @media (min-width: 325px) {
         // top: 28px;
         // left: -39px;
-        left: -38px;
-        top: 27px;
+        left: -30px;
+        top: 28px;
       }
 
       // @media (min-width: 675px) {

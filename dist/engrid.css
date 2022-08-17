@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, August 15, 2022 @ 13:28:12 ET
+ *  Date: Wednesday, August 17, 2022 @ 09:29:59 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.13.13
  *  ENGrid scripts: v0.13.14
@@ -8799,11 +8799,11 @@ body:not([data-engrid-debug]) #debug-bar{
   transition:all .3s;
 }
 [data-engrid-theme=aiusa] #upsellYesButton .label .candle{
-  left:-30px;
+  left:-20px;
   opacity:1;
   position:absolute;
   position:relative;
-  top:26px;
+  top:42px;
   transition:opacity .3s ease-in-out,top .3s ease-in-out,all .3s;
   width:0;
   z-index:0;
@@ -8830,10 +8830,10 @@ body:not([data-engrid-debug]) #debug-bar{
 [data-engrid-theme=aiusa] #upsellYesButton .label .candle .candle-flame svg path:last-child{
   animation:firesmall 2s ease-in infinite;
 }
-@media (min-width:350px){
+@media (min-width:325px){
   [data-engrid-theme=aiusa] #upsellYesButton .label .candle{
-    left:-38px;
-    top:27px;
+    left:-30px;
+    top:28px;
   }
 }
 [data-engrid-theme=aiusa] #upsellYesButton .label .candle-base{
