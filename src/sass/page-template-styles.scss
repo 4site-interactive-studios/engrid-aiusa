@@ -1483,6 +1483,7 @@
 
         .candle {
           transform: scale(1.2);
+          left: -32px;
         }
 
         .candle .candle-base {
@@ -1533,7 +1534,7 @@
   }
 
   .upsellLightboxContainer#goMonthly {
-    border-radius: 16px 12px 12px;
+    border-radius: 12px;
   }
 
   .upsellLightboxContainer#goMonthly .upsellLightboxContent {
