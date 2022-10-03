@@ -19,10 +19,6 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, October 3, 2022 @ 14:32:45 ET
- *  By: fernando
- *  ENGrid styles: v0.13.19
- *  ENGrid scripts: v0.13.23
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -8944,6 +8940,9 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 }
 [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio][value=ANNUAL i]+label:after{
   content:var(--giving-frequency-upsell-arrow-annual);
+}
+[data-engrid-theme=aiusa][data-engrid-payment-type=paypal] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio>.en__field__element .en__field__item:not(:first-child),[data-engrid-theme=aiusa][data-engrid-transaction-recurring=y] div.en__field__item.paypal{
+  display:none !important;
 }
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
