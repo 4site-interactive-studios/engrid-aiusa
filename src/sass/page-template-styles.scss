@@ -2229,6 +2229,14 @@
       }
     }
   }
+  &[data-engrid-transaction-recurring="y"] div.en__field__item.paypal,
+  &[data-engrid-payment-type="paypal"]
+    .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    > .en__field__element
+    .en__field__item:not(:first-child) {
+    display: none !important;
+  }
 }
 
 /*

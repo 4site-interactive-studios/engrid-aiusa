@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, August 16, 2022 @ 10:55:38 ET
+ *  Date: Thursday, August 25, 2022 @ 17:04:48 ET
  *  By: fernando
- *  ENGrid styles: v0.13.13
- *  ENGrid scripts: v0.13.14
+ *  ENGrid styles: v0.13.16
+ *  ENGrid scripts: v0.13.17
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11792,8 +11792,8 @@ class App extends engrid_ENGrid {
                 this._amount.load();
             }, 150);
         });
-        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + s));
-        this._form.onError.subscribe((s) => this.logger.danger("Error: " + s));
+        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + JSON.stringify(s)));
+        this._form.onError.subscribe((s) => this.logger.danger("Error: " + JSON.stringify(s)));
         window.enOnSubmit = () => {
             this._form.submit = true;
             this._form.submitPromise = false;
@@ -11875,6 +11875,7 @@ class App extends engrid_ENGrid {
         new OtherAmount();
         new MinMaxAmount();
         new Ticker();
+        new AriaAttributes();
         new AddNameToMessage();
         new ExpandRegionName();
         // Page Background
@@ -11926,7 +11927,7 @@ class App extends engrid_ENGrid {
     }
     // Use this function to add any Data Attributes to the Body tag
     setDataAttributes() {
-        // Add the Page Type as a Data Attribute on the video
+        // Add the Page Type as a Data Attribute on the Body Tag
         if (engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
             App.setBodyData("page-type", window.pageJson.pageType);
             this.logger.log("Page Type: " + window.pageJson.pageType);
@@ -11934,6 +11935,8 @@ class App extends engrid_ENGrid {
         else {
             this.logger.log("Page Type: Not Found");
         }
+        // Add the currency code as a Data Attribute on the Body Tag
+        App.setBodyData("currency-code", App.getCurrencyCode());
         // Add a body banner data attribute if the banner contains no image or video
         if (!document.querySelector(".body-banner img, .body-banner video")) {
             App.setBodyData("body-banner", "empty");
@@ -12021,6 +12024,14 @@ class App extends engrid_ENGrid {
         const otherAmountDiv = document.querySelector(".en__field--donationAmt .en__field__item--other");
         if (otherAmountDiv) {
             otherAmountDiv.setAttribute("data-currency-symbol", App.getCurrencySymbol());
+        }
+        // Add a payment type data attribute
+        const paymentTypeSelect = App.getField("transaction.paymenttype");
+        if (paymentTypeSelect) {
+            App.setBodyData("payment-type", paymentTypeSelect.value);
+            paymentTypeSelect.addEventListener("change", () => {
+                App.setBodyData("payment-type", paymentTypeSelect.value);
+            });
         }
     }
 }
@@ -12222,6 +12233,25 @@ class ApplePay {
         }
         this._form.submit = true;
         return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/aria-attributes.js
+class AriaAttributes {
+    constructor() {
+        this.mandatoryFields = document.querySelectorAll(".en__mandatory .en__field__input");
+        if (!this.shouldRun()) {
+            return;
+        }
+        this.addRequired();
+    }
+    addRequired() {
+        this.mandatoryFields.forEach((field) => {
+            field.setAttribute("aria-required", "true");
+        });
+    }
+    shouldRun() {
+        return this.mandatoryFields.length > 0;
     }
 }
 
@@ -17506,6 +17536,7 @@ class LiveCurrency {
                     if (otherAmountDiv) {
                         otherAmountDiv.setAttribute("data-currency-symbol", engrid_ENGrid.getCurrencySymbol());
                     }
+                    engrid_ENGrid.setBodyData("currency-code", engrid_ENGrid.getCurrencyCode());
                 }, 10);
             });
         }
@@ -17521,10 +17552,11 @@ class LiveCurrency {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.14";
+const AppVersion = "0.13.17";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
