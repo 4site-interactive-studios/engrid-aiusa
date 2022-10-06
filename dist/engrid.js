@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, October 5, 2022 @ 16:35:35 ET
+ *  Date: Thursday, October 6, 2022 @ 09:56:07 ET
  *  By: ryanoliver
  *  ENGrid styles: v0.13.13
  *  ENGrid scripts: v0.13.14
@@ -18849,14 +18849,14 @@ class DataLayer {
             event: `EN_PAGEJSON_${property.toUpperCase()}-${pageJson[property]}`
           });
           this.dataLayer.push({
-            [`EN_PAGEJSON_${property.toUpperCase()}`]: pageJson[property]
+            [`'EN_PAGEJSON_${property.toUpperCase()}'`]: pageJson[property]
           });
         } else {
           this.dataLayer.push({
             event: `EN_PAGEJSON_${property.toUpperCase()}-${this.transformJSON(pageJson[property])}`
           });
           this.dataLayer.push({
-            [`EN_PAGEJSON_${property.toUpperCase()}`]: this.transformJSON(pageJson[property])
+            [`'EN_PAGEJSON_${property.toUpperCase()}'`]: this.transformJSON(pageJson[property])
           });
         }
       }
