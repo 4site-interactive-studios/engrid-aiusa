@@ -501,7 +501,7 @@
 
   // ENGRID SECTIONS BACKGROUND COLOR
   // QUICK SETTINGS
-  --engrid__page_background-color: var(--color_transparent);
+  --engrid__page_background-color: #f0f0f0; /* var(--color_transparent) */
   --engrid__content_background-color: var(--color_transparent);
   --engrid__body_background-color: var(--color_white);
   // DETAIL SETTINGS
@@ -629,6 +629,7 @@
 
   // LABEL APPENDED TO DONTIONAL GIVING AMOUNTS BASED ON GIVING FREQUENCY
   --give-monthly-donation-amount-appended-label: " Monthly";
+  --give-quarterly-donation-amount-appended-label: " Quarterly";
   --give-annual-donation-amount-appended-label: " Annually";
 
   // IMAGE ATTRIBUTION OVERLAY
@@ -710,6 +711,21 @@
     font-size: 0.75rem;
     line-height: 1rem;
     font-family: var(--native-fonts__sans-serif);
+  }
+
+  .dtd-company-selected {
+    // Double the Donation Wrong Amount A link styled as a button overrides
+    .wrongcompany a {
+      color: var(--button_color_checked);
+      background-color: var(--button_background-color_checked);
+      border-color: var(--button_border-color_checked);
+      &:focus,
+      &:hover {
+        color: var(--button_color_checked);
+        background-color: var(--button_background-color_checked);
+        border-color: var(--button_border-color_checked);
+      }
+    }
   }
 
   .en__field.en__field--checkbox > label {
@@ -895,7 +911,6 @@
   .en__ecardrecipients__email input.invalid,
   .en__ecardrecipients__name input.invalid {
     border-color: var(--error__color);
-    background-color: var(--error__color-faded);
     font-family: var(--input_font-family);
     color: var(--input_color);
     font-size: var(--input_font-size);
@@ -962,174 +977,6 @@
     --donation-amount__button_color_checked: initial;
   }
 
-  // Double the donation theming
-  @mixin dtd-search-input {
-    .dtd-search-input {
-      font-family: var(--input_font-family) !important;
-      color: var(--input_color) !important;
-      font-size: var(--input_font-size) !important;
-      font-weight: var(--input_font-weight) !important;
-      line-height: var(--input_line-height) !important;
-      background-color: var(--input_background-color) !important;
-      border-width: var(--input_border-width) !important;
-      border-color: var(--input_border-color) !important;
-      border-radius: var(--input_border-radius) !important;
-      height: auto !important; // Shared between input, textarea, and select
-      max-width: 100% !important; // Shared between input, textarea, and select
-      width: 100% !important; // Shared between input, textarea, and select
-      min-width: initial !important; // Shared between input, textarea, and select
-      display: block !important; // Shared between input, textarea, and select
-      // -webkit-box-sizing: border-box; // Shared between input, textarea, and select
-      box-sizing: border-box; // Shared between input, textarea, and select
-      margin: 0rem !important; // Shared between input, textarea, and select
-      padding: var(--input_padding) !important;
-      transition: box-shadow 0.25s, border-color 0.25s ease-in-out !important; // Shared between input, textarea, and select
-      border-style: solid !important; // Shared between input, textarea, and select
-
-      &:focus,
-      &:hover {
-        color: var(--input_color_hover) !important;
-        background-color: var(--input_background-color_hover) !important;
-        border-color: var(--input_border-color_hover) !important;
-        border-bottom-color: var(--input_border-bottom-color_hover) !important;
-        // outline: none; // Shared between input:focus, textarea:focus, and select:focus
-        // --input_placeholder-color: hsl(0, 0%, 67%);
-      }
-    }
-  }
-
-  #dd-container,
-  .dtd-plugin {
-    .dtd-callout {
-      // Remove Excessive Styling from the Double the Donation widgets https://cln.sh/BNe0sf
-      padding: 0;
-      border: none;
-      box-shadow: none;
-      background-color: transparent;
-
-      font-family: var(--default_font-family);
-      color: var(--default_color);
-      font-size: var(--default_font-size);
-      font-weight: var(--default_font-weight);
-      line-height: var(--default_line-height);
-    }
-
-    .heading[aria-level="1"] {
-      font-family: var(--h1_font-family);
-      color: var(--h1_color);
-      font-size: var(--h1_font-size);
-      font-weight: var(--h1_font-weight);
-      line-height: var(--h1_line-height);
-      margin-top: 2rem;
-      margin-bottom: 1rem;
-      text-transform: var(--h1_text-transform);
-    }
-
-    .heading[aria-level="2"] {
-      font-family: var(--h2_font-family);
-      color: var(--h2_color);
-      font-size: var(--h2_font-size);
-      font-weight: var(--h2_font-weight);
-      line-height: var(--h2_line-height);
-      margin-top: calc(2rem * var(--scale-down_20pct));
-      margin-bottom: calc(1rem * var(--scale-down_20pct));
-      text-transform: var(--h2_text-transform);
-    }
-
-    .heading[aria-level="3"] {
-      font-family: var(--h3_font-family);
-      color: var(--h3_color);
-      font-size: var(--h3_font-size);
-      font-weight: var(--h3_font-weight);
-      line-height: var(--h3_line-height);
-      margin-top: calc(2rem * var(--scale-down_40pct));
-      margin-bottom: calc(1rem * var(--scale-down_40pct));
-      text-transform: var(--h3_text-transform);
-    }
-
-    .heading[aria-level="4"],
-    .heading[aria-level="5"],
-    .heading[aria-level="6"] {
-      font-family: var(--h3_font-family);
-      color: var(--h3_color);
-      font-size: calc(var(--h3_font-size) * var(--scale-down_20pct));
-      font-weight: var(--h3_font-weight);
-      line-height: var(--h3_line-height);
-      margin-top: calc(2rem * var(--scale-down_80pct));
-      margin-bottom: calc(1rem * var(--scale-down_80pct));
-      text-transform: var(--h4_text-transform);
-    }
-
-    .eligibility-status {
-      font-size: var(--default_font-size);
-    }
-
-    .dtd-search-box {
-      border: none;
-      box-shadow: none;
-    }
-
-    @include dtd-search-input;
-
-    .dtd-search-input {
-      padding-left: 40px !important;
-    }
-
-    button,
-    .button,
-    a[class*="mg-"][class*="-button"] {
-      // Styles their a link buttons like the theme buttons
-      font-family: var(--button_font-family);
-      font-size: var(--button_font-size);
-      font-weight: var(--button_font-weight);
-      line-height: var(--button_line-height);
-      border-width: var(--button_border-width);
-      border-color: var(--button_border-color);
-      border-radius: var(--button_border-radius);
-      cursor: pointer;
-      border-style: solid;
-      padding: var(--button_padding);
-      text-transform: var(--button_text-transform);
-      -webkit-appearance: none;
-      -webkit-transition: background-color 0.2s ease-out, color 0.2s ease-out,
-        border-color 0.2s ease-out;
-      transition: background-color 0.2s ease-out, color 0.2s ease-out,
-        border-color 0.2s ease-out;
-      text-align: center;
-      background-color: var(--submit__button_background-color);
-      color: var(--submit__button_color);
-      border-color: var(--submit__button_border-color);
-
-      &.disabled,
-      &[disabled],
-      &.disabled:hover,
-      &[disabled]:hover,
-      &.disabled:focus,
-      &[disabled]:focus {
-        background-color: var(--submit__button_background-color);
-        color: var(--submit__button_color);
-        border-color: var(--submit__button_border-color);
-      }
-
-      &:hover,
-      &:focus {
-        background-color: var(--submit__button_background-color_hover);
-        color: var(--submit__button_color_hover);
-        border-color: var(--submit__button_border-color_hover);
-      }
-    }
-
-    .mg-forms-button,
-    .mg-guidelines-button {
-      width: calc(100% - 1rem);
-    }
-  }
-
-  #dd-company-name-input,
-  .dtd-streamlined-plugin {
-    @include dtd-search-input;
-  }
-
   /*
 * ##########################################################
 * # MAIN MENU WITH FLYOUT
@@ -1151,13 +998,6 @@
       list-style: none;
       // background-color: #eee;
       display: inline-block;
-    }
-
-    ul[role="menubar"] [role="menuitem"],
-    ul[role="menubar"] [role="separator"] {
-      // padding: 0.25em;
-      // background-color: #eee;
-      // border: 2px solid #eee;
     }
 
     // ul[role="menubar"] [role="separator"] {
@@ -1198,9 +1038,6 @@
     ul[role="menubar"] > li {
       display: inline;
       position: relative;
-    }
-
-    ul[role="menubar"] > li > a {
     }
 
     // ul[role="menubar"] > li > a::before {
@@ -1344,11 +1181,11 @@
 * ##########################################################
 */
 
-  .content-footer {
-    // &.pseudo-subgrid > div{
-    //   grid-column: pc;
-    // }
-  }
+  // .content-footer {
+  //   // &.pseudo-subgrid > div{
+  //   //   grid-column: pc;
+  //   // }
+  // }
 
   /*
 * ##########################################################
@@ -1691,7 +1528,6 @@
       margin: 20px 0 0;
       font-size: 1rem;
       line-height: 1.25rem;
-      font-weight: 700;
       font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
       font-weight: 700;
     }
@@ -2197,6 +2033,13 @@
       top: 0px !important;
     }
   }
+
+  // Chrome introduced a visual regression causing accessible focus outlines to outline the candle embers. There is no way to remove them just from the embers so we remove it from the root label
+  // REF: https://app.productive.io/2650-4site-interactive-studios-inc/tasks/2821791
+  .radio-to-buttons_recurrfreq .en__field__input--radio + label {
+    outline: none;
+  }
+
   .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
     input[type="radio"]
@@ -2377,7 +2220,7 @@
     .radio-to-buttons_recurrfreq
       .en__field--recurrfreq.en__field--radio
       input[type="radio"] {
-      &[value="MONTHLY" i] + label:after {
+      monthly &[value="MONTHLY" i] + label:after {
         content: var(--giving-frequency-upsell-arrow-monthly);
       }
 
@@ -2713,7 +2556,7 @@ body#en__pagebuilder .content-footerSpacer {
 }
 
 /* Add your custom theme styles here */
-[data-engrid-embedded] {
+[data-engrid-embedded][data-multi-step] {
   // Zoom Out If Screen Is 320px or less
   @media only screen and (max-width: 320px) {
     #engrid {
@@ -2750,11 +2593,8 @@ body#en__pagebuilder .content-footerSpacer {
 
       &:before {
         content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="11" height="20" fill="none" viewBox="0 0 11 20"><path fill="%234f606c" d="M10.268 12.176c-.097-.327-.214-.612-.352-.853-.138-.242-.335-.478-.591-.71-.257-.23-.488-.416-.692-.557-.205-.142-.486-.3-.843-.475s-.64-.305-.848-.39c-.208-.086-.51-.203-.904-.352-.35-.134-.61-.236-.782-.307-.17-.07-.396-.17-.675-.301-.279-.13-.487-.246-.625-.346-.137-.1-.284-.223-.44-.368-.157-.145-.267-.3-.33-.463-.063-.164-.095-.343-.095-.536 0-.506.223-.919.67-1.239.446-.32 1.023-.48 1.73-.48.312 0 .63.043.954.129.324.085.6.182.831.29.231.108.449.227.654.357.204.13.35.229.435.296.085.067.14.111.162.134.097.074.197.1.301.078.112-.008.197-.067.257-.179l.904-1.63c.09-.148.07-.29-.056-.423-.044-.045-.1-.097-.167-.157s-.212-.167-.436-.323c-.223-.157-.46-.296-.708-.419-.25-.123-.573-.247-.972-.374-.397-.126-.809-.212-1.233-.256V.357c0-.104-.033-.19-.1-.257C6.25.034 6.164 0 6.06 0H4.553c-.096 0-.18.035-.25.106-.071.07-.107.154-.107.251v2.01c-1.168.222-2.117.72-2.846 1.495-.729.773-1.094 1.674-1.094 2.7 0 .306.032.596.095.87.063.276.142.524.235.743.093.22.225.435.396.648.171.212.333.394.485.546.153.153.352.311.597.475.246.163.456.296.631.396.175.1.408.216.698.346.29.13.519.229.686.296.168.066.396.16.687.278.401.157.7.278.893.363.193.086.439.205.736.357.298.153.515.292.653.419.138.126.262.283.374.469.112.186.168.383.168.591 0 .588-.23 1.042-.687 1.361-.457.32-.988.48-1.59.48-.275 0-.55-.03-.826-.089-.967-.193-1.871-.658-2.712-1.395l-.022-.022c-.067-.082-.157-.115-.268-.1-.12.014-.205.06-.257.134l-1.15 1.506c-.111.149-.104.302.023.458.037.044.102.112.195.2.093.09.266.23.52.42.252.19.527.368.825.535.298.168.675.333 1.133.497.458.163.932.279 1.423.346v1.953c0 .097.035.18.106.251.07.07.154.106.251.106h1.507c.104 0 .19-.033.257-.1s.1-.153.1-.257V17.69c1.183-.194 2.145-.702 2.885-1.524.74-.822 1.11-1.802 1.11-2.94 0-.373-.048-.722-.146-1.05z"/></svg>');
-        position: absolute;
         width: 11px;
         height: 20px;
-        top: 50%;
-        left: 14px;
         font-size: 20px;
         font-weight: 700;
         left: 19px;
@@ -2914,8 +2754,8 @@ body#en__pagebuilder .content-footerSpacer {
         font-style: normal;
         letter-spacing: 0.84px;
         margin-bottom: 0;
-        -webkit-transform: translateZ(0);
-        -webkit-backface-visibility: hidden;
+        transform: translateZ(0);
+        backface-visibility: hidden;
         small {
           font-size: 10px;
           font-weight: 400;
@@ -3188,7 +3028,7 @@ body#en__pagebuilder .content-footerSpacer {
     }
   }
 
-  &[data-engrid-embedded] {
+  &[data-engrid-embedded][data-multi-step] {
     height: 100vh;
     form.en__component {
       scroll-snap-type: x mandatory;
@@ -3257,7 +3097,7 @@ body#en__pagebuilder .content-footerSpacer {
       }
     }
     form.en__component {
-      & > .en__component {
+      & > .en__component[data-section-id] {
         padding: 60px 45px;
         margin: auto;
       }

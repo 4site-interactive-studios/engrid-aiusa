@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, February 21, 2022 @ 11:52:55 ET
- *  By: bryancasler
- *  ENGrid styles: v0.8.3
- *  ENGrid scripts: v0.8.4
+ *  Date: Tuesday, October 11, 2022 @ 10:05:22 ET
+ *  By: fernando
+ *  ENGrid styles: v0.13.19
+ *  ENGrid scripts: v0.13.23
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -1497,6 +1497,1103 @@ __webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_p
 __webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.PromiseSimpleEventHandlingBase; } });
 __webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.PromiseSimpleEventList; } });
 __webpack_unused_export__ = ({ enumerable: true, get: function () { return ste_promise_simple_events_1.NonUniformPromiseSimpleEventList; } });
+
+
+/***/ }),
+
+/***/ 6377:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+// A library of seedable RNGs implemented in Javascript.
+//
+// Usage:
+//
+// var seedrandom = require('seedrandom');
+// var random = seedrandom(1); // or any seed.
+// var x = random();       // 0 <= x < 1.  Every bit is random.
+// var x = random.quick(); // 0 <= x < 1.  32 bits of randomness.
+
+// alea, a 53-bit multiply-with-carry generator by Johannes Baagøe.
+// Period: ~2^116
+// Reported to pass all BigCrush tests.
+var alea = __webpack_require__(4832);
+
+// xor128, a pure xor-shift generator by George Marsaglia.
+// Period: 2^128-1.
+// Reported to fail: MatrixRank and LinearComp.
+var xor128 = __webpack_require__(8652);
+
+// xorwow, George Marsaglia's 160-bit xor-shift combined plus weyl.
+// Period: 2^192-2^32
+// Reported to fail: CollisionOver, SimpPoker, and LinearComp.
+var xorwow = __webpack_require__(801);
+
+// xorshift7, by François Panneton and Pierre L'ecuyer, takes
+// a different approach: it adds robustness by allowing more shifts
+// than Marsaglia's original three.  It is a 7-shift generator
+// with 256 bits, that passes BigCrush with no systmatic failures.
+// Period 2^256-1.
+// No systematic BigCrush failures reported.
+var xorshift7 = __webpack_require__(2030);
+
+// xor4096, by Richard Brent, is a 4096-bit xor-shift with a
+// very long period that also adds a Weyl generator. It also passes
+// BigCrush with no systematic failures.  Its long period may
+// be useful if you have many generators and need to avoid
+// collisions.
+// Period: 2^4128-2^32.
+// No systematic BigCrush failures reported.
+var xor4096 = __webpack_require__(3618);
+
+// Tyche-i, by Samuel Neves and Filipe Araujo, is a bit-shifting random
+// number generator derived from ChaCha, a modern stream cipher.
+// https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+// Period: ~2^127
+// No systematic BigCrush failures reported.
+var tychei = __webpack_require__(9049);
+
+// The original ARC4-based prng included in this library.
+// Period: ~2^1600
+var sr = __webpack_require__(1971);
+
+sr.alea = alea;
+sr.xor128 = xor128;
+sr.xorwow = xorwow;
+sr.xorshift7 = xorshift7;
+sr.xor4096 = xor4096;
+sr.tychei = tychei;
+
+module.exports = sr;
+
+
+/***/ }),
+
+/***/ 4832:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
+// http://baagoe.com/en/RandomMusings/javascript/
+// https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
+// Original work is under MIT license -
+
+// Copyright (C) 2010 by Johannes Baagøe <baagoe@baagoe.org>
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+// 
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+// 
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+
+
+(function(global, module, define) {
+
+function Alea(seed) {
+  var me = this, mash = Mash();
+
+  me.next = function() {
+    var t = 2091639 * me.s0 + me.c * 2.3283064365386963e-10; // 2^-32
+    me.s0 = me.s1;
+    me.s1 = me.s2;
+    return me.s2 = t - (me.c = t | 0);
+  };
+
+  // Apply the seeding algorithm from Baagoe.
+  me.c = 1;
+  me.s0 = mash(' ');
+  me.s1 = mash(' ');
+  me.s2 = mash(' ');
+  me.s0 -= mash(seed);
+  if (me.s0 < 0) { me.s0 += 1; }
+  me.s1 -= mash(seed);
+  if (me.s1 < 0) { me.s1 += 1; }
+  me.s2 -= mash(seed);
+  if (me.s2 < 0) { me.s2 += 1; }
+  mash = null;
+}
+
+function copy(f, t) {
+  t.c = f.c;
+  t.s0 = f.s0;
+  t.s1 = f.s1;
+  t.s2 = f.s2;
+  return t;
+}
+
+function impl(seed, opts) {
+  var xg = new Alea(seed),
+      state = opts && opts.state,
+      prng = xg.next;
+  prng.int32 = function() { return (xg.next() * 0x100000000) | 0; }
+  prng.double = function() {
+    return prng() + (prng() * 0x200000 | 0) * 1.1102230246251565e-16; // 2^-53
+  };
+  prng.quick = prng;
+  if (state) {
+    if (typeof(state) == 'object') copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+function Mash() {
+  var n = 0xefc8249d;
+
+  var mash = function(data) {
+    data = data.toString();
+    for (var i = 0; i < data.length; i++) {
+      n += data.charCodeAt(i);
+      var h = 0.02519603282416938 * n;
+      n = h >>> 0;
+      h -= n;
+      h *= n;
+      n = h >>> 0;
+      h -= n;
+      n += h * 0x100000000; // 2^32
+    }
+    return (n >>> 0) * 2.3283064365386963e-10; // 2^-32
+  };
+
+  return mash;
+}
+
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.alea = impl;
+}
+
+})(
+  this,
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+
+
+/***/ }),
+
+/***/ 9049:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A Javascript implementaion of the "Tyche-i" prng algorithm by
+// Samuel Neves and Filipe Araujo.
+// See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
+
+(function(global, module, define) {
+
+function XorGen(seed) {
+  var me = this, strseed = '';
+
+  // Set up generator function.
+  me.next = function() {
+    var b = me.b, c = me.c, d = me.d, a = me.a;
+    b = (b << 25) ^ (b >>> 7) ^ c;
+    c = (c - d) | 0;
+    d = (d << 24) ^ (d >>> 8) ^ a;
+    a = (a - b) | 0;
+    me.b = b = (b << 20) ^ (b >>> 12) ^ c;
+    me.c = c = (c - d) | 0;
+    me.d = (d << 16) ^ (c >>> 16) ^ a;
+    return me.a = (a - b) | 0;
+  };
+
+  /* The following is non-inverted tyche, which has better internal
+   * bit diffusion, but which is about 25% slower than tyche-i in JS.
+  me.next = function() {
+    var a = me.a, b = me.b, c = me.c, d = me.d;
+    a = (me.a + me.b | 0) >>> 0;
+    d = me.d ^ a; d = d << 16 ^ d >>> 16;
+    c = me.c + d | 0;
+    b = me.b ^ c; b = b << 12 ^ d >>> 20;
+    me.a = a = a + b | 0;
+    d = d ^ a; me.d = d = d << 8 ^ d >>> 24;
+    me.c = c = c + d | 0;
+    b = b ^ c;
+    return me.b = (b << 7 ^ b >>> 25);
+  }
+  */
+
+  me.a = 0;
+  me.b = 0;
+  me.c = 2654435769 | 0;
+  me.d = 1367130551;
+
+  if (seed === Math.floor(seed)) {
+    // Integer seed.
+    me.a = (seed / 0x100000000) | 0;
+    me.b = seed | 0;
+  } else {
+    // String seed.
+    strseed += seed;
+  }
+
+  // Mix in string seed, then discard an initial batch of 64 values.
+  for (var k = 0; k < strseed.length + 20; k++) {
+    me.b ^= strseed.charCodeAt(k) | 0;
+    me.next();
+  }
+}
+
+function copy(f, t) {
+  t.a = f.a;
+  t.b = f.b;
+  t.c = f.c;
+  t.d = f.d;
+  return t;
+};
+
+function impl(seed, opts) {
+  var xg = new XorGen(seed),
+      state = opts && opts.state,
+      prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+  prng.double = function() {
+    do {
+      var top = xg.next() >>> 11,
+          bot = (xg.next() >>> 0) / 0x100000000,
+          result = (top + bot) / (1 << 21);
+    } while (result === 0);
+    return result;
+  };
+  prng.int32 = xg.next;
+  prng.quick = prng;
+  if (state) {
+    if (typeof(state) == 'object') copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.tychei = impl;
+}
+
+})(
+  this,
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+
+
+/***/ }),
+
+/***/ 8652:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A Javascript implementaion of the "xor128" prng algorithm by
+// George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+(function(global, module, define) {
+
+function XorGen(seed) {
+  var me = this, strseed = '';
+
+  me.x = 0;
+  me.y = 0;
+  me.z = 0;
+  me.w = 0;
+
+  // Set up generator function.
+  me.next = function() {
+    var t = me.x ^ (me.x << 11);
+    me.x = me.y;
+    me.y = me.z;
+    me.z = me.w;
+    return me.w ^= (me.w >>> 19) ^ t ^ (t >>> 8);
+  };
+
+  if (seed === (seed | 0)) {
+    // Integer seed.
+    me.x = seed;
+  } else {
+    // String seed.
+    strseed += seed;
+  }
+
+  // Mix in string seed, then discard an initial batch of 64 values.
+  for (var k = 0; k < strseed.length + 64; k++) {
+    me.x ^= strseed.charCodeAt(k) | 0;
+    me.next();
+  }
+}
+
+function copy(f, t) {
+  t.x = f.x;
+  t.y = f.y;
+  t.z = f.z;
+  t.w = f.w;
+  return t;
+}
+
+function impl(seed, opts) {
+  var xg = new XorGen(seed),
+      state = opts && opts.state,
+      prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+  prng.double = function() {
+    do {
+      var top = xg.next() >>> 11,
+          bot = (xg.next() >>> 0) / 0x100000000,
+          result = (top + bot) / (1 << 21);
+    } while (result === 0);
+    return result;
+  };
+  prng.int32 = xg.next;
+  prng.quick = prng;
+  if (state) {
+    if (typeof(state) == 'object') copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.xor128 = impl;
+}
+
+})(
+  this,
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+
+
+/***/ }),
+
+/***/ 3618:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
+//
+// This fast non-cryptographic random number generator is designed for
+// use in Monte-Carlo algorithms. It combines a long-period xorshift
+// generator with a Weyl generator, and it passes all common batteries
+// of stasticial tests for randomness while consuming only a few nanoseconds
+// for each prng generated.  For background on the generator, see Brent's
+// paper: "Some long-period random number generators using shifts and xors."
+// http://arxiv.org/pdf/1004.3115v1.pdf
+//
+// Usage:
+//
+// var xor4096 = require('xor4096');
+// random = xor4096(1);                        // Seed with int32 or string.
+// assert.equal(random(), 0.1520436450538547); // (0, 1) range, 53 bits.
+// assert.equal(random.int32(), 1806534897);   // signed int32, 32 bits.
+//
+// For nonzero numeric keys, this impelementation provides a sequence
+// identical to that by Brent's xorgens 3 implementaion in C.  This
+// implementation also provides for initalizing the generator with
+// string seeds, or for saving and restoring the state of the generator.
+//
+// On Chrome, this prng benchmarks about 2.1 times slower than
+// Javascript's built-in Math.random().
+
+(function(global, module, define) {
+
+function XorGen(seed) {
+  var me = this;
+
+  // Set up generator function.
+  me.next = function() {
+    var w = me.w,
+        X = me.X, i = me.i, t, v;
+    // Update Weyl generator.
+    me.w = w = (w + 0x61c88647) | 0;
+    // Update xor generator.
+    v = X[(i + 34) & 127];
+    t = X[i = ((i + 1) & 127)];
+    v ^= v << 13;
+    t ^= t << 17;
+    v ^= v >>> 15;
+    t ^= t >>> 12;
+    // Update Xor generator array state.
+    v = X[i] = v ^ t;
+    me.i = i;
+    // Result is the combination.
+    return (v + (w ^ (w >>> 16))) | 0;
+  };
+
+  function init(me, seed) {
+    var t, v, i, j, w, X = [], limit = 128;
+    if (seed === (seed | 0)) {
+      // Numeric seeds initialize v, which is used to generates X.
+      v = seed;
+      seed = null;
+    } else {
+      // String seeds are mixed into v and X one character at a time.
+      seed = seed + '\0';
+      v = 0;
+      limit = Math.max(limit, seed.length);
+    }
+    // Initialize circular array and weyl value.
+    for (i = 0, j = -32; j < limit; ++j) {
+      // Put the unicode characters into the array, and shuffle them.
+      if (seed) v ^= seed.charCodeAt((j + 32) % seed.length);
+      // After 32 shuffles, take v as the starting w value.
+      if (j === 0) w = v;
+      v ^= v << 10;
+      v ^= v >>> 15;
+      v ^= v << 4;
+      v ^= v >>> 13;
+      if (j >= 0) {
+        w = (w + 0x61c88647) | 0;     // Weyl.
+        t = (X[j & 127] ^= (v + w));  // Combine xor and weyl to init array.
+        i = (0 == t) ? i + 1 : 0;     // Count zeroes.
+      }
+    }
+    // We have detected all zeroes; make the key nonzero.
+    if (i >= 128) {
+      X[(seed && seed.length || 0) & 127] = -1;
+    }
+    // Run the generator 512 times to further mix the state before using it.
+    // Factoring this as a function slows the main generator, so it is just
+    // unrolled here.  The weyl generator is not advanced while warming up.
+    i = 127;
+    for (j = 4 * 128; j > 0; --j) {
+      v = X[(i + 34) & 127];
+      t = X[i = ((i + 1) & 127)];
+      v ^= v << 13;
+      t ^= t << 17;
+      v ^= v >>> 15;
+      t ^= t >>> 12;
+      X[i] = v ^ t;
+    }
+    // Storing state as object members is faster than using closure variables.
+    me.w = w;
+    me.X = X;
+    me.i = i;
+  }
+
+  init(me, seed);
+}
+
+function copy(f, t) {
+  t.i = f.i;
+  t.w = f.w;
+  t.X = f.X.slice();
+  return t;
+};
+
+function impl(seed, opts) {
+  if (seed == null) seed = +(new Date);
+  var xg = new XorGen(seed),
+      state = opts && opts.state,
+      prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+  prng.double = function() {
+    do {
+      var top = xg.next() >>> 11,
+          bot = (xg.next() >>> 0) / 0x100000000,
+          result = (top + bot) / (1 << 21);
+    } while (result === 0);
+    return result;
+  };
+  prng.int32 = xg.next;
+  prng.quick = prng;
+  if (state) {
+    if (state.X) copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.xor4096 = impl;
+}
+
+})(
+  this,                                     // window object or global
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+/***/ }),
+
+/***/ 2030:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A Javascript implementaion of the "xorshift7" algorithm by
+// François Panneton and Pierre L'ecuyer:
+// "On the Xorgshift Random Number Generators"
+// http://saluc.engr.uconn.edu/refs/crypto/rng/panneton05onthexorshift.pdf
+
+(function(global, module, define) {
+
+function XorGen(seed) {
+  var me = this;
+
+  // Set up generator function.
+  me.next = function() {
+    // Update xor generator.
+    var X = me.x, i = me.i, t, v, w;
+    t = X[i]; t ^= (t >>> 7); v = t ^ (t << 24);
+    t = X[(i + 1) & 7]; v ^= t ^ (t >>> 10);
+    t = X[(i + 3) & 7]; v ^= t ^ (t >>> 3);
+    t = X[(i + 4) & 7]; v ^= t ^ (t << 7);
+    t = X[(i + 7) & 7]; t = t ^ (t << 13); v ^= t ^ (t << 9);
+    X[i] = v;
+    me.i = (i + 1) & 7;
+    return v;
+  };
+
+  function init(me, seed) {
+    var j, w, X = [];
+
+    if (seed === (seed | 0)) {
+      // Seed state array using a 32-bit integer.
+      w = X[0] = seed;
+    } else {
+      // Seed state using a string.
+      seed = '' + seed;
+      for (j = 0; j < seed.length; ++j) {
+        X[j & 7] = (X[j & 7] << 15) ^
+            (seed.charCodeAt(j) + X[(j + 1) & 7] << 13);
+      }
+    }
+    // Enforce an array length of 8, not all zeroes.
+    while (X.length < 8) X.push(0);
+    for (j = 0; j < 8 && X[j] === 0; ++j);
+    if (j == 8) w = X[7] = -1; else w = X[j];
+
+    me.x = X;
+    me.i = 0;
+
+    // Discard an initial 256 values.
+    for (j = 256; j > 0; --j) {
+      me.next();
+    }
+  }
+
+  init(me, seed);
+}
+
+function copy(f, t) {
+  t.x = f.x.slice();
+  t.i = f.i;
+  return t;
+}
+
+function impl(seed, opts) {
+  if (seed == null) seed = +(new Date);
+  var xg = new XorGen(seed),
+      state = opts && opts.state,
+      prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+  prng.double = function() {
+    do {
+      var top = xg.next() >>> 11,
+          bot = (xg.next() >>> 0) / 0x100000000,
+          result = (top + bot) / (1 << 21);
+    } while (result === 0);
+    return result;
+  };
+  prng.int32 = xg.next;
+  prng.quick = prng;
+  if (state) {
+    if (state.x) copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.xorshift7 = impl;
+}
+
+})(
+  this,
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+
+/***/ }),
+
+/***/ 801:
+/***/ (function(module, exports, __webpack_require__) {
+
+/* module decorator */ module = __webpack_require__.nmd(module);
+var __WEBPACK_AMD_DEFINE_RESULT__;// A Javascript implementaion of the "xorwow" prng algorithm by
+// George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
+
+(function(global, module, define) {
+
+function XorGen(seed) {
+  var me = this, strseed = '';
+
+  // Set up generator function.
+  me.next = function() {
+    var t = (me.x ^ (me.x >>> 2));
+    me.x = me.y; me.y = me.z; me.z = me.w; me.w = me.v;
+    return (me.d = (me.d + 362437 | 0)) +
+       (me.v = (me.v ^ (me.v << 4)) ^ (t ^ (t << 1))) | 0;
+  };
+
+  me.x = 0;
+  me.y = 0;
+  me.z = 0;
+  me.w = 0;
+  me.v = 0;
+
+  if (seed === (seed | 0)) {
+    // Integer seed.
+    me.x = seed;
+  } else {
+    // String seed.
+    strseed += seed;
+  }
+
+  // Mix in string seed, then discard an initial batch of 64 values.
+  for (var k = 0; k < strseed.length + 64; k++) {
+    me.x ^= strseed.charCodeAt(k) | 0;
+    if (k == strseed.length) {
+      me.d = me.x << 10 ^ me.x >>> 4;
+    }
+    me.next();
+  }
+}
+
+function copy(f, t) {
+  t.x = f.x;
+  t.y = f.y;
+  t.z = f.z;
+  t.w = f.w;
+  t.v = f.v;
+  t.d = f.d;
+  return t;
+}
+
+function impl(seed, opts) {
+  var xg = new XorGen(seed),
+      state = opts && opts.state,
+      prng = function() { return (xg.next() >>> 0) / 0x100000000; };
+  prng.double = function() {
+    do {
+      var top = xg.next() >>> 11,
+          bot = (xg.next() >>> 0) / 0x100000000,
+          result = (top + bot) / (1 << 21);
+    } while (result === 0);
+    return result;
+  };
+  prng.int32 = xg.next;
+  prng.quick = prng;
+  if (state) {
+    if (typeof(state) == 'object') copy(state, xg);
+    prng.state = function() { return copy(xg, {}); }
+  }
+  return prng;
+}
+
+if (module && module.exports) {
+  module.exports = impl;
+} else if (__webpack_require__.amdD && __webpack_require__.amdO) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return impl; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+} else {
+  this.xorwow = impl;
+}
+
+})(
+  this,
+   true && module,    // present in node.js
+  __webpack_require__.amdD   // present with an AMD loader
+);
+
+
+
+
+/***/ }),
+
+/***/ 1971:
+/***/ ((module, exports, __webpack_require__) => {
+
+var __WEBPACK_AMD_DEFINE_RESULT__;/*
+Copyright 2014 David Bau.
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+*/
+
+(function (pool, math) {
+//
+// The following constants are related to IEEE 754 limits.
+//
+
+// Detect the global object, even if operating in strict mode.
+// http://stackoverflow.com/a/14387057/265298
+var global = (0, eval)('this'),
+    width = 256,        // each RC4 output is 0 <= x < 256
+    chunks = 6,         // at least six RC4 outputs for each double
+    digits = 52,        // there are 52 significant digits in a double
+    rngname = 'random', // rngname: name for Math.random and Math.seedrandom
+    startdenom = math.pow(width, chunks),
+    significance = math.pow(2, digits),
+    overflow = significance * 2,
+    mask = width - 1,
+    nodecrypto;         // node.js crypto module, initialized at the bottom.
+
+//
+// seedrandom()
+// This is the seedrandom function described above.
+//
+function seedrandom(seed, options, callback) {
+  var key = [];
+  options = (options == true) ? { entropy: true } : (options || {});
+
+  // Flatten the seed string or build one from local entropy if needed.
+  var shortseed = mixkey(flatten(
+    options.entropy ? [seed, tostring(pool)] :
+    (seed == null) ? autoseed() : seed, 3), key);
+
+  // Use the seed to initialize an ARC4 generator.
+  var arc4 = new ARC4(key);
+
+  // This function returns a random double in [0, 1) that contains
+  // randomness in every bit of the mantissa of the IEEE 754 value.
+  var prng = function() {
+    var n = arc4.g(chunks),             // Start with a numerator n < 2 ^ 48
+        d = startdenom,                 //   and denominator d = 2 ^ 48.
+        x = 0;                          //   and no 'extra last byte'.
+    while (n < significance) {          // Fill up all significant digits by
+      n = (n + x) * width;              //   shifting numerator and
+      d *= width;                       //   denominator and generating a
+      x = arc4.g(1);                    //   new least-significant-byte.
+    }
+    while (n >= overflow) {             // To avoid rounding up, before adding
+      n /= 2;                           //   last byte, shift everything
+      d /= 2;                           //   right using integer math until
+      x >>>= 1;                         //   we have exactly the desired bits.
+    }
+    return (n + x) / d;                 // Form the number within [0, 1).
+  };
+
+  prng.int32 = function() { return arc4.g(4) | 0; }
+  prng.quick = function() { return arc4.g(4) / 0x100000000; }
+  prng.double = prng;
+
+  // Mix the randomness into accumulated entropy.
+  mixkey(tostring(arc4.S), pool);
+
+  // Calling convention: what to return as a function of prng, seed, is_math.
+  return (options.pass || callback ||
+      function(prng, seed, is_math_call, state) {
+        if (state) {
+          // Load the arc4 state from the given state if it has an S array.
+          if (state.S) { copy(state, arc4); }
+          // Only provide the .state method if requested via options.state.
+          prng.state = function() { return copy(arc4, {}); }
+        }
+
+        // If called as a method of Math (Math.seedrandom()), mutate
+        // Math.random because that is how seedrandom.js has worked since v1.0.
+        if (is_math_call) { math[rngname] = prng; return seed; }
+
+        // Otherwise, it is a newer calling convention, so return the
+        // prng directly.
+        else return prng;
+      })(
+  prng,
+  shortseed,
+  'global' in options ? options.global : (this == math),
+  options.state);
+}
+math['seed' + rngname] = seedrandom;
+
+//
+// ARC4
+//
+// An ARC4 implementation.  The constructor takes a key in the form of
+// an array of at most (width) integers that should be 0 <= x < (width).
+//
+// The g(count) method returns a pseudorandom integer that concatenates
+// the next (count) outputs from ARC4.  Its return value is a number x
+// that is in the range 0 <= x < (width ^ count).
+//
+function ARC4(key) {
+  var t, keylen = key.length,
+      me = this, i = 0, j = me.i = me.j = 0, s = me.S = [];
+
+  // The empty key [] is treated as [0].
+  if (!keylen) { key = [keylen++]; }
+
+  // Set up S using the standard key scheduling algorithm.
+  while (i < width) {
+    s[i] = i++;
+  }
+  for (i = 0; i < width; i++) {
+    s[i] = s[j = mask & (j + key[i % keylen] + (t = s[i]))];
+    s[j] = t;
+  }
+
+  // The "g" method returns the next (count) outputs as one number.
+  (me.g = function(count) {
+    // Using instance members instead of closure state nearly doubles speed.
+    var t, r = 0,
+        i = me.i, j = me.j, s = me.S;
+    while (count--) {
+      t = s[i = mask & (i + 1)];
+      r = r * width + s[mask & ((s[i] = s[j = mask & (j + t)]) + (s[j] = t))];
+    }
+    me.i = i; me.j = j;
+    return r;
+    // For robust unpredictability, the function call below automatically
+    // discards an initial batch of values.  This is called RC4-drop[256].
+    // See http://google.com/search?q=rsa+fluhrer+response&btnI
+  })(width);
+}
+
+//
+// copy()
+// Copies internal state of ARC4 to or from a plain object.
+//
+function copy(f, t) {
+  t.i = f.i;
+  t.j = f.j;
+  t.S = f.S.slice();
+  return t;
+};
+
+//
+// flatten()
+// Converts an object tree to nested arrays of strings.
+//
+function flatten(obj, depth) {
+  var result = [], typ = (typeof obj), prop;
+  if (depth && typ == 'object') {
+    for (prop in obj) {
+      try { result.push(flatten(obj[prop], depth - 1)); } catch (e) {}
+    }
+  }
+  return (result.length ? result : typ == 'string' ? obj : obj + '\0');
+}
+
+//
+// mixkey()
+// Mixes a string seed into a key that is an array of integers, and
+// returns a shortened string seed that is equivalent to the result key.
+//
+function mixkey(seed, key) {
+  var stringseed = seed + '', smear, j = 0;
+  while (j < stringseed.length) {
+    key[mask & j] =
+      mask & ((smear ^= key[mask & j] * 19) + stringseed.charCodeAt(j++));
+  }
+  return tostring(key);
+}
+
+//
+// autoseed()
+// Returns an object for autoseeding, using window.crypto and Node crypto
+// module if available.
+//
+function autoseed() {
+  try {
+    var out;
+    if (nodecrypto && (out = nodecrypto.randomBytes)) {
+      // The use of 'out' to remember randomBytes makes tight minified code.
+      out = out(width);
+    } else {
+      out = new Uint8Array(width);
+      (global.crypto || global.msCrypto).getRandomValues(out);
+    }
+    return tostring(out);
+  } catch (e) {
+    var browser = global.navigator,
+        plugins = browser && browser.plugins;
+    return [+new Date, global, plugins, global.screen, tostring(pool)];
+  }
+}
+
+//
+// tostring()
+// Converts an array of charcodes to a string
+//
+function tostring(a) {
+  return String.fromCharCode.apply(0, a);
+}
+
+//
+// When seedrandom.js is loaded, we immediately mix a few bits
+// from the built-in RNG into the entropy pool.  Because we do
+// not want to interfere with deterministic PRNG state later,
+// seedrandom will not call math.random on its own again after
+// initialization.
+//
+mixkey(math.random(), pool);
+
+//
+// Nodejs and AMD support: export the implementation as a module using
+// either convention.
+//
+if ( true && module.exports) {
+  module.exports = seedrandom;
+  // When in node.js, try using crypto package for autoseeding.
+  try {
+    nodecrypto = __webpack_require__(5042);
+  } catch (ex) {}
+} else if (true) {
+  !(__WEBPACK_AMD_DEFINE_RESULT__ = (function() { return seedrandom; }).call(exports, __webpack_require__, exports, module),
+		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+}
+
+// End anonymous scope, and pass initial values.
+})(
+  [],     // pool: entropy pool starts empty
+  Math    // math: package containing random, pow, and seedrandom
+);
+
+
+/***/ }),
+
+/***/ 7650:
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+var seedrandom = __webpack_require__(6377);
+var self = __webpack_require__(1987);
+
+module.exports = self;
+
+
+
+/***/ }),
+
+/***/ 1987:
+/***/ (function(module) {
+
+;(function() {
+	var self = {};
+
+	if(Math.seedrandom) seedrandom = Math.seedrandom;
+
+	var isArray = function($){
+		return Object.prototype.toString.call( $ ) === '[object Array]'
+	}
+
+	var extend = function(obj) {
+		for (var i = 1; i < arguments.length; i++) for (var key in arguments[i]) obj[key] = arguments[i][key];
+		return obj;
+	}
+
+	var seedify = function(seed){
+		if (/(number|string)/i.test(Object.prototype.toString.call(seed).match(/^\[object (.*)\]$/)[1])) return seed;
+		if (isNaN(seed)) return Number(String((this.strSeed = seed)).split('').map(function(x){return x.charCodeAt(0)}).join(''));
+		return seed;
+	}
+
+	var seedRand = function(func,min,max){
+		return Math.floor(func() * (max - min + 1)) + min;
+	}
+
+	self.shuffle = function(arr,seed){
+		if (!isArray(arr)) return null;
+		seed = seedify(seed) || 'none';
+
+		var size = arr.length;
+		var rng = seedrandom(seed);
+		var resp = [];
+		var keys = [];
+
+		for(var i=0;i<size;i++) keys.push(i);
+		for(var i=0;i<size;i++){
+			var r = seedRand(rng,0,keys.length-1);
+			var g = keys[r];
+			keys.splice(r,1);
+			resp.push(arr[g]);
+		}
+		return resp;
+	}
+
+	self.unshuffle = function(arr,seed){
+		if (!isArray(arr)) return null;
+		seed = seedify(seed) || 'none';
+
+		var size = arr.length;
+		var rng = seedrandom(seed);
+		var resp = [];
+		var map = [];
+		var keys = [];
+
+		for(var i=0;i<size;i++) {
+			resp.push(null);
+			keys.push(i);
+		}
+
+		for(var i=0;i<size;i++){
+			var r = seedRand(rng,0,keys.length-1);
+			var g = keys[r];
+			keys.splice(r,1);
+			resp[g]=arr[i];
+		}
+
+		return resp;
+	}
+
+	if(true){
+		module.exports=self;
+	} else {}
+}.call(this));
 
 
 /***/ }),
@@ -9494,6 +10591,13 @@ tippy.setDefaultProps({
 //# sourceMappingURL=tippy.esm.js.map
 
 
+/***/ }),
+
+/***/ 5042:
+/***/ (() => {
+
+/* (ignored) */
+
 /***/ })
 
 /******/ 	});
@@ -9510,19 +10614,34 @@ tippy.setDefaultProps({
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
+/******/ 			id: moduleId,
+/******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
 /******/ 	
 /******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Flag the module as loaded
+/******/ 		module.loaded = true;
 /******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/amd define */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdD = function () {
+/******/ 			throw new Error('define cannot be used indirect');
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/amd options */
+/******/ 	(() => {
+/******/ 		__webpack_require__.amdO = {};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -9550,6 +10669,15 @@ tippy.setDefaultProps({
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/node module decorator */
+/******/ 	(() => {
+/******/ 		__webpack_require__.nmd = (module) => {
+/******/ 			module.paths = [];
+/******/ 			if (!module.children) module.children = [];
+/******/ 			return module;
+/******/ 		};
 /******/ 	})();
 /******/ 	
 /************************************************************************/
@@ -9608,9 +10736,15 @@ const OptionsDefaults = {
     CapitalizeFields: false,
     ClickToExpand: true,
     CurrencySymbol: "$",
+    CurrencyCode: "USD",
+    AddCurrencySymbol: true,
     ThousandsSeparator: "",
     DecimalSeparator: ".",
     DecimalPlaces: 2,
+    MinAmount: 1,
+    MaxAmount: 100000,
+    MinAmountMessage: "Amount must be at least $1",
+    MaxAmountMessage: "Amount must be less than $100,000",
     SkipToMainContentLink: true,
     SrcDefer: true,
     NeverBounceAPI: null,
@@ -9622,6 +10756,8 @@ const OptionsDefaults = {
     TranslateFields: true,
     Debug: false,
     RememberMe: false,
+    TidyContact: false,
+    RegionLongFormat: "",
 };
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/upsell-options.js
@@ -9703,54 +10839,48 @@ const TranslateOptionsDefaults = {
 
 class Loader {
     constructor() {
-        this.logger = new EngridLogger("Logger", "gold", "black", "🔁");
+        this.logger = new EngridLogger("Loader", "gold", "black", "🔁");
         this.cssElement = document.querySelector('link[href*="engrid."][rel="stylesheet"]');
         this.jsElement = document.querySelector('script[src*="engrid."]');
     }
     // Returns true if ENgrid should reload (that means the current ENgrid is not the right one)
     // Returns false if ENgrid should not reload (that means the current ENgrid is the right one)
     reload() {
-        var _a, _b, _c;
+        var _a, _b, _c, _d, _e;
         const isLoaded = engrid_ENGrid.getBodyData("loaded");
         let assets = this.getOption("assets");
         if (isLoaded || !assets) {
-            this.logger.success("ENgrid Loader: LOADED");
+            this.logger.success("LOADED");
             return false;
         }
         // Load the right ENgrid
-        this.logger.log("ENgrid Loader: RELOADING");
+        this.logger.log("RELOADING");
         engrid_ENGrid.setBodyData("loaded", "true"); // Set the loaded flag, so the next time we don't reload
         // Fetch the desired repo, assets location, and override JS/CSS
-        const engrid_repo = this.getOption("repo-name");
-        const engrid_repo_owner = this.getOption("repo-owner");
+        const theme = engrid_ENGrid.getBodyData("theme");
+        const engrid_repo = (_a = this.getOption("repo-name")) !== null && _a !== void 0 ? _a : `engrid-${theme}`;
+        const engrid_repo_owner = (_b = this.getOption("repo-owner")) !== null && _b !== void 0 ? _b : "4site-interactive-studios";
         let engrid_js_url = "";
         let engrid_css_url = "";
         switch (assets) {
             case "local":
-                this.logger.log("ENgrid Loader: LOADING LOCAL");
-                // Find a way to guess local URL if there's no engrid_repo
-                if (!engrid_repo) {
-                    const theme = engrid_ENGrid.getBodyData("theme");
-                    engrid_js_url = `https://engrid-${theme}.test/dist/engrid.js`;
-                    engrid_css_url = `https://engrid-${theme}.test/dist/engrid.css`;
-                }
-                else {
-                    engrid_js_url = `https://engrid-${engrid_repo}.test/dist/engrid.js`;
-                    engrid_css_url = `https://engrid-${engrid_repo}.test/dist/engrid.css`;
-                }
+                this.logger.log("LOADING LOCAL");
+                engrid_ENGrid.setBodyData("assets", "local");
+                engrid_js_url = `https://${engrid_repo}.test/dist/engrid.js`;
+                engrid_css_url = `https://${engrid_repo}.test/dist/engrid.css`;
                 break;
             case "flush":
-                this.logger.log("ENgrid Loader: FLUSHING CACHE");
+                this.logger.log("FLUSHING CACHE");
                 const timestamp = Date.now();
-                const jsCurrentURL = new URL(((_a = this.jsElement) === null || _a === void 0 ? void 0 : _a.getAttribute("src")) || "");
+                const jsCurrentURL = new URL(((_c = this.jsElement) === null || _c === void 0 ? void 0 : _c.getAttribute("src")) || "");
                 jsCurrentURL.searchParams.set("v", timestamp.toString());
                 engrid_js_url = jsCurrentURL.toString();
-                const cssCurrentURL = new URL(((_b = this.cssElement) === null || _b === void 0 ? void 0 : _b.getAttribute("href")) || "");
+                const cssCurrentURL = new URL(((_d = this.cssElement) === null || _d === void 0 ? void 0 : _d.getAttribute("href")) || "");
                 cssCurrentURL.searchParams.set("v", timestamp.toString());
                 engrid_css_url = cssCurrentURL.toString();
                 break;
             default:
-                this.logger.log("ENgrid Loader: LOADING EXTERNAL");
+                this.logger.log("LOADING EXTERNAL");
                 engrid_js_url =
                     "https://cdn.jsdelivr.net/gh/" +
                         engrid_repo_owner +
@@ -9770,7 +10900,7 @@ class Loader {
         }
         this.setCssFile(engrid_css_url);
         this.setJsFile(engrid_js_url);
-        (_c = this.jsElement) === null || _c === void 0 ? void 0 : _c.remove();
+        (_e = this.jsElement) === null || _e === void 0 ? void 0 : _e.remove();
         return true;
     }
     getOption(key) {
@@ -9819,7 +10949,9 @@ class EnForm {
         this._onValidate = new dist/* SignalDispatcher */.nz();
         this._onError = new dist/* SignalDispatcher */.nz();
         this.submit = true;
+        this.submitPromise = false;
         this.validate = true;
+        this.validatePromise = false;
     }
     static getInstance() {
         if (!EnForm.instance) {
@@ -9866,6 +10998,7 @@ class EnForm {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/events/donation-amount.js
 
+
 class DonationAmount {
     constructor(radios = "transaction.donationAmt", other = "transaction.donationAmt.other") {
         this._onAmountChange = new dist/* SimpleEventDispatcher */.FK();
@@ -9878,17 +11011,22 @@ class DonationAmount {
         // Watch Radios Inputs for Changes
         document.addEventListener("change", (e) => {
             const element = e.target;
-            if (element && element.name == radios) {
-                element.value = this.removeCommas(element.value);
-                this.amount = parseFloat(element.value);
+            if (element) {
+                if (element.name == radios) {
+                    this.amount = parseFloat(element.value);
+                }
+                else if (element.name == other) {
+                    const cleanedAmount = engrid_ENGrid.cleanAmount(element.value);
+                    element.value = cleanedAmount.toString();
+                    this.amount = cleanedAmount;
+                }
             }
         });
         // Watch Other Amount Field
         const otherField = document.querySelector(`[name='${this._other}']`);
         if (otherField) {
             otherField.addEventListener("keyup", (e) => {
-                otherField.value = this.removeCommas(otherField.value);
-                this.amount = parseFloat(otherField.value);
+                this.amount = engrid_ENGrid.cleanAmount(otherField.value);
             });
         }
     }
@@ -9920,8 +11058,8 @@ class DonationAmount {
             }
             else {
                 const otherField = document.querySelector('input[name="' + this._other + '"]');
-                currentAmountValue = parseFloat(otherField.value);
-                this.amount = parseFloat(otherField.value);
+                currentAmountValue = engrid_ENGrid.cleanAmount(otherField.value);
+                this.amount = currentAmountValue;
             }
         }
     }
@@ -9959,18 +11097,6 @@ class DonationAmount {
         const otherWrapper = otherField.parentNode;
         otherWrapper.classList.add("en__field__item--hidden");
     }
-    // Remove commas
-    removeCommas(v) {
-        // replace 5,00 with 5.00
-        if (v.length > 3 && v.charAt(v.length - 3) == ",") {
-            v = v.substr(0, v.length - 3) + "." + v.substr(v.length - 2, 2);
-        }
-        else if (v.length > 2 && v.charAt(v.length - 2) == ",") {
-            v = v.substr(0, v.length - 2) + "." + v.substr(v.length - 1, 1);
-        }
-        // replace any remaining commas
-        return v.replace(/,/g, "");
-    }
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/engrid.js
@@ -9986,14 +11112,30 @@ class engrid_ENGrid {
     static get debug() {
         return !!this.getOption("Debug");
     }
+    static get demo() {
+        return this.getUrlParameter("mode") === "DEMO";
+    }
     // Return any parameter from the URL
     static getUrlParameter(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
-        var results = regex.exec(location.search);
-        return results === null
-            ? ""
-            : decodeURIComponent(results[1].replace(/\+/g, " "));
+        const searchParams = new URLSearchParams(window.location.search);
+        // Add support for array on the name ending with []
+        if (name.endsWith("[]")) {
+            let values = [];
+            searchParams.forEach((value, key) => {
+                if (key.startsWith(name.replace("[]", ""))) {
+                    values.push(new Object({ [key]: value }));
+                }
+            });
+            return values.length > 0 ? values : null;
+        }
+        if (searchParams.has(name)) {
+            return searchParams.get(name) || true;
+        }
+        return null;
+    }
+    static getField(name) {
+        // Get the field by name
+        return document.querySelector(`[name="${name}"]`);
     }
     // Return the field value from its name. It works on any field type.
     // Multiple values (from checkboxes or multi-select) are returned as single string
@@ -10002,7 +11144,9 @@ class engrid_ENGrid {
         return new FormData(this.enForm).getAll(name).join(",");
     }
     // Set a value to any field. If it's a dropdown, radio or checkbox, it selects the proper option matching the value
-    static setFieldValue(name, value) {
+    static setFieldValue(name, value, parseENDependencies = true) {
+        if (value === engrid_ENGrid.getFieldValue(name))
+            return;
         document.getElementsByName(name).forEach((field) => {
             if ("type" in field) {
                 switch (field.type) {
@@ -10026,9 +11170,11 @@ class engrid_ENGrid {
                     default:
                         field.value = value;
                 }
+                field.setAttribute("engrid-value-changed", "");
             }
         });
-        this.enParseDependencies();
+        if (parseENDependencies)
+            this.enParseDependencies();
         return;
     }
     // Create a hidden input field
@@ -10045,12 +11191,39 @@ class engrid_ENGrid {
     }
     // Trigger EN Dependencies
     static enParseDependencies() {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c, _d, _e, _f;
         if (window.EngagingNetworks &&
             typeof ((_e = (_d = (_c = (_b = (_a = window.EngagingNetworks) === null || _a === void 0 ? void 0 : _a.require) === null || _b === void 0 ? void 0 : _b._defined) === null || _c === void 0 ? void 0 : _c.enDependencies) === null || _d === void 0 ? void 0 : _d.dependencies) === null || _e === void 0 ? void 0 : _e.parseDependencies) === "function") {
-            window.EngagingNetworks.require._defined.enDependencies.dependencies.parseDependencies(window.EngagingNetworks.dependencies);
-            if (engrid_ENGrid.getOption("Debug"))
-                console.trace("EN Dependencies Triggered");
+            const customDependencies = [];
+            if ("dependencies" in window.EngagingNetworks) {
+                const amountContainer = document.querySelector(".en__field--donationAmt");
+                if (amountContainer) {
+                    let amountID = ((_f = [...amountContainer.classList.values()]
+                        .filter((v) => v.startsWith("en__field--") && Number(v.substring(11)) > 0)
+                        .toString()
+                        .match(/\d/g)) === null || _f === void 0 ? void 0 : _f.join("")) || "";
+                    if (amountID) {
+                        window.EngagingNetworks.dependencies.forEach((dependency) => {
+                            if ("actions" in dependency && dependency.actions.length > 0) {
+                                let amountIdFound = false;
+                                dependency.actions.forEach((action) => {
+                                    if ("target" in action && action.target === amountID) {
+                                        amountIdFound = true;
+                                    }
+                                });
+                                if (!amountIdFound) {
+                                    customDependencies.push(dependency);
+                                }
+                            }
+                        });
+                        if (customDependencies.length > 0) {
+                            window.EngagingNetworks.require._defined.enDependencies.dependencies.parseDependencies(customDependencies);
+                            if (engrid_ENGrid.getOption("Debug"))
+                                console.log("EN Dependencies Triggered", customDependencies);
+                        }
+                    }
+                }
+            }
         }
     }
     // Return the status of the gift process (true if a donation has been made, otherwise false)
@@ -10081,13 +11254,20 @@ class engrid_ENGrid {
     static getPageType() {
         if ("pageJson" in window && "pageType" in window.pageJson) {
             switch (window.pageJson.pageType) {
+                case "donation":
+                case "premiumgift":
+                    return "DONATION";
+                    break;
                 case "e-card":
                     return "ECARD";
                     break;
                 case "otherdatacapture":
+                case "survey":
                     return "SURVEY";
                     break;
                 case "emailtotarget":
+                    return "EMAILTOTARGET";
+                    break;
                 case "advocacypetition":
                     return "ADVOCACY";
                     break;
@@ -10097,12 +11277,15 @@ class engrid_ENGrid {
                 case "supporterhub":
                     return "SUPPORTERHUB";
                     break;
+                case "unsubscribe":
+                    return "UNSUBSCRIBE";
+                    break;
                 default:
-                    return "DONATION";
+                    return "UNKNOWN";
             }
         }
         else {
-            return "DONATION";
+            return "UNKNOWN";
         }
     }
     // Set body engrid data attributes
@@ -10120,6 +11303,11 @@ class engrid_ENGrid {
         const body = document.querySelector("body");
         return body.getAttribute(`data-engrid-${dataName}`);
     }
+    // Check if body has engrid data attributes
+    static hasBodyData(dataName) {
+        const body = document.querySelector("body");
+        return body.hasAttribute(`data-engrid-${dataName}`);
+    }
     // Return the option value
     static getOption(key) {
         return window.EngridOptions[key] || null;
@@ -10130,10 +11318,10 @@ class engrid_ENGrid {
         scriptTag.src = url;
         scriptTag.onload = onload;
         if (head) {
-            document.getElementsByTagName("head")[0].appendChild(scriptTag);
+            document.head.appendChild(scriptTag);
             return;
         }
-        document.getElementsByTagName("body")[0].appendChild(scriptTag);
+        document.body.appendChild(scriptTag);
         return;
     }
     // Format a number
@@ -10159,6 +11347,42 @@ class engrid_ENGrid {
             s[1] += new Array(prec - s[1].length + 1).join("0");
         }
         return s.join(dec);
+    }
+    // Clean an Amount
+    static cleanAmount(amount) {
+        // Split the number
+        const valueArray = amount.replace(/[^0-9,\.]/g, "").split(/[,.]+/);
+        const delimArray = amount.replace(/[^.,]/g, "").split("");
+        // Handle values with no decimal places and non-numeric values
+        if (valueArray.length === 1) {
+            return parseInt(valueArray[0]) || 0;
+        }
+        // Ignore invalid numbers
+        if (valueArray
+            .map((x, index) => {
+            return index > 0 && index + 1 !== valueArray.length && x.length !== 3
+                ? true
+                : false;
+        })
+            .includes(true)) {
+            return 0;
+        }
+        // Multiple commas is a bad thing? So edgy.
+        if (delimArray.length > 1 && !delimArray.includes(".")) {
+            return 0;
+        }
+        // Handle invalid decimal and comma formatting
+        if ([...new Set(delimArray.slice(0, -1))].length > 1) {
+            return 0;
+        }
+        // If there are cents
+        if (valueArray[valueArray.length - 1].length <= 2) {
+            const cents = valueArray.pop() || "00";
+            return parseInt(cents) > 0
+                ? parseFloat(Number(parseInt(valueArray.join("")) + "." + cents).toFixed(2))
+                : parseInt(valueArray.join(""));
+        }
+        return parseInt(valueArray.join(""));
     }
     static disableSubmit(label = "") {
         const submit = document.querySelector(".en__submit button");
@@ -10211,6 +11435,59 @@ class engrid_ENGrid {
             obj = obj[args[i]];
         }
         return true;
+    }
+    static setError(element, errorMessage) {
+        const errorElement = typeof element === "string" ? document.querySelector(element) : element;
+        if (errorElement) {
+            errorElement.classList.add("en__field--validationFailed");
+            let errorMessageElement = errorElement.querySelector(".en__field__error");
+            if (!errorMessageElement) {
+                errorMessageElement = document.createElement("div");
+                errorMessageElement.classList.add("en__field__error");
+                errorMessageElement.innerHTML = errorMessage;
+                errorElement.insertBefore(errorMessageElement, errorElement.firstChild);
+            }
+            else {
+                errorMessageElement.innerHTML = errorMessage;
+            }
+        }
+    }
+    static removeError(element) {
+        const errorElement = typeof element === "string" ? document.querySelector(element) : element;
+        if (errorElement) {
+            errorElement.classList.remove("en__field--validationFailed");
+            const errorMessageElement = errorElement.querySelector(".en__field__error");
+            if (errorMessageElement) {
+                errorElement.removeChild(errorMessageElement);
+            }
+        }
+    }
+    static isVisible(element) {
+        return !!(element.offsetWidth ||
+            element.offsetHeight ||
+            element.getClientRects().length);
+    }
+    static getCurrencySymbol() {
+        const currencyField = engrid_ENGrid.getField("transaction.paycurrency");
+        if (currencyField) {
+            const currencyArray = {
+                USD: "$",
+                EUR: "€",
+                GBP: "£",
+                AUD: "$",
+                CAD: "$",
+                JPY: "¥",
+            };
+            return currencyArray[currencyField.value] || "$";
+        }
+        return engrid_ENGrid.getOption("CurrencySymbol") || "$";
+    }
+    static getCurrencyCode() {
+        const currencyField = engrid_ENGrid.getField("transaction.paycurrency");
+        if (currencyField) {
+            return currencyField.value || "USD";
+        }
+        return engrid_ENGrid.getOption("CurrencyCode") || "USD";
     }
 }
 
@@ -10424,23 +11701,17 @@ class App extends engrid_ENGrid {
         this._amount = DonationAmount.getInstance("transaction.donationAmt", "transaction.donationAmt.other");
         this._frequency = DonationFrequency.getInstance();
         this.logger = new EngridLogger("App", "black", "white", "🍏");
-        this.shouldScroll = () => {
-            // If you find a error, scroll
-            if (document.querySelector(".en__errorHeader")) {
-                return true;
-            }
-            // Try to match the iframe referrer URL by testing valid EN Page URLs
-            let referrer = document.referrer;
-            let enURLPattern = new RegExp(/^(.*)\/(page)\/(\d+.*)/);
-            // Scroll if the Regex matches, don't scroll otherwise
-            return enURLPattern.test(referrer);
-        };
         const loader = new Loader();
         this.options = Object.assign(Object.assign({}, OptionsDefaults), options);
         // Add Options to window
         window.EngridOptions = this.options;
         if (loader.reload())
             return;
+        // Turn Debug ON if you use local assets
+        if (engrid_ENGrid.getBodyData("assets") === "local" &&
+            engrid_ENGrid.getUrlParameter("debug") !== "false") {
+            window.EngridOptions.Debug = true;
+        }
         // Document Load
         if (document.readyState !== "loading") {
             this.run();
@@ -10471,17 +11742,20 @@ class App extends engrid_ENGrid {
             }, 10);
             return;
         }
+        // If there's an option object on the page, override the defaults
+        if (window.hasOwnProperty("EngridPageOptions")) {
+            this.options = Object.assign(Object.assign({}, this.options), window.EngridPageOptions);
+            // Add Options to window
+            window.EngridOptions = this.options;
+        }
         if (this.options.Debug || App.getUrlParameter("debug") == "true")
             // Enable debug if available is the first thing
             App.setBodyData("debug", "");
-        // Page Background
-        new PageBackground();
         // TODO: Abstract everything to the App class so we can remove custom-methods
         inputPlaceholder();
         preventAutocomplete();
         watchInmemField();
         watchGiveBySelectField();
-        SetEnFieldOtherAmountRadioStepValue();
         simpleUnsubscribe();
         contactDetailLabels();
         easyEdit();
@@ -10521,21 +11795,37 @@ class App extends engrid_ENGrid {
                 this._amount.load();
             }, 150);
         });
-        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + s));
-        this._form.onError.subscribe((s) => this.logger.danger("Error: " + s));
+        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + JSON.stringify(s)));
+        this._form.onError.subscribe((s) => this.logger.danger("Error: " + JSON.stringify(s)));
         window.enOnSubmit = () => {
+            this._form.submit = true;
+            this._form.submitPromise = false;
             this._form.dispatchSubmit();
-            return this._form.submit;
+            if (!this._form.submit)
+                return false;
+            if (this._form.submitPromise)
+                return this._form.submitPromise;
+            this.logger.success("enOnSubmit Success");
+            return true;
         };
         window.enOnError = () => {
             this._form.dispatchError();
         };
         window.enOnValidate = () => {
+            this._form.validate = true;
+            this._form.validatePromise = false;
             this._form.dispatchValidate();
-            return this._form.validate;
+            if (!this._form.validate)
+                return false;
+            if (this._form.validatePromise)
+                return this._form.validatePromise;
+            this.logger.success("Validation Passed");
+            return true;
         };
+        // Live Currency
+        new LiveCurrency();
         // iFrame Logic
-        this.loadIFrame();
+        new iFrame();
         // Live Variables
         new LiveVariables(this.options);
         // Dynamically set Recurrency Frequency
@@ -10544,12 +11834,13 @@ class App extends engrid_ENGrid {
         new UpsellLightbox();
         // Amount Labels
         new AmountLabel();
+        // Engrid Data Replacement
+        new DataReplace();
+        // ENgrid Hide Script
+        new DataHide();
         // On the end of the script, after all subscribers defined, let's load the current value
         this._amount.load();
         this._frequency.load();
-        // Translate Fields
-        if (this.options.TranslateFields)
-            new TranslateFields();
         // Simple Country Select
         new SimpleCountrySelect();
         // Add Image Attribution
@@ -10587,35 +11878,38 @@ class App extends engrid_ENGrid {
             new NeverBounce(this.options.NeverBounceAPI, this.options.NeverBounceDateField, this.options.NeverBounceStatusField, this.options.NeverBounceDateFormat);
         new ShowIfAmount();
         new OtherAmount();
+        new MinMaxAmount();
+        new Ticker();
+        new A11y();
+        new AddNameToMessage();
+        new ExpandRegionName();
+        // Page Background
+        new PageBackground();
+        // Url Params to Form Fields
+        new UrlToForm();
+        // Required if Visible Fields
+        new RequiredIfVisible();
+        // TidyContact
+        if (this.options.TidyContact)
+            new TidyContact();
+        // Translate Fields
+        if (this.options.TranslateFields)
+            new TranslateFields();
+        // Data Layer Events
+        new DataLayer();
         this.setDataAttributes();
+        engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
+        window.EngridVersion = AppVersion;
+        this.logger.success(`VERSION: ${AppVersion}`);
     }
     onLoad() {
         if (this.options.onLoad) {
             this.options.onLoad();
         }
-        if (this.inIframe()) {
-            // Scroll to top of iFrame
-            this.logger.log("iFrame Event - window.onload");
-            sendIframeHeight();
-            window.parent.postMessage({
-                scroll: this.shouldScroll(),
-            }, "*");
-            // On click fire the resize event
-            document.addEventListener("click", (e) => {
-                this.logger.log("iFrame Event - click");
-                setTimeout(() => {
-                    sendIframeHeight();
-                }, 100);
-            });
-        }
     }
     onResize() {
         if (this.options.onResize) {
             this.options.onResize();
-        }
-        if (this.inIframe()) {
-            this.logger.log("iFrame Event - window.onload");
-            sendIframeHeight();
         }
     }
     onValidate() {
@@ -10629,9 +11923,6 @@ class App extends engrid_ENGrid {
             this.logger.log("Client onSubmit Triggered");
             this.options.onSubmit();
         }
-        if (this.inIframe()) {
-            sendIframeFormStatus("submit");
-        }
     }
     onError() {
         if (this.options.onError) {
@@ -10639,26 +11930,9 @@ class App extends engrid_ENGrid {
             this.options.onError();
         }
     }
-    inIframe() {
-        try {
-            return window.self !== window.top;
-        }
-        catch (e) {
-            return true;
-        }
-    }
-    loadIFrame() {
-        if (this.inIframe()) {
-            // Add the data-engrid-embedded attribute when inside an iFrame if it wasn't already added by a script in the Page Template
-            App.setBodyData("embedded", "");
-            // Fire the resize event
-            this.logger.log("iFrame Event - First Resize");
-            sendIframeHeight();
-        }
-    }
     // Use this function to add any Data Attributes to the Body tag
     setDataAttributes() {
-        // Add the Page Type as a Data Attribute on the video
+        // Add the Page Type as a Data Attribute on the Body Tag
         if (engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
             App.setBodyData("page-type", window.pageJson.pageType);
             this.logger.log("Page Type: " + window.pageJson.pageType);
@@ -10666,10 +11940,10 @@ class App extends engrid_ENGrid {
         else {
             this.logger.log("Page Type: Not Found");
         }
-        // Add a body banner data attribute if the banner contains no image
-        // @TODO Should this account for video?
-        // @TODO Should we merge this with the script that checks the background image?
-        if (!document.querySelector(".body-banner img")) {
+        // Add the currency code as a Data Attribute on the Body Tag
+        App.setBodyData("currency-code", App.getCurrencyCode());
+        // Add a body banner data attribute if the banner contains no image or video
+        if (!document.querySelector(".body-banner img, .body-banner video")) {
             App.setBodyData("body-banner", "empty");
         }
         // Add a page-alert data attribute if it is empty
@@ -10732,8 +12006,8 @@ class App extends engrid_ENGrid {
         if (!document.querySelector(".content-footer *")) {
             App.setBodyData("no-content-footer", "");
         }
-        // Add a page-backgroundImage data attribute if it is empty
-        if (!document.querySelector(".page-backgroundImage *")) {
+        // Add a page-backgroundImage banner data attribute if the page background image contains no image or video
+        if (!document.querySelector(".page-backgroundImage img, .page-backgroundImage video")) {
             App.setBodyData("no-page-backgroundImage", "");
         }
         // Add a page-backgroundImageOverlay data attribute if it is empty
@@ -10752,6 +12026,21 @@ class App extends engrid_ENGrid {
                 App.setBodyData("country", countrySelect.value);
             });
         }
+        const otherAmountDiv = document.querySelector(".en__field--donationAmt .en__field__item--other");
+        if (otherAmountDiv) {
+            otherAmountDiv.setAttribute("data-currency-symbol", App.getCurrencySymbol());
+        }
+        // Add a payment type data attribute
+        const paymentTypeSelect = App.getField("transaction.paymenttype");
+        if (paymentTypeSelect) {
+            App.setBodyData("payment-type", paymentTypeSelect.value);
+            paymentTypeSelect.addEventListener("change", () => {
+                App.setBodyData("payment-type", paymentTypeSelect.value);
+            });
+        }
+        // Add demo data attribute
+        if (App.demo)
+            App.setBodyData("demo", "");
     }
 }
 
@@ -10771,15 +12060,16 @@ class AmountLabel {
     }
     // Should we run the script?
     shouldRun() {
-        return engrid_ENGrid.getPageType() === "DONATION";
+        return !!(engrid_ENGrid.getPageType() === "DONATION" &&
+            engrid_ENGrid.getOption("AddCurrencySymbol"));
     }
     // Fix Amount Labels
     fixAmountLabels() {
         let amounts = document.querySelectorAll(".en__field--donationAmt label");
+        const currencySymbol = engrid_ENGrid.getCurrencySymbol() || "";
         amounts.forEach((element) => {
             if (!isNaN(element.innerText)) {
-                element.innerText =
-                    engrid_ENGrid.getOption("CurrencySymbol") + element.innerText;
+                element.innerText = currencySymbol + element.innerText;
             }
         });
     }
@@ -10954,6 +12244,54 @@ class ApplePay {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/a11y.js
+// a11y means accessibility
+// This Component is supposed to be used as a helper for Arria Attributes & Other Accessibility Features
+class A11y {
+    constructor() {
+        this.addRequired();
+        this.addLabel();
+        this.addGroupRole();
+    }
+    addGroupRole() {
+        // Add role="group" to all EN Radio fields
+        const radioFields = document.querySelectorAll(".en__field--radio");
+        radioFields.forEach((field) => {
+            field.setAttribute("role", "group");
+            // Add random ID to the label
+            const label = field.querySelector("label");
+            if (label) {
+                label.setAttribute("id", `en__field__label--${Math.random().toString(36).slice(2, 7)}`);
+                field.setAttribute("aria-labelledby", label.id);
+            }
+        });
+    }
+    addRequired() {
+        const mandatoryFields = document.querySelectorAll(".en__mandatory .en__field__input");
+        mandatoryFields.forEach((field) => {
+            field.setAttribute("aria-required", "true");
+        });
+    }
+    addLabel() {
+        const otherAmount = document.querySelector(".en__field__input--otheramount");
+        if (otherAmount) {
+            otherAmount.setAttribute("aria-label", "Enter your custom donation amount");
+        }
+        // Split selects usually don't have a label, so let's make the first option the label
+        const splitSelects = document.querySelectorAll(".en__field__input--splitselect");
+        splitSelects.forEach((select) => {
+            var _a, _b, _c, _d;
+            const firstOption = select.querySelector("option");
+            if (firstOption &&
+                firstOption.value === "" &&
+                !((_b = (_a = firstOption.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === null || _b === void 0 ? void 0 : _b.includes("select")) &&
+                !((_d = (_c = firstOption.textContent) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === null || _d === void 0 ? void 0 : _d.includes("choose"))) {
+                select.setAttribute("aria-label", firstOption.textContent || "");
+            }
+        });
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/capitalize-fields.js
 
 
@@ -11047,6 +12385,8 @@ class Autocomplete {
         this.autoCompleteField('[name="supporter.city"]', "address-level2");
         this.autoCompleteField('[name="supporter.region"]', "address-level1");
         this.autoCompleteField('[name="supporter.postcode"]', "postal-code");
+        // Ignore Autocomplete on the Recipient Email Field
+        this.autoCompleteField('[name="transaction.infemail"]', "none");
     }
     autoCompleteField(querySelector, autoCompleteValue) {
         let field = document.querySelector(querySelector);
@@ -11065,9 +12405,48 @@ class Autocomplete {
 class Ecard {
     constructor() {
         this._form = EnForm.getInstance();
-        if (engrid_ENGrid.getPageType() === "ECARD") {
-            this._form.onValidate.subscribe(() => this.checkRecipientFields());
+        this.logger = new EngridLogger("Ecard", "red", "#f5f5f5", "🪪");
+        if (!this.shouldRun())
+            return;
+        this._form.onValidate.subscribe(() => this.checkRecipientFields());
+        const schedule = engrid_ENGrid.getUrlParameter("engrid_ecard.schedule");
+        const scheduleField = engrid_ENGrid.getField("ecard.schedule");
+        const name = engrid_ENGrid.getUrlParameter("engrid_ecard.name");
+        const nameField = document.querySelector(".en__ecardrecipients__name input");
+        const email = engrid_ENGrid.getUrlParameter("engrid_ecard.email");
+        const emailField = document.querySelector(".en__ecardrecipients__email input");
+        if (schedule && scheduleField) {
+            // Check if chedule date is in the past
+            const scheduleDate = new Date(schedule.toString());
+            const today = new Date();
+            if (scheduleDate.setHours(0, 0, 0, 0) < today.setHours(0, 0, 0, 0)) {
+                // If it is, set the schedule to today
+                scheduleField.value = engrid_ENGrid.formatDate(today, "YYYY-MM-DD");
+            }
+            else {
+                // Otherwise, set the schedule to the date provided
+                scheduleField.value = schedule.toString();
+            }
+            this.logger.log("Schedule set to " + scheduleField.value);
         }
+        if (name && nameField) {
+            nameField.value = name.toString();
+            this.logger.log("Name set to " + nameField.value);
+        }
+        if (email && emailField) {
+            emailField.value = email.toString();
+            this.logger.log("Email set to " + emailField.value);
+        }
+        // Replace the Future Delivery Label with a H2
+        const futureDeliveryLabel = document.querySelector(".en__ecardrecipients__futureDelivery label");
+        if (futureDeliveryLabel) {
+            const futureDeliveryH2 = document.createElement("h2");
+            futureDeliveryH2.innerText = futureDeliveryLabel.innerText;
+            futureDeliveryLabel.replaceWith(futureDeliveryH2);
+        }
+    }
+    shouldRun() {
+        return engrid_ENGrid.getPageType() === "ECARD";
     }
     checkRecipientFields() {
         const addRecipientButton = document.querySelector(".en__ecarditems__addrecipient");
@@ -11340,19 +12719,29 @@ const debugBar = () => {
     }
 };
 const inputPlaceholder = () => {
-    // FIND ALL COMMON INPUT FIELDS
-    let enFieldDonationAmt = document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other");
+    // Personal Information
     let enFieldFirstName = document.querySelector("input#en__field_supporter_firstName");
     let enFieldLastName = document.querySelector("input#en__field_supporter_lastName");
     let enFieldEmailAddress = document.querySelector("input#en__field_supporter_emailAddress");
-    let enFieldPhoneNumber = document.querySelector("#inputen__field_supporter_phoneNumber");
+    let enFieldPhoneNumber = document.querySelector("input#en__field_supporter_phoneNumber");
+    let enFieldPhoneNumberRequired = document.querySelector(".en__mandatory > * > input#en__field_supporter_phoneNumber");
     let enFieldPhoneNumber2 = document.querySelector("input#en__field_supporter_phoneNumber2");
+    let enFieldPhoneNumber2Required = document.querySelector(".en__mandatory > * > input#en__field_supporter_phoneNumber2");
+    // Address
     let enFieldCountry = document.querySelector("input#en__field_supporter_country");
     let enFieldAddress1 = document.querySelector("input#en__field_supporter_address1");
     let enFieldAddress2 = document.querySelector("input#en__field_supporter_address2");
     let enFieldCity = document.querySelector("input#en__field_supporter_city");
-    // let enFieldRegion = document.querySelector("input#en__field_supporter_region") as HTMLInputElement
+    let enFieldRegion = document.querySelector("input#en__field_supporter_region");
     let enFieldPostcode = document.querySelector("input#en__field_supporter_postcode");
+    // Donation
+    let enFieldDonationAmt = document.querySelector(".en__field--donationAmt.en__field--withOther .en__field__input--other");
+    let enFieldCcnumber = document.querySelector("input#en__field_transaction_ccnumber");
+    let enFieldCcexpire = document.querySelector("input#en__field_transaction_ccexpire");
+    let enFieldCcvv = document.querySelector("input#en__field_transaction_ccvv");
+    let enFieldBankAccountNumber = document.querySelector("input#en__field_supporter_bankAccountNumber");
+    let enFieldBankRoutingNumber = document.querySelector("input#en__field_supporter_bankRoutingNumber");
+    // In Honor
     let enFieldHonname = document.querySelector("input#en__field_transaction_honname");
     let enFieldInfname = document.querySelector("input#en__field_transaction_infname");
     let enFieldInfemail = document.querySelector("input#en__field_transaction_infemail");
@@ -11361,21 +12750,36 @@ const inputPlaceholder = () => {
     let enFieldInfadd2 = document.querySelector("input#en__field_transaction_infadd2");
     let enFieldInfcity = document.querySelector("input#en__field_transaction_infcity");
     let enFieldInfpostcd = document.querySelector("input#en__field_transaction_infpostcd");
+    // Miscillaneous
     let enFieldGftrsn = document.querySelector("input#en__field_transaction_gftrsn");
-    let enFieldCcnumber = document.querySelector("input#en__field_transaction_ccnumber");
-    let enFieldCcexpire = document.querySelector("input#en__field_transaction_ccexpire");
-    let enFieldCcvv = document.querySelector("input#en__field_transaction_ccvv");
-    let enFieldBankAccountNumber = document.querySelector("input#en__field_supporter_bankAccountNumber");
-    let enFieldBankRoutingNumber = document.querySelector("input#en__field_supporter_bankRoutingNumber");
+    // Shipping Infromation
+    let enFieldShippingFirstName = document.querySelector("input#en__field_transaction_shipfname");
+    let enFieldShippingLastName = document.querySelector("input#en__field_transaction_shiplname");
+    let enFieldShippingEmailAddress = document.querySelector("input#en__field_transaction_shipemail");
+    let enFieldShippingCountry = document.querySelector("input#en__field_transaction_shipcountry");
+    let enFieldShippingAddress1 = document.querySelector("input#en__field_transaction_shipadd1");
+    let enFieldShippingAddress2 = document.querySelector("input#en__field_transaction_shipadd2");
+    let enFieldShippingCity = document.querySelector("input#en__field_transaction_shipcity");
+    let enFieldShippingRegion = document.querySelector("input#en__field_transaction_shipregion");
+    let enFieldShippingPostcode = document.querySelector("input#en__field_transaction_shippostcode");
+    // Billing Infromation
+    let enFieldBillingCountry = document.querySelector("input#en__field_supporter_billingCountry");
+    let enFieldBillingAddress1 = document.querySelector("input#en__field_supporter_billingAddress1");
+    let enFieldBillingAddress2 = document.querySelector("input#en__field_supporter_billingAddress2");
+    let enFieldBillingCity = document.querySelector("input#en__field_supporter_billingCity");
+    let enFieldBillingRegion = document.querySelector("input#en__field_supporter_billingRegion");
+    let enFieldBillingPostcode = document.querySelector("input#en__field_supporter_billingPostcode");
     // CHANGE FIELD INPUT TYPES
     if (enFieldDonationAmt) {
-        enFieldDonationAmt.setAttribute("inputmode", "numeric");
+        enFieldDonationAmt.setAttribute("inputmode", "decimal");
+    }
+    // ADD THE MISSING LABEL FOR IMPROVED ACCESSABILITY
+    if (enFieldDonationAmt) {
+        enFieldDonationAmt.setAttribute("aria-label", "Enter your custom donation amount");
     }
     // ADD FIELD PLACEHOLDERS
     const enAddInputPlaceholder = document.querySelector("[data-engrid-add-input-placeholders]");
-    if (enAddInputPlaceholder && enFieldDonationAmt) {
-        enFieldDonationAmt.placeholder = "Other Amount";
-    }
+    // Personal Information
     if (enAddInputPlaceholder && enFieldFirstName) {
         enFieldFirstName.placeholder = "First Name";
     }
@@ -11385,12 +12789,27 @@ const inputPlaceholder = () => {
     if (enAddInputPlaceholder && enFieldEmailAddress) {
         enFieldEmailAddress.placeholder = "Email Address";
     }
-    if (enAddInputPlaceholder && enFieldPhoneNumber) {
+    if (enAddInputPlaceholder &&
+        enFieldPhoneNumber &&
+        enFieldPhoneNumberRequired) {
         enFieldPhoneNumber.placeholder = "Phone Number";
     }
-    if (enAddInputPlaceholder && enFieldPhoneNumber2) {
+    else if (enAddInputPlaceholder &&
+        enFieldPhoneNumber &&
+        !enFieldPhoneNumberRequired) {
+        enFieldPhoneNumber.placeholder = "Phone Number (Optional)";
+    }
+    if (enAddInputPlaceholder &&
+        enFieldPhoneNumber2 &&
+        enFieldPhoneNumber2Required) {
+        enFieldPhoneNumber2.placeholder = "000-000-0000";
+    }
+    else if (enAddInputPlaceholder &&
+        enFieldPhoneNumber2 &&
+        !enFieldPhoneNumber2Required) {
         enFieldPhoneNumber2.placeholder = "000-000-0000 (Optional)";
     }
+    // Address
     if (enAddInputPlaceholder && enFieldCountry) {
         enFieldCountry.placeholder = "Country";
     }
@@ -11403,36 +12822,15 @@ const inputPlaceholder = () => {
     if (enAddInputPlaceholder && enFieldCity) {
         enFieldCity.placeholder = "City";
     }
-    // if (enAddInputPlaceholder && enFieldRegion){enFieldRegion.placeholder = "TBD";}
+    if (enAddInputPlaceholder && enFieldRegion) {
+        enFieldRegion.placeholder = "Region";
+    }
     if (enAddInputPlaceholder && enFieldPostcode) {
         enFieldPostcode.placeholder = "Postal Code";
     }
-    if (enAddInputPlaceholder && enFieldHonname) {
-        enFieldHonname.placeholder = "Honoree Name";
-    }
-    if (enAddInputPlaceholder && enFieldInfname) {
-        enFieldInfname.placeholder = "Recipient Name";
-    }
-    if (enAddInputPlaceholder && enFieldInfemail) {
-        enFieldInfemail.placeholder = "Recipient Email Address";
-    }
-    if (enAddInputPlaceholder && enFieldInfcountry) {
-        enFieldInfcountry.placeholder = "TBD";
-    }
-    if (enAddInputPlaceholder && enFieldInfadd1) {
-        enFieldInfadd1.placeholder = "Recipient Street Address";
-    }
-    if (enAddInputPlaceholder && enFieldInfadd2) {
-        enFieldInfadd2.placeholder = "Recipient Apt., ste., bldg.";
-    }
-    if (enAddInputPlaceholder && enFieldInfcity) {
-        enFieldInfcity.placeholder = "Recipient City";
-    }
-    if (enAddInputPlaceholder && enFieldInfpostcd) {
-        enFieldInfpostcd.placeholder = "Recipient Postal Code";
-    }
-    if (enAddInputPlaceholder && enFieldGftrsn) {
-        enFieldGftrsn.placeholder = "Reason for your gift";
+    // Donation
+    if (enAddInputPlaceholder && enFieldDonationAmt) {
+        enFieldDonationAmt.placeholder = "Other";
     }
     if (enAddInputPlaceholder && enFieldCcnumber) {
         enFieldCcnumber.placeholder = "•••• •••• •••• ••••";
@@ -11448,6 +12846,82 @@ const inputPlaceholder = () => {
     }
     if (enAddInputPlaceholder && enFieldBankRoutingNumber) {
         enFieldBankRoutingNumber.placeholder = "Bank Routing Number";
+    }
+    // In Honor
+    if (enAddInputPlaceholder && enFieldHonname) {
+        enFieldHonname.placeholder = "Honoree Name";
+    }
+    if (enAddInputPlaceholder && enFieldInfname) {
+        enFieldInfname.placeholder = "Recipient Name";
+    }
+    if (enAddInputPlaceholder && enFieldInfemail) {
+        enFieldInfemail.placeholder = "Recipient Email Address";
+    }
+    if (enAddInputPlaceholder && enFieldInfcountry) {
+        enFieldInfcountry.placeholder = "Country";
+    }
+    if (enAddInputPlaceholder && enFieldInfadd1) {
+        enFieldInfadd1.placeholder = "Recipient Street Address";
+    }
+    if (enAddInputPlaceholder && enFieldInfadd2) {
+        enFieldInfadd2.placeholder = "Recipient Apt., ste., bldg.";
+    }
+    if (enAddInputPlaceholder && enFieldInfcity) {
+        enFieldInfcity.placeholder = "Recipient City";
+    }
+    if (enAddInputPlaceholder && enFieldInfpostcd) {
+        enFieldInfpostcd.placeholder = "Recipient Postal Code";
+    }
+    // Miscillaneous
+    if (enAddInputPlaceholder && enFieldGftrsn) {
+        enFieldGftrsn.placeholder = "Reason for your gift";
+    }
+    // Shipping Infromation
+    if (enAddInputPlaceholder && enFieldShippingFirstName) {
+        enFieldShippingFirstName.placeholder = "Shipping First Name";
+    }
+    if (enAddInputPlaceholder && enFieldShippingLastName) {
+        enFieldShippingLastName.placeholder = "Shipping Last Name";
+    }
+    if (enAddInputPlaceholder && enFieldShippingEmailAddress) {
+        enFieldShippingEmailAddress.placeholder = "Shipping Email Address";
+    }
+    if (enAddInputPlaceholder && enFieldShippingCountry) {
+        enFieldShippingCountry.placeholder = "Shipping Country";
+    }
+    if (enAddInputPlaceholder && enFieldShippingAddress1) {
+        enFieldShippingAddress1.placeholder = "Shipping Street Address";
+    }
+    if (enAddInputPlaceholder && enFieldShippingAddress2) {
+        enFieldShippingAddress2.placeholder = "Shipping Apt., ste., bldg.";
+    }
+    if (enAddInputPlaceholder && enFieldShippingCity) {
+        enFieldShippingCity.placeholder = "Shipping City";
+    }
+    if (enAddInputPlaceholder && enFieldShippingRegion) {
+        enFieldShippingRegion.placeholder = "Shipping Region";
+    }
+    if (enAddInputPlaceholder && enFieldShippingPostcode) {
+        enFieldShippingPostcode.placeholder = "Shipping Postal Code";
+    }
+    // Billing Information
+    if (enAddInputPlaceholder && enFieldBillingCountry) {
+        enFieldBillingCountry.placeholder = "Billing Country";
+    }
+    if (enAddInputPlaceholder && enFieldBillingAddress1) {
+        enFieldBillingAddress1.placeholder = "Billing Street Address";
+    }
+    if (enAddInputPlaceholder && enFieldBillingAddress2) {
+        enFieldBillingAddress2.placeholder = "Billing Apt., ste., bldg.";
+    }
+    if (enAddInputPlaceholder && enFieldBillingCity) {
+        enFieldBillingCity.placeholder = "Billing City";
+    }
+    if (enAddInputPlaceholder && enFieldBillingRegion) {
+        enFieldBillingRegion.placeholder = "Billing Region";
+    }
+    if (enAddInputPlaceholder && enFieldBillingPostcode) {
+        enFieldBillingPostcode.placeholder = "Billing Postal Code";
     }
 };
 const preventAutocomplete = () => {
@@ -11527,6 +13001,8 @@ const watchGiveBySelectField = () => {
             }
             enFieldPaymentType.value = "applepay";
         }
+        const event = new Event("change");
+        enFieldPaymentType.dispatchEvent(event);
     };
     // Check Giving Frequency on page load
     if (enFieldGiveBySelect) {
@@ -11582,19 +13058,6 @@ let field_expiration_parts = document.querySelectorAll(".en__field--ccexpire .en
 const field_country = document.getElementById("en__field_supporter_country");
 let field_expiration_month = field_expiration_parts[0];
 let field_expiration_year = field_expiration_parts[1];
-/* The Donation Other Giving Amount is a "Number" type input field.
-   It also has its step value set to .01 so it increments up/down by once whole cent.
-   This step also client-side prevents users from entering a fraction of a penny.
-   And it has a min set to 5 so nothing less can be submitted
-*/
-const SetEnFieldOtherAmountRadioStepValue = () => {
-    const enFieldOtherAmountRadio = document.querySelector(".en__field--donationAmt .en__field__input--other");
-    if (enFieldOtherAmountRadio) {
-        enFieldOtherAmountRadio.setAttribute("step", ".01");
-        enFieldOtherAmountRadio.setAttribute("type", "number");
-        enFieldOtherAmountRadio.setAttribute("min", "5");
-    }
-};
 /*
  * Helpers
  */
@@ -11844,36 +13307,184 @@ const isInViewport = (e) => {
 };
 // Checks to see if the page is so short, the footer is above the fold. If the footer is above the folde we'll use this class to ensure at a minimum the page fills the full viewport height.
 if (contentFooter && isInViewport(contentFooter)) {
-    document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute("data-engrid-footer-above-fold", "");
+    document.body.setAttribute("data-engrid-footer-above-fold", "");
 }
 else {
-    document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute("data-engrid-footer-below-fold", "");
+    document.body.setAttribute("data-engrid-footer-below-fold", "");
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/iframe.js
 
-const sendIframeHeight = () => {
-    let height = document.body.offsetHeight;
-    console.log("Sending iFrame height of: ", height, "px"); // check the message is being sent correctly
-    window.parent.postMessage({
-        frameHeight: height,
-        pageNumber: engrid_ENGrid.getPageNumber(),
-        pageCount: engrid_ENGrid.getPageCount(),
-        giftProcess: engrid_ENGrid.getGiftProcess(),
-    }, "*");
-};
-const sendIframeFormStatus = (status) => {
-    window.parent.postMessage({
-        status: status,
-        pageNumber: engrid_ENGrid.getPageNumber(),
-        pageCount: engrid_ENGrid.getPageCount(),
-        giftProcess: engrid_ENGrid.getGiftProcess(),
-    }, "*");
-};
+
+class iFrame {
+    constructor() {
+        this._form = EnForm.getInstance();
+        this.logger = new EngridLogger("iFrame", "brown", "gray", "📡");
+        if (this.inIframe()) {
+            // Add the data-engrid-embedded attribute when inside an iFrame if it wasn't already added by a script in the Page Template
+            engrid_ENGrid.setBodyData("embedded", "");
+            // Fire the resize event
+            this.logger.log("First Resize");
+            this.sendIframeHeight();
+            // Listen for the resize event
+            window.addEventListener("resize", this.sendIframeHeight.bind(this));
+            window.addEventListener("load", (event) => {
+                // Scroll to top of iFrame
+                this.logger.log("iFrame Event - window.onload");
+                this.sendIframeHeight();
+                window.parent.postMessage({
+                    scroll: this.shouldScroll(),
+                }, "*");
+                // On click fire the resize event
+                document.addEventListener("click", (e) => {
+                    this.logger.log("Event - click");
+                    setTimeout(() => {
+                        this.sendIframeHeight();
+                    }, 100);
+                });
+            });
+            // Listen for the form submit event
+            this._form.onSubmit.subscribe((e) => {
+                this.logger.log("Event - onSubmit");
+                this.sendIframeFormStatus("submit");
+            });
+            // If the iFrame is Chained, check if the form has data
+            if (this.isChained() && this.hasPayment()) {
+                this.logger.log("Chained iFrame");
+                this.sendIframeFormStatus("chained");
+                this.hideFormComponents();
+                this.addChainedBanner();
+            }
+            // Remove the skip link markup when inside an iFrame
+            const skipLink = document.querySelector(".skip-link");
+            if (skipLink) {
+                skipLink.remove();
+            }
+        }
+        else {
+            // Parent Page Logic
+            window.addEventListener("message", (event) => {
+                const iframe = this.getIFrameByEvent(event);
+                if (iframe) {
+                    if (event.data.hasOwnProperty("frameHeight")) {
+                        iframe.style.height = event.data.frameHeight + "px";
+                    }
+                    else if (event.data.hasOwnProperty("scroll") &&
+                        event.data.scroll > 0) {
+                        const elDistanceToTop = window.pageYOffset + iframe.getBoundingClientRect().top;
+                        let scrollTo = elDistanceToTop + event.data.scroll;
+                        window.scrollTo({
+                            top: scrollTo,
+                            left: 0,
+                            behavior: "smooth",
+                        });
+                        this.logger.log("Scrolling Window To " + scrollTo);
+                    }
+                }
+            });
+        }
+    }
+    sendIframeHeight() {
+        let height = document.body.offsetHeight;
+        this.logger.log("Sending iFrame height of: " + height + "px"); // check the message is being sent correctly
+        window.parent.postMessage({
+            frameHeight: height,
+            pageNumber: engrid_ENGrid.getPageNumber(),
+            pageCount: engrid_ENGrid.getPageCount(),
+            giftProcess: engrid_ENGrid.getGiftProcess(),
+        }, "*");
+    }
+    sendIframeFormStatus(status) {
+        window.parent.postMessage({
+            status: status,
+            pageNumber: engrid_ENGrid.getPageNumber(),
+            pageCount: engrid_ENGrid.getPageCount(),
+            giftProcess: engrid_ENGrid.getGiftProcess(),
+        }, "*");
+    }
+    getIFrameByEvent(event) {
+        return [].slice
+            .call(document.getElementsByTagName("iframe"))
+            .filter((iframe) => {
+            return iframe.contentWindow === event.source;
+        })[0];
+    }
+    shouldScroll() {
+        // If you find a error, scroll
+        if (document.querySelector(".en__errorHeader")) {
+            return true;
+        }
+        // If it's a chained iFrame, don't scroll
+        if (this.isChained()) {
+            return false;
+        }
+        // Try to match the iframe referrer URL by testing valid EN Page URLs
+        let referrer = document.referrer;
+        let enURLPattern = new RegExp(/^(.*)\/(page)\/(\d+.*)/);
+        // Scroll if the Regex matches, don't scroll otherwise
+        return enURLPattern.test(referrer);
+    }
+    inIframe() {
+        try {
+            return window.self !== window.top;
+        }
+        catch (e) {
+            return true;
+        }
+    }
+    isChained() {
+        return !!engrid_ENGrid.getUrlParameter("chain");
+    }
+    hasPayment() {
+        const payment = engrid_ENGrid.getFieldValue("transaction.paymenttype");
+        const ccnumber = engrid_ENGrid.getFieldValue("transaction.ccnumber");
+        return payment || ccnumber;
+    }
+    hideFormComponents() {
+        this.logger.log("Hiding Form Components");
+        const en__component = document.querySelectorAll(".body-main > div");
+        en__component.forEach((component, index) => {
+            if (component.classList.contains("hide") === false &&
+                component.classList.contains("hide-iframe") === false &&
+                component.classList.contains("radio-to-buttons_donationAmt") ===
+                    false &&
+                index < en__component.length - 1) {
+                component.classList.add("hide-iframe");
+                component.classList.add("hide-chained");
+            }
+        });
+        this.sendIframeHeight();
+    }
+    showFormComponents() {
+        this.logger.log("Showing Form Components");
+        const en__component = document.querySelectorAll(".body-main > div.hide-chained");
+        en__component.forEach((component) => {
+            component.classList.remove("hide-iframe");
+            component.classList.remove("hide-chained");
+        });
+        this.sendIframeHeight();
+    }
+    addChainedBanner() {
+        var _a, _b;
+        this.logger.log("Adding Chained Banner");
+        const banner = document.createElement("div");
+        const lastComponent = document.querySelector(".body-main > div:last-of-type");
+        banner.classList.add("en__component");
+        banner.classList.add("en__component--banner");
+        banner.classList.add("en__component--banner--chained");
+        banner.innerHTML = `<div class="en__component__content"><div class="en__component__content__inner"><div class="en__component__content__text"><p>
+      Giving as <strong>${engrid_ENGrid.getFieldValue("supporter.firstName")} ${engrid_ENGrid.getFieldValue("supporter.lastName")}</strong> 
+      with <strong>${engrid_ENGrid.getFieldValue("transaction.paymenttype").toUpperCase()}</strong>
+      (<a href="#" class="en__component__content__link">change</a>)</p></div></div></div>`;
+        (_a = lastComponent === null || lastComponent === void 0 ? void 0 : lastComponent.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(banner, lastComponent);
+        (_b = banner
+            .querySelector(".en__component__content__link")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.showFormComponents();
+            banner.remove();
+        });
+    }
+}
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/media-attribution.js
 /*
@@ -11893,6 +13504,7 @@ const sendIframeFormStatus = (status) => {
   <figure class="media-with-attribution"><img src="https://via.placeholder.com/300x300" data-src="https://via.placeholder.com/300x300" data-attribution-source="Jane Doe 1"><figattribution class="attribution-bottomright">Jane Doe 1</figattribution></figure>
 */
 
+const tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 class MediaAttribution {
     constructor() {
         // Find all images with attribution but not with the "data-attribution-hide-overlay" attribute
@@ -11922,6 +13534,19 @@ class MediaAttribution {
                     }
                     else {
                         mediaWithAttributionElement.insertAdjacentHTML("afterend", "<figattribution>" + attributionSource + "</figure>");
+                    }
+                    const attributionSourceTooltip = "attributionSourceTooltip" in mediaWithAttributionElement.dataset
+                        ? mediaWithAttributionElement.dataset.attributionSourceTooltip
+                        : false;
+                    if (attributionSourceTooltip) {
+                        tippy(".media-with-attribution figattribution", {
+                            content: attributionSourceTooltip,
+                            arrow: true,
+                            arrowType: "default",
+                            placement: "left",
+                            trigger: "click mouseenter focus",
+                            interactive: true,
+                        });
                     }
                 }
             }
@@ -11971,7 +13596,7 @@ class LiveVariables {
     }
     getAmountTxt(amount = 0) {
         var _a, _b, _c, _d;
-        const symbol = (_a = this.options.CurrencySymbol) !== null && _a !== void 0 ? _a : "$";
+        const symbol = (_a = engrid_ENGrid.getCurrencySymbol()) !== null && _a !== void 0 ? _a : "$";
         const dec_separator = (_b = this.options.DecimalSeparator) !== null && _b !== void 0 ? _b : ".";
         const thousands_separator = (_c = this.options.ThousandsSeparator) !== null && _c !== void 0 ? _c : "";
         const dec_places = amount % 1 == 0 ? 0 : (_d = this.options.DecimalPlaces) !== null && _d !== void 0 ? _d : 2;
@@ -11980,7 +13605,7 @@ class LiveVariables {
     }
     getUpsellAmountTxt(amount = 0) {
         var _a, _b, _c, _d;
-        const symbol = (_a = this.options.CurrencySymbol) !== null && _a !== void 0 ? _a : "$";
+        const symbol = (_a = engrid_ENGrid.getCurrencySymbol()) !== null && _a !== void 0 ? _a : "$";
         const dec_separator = (_b = this.options.DecimalSeparator) !== null && _b !== void 0 ? _b : ".";
         const thousands_separator = (_c = this.options.ThousandsSeparator) !== null && _c !== void 0 ? _c : "";
         const dec_places = amount % 1 == 0 ? 0 : (_d = this.options.DecimalPlaces) !== null && _d !== void 0 ? _d : 2;
@@ -12015,7 +13640,7 @@ class LiveVariables {
     loadingSubmitButton() {
         const submit = document.querySelector(".en__submit button");
         // Don't add the Loading element if the button is from an Ajax form (like the supporter hub)
-        if (submit.hasAttribute("data-action")) {
+        if (submit.closest(".en__hubOverlay") !== null) {
             return true;
         }
         let submitButtonOriginalHTML = submit.innerHTML;
@@ -12120,11 +13745,11 @@ class UpsellLightbox {
         this._amount = DonationAmount.getInstance();
         this._fees = ProcessingFees.getInstance();
         this._frequency = DonationFrequency.getInstance();
+        this.logger = new EngridLogger("UpsellLightbox", "black", "pink", "🪟");
         let options = "EngridUpsell" in window ? window.EngridUpsell : {};
         this.options = Object.assign(Object.assign({}, UpsellOptionsDefaults), options);
         if (!this.shouldRun()) {
-            if (engrid_ENGrid.debug)
-                console.log("Upsell script should NOT run");
+            this.logger.log("Upsell script should NOT run");
             // If we're not on a Donation Page, get out
             return;
         }
@@ -12165,7 +13790,7 @@ class UpsellLightbox {
                     </p>
                   </div>
                   <div class="upsellOtherAmountInput">
-                    <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="" autocomplete="off">
+                    <input href="#" id="secondOtherField" name="secondOtherField" type="text" value="" inputmode="decimal" aria-label="Enter your custom donation amount" autocomplete="off" data-lpignore="true" aria-required="true" size="12">
                     <small>Minimum ${this.getAmountTxt(this.options.minAmount)}</small>
                   </div>
                 </div>
@@ -12221,8 +13846,7 @@ class UpsellLightbox {
         if (otherField) {
             otherField.addEventListener("keyup", this.popupOtherField.bind(this));
         }
-        if (engrid_ENGrid.debug)
-            console.log("Upsell script rendered");
+        this.logger.log("Upsell script rendered");
     }
     // Should we run the script?
     shouldRun() {
@@ -12271,6 +13895,8 @@ class UpsellLightbox {
             let val = this.options.amountRange[i];
             if (upsellAmount == 0 && amount <= val.max) {
                 upsellAmount = val.suggestion;
+                if (upsellAmount === 0)
+                    return 0;
                 if (typeof upsellAmount !== "number") {
                     const suggestionMath = upsellAmount.replace("amount", amount.toFixed(2));
                     upsellAmount = parseFloat(Function('"use strict";return (' + suggestionMath + ")")());
@@ -12292,18 +13918,15 @@ class UpsellLightbox {
         if (freq == "onetime" &&
             !this.overlay.classList.contains("is-submitting") &&
             upsellAmount > 0) {
-            if (engrid_ENGrid.debug) {
-                console.log("Upsell Frequency", this._frequency.frequency);
-                console.log("Upsell Amount", this._amount.amount);
-                console.log("Upsell Suggested Amount", upsellAmount);
-            }
+            this.logger.log("Upsell Frequency " + this._frequency.frequency);
+            this.logger.log("Upsell Amount " + this._amount.amount);
+            this.logger.log("Upsell Suggested Amount " + upsellAmount);
             return true;
         }
         return false;
     }
     open() {
-        if (engrid_ENGrid.debug)
-            console.log("Upsell Script Triggered");
+        this.logger.log("Upsell script opened");
         if (!this.shouldOpen()) {
             // In the circumstance when the form fails to validate via server-side validation, the page will reload
             // When that happens, we should place the original amount saved in sessionStorage into the upsell original amount field
@@ -12354,8 +13977,7 @@ class UpsellLightbox {
         e.preventDefault();
         if (e.target instanceof Element &&
             ((_a = document.querySelector("#upsellYesButton")) === null || _a === void 0 ? void 0 : _a.contains(e.target))) {
-            if (engrid_ENGrid.debug)
-                console.log("Upsold");
+            this.logger.success("Upsold");
             this.setOriginalAmount(this._amount.amount.toString());
             const upsoldAmount = this.getUpsellAmount();
             this._frequency.setFrequency("monthly");
@@ -12382,7 +14004,7 @@ class UpsellLightbox {
     }
     getAmountTxt(amount = 0) {
         var _a, _b, _c, _d;
-        const symbol = (_a = engrid_ENGrid.getOption("CurrencySymbol")) !== null && _a !== void 0 ? _a : "$";
+        const symbol = (_a = engrid_ENGrid.getCurrencySymbol()) !== null && _a !== void 0 ? _a : "$";
         const dec_separator = (_b = engrid_ENGrid.getOption("DecimalSeparator")) !== null && _b !== void 0 ? _b : ".";
         const thousands_separator = (_c = engrid_ENGrid.getOption("ThousandsSeparator")) !== null && _c !== void 0 ? _c : "";
         const dec_places = amount % 1 == 0 ? 0 : (_d = engrid_ENGrid.getOption("DecimalPlaces")) !== null && _d !== void 0 ? _d : 2;
@@ -12403,10 +14025,13 @@ class UpsellLightbox {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/show-hide-radio-checkboxes.js
+
 class ShowHideRadioCheckboxes {
     constructor(elements, classes) {
+        this.logger = new EngridLogger("ShowHideRadioCheckboxes", "black", "lightblue", "👁");
         this.elements = document.getElementsByName(elements);
         this.classes = classes;
+        this.createDataAttributes();
         this.hideAll();
         for (let i = 0; i < this.elements.length; i++) {
             let element = this.elements[i];
@@ -12419,6 +14044,35 @@ class ShowHideRadioCheckboxes {
             });
         }
     }
+    // Create default data attributes on all fields
+    createDataAttributes() {
+        this.elements.forEach((item) => {
+            if (item instanceof HTMLInputElement) {
+                let inputValue = item.value.replace(/\W/g, "");
+                document
+                    .querySelectorAll("." + this.classes + inputValue)
+                    .forEach((el) => {
+                    // Consider toggling "hide" class so these fields can be displayed when in a debug state
+                    if (el instanceof HTMLElement) {
+                        const fields = el.querySelectorAll("input[type='text'], input[type='number'], input[type='email'], select, textarea");
+                        if (fields.length > 0) {
+                            fields.forEach((field) => {
+                                if (field instanceof HTMLInputElement ||
+                                    field instanceof HTMLSelectElement) {
+                                    if (!field.hasAttribute("data-original-value")) {
+                                        field.setAttribute("data-original-value", field.value);
+                                    }
+                                    if (!field.hasAttribute("data-value")) {
+                                        field.setAttribute("data-value", field.value);
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            }
+        });
+    }
     // Hide All Divs
     hideAll() {
         this.elements.forEach((item, index) => {
@@ -12428,23 +14082,56 @@ class ShowHideRadioCheckboxes {
     }
     // Hide Single Element Div
     hide(item) {
-        let inputValue = item.value;
+        let inputValue = item.value.replace(/\W/g, "");
         document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
             // Consider toggling "hide" class so these fields can be displayed when in a debug state
-            if (el instanceof HTMLElement)
+            if (el instanceof HTMLElement) {
+                this.toggleValue(el, "hide");
                 el.style.display = "none";
+                this.logger.log("Hiding", el);
+            }
         });
     }
     // Show Single Element Div
     show(item) {
-        let inputValue = item.value;
+        let inputValue = item.value.replace(/\W/g, "");
         document.querySelectorAll("." + this.classes + inputValue).forEach((el) => {
             // Consider toggling "hide" class so these fields can be displayed when in a debug state
-            if (el instanceof HTMLElement)
+            if (el instanceof HTMLElement) {
+                this.toggleValue(el, "show");
                 el.style.display = "";
+                this.logger.log("Showing", el);
+            }
         });
         if (item.type == "checkbox" && !item.checked) {
             this.hide(item);
+        }
+    }
+    // Take the field values and add to a data attribute on the field
+    toggleValue(item, type) {
+        if (type == "hide" && !engrid_ENGrid.isVisible(item))
+            return;
+        this.logger.log(`toggleValue: ${type}`);
+        const fields = item.querySelectorAll("input[type='text'], input[type='number'], input[type='email'], select, textarea");
+        if (fields.length > 0) {
+            fields.forEach((field) => {
+                var _a;
+                if (field instanceof HTMLInputElement ||
+                    field instanceof HTMLSelectElement) {
+                    if (field.name) {
+                        const fieldValue = engrid_ENGrid.getFieldValue(field.name);
+                        const originalValue = field.getAttribute("data-original-value");
+                        const dataValue = (_a = field.getAttribute("data-value")) !== null && _a !== void 0 ? _a : "";
+                        if (type === "hide") {
+                            field.setAttribute("data-value", fieldValue);
+                            engrid_ENGrid.setFieldValue(field.name, originalValue);
+                        }
+                        else {
+                            engrid_ENGrid.setFieldValue(field.name, dataValue);
+                        }
+                    }
+                }
+            });
         }
     }
 }
@@ -12658,8 +14345,8 @@ class TranslateFields {
                 break;
             case "AU":
             case "AUS":
-                this.setStateValues("Province/State", [
-                    { label: "Select Province/State", value: "" },
+                this.setStateValues("Province / State", [
+                    { label: "Select", value: "" },
                     { label: "New South Wales", value: "NSW" },
                     { label: "Victoria", value: "VIC" },
                     { label: "Queensland", value: "QLD" },
@@ -12671,8 +14358,8 @@ class TranslateFields {
                 ]);
                 break;
             case "Australia":
-                this.setStateValues("Province/State", [
-                    { label: "Select Province/State", value: "" },
+                this.setStateValues("Province / State", [
+                    { label: "Select", value: "" },
                     { label: "New South Wales", value: "New South Wales" },
                     { label: "Victoria", value: "Victoria" },
                     { label: "Queensland", value: "Queensland" },
@@ -12801,8 +14488,8 @@ class TranslateFields {
                 break;
             case "CA":
             case "CAN":
-                this.setStateValues("Province/State", [
-                    { label: "Select Province/State", value: "" },
+                this.setStateValues("Province / Territory", [
+                    { label: "Select", value: "" },
                     { label: "Alberta", value: "AB" },
                     { label: "British Columbia", value: "BC" },
                     { label: "Manitoba", value: "MB" },
@@ -12819,8 +14506,8 @@ class TranslateFields {
                 ]);
                 break;
             case "Canada":
-                this.setStateValues("Province/State", [
-                    { label: "Select Province/State", value: "" },
+                this.setStateValues("Province / Territory", [
+                    { label: "Select", value: "" },
                     { label: "Alberta", value: "Alberta" },
                     { label: "British Columbia", value: "British Columbia" },
                     { label: "Manitoba", value: "Manitoba" },
@@ -12841,8 +14528,8 @@ class TranslateFields {
                 break;
             case "MX":
             case "MEX":
-                this.setStateValues("Province", [
-                    { label: "Select Province", value: "" },
+                this.setStateValues("Estado", [
+                    { label: "Seleccione Estado", value: "" },
                     { label: "Aguascalientes", value: "AGU" },
                     { label: "Baja California", value: "BCN" },
                     { label: "Baja California Sur", value: "BCS" },
@@ -12877,8 +14564,8 @@ class TranslateFields {
                 ]);
                 break;
             case "Mexico":
-                this.setStateValues("Province", [
-                    { label: "Select Province", value: "" },
+                this.setStateValues("Estado", [
+                    { label: "Seleccione Estado", value: "" },
                     { label: "Aguascalientes", value: "Aguascalientes" },
                     { label: "Baja California", value: "Baja California" },
                     { label: "Baja California Sur", value: "Baja California Sur" },
@@ -12913,7 +14600,7 @@ class TranslateFields {
                 ]);
                 break;
             default:
-                this.setStateValues("Province/State", null);
+                this.setStateValues("Province / State", null);
                 break;
         }
     }
@@ -12972,6 +14659,8 @@ class TranslateFields {
         if (stateField) {
             set("engrid-state", stateField.value, {
                 expires: 1,
+                sameSite: "none",
+                secure: true,
             });
         }
     }
@@ -12984,7 +14673,7 @@ class TranslateFields {
 class SimpleCountrySelect {
     constructor() {
         this.countryWrapper = document.querySelector(".simple_country_select");
-        this.countrySelect = document.querySelector("#en__field_supporter_country");
+        this.countrySelect = document.querySelector("select#en__field_supporter_country");
         this.country = null;
         const engridAutofill = get("engrid-autofill");
         const submissionFailed = !!(engrid_ENGrid.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") && window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed());
@@ -13337,10 +15026,14 @@ class NeverBounce {
         this.emailWrapper = document.querySelector(".en__field--emailAddress");
         this.nbDate = null;
         this.nbStatus = null;
+        this.logger = new EngridLogger("NeverBounce", "#039bc4", "#dfdfdf", "📧");
+        this.shouldRun = true;
+        this.nbLoaded = false;
+        this.emailField = document.getElementById("en__field_supporter_emailAddress");
         window._NBSettings = {
             apiKey: this.apiKey,
             autoFieldHookup: false,
-            inputLatency: 500,
+            inputLatency: 1500,
             displayPoweredBy: false,
             loadingMessage: "Validating...",
             softRejectMessage: "Invalid email",
@@ -13348,27 +15041,41 @@ class NeverBounce {
             feedback: false,
         };
         engrid_ENGrid.loadJS("https://cdn.neverbounce.com/widget/dist/NeverBounce.js");
-        this.init();
-        this.form.onValidate.subscribe(() => (this.form.validate = this.validate()));
+        if (this.emailField) {
+            if (this.emailField.value)
+                this.shouldRun = false;
+            this.emailField.addEventListener("change", (e) => {
+                var _a;
+                if (!this.nbLoaded) {
+                    this.shouldRun = true;
+                    this.init();
+                    if ((_a = this.emailField) === null || _a === void 0 ? void 0 : _a.value) {
+                        setTimeout(function () {
+                            window._nb.fields
+                                .get(document.querySelector("[data-nb-id]"))[0]
+                                .forceUpdate();
+                        }, 100);
+                    }
+                }
+            });
+            window.setTimeout(() => {
+                this.init();
+            }, 1000);
+        }
+        this.form.onValidate.subscribe(this.validate.bind(this));
     }
     init() {
-        this.emailField = document.getElementById("en__field_supporter_emailAddress");
+        if (this.nbLoaded || !this.shouldRun)
+            return;
+        this.logger.log("Init Function");
         if (this.dateField && document.getElementsByName(this.dateField).length)
             this.nbDate = document.querySelector("[name='" + this.dateField + "']");
         if (this.statusField && document.getElementsByName(this.statusField).length)
             this.nbStatus = document.querySelector("[name='" + this.statusField + "']");
         if (!this.emailField) {
-            if (engrid_ENGrid.debug)
-                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            this.logger.log("E-mail Field Not Found");
             return;
         }
-        if (!this.emailField) {
-            if (engrid_ENGrid.debug)
-                console.log("Engrid Neverbounce: E-mail Field Not Found", this.emailField);
-            return;
-        }
-        if (engrid_ENGrid.debug)
-            console.log("Engrid Neverbounce External Script Loaded");
         this.wrap(this.emailField, document.createElement("div"));
         const parentNode = this.emailField.parentNode;
         parentNode.id = "nb-wrapper";
@@ -13378,67 +15085,55 @@ class NeverBounce {
             '<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>';
         this.insertAfter(nbCustomMessageHTML, this.emailField);
         const NBClass = this;
-        window.addEventListener("load", function () {
-            document
-                .getElementsByTagName("body")[0]
-                .addEventListener("nb:registered", function (event) {
-                const field = document.querySelector('[data-nb-id="' + event.detail.id + '"]');
-                field.addEventListener("nb:loading", function (e) {
-                    engrid_ENGrid.disableSubmit("Validating Your Email");
-                });
-                // Never Bounce: Do work when input changes or when API responds with an error
-                field.addEventListener("nb:clear", function (e) {
-                    NBClass.setEmailStatus("clear");
-                    engrid_ENGrid.enableSubmit();
-                    if (NBClass.nbDate)
-                        NBClass.nbDate.value = "";
-                    if (NBClass.nbStatus)
-                        NBClass.nbStatus.value = "";
-                });
-                // Never Bounce: Do work when results have an input that does not look like an email (i.e. missing @ or no .com/.net/etc...)
-                field.addEventListener("nb:soft-result", function (e) {
-                    NBClass.setEmailStatus("soft-result");
-                    if (NBClass.nbDate)
-                        NBClass.nbDate.value = "";
-                    if (NBClass.nbStatus)
-                        NBClass.nbStatus.value = "";
-                    engrid_ENGrid.enableSubmit();
-                });
-                // Never Bounce: When results have been received
-                field.addEventListener("nb:result", function (e) {
-                    if (e.detail.result.is(window._nb.settings.getAcceptedStatusCodes())) {
-                        NBClass.setEmailStatus("valid");
-                        if (NBClass.nbDate)
-                            NBClass.nbDate.value = engrid_ENGrid.formatDate(new Date(), NBClass.dateFormat);
-                        if (NBClass.nbStatus)
-                            NBClass.nbStatus.value = (e).detail.result.response.result;
-                    }
-                    else {
-                        NBClass.setEmailStatus("invalid");
-                        if (NBClass.nbDate)
-                            NBClass.nbDate.value = "";
-                        if (NBClass.nbStatus)
-                            NBClass.nbStatus.value = "";
-                    }
-                    engrid_ENGrid.enableSubmit();
-                });
-                if (field.value) {
-                    console.log(field);
-                    setTimeout(function () {
-                        window._nb.fields
-                            .get(document.querySelector("[data-nb-id]"))[0]
-                            .forceUpdate();
-                    }, 100);
-                }
+        document.body.addEventListener("nb:registered", function (event) {
+            const field = document.querySelector('[data-nb-id="' + event.detail.id + '"]');
+            field.addEventListener("nb:loading", function (e) {
+                engrid_ENGrid.disableSubmit("Validating Your Email");
             });
-            // Never Bounce: Register field with the widget and broadcast nb:registration event
-            window._nb.fields.registerListener(NBClass.emailField, true);
+            // Never Bounce: Do work when input changes or when API responds with an error
+            field.addEventListener("nb:clear", function (e) {
+                NBClass.setEmailStatus("clear");
+                engrid_ENGrid.enableSubmit();
+                if (NBClass.nbDate)
+                    NBClass.nbDate.value = "";
+                if (NBClass.nbStatus)
+                    NBClass.nbStatus.value = "";
+            });
+            // Never Bounce: Do work when results have an input that does not look like an email (i.e. missing @ or no .com/.net/etc...)
+            field.addEventListener("nb:soft-result", function (e) {
+                NBClass.setEmailStatus("soft-result");
+                if (NBClass.nbDate)
+                    NBClass.nbDate.value = "";
+                if (NBClass.nbStatus)
+                    NBClass.nbStatus.value = "";
+                engrid_ENGrid.enableSubmit();
+            });
+            // Never Bounce: When results have been received
+            field.addEventListener("nb:result", function (e) {
+                if (e.detail.result.is(window._nb.settings.getAcceptedStatusCodes())) {
+                    NBClass.setEmailStatus("valid");
+                    if (NBClass.nbDate)
+                        NBClass.nbDate.value = engrid_ENGrid.formatDate(new Date(), NBClass.dateFormat);
+                    if (NBClass.nbStatus)
+                        NBClass.nbStatus.value = (e).detail.result.response.result;
+                }
+                else {
+                    NBClass.setEmailStatus("invalid");
+                    if (NBClass.nbDate)
+                        NBClass.nbDate.value = "";
+                    if (NBClass.nbStatus)
+                        NBClass.nbStatus.value = "";
+                }
+                engrid_ENGrid.enableSubmit();
+            });
         });
+        // Never Bounce: Register field with the widget and broadcast nb:registration event
+        window._nb.fields.registerListener(NBClass.emailField, true);
+        this.nbLoaded = true;
     }
     clearStatus() {
         if (!this.emailField) {
-            if (engrid_ENGrid.debug)
-                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            this.logger.log("E-mail Field Not Found");
             return;
         }
         this.emailField.classList.remove("rm-error");
@@ -13457,11 +15152,9 @@ class NeverBounce {
             errorField.remove();
     }
     setEmailStatus(status) {
-        if (engrid_ENGrid.debug)
-            console.log("Neverbounce Status:", status);
+        this.logger.log("Status:", status);
         if (!this.emailField) {
-            if (engrid_ENGrid.debug)
-                console.log("Engrid Neverbounce: E-mail Field Not Found");
+            this.logger.log("E-mail Field Not Found");
             return;
         }
         // Search page for the NB Wrapper div and set as variable
@@ -13526,11 +15219,6 @@ class NeverBounce {
         var _a;
         (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(el, referenceNode.nextSibling);
     }
-    //  to insert HTML before a DIV
-    insertBefore(el, referenceNode) {
-        var _a;
-        (_a = referenceNode === null || referenceNode === void 0 ? void 0 : referenceNode.parentNode) === null || _a === void 0 ? void 0 : _a.insertBefore(el, referenceNode);
-    }
     //  to Wrap HTML around a DIV
     wrap(el, wrapper) {
         var _a;
@@ -13539,20 +15227,20 @@ class NeverBounce {
     }
     validate() {
         var _a;
-        if (!this.emailField) {
-            if (engrid_ENGrid.debug)
-                console.log("Engrid Neverbounce validate(): E-mail Field Not Found. Returning true.");
-            return true;
+        const nbResult = engrid_ENGrid.getFieldValue("nb-result");
+        if (!this.emailField || !this.shouldRun || !this.nbLoaded || !nbResult) {
+            this.logger.log("validate(): Should Not Run. Returning true.");
+            return;
         }
         if (this.nbStatus) {
-            this.nbStatus.value = engrid_ENGrid.getFieldValue("nb-result");
+            this.nbStatus.value = nbResult;
         }
-        if (!["catchall", "unknown", "valid"].includes(engrid_ENGrid.getFieldValue("nb-result"))) {
+        if (!["catchall", "unknown", "valid"].includes(nbResult)) {
             this.setEmailStatus("required");
             (_a = this.emailField) === null || _a === void 0 ? void 0 : _a.focus();
-            return false;
+            this.logger.log("NB-Result:", engrid_ENGrid.getFieldValue("nb-result"));
+            this.form.validate = false;
         }
-        return true;
     }
 }
 
@@ -13601,29 +15289,53 @@ class ProgressBar {
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/remember-me.js
 
 
-const tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
+const remember_me_tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 class RememberMe {
     constructor(options) {
         this._form = EnForm.getInstance();
         this.iframe = null;
-        this.remoteUrl = (options.remoteUrl) ? options.remoteUrl : null;
-        this.cookieName = (options.cookieName) ? options.cookieName : 'engrid-autofill';
-        this.cookieExpirationDays = (options.cookieExpirationDays) ? options.cookieExpirationDays : 365;
-        this.rememberMeOptIn = (options.checked) ? options.checked : false;
-        this.fieldNames = (options.fieldNames) ? options.fieldNames : [];
-        this.fieldDonationAmountRadioName = (options.fieldDonationAmountRadioName) ? options.fieldDonationAmountRadioName : 'transaction.donationAmt';
-        this.fieldDonationAmountOtherName = (options.fieldDonationAmountOtherName) ? options.fieldDonationAmountOtherName : 'transaction.donationAmt.other';
-        this.fieldDonationRecurrPayRadioName = (options.fieldDonationRecurrPayRadioName) ? options.fieldDonationRecurrPayRadioName : 'transaction.recurrpay';
-        this.fieldDonationAmountOtherCheckboxID = (options.fieldDonationAmountOtherCheckboxID) ? options.fieldDonationAmountOtherCheckboxID : '#en__field_transaction_donationAmt4';
-        this.fieldOptInSelectorTarget = (options.fieldOptInSelectorTarget) ? options.fieldOptInSelectorTarget : '.en__field--emailAddress.en__field';
-        this.fieldOptInSelectorTargetLocation = (options.fieldOptInSelectorTargetLocation) ? options.fieldOptInSelectorTargetLocation : 'after';
-        this.fieldClearSelectorTarget = (options.fieldClearSelectorTarget) ? options.fieldClearSelectorTarget : 'label[for="en__field_supporter_firstName"]';
-        this.fieldClearSelectorTargetLocation = (options.fieldClearSelectorTargetLocation) ? options.fieldClearSelectorTargetLocation : 'before';
+        this.remoteUrl = options.remoteUrl ? options.remoteUrl : null;
+        this.cookieName = options.cookieName
+            ? options.cookieName
+            : "engrid-autofill";
+        this.cookieExpirationDays = options.cookieExpirationDays
+            ? options.cookieExpirationDays
+            : 365;
+        this.rememberMeOptIn = options.checked ? options.checked : false;
+        this.fieldNames = options.fieldNames ? options.fieldNames : [];
+        this.fieldDonationAmountRadioName = options.fieldDonationAmountRadioName
+            ? options.fieldDonationAmountRadioName
+            : "transaction.donationAmt";
+        this.fieldDonationAmountOtherName = options.fieldDonationAmountOtherName
+            ? options.fieldDonationAmountOtherName
+            : "transaction.donationAmt.other";
+        this.fieldDonationRecurrPayRadioName =
+            options.fieldDonationRecurrPayRadioName
+                ? options.fieldDonationRecurrPayRadioName
+                : "transaction.recurrpay";
+        this.fieldDonationAmountOtherCheckboxID =
+            options.fieldDonationAmountOtherCheckboxID
+                ? options.fieldDonationAmountOtherCheckboxID
+                : "#en__field_transaction_donationAmt4";
+        this.fieldOptInSelectorTarget = options.fieldOptInSelectorTarget
+            ? options.fieldOptInSelectorTarget
+            : ".en__field--emailAddress.en__field";
+        this.fieldOptInSelectorTargetLocation =
+            options.fieldOptInSelectorTargetLocation
+                ? options.fieldOptInSelectorTargetLocation
+                : "after";
+        this.fieldClearSelectorTarget = options.fieldClearSelectorTarget
+            ? options.fieldClearSelectorTarget
+            : 'label[for="en__field_supporter_firstName"]';
+        this.fieldClearSelectorTargetLocation =
+            options.fieldClearSelectorTargetLocation
+                ? options.fieldClearSelectorTargetLocation
+                : "before";
         this.fieldData = {};
         if (this.useRemote()) {
             this.createIframe(() => {
                 if (this.iframe && this.iframe.contentWindow) {
-                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: 'read' }, '*');
+                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: "read" }, "*");
                     this._form.onSubmit.subscribe(() => {
                         if (this.rememberMeOptIn) {
                             this.readFields();
@@ -13632,7 +15344,10 @@ class RememberMe {
                     });
                 }
             }, (event) => {
-                if (event.data && event.data.key && event.data.value !== undefined && event.data.key === this.cookieName) {
+                if (event.data &&
+                    event.data.key &&
+                    event.data.value !== undefined &&
+                    event.data.key === this.cookieName) {
                     this.updateFieldData(event.data.value);
                     this.writeFields();
                     let hasFieldData = Object.keys(this.fieldData).length > 0;
@@ -13676,33 +15391,35 @@ class RememberMe {
         }
     }
     insertClearRememberMeLink() {
-        if (!document.getElementById('clear-autofill-data')) {
-            const clearAutofillLabel = 'clear autofill';
-            const clearRememberMeField = document.createElement('a');
-            clearRememberMeField.setAttribute('id', 'clear-autofill-data');
-            clearRememberMeField.classList.add('label-tooltip');
-            clearRememberMeField.setAttribute('style', 'cursor: pointer;');
+        if (!document.getElementById("clear-autofill-data")) {
+            const clearAutofillLabel = "clear autofill";
+            const clearRememberMeField = document.createElement("a");
+            clearRememberMeField.setAttribute("id", "clear-autofill-data");
+            clearRememberMeField.classList.add("label-tooltip");
+            clearRememberMeField.setAttribute("style", "cursor: pointer;");
             clearRememberMeField.innerHTML = `(${clearAutofillLabel})`;
             const targetField = this.getElementByFirstSelector(this.fieldClearSelectorTarget);
             if (targetField) {
-                if (this.fieldClearSelectorTargetLocation === 'after') {
+                if (this.fieldClearSelectorTargetLocation === "after") {
                     targetField.appendChild(clearRememberMeField);
                 }
                 else {
                     targetField.prepend(clearRememberMeField);
                 }
-                clearRememberMeField.addEventListener('click', (e) => {
+                clearRememberMeField.addEventListener("click", (e) => {
                     e.preventDefault();
-                    this.clearFields(['supporter.country' /*, 'supporter.emailAddress'*/]);
+                    this.clearFields([
+                        "supporter.country" /*, 'supporter.emailAddress'*/,
+                    ]);
                     if (this.useRemote()) {
                         this.clearCookieOnRemote();
                     }
                     else {
                         this.clearCookie();
                     }
-                    let clearAutofillLink = document.getElementById('clear-autofill-data');
+                    let clearAutofillLink = document.getElementById("clear-autofill-data");
                     if (clearAutofillLink) {
-                        clearAutofillLink.style.display = 'none';
+                        clearAutofillLink.style.display = "none";
                     }
                     this.rememberMeOptIn = false;
                 });
@@ -13712,7 +15429,7 @@ class RememberMe {
     getElementByFirstSelector(selectorsString) {
         // iterate through the selectors until we find one that exists
         let targetField = null;
-        const selectorTargets = selectorsString.split(',');
+        const selectorTargets = selectorsString.split(",");
         for (let i = 0; i < selectorTargets.length; i++) {
             targetField = document.querySelector(selectorTargets[i]);
             if (targetField) {
@@ -13722,19 +15439,19 @@ class RememberMe {
         return targetField;
     }
     insertRememberMeOptin() {
-        let rememberMeOptInField = document.getElementById('remember-me-opt-in');
+        let rememberMeOptInField = document.getElementById("remember-me-opt-in");
         if (!rememberMeOptInField) {
-            const rememberMeLabel = 'Remember Me';
+            const rememberMeLabel = "Remember Me";
             const rememberMeInfo = `
 				Check “Remember me” to complete forms on this device faster. 
 				While your financial information won’t be stored, you should only check this box from a personal device. 
 				Click “Clear autofill” to remove the information from your device at any time.
 			`;
-            const rememberMeOptInFieldChecked = (this.rememberMeOptIn) ? 'checked' : '';
-            const rememberMeOptInField = document.createElement('div');
-            rememberMeOptInField.classList.add('en__field', 'en__field--checkbox');
-            rememberMeOptInField.setAttribute('id', 'remember-me-opt-in');
-            rememberMeOptInField.setAttribute('style', 'overflow-x: hidden;');
+            const rememberMeOptInFieldChecked = this.rememberMeOptIn ? "checked" : "";
+            const rememberMeOptInField = document.createElement("div");
+            rememberMeOptInField.classList.add("en__field", "en__field--checkbox");
+            rememberMeOptInField.setAttribute("id", "remember-me-opt-in");
+            rememberMeOptInField.setAttribute("style", "overflow-x: hidden;");
             rememberMeOptInField.innerHTML = `
 				<div class="en__field__item rememberme-wrapper">
 					<input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${rememberMeOptInFieldChecked} />
@@ -13750,10 +15467,12 @@ class RememberMe {
 			`;
             const targetField = this.getElementByFirstSelector(this.fieldOptInSelectorTarget);
             if (targetField && targetField.parentNode) {
-                targetField.parentNode.insertBefore(rememberMeOptInField, (this.fieldOptInSelectorTargetLocation == 'before') ? targetField : targetField.nextSibling);
-                const rememberMeCheckbox = document.getElementById('remember-me-checkbox');
+                targetField.parentNode.insertBefore(rememberMeOptInField, this.fieldOptInSelectorTargetLocation == "before"
+                    ? targetField
+                    : targetField.nextSibling);
+                const rememberMeCheckbox = document.getElementById("remember-me-checkbox");
                 if (rememberMeCheckbox) {
-                    rememberMeCheckbox.addEventListener('change', () => {
+                    rememberMeCheckbox.addEventListener("change", () => {
                         if (rememberMeCheckbox.checked) {
                             this.rememberMeOptIn = true;
                         }
@@ -13762,7 +15481,7 @@ class RememberMe {
                         }
                     });
                 }
-                tippy('#rememberme-learn-more-toggle', { content: rememberMeInfo });
+                remember_me_tippy("#rememberme-learn-more-toggle", { content: rememberMeInfo });
             }
         }
         else if (this.rememberMeOptIn) {
@@ -13770,18 +15489,22 @@ class RememberMe {
         }
     }
     useRemote() {
-        return (this.remoteUrl && window.postMessage && window.JSON && window.localStorage);
+        return (!!this.remoteUrl &&
+            typeof window.postMessage === "function" &&
+            window.JSON &&
+            window.localStorage);
     }
     createIframe(iframeLoaded, messageReceived) {
         if (this.remoteUrl) {
-            let iframe = document.createElement('iframe');
-            iframe.style.cssText = 'position:absolute;width:1px;height:1px;left:-9999px;';
+            let iframe = document.createElement("iframe");
+            iframe.style.cssText =
+                "position:absolute;width:1px;height:1px;left:-9999px;";
             iframe.src = this.remoteUrl;
-            iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts');
+            iframe.setAttribute("sandbox", "allow-same-origin allow-scripts");
             this.iframe = iframe;
             document.body.appendChild(this.iframe);
-            this.iframe.addEventListener('load', () => iframeLoaded(), false);
-            window.addEventListener('message', (event) => messageReceived(event), false);
+            this.iframe.addEventListener("load", () => iframeLoaded(), false);
+            window.addEventListener("message", (event) => messageReceived(event), false);
         }
     }
     clearCookie() {
@@ -13794,28 +15517,35 @@ class RememberMe {
     }
     saveCookieToRemote() {
         if (this.iframe && this.iframe.contentWindow) {
-            this.iframe.contentWindow.postMessage({ key: this.cookieName, value: JSON.stringify(this.fieldData), operation: 'write', expires: this.cookieExpirationDays }, '*');
+            this.iframe.contentWindow.postMessage({
+                key: this.cookieName,
+                value: JSON.stringify(this.fieldData),
+                operation: "write",
+                expires: this.cookieExpirationDays,
+            }, "*");
         }
     }
     readCookie() {
-        this.updateFieldData(get(this.cookieName) || '');
+        this.updateFieldData(get(this.cookieName) || "");
     }
     saveCookie() {
-        set(this.cookieName, JSON.stringify(this.fieldData), { expires: this.cookieExpirationDays });
+        set(this.cookieName, JSON.stringify(this.fieldData), {
+            expires: this.cookieExpirationDays,
+        });
     }
     readFields() {
         for (let i = 0; i < this.fieldNames.length; i++) {
             let fieldSelector = "[name='" + this.fieldNames[i] + "']";
             let field = document.querySelector(fieldSelector);
             if (field) {
-                if (field.tagName === 'INPUT') {
-                    let type = field.getAttribute('type');
-                    if (type === 'radio' || type === 'checkbox') {
+                if (field.tagName === "INPUT") {
+                    let type = field.getAttribute("type");
+                    if (type === "radio" || type === "checkbox") {
                         field = document.querySelector(fieldSelector + ":checked");
                     }
                     this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
                 }
-                else if (field.tagName === 'SELECT') {
+                else if (field.tagName === "SELECT") {
                     this.fieldData[this.fieldNames[i]] = encodeURIComponent(field.value);
                 }
             }
@@ -13823,7 +15553,7 @@ class RememberMe {
     }
     setFieldValue(field, value, overwrite = false) {
         if (field && value !== undefined) {
-            if (field.value && overwrite || !field.value) {
+            if ((field.value && overwrite) || !field.value) {
                 field.value = value;
             }
         }
@@ -13833,11 +15563,11 @@ class RememberMe {
             if (skipFields.includes(key)) {
                 delete this.fieldData[key];
             }
-            else if (this.fieldData[key] === '') {
+            else if (this.fieldData[key] === "") {
                 delete this.fieldData[key];
             }
             else {
-                this.fieldData[key] = '';
+                this.fieldData[key] = "";
             }
         }
         this.writeFields(true);
@@ -13847,14 +15577,17 @@ class RememberMe {
             let fieldSelector = "[name='" + this.fieldNames[i] + "']";
             let field = document.querySelector(fieldSelector);
             if (field) {
-                if (field.tagName === 'INPUT') {
+                if (field.tagName === "INPUT") {
                     if (this.fieldNames[i] === this.fieldDonationRecurrPayRadioName) {
-                        if (this.fieldData[this.fieldNames[i]] === 'Y') {
+                        if (this.fieldData[this.fieldNames[i]] === "Y") {
                             field.click();
                         }
                     }
                     else if (this.fieldDonationAmountRadioName === this.fieldNames[i]) {
-                        field = document.querySelector(fieldSelector + "[value='" + this.fieldData[this.fieldNames[i]] + "']");
+                        field = document.querySelector(fieldSelector +
+                            "[value='" +
+                            this.fieldData[this.fieldNames[i]] +
+                            "']");
                         if (field) {
                             field.click();
                         }
@@ -13867,7 +15600,7 @@ class RememberMe {
                         this.setFieldValue(field, this.fieldData[this.fieldNames[i]], overwrite);
                     }
                 }
-                else if (field.tagName === 'SELECT') {
+                else if (field.tagName === "SELECT") {
                     this.setFieldValue(field, this.fieldData[this.fieldNames[i]], true);
                 }
             }
@@ -13993,22 +15726,42 @@ class ShowIfAmount {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/other-amount.js
 // This class automatically select other radio input when an amount is entered into it.
+
 class OtherAmount {
     constructor() {
-        "focus input".split(" ").forEach((e) => {
+        this.logger = new EngridLogger("OtherAmount", "green", "black", "💰");
+        "focusin input".split(" ").forEach((e) => {
             var _a;
             // We're attaching this event to the body because sometimes the other amount input is not in the DOM yet and comes via AJAX.
             (_a = document.querySelector("body")) === null || _a === void 0 ? void 0 : _a.addEventListener(e, (event) => {
                 const target = event.target;
                 if (target.classList.contains("en__field__input--other")) {
-                    console.log("Other Amount Field Focused");
+                    this.logger.log("Other Amount Field Focused");
                     this.setRadioInput();
                 }
             });
         });
+        const otherAmountField = document.querySelector("[name='transaction.donationAmt.other'");
+        if (otherAmountField) {
+            otherAmountField.addEventListener("change", (e) => {
+                const target = e.target;
+                const amount = target.value;
+                const cleanAmount = engrid_ENGrid.cleanAmount(amount);
+                if (amount !== cleanAmount.toString()) {
+                    this.logger.log(`Other Amount Field Changed: ${amount} => ${cleanAmount}`);
+                    if ("dataLayer" in window) {
+                        window.dataLayer.push({
+                            event: "otherAmountTransformed",
+                            otherAmountTransformation: `${amount} => ${cleanAmount}`,
+                        });
+                    }
+                    target.value = cleanAmount.toString();
+                }
+            });
+        }
     }
     setRadioInput() {
-        const target = document.querySelector(".en__field__input--other");
+        const target = document.querySelector(".en__field--donationAmt .en__field__input--other");
         if (target && target.parentNode && target.parentNode.parentNode) {
             const targetWrapper = target.parentNode;
             targetWrapper.classList.remove("en__field__item--hidden");
@@ -14106,6 +15859,1738 @@ class EngridLogger {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/min-max-amount.js
+// This script adds an erros message to the page if the amount is greater than the max amount or less than the min amount.
+
+class MinMaxAmount {
+    constructor() {
+        var _a, _b;
+        this._form = EnForm.getInstance();
+        this._amount = DonationAmount.getInstance();
+        this.minAmount = (_a = engrid_ENGrid.getOption("MinAmount")) !== null && _a !== void 0 ? _a : 1;
+        this.maxAmount = (_b = engrid_ENGrid.getOption("MaxAmount")) !== null && _b !== void 0 ? _b : 100000;
+        this.minAmountMessage = engrid_ENGrid.getOption("MinAmountMessage");
+        this.maxAmountMessage = engrid_ENGrid.getOption("MaxAmountMessage");
+        this.logger = new EngridLogger("MinMaxAmount", "white", "purple", "🔢");
+        if (!this.shouldRun()) {
+            // If we're not on a Donation Page, get out
+            return;
+        }
+        this._amount.onAmountChange.subscribe((s) => window.setTimeout(this.liveValidate.bind(this), 1000) // Wait 1 second for the amount to be updated
+        );
+        this._form.onValidate.subscribe(this.enOnValidate.bind(this));
+    }
+    // Should we run the script?
+    shouldRun() {
+        return engrid_ENGrid.getPageType() === "DONATION";
+    }
+    // Don't submit the form if the amount is not valid
+    enOnValidate() {
+        const otherAmount = document.querySelector("[name='transaction.donationAmt.other']");
+        if (this._amount.amount < this.minAmount) {
+            this.logger.log("Amount is less than min amount: " + this.minAmount);
+            if (otherAmount) {
+                otherAmount.focus();
+            }
+            this._form.validate = false;
+        }
+        else if (this._amount.amount > this.maxAmount) {
+            this.logger.log("Amount is greater than max amount: " + this.maxAmount);
+            if (otherAmount) {
+                otherAmount.focus();
+            }
+            this._form.validate = false;
+        }
+        window.setTimeout(this.liveValidate.bind(this), 300);
+    }
+    // Disable Submit Button if the amount is not valid
+    liveValidate() {
+        const amount = engrid_ENGrid.cleanAmount(this._amount.amount.toString());
+        this.logger.log(`Amount: ${amount}`);
+        if (amount < this.minAmount) {
+            this.logger.log("Amount is less than min amount: " + this.minAmount);
+            engrid_ENGrid.setError(".en__field--withOther", this.minAmountMessage || "Invalid Amount");
+        }
+        else if (amount > this.maxAmount) {
+            this.logger.log("Amount is greater than max amount: " + this.maxAmount);
+            engrid_ENGrid.setError(".en__field--withOther", this.maxAmountMessage || "Invalid Amount");
+        }
+        else {
+            engrid_ENGrid.removeError(".en__field--withOther");
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/ticker.js
+
+class Ticker {
+    constructor() {
+        this.shuffleSeed = __webpack_require__(7650);
+        this.items = [];
+        this.tickerElement = document.querySelector(".engrid-ticker");
+        this.logger = new EngridLogger("Ticker", "black", "beige", "🔁");
+        if (!this.shouldRun()) {
+            this.logger.log("Not running");
+            // If we don't find a ticker, get out
+            return;
+        }
+        const tickerList = document.querySelectorAll(".engrid-ticker li");
+        if (tickerList.length > 0) {
+            for (let i = 0; i < tickerList.length; i++) {
+                this.items.push(tickerList[i].innerText);
+            }
+        }
+        this.render();
+        return;
+    }
+    // Should we run the script?
+    shouldRun() {
+        return this.tickerElement !== null;
+    }
+    getSeed() {
+        return new Date().getDate() + engrid_ENGrid.getPageID();
+    }
+    // Get Items
+    getItems() {
+        const total = this.tickerElement.getAttribute("data-total") || "50";
+        this.logger.log("Getting " + total + " items");
+        const seed = this.getSeed();
+        const items = this.shuffleSeed.shuffle(this.items, seed);
+        const now = new Date();
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+        let pointer = Math.round((hour * 60 + minute) / 5);
+        if (pointer >= items.length) {
+            pointer = 0;
+        }
+        const ret = items.slice(pointer, pointer + total).reverse();
+        return ret;
+    }
+    // Render
+    render() {
+        var _a, _b, _c;
+        this.logger.log("Rendering");
+        const items = this.getItems();
+        let ticker = document.createElement("div");
+        ticker.classList.add("en__component");
+        ticker.classList.add("en__component--ticker");
+        let str = `<div class="ticker">`;
+        for (let i = 0; i < items.length; i++) {
+            str += '<div class="ticker__item">' + items[i] + "</div>";
+        }
+        str = '<div id="engrid-ticker">' + str + "</div></div>";
+        ticker.innerHTML = str;
+        (_b = (_a = this.tickerElement) === null || _a === void 0 ? void 0 : _a.parentElement) === null || _b === void 0 ? void 0 : _b.insertBefore(ticker, this.tickerElement);
+        (_c = this.tickerElement) === null || _c === void 0 ? void 0 : _c.remove();
+        const tickerWidth = document.querySelector(".ticker").offsetWidth.toString();
+        ticker.style.setProperty("--ticker-size", tickerWidth);
+        this.logger.log("Ticker Size: " + ticker.style.getPropertyValue("--ticker-size"));
+        this.logger.log("Ticker Width: " + tickerWidth);
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-layer.js
+// This class automatically select other radio input when an amount is entered into it.
+
+class DataLayer {
+    constructor() {
+        this.logger = new EngridLogger("DataLayer", "#f1e5bc", "#009cdc", "📊");
+        this.dataLayer = window.dataLayer || [];
+        this._form = EnForm.getInstance();
+        this.onLoad();
+        this._form.onSubmit.subscribe(() => this.onSubmit());
+    }
+    onLoad() {
+        if (engrid_ENGrid.getGiftProcess()) {
+            this.logger.log("EN_SUCCESSFUL_DONATION");
+            this.dataLayer.push({
+                event: "EN_SUCCESSFUL_DONATION",
+            });
+        }
+        else {
+            this.logger.log("EN_PAGE_VIEW");
+            this.dataLayer.push({
+                event: "EN_PAGE_VIEW",
+            });
+        }
+    }
+    onSubmit() {
+        const optIn = document.querySelector(".en__field__item:not(.en__field--question) input[name^='supporter.questions'][type='checkbox']:checked");
+        if (optIn) {
+            this.logger.log("EN_SUBMISSION_WITH_EMAIL_OPTIN");
+            this.dataLayer.push({
+                event: "EN_SUBMISSION_WITH_EMAIL_OPTIN",
+            });
+        }
+        else {
+            this.logger.log("EN_SUBMISSION_WITHOUT_EMAIL_OPTIN");
+            this.dataLayer.push({
+                event: "EN_SUBMISSION_WITHOUT_EMAIL_OPTIN",
+            });
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-replace.js
+
+class DataReplace {
+    constructor() {
+        this.logger = new EngridLogger("DataReplace", "#333333", "#00f3ff", "⤵️");
+        this.enElements = new Array();
+        this.searchElements();
+        if (!this.shouldRun())
+            return;
+        this.logger.log("Elements Found:", this.enElements);
+        this.replaceAll();
+    }
+    searchElements() {
+        const enElements = document.querySelectorAll(`
+      .en__component--copyblock,
+      .en__component--codeblock,
+      .en__field
+      `);
+        if (enElements.length > 0) {
+            enElements.forEach((item) => {
+                if (item instanceof HTMLElement &&
+                    item.innerHTML.includes("{engrid_data~")) {
+                    this.enElements.push(item);
+                }
+            });
+        }
+    }
+    shouldRun() {
+        return this.enElements.length > 0;
+    }
+    replaceAll() {
+        const regEx = /{engrid_data~\[([\w-]+)\]~?\[?(.+?)?\]?}/g;
+        this.enElements.forEach((item) => {
+            const array = item.innerHTML.matchAll(regEx);
+            for (const match of array) {
+                this.replaceItem(item, match);
+            }
+        });
+        engrid_ENGrid.setBodyData("merge-tags-processed", "");
+    }
+    replaceItem(where, [item, key, defaultValue]) {
+        var _a;
+        let value = (_a = engrid_ENGrid.getUrlParameter(`engrid_data[${key}]`)) !== null && _a !== void 0 ? _a : defaultValue;
+        if (typeof value === "string") {
+            value = value.replace(/\r?\\n|\n|\r/g, "<br>");
+        }
+        else {
+            value = "";
+        }
+        this.logger.log("Replacing", key, value);
+        where.innerHTML = where.innerHTML.replace(item, value);
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-hide.js
+
+class DataHide {
+    constructor() {
+        this.logger = new EngridLogger("DataHide", "#333333", "#f0f0f0", "🙈");
+        this.enElements = new Array();
+        this.logger.log("Constructor");
+        this.enElements = engrid_ENGrid.getUrlParameter("engrid_hide[]");
+        if (!this.enElements || this.enElements.length === 0) {
+            this.logger.log("No Elements Found");
+            return;
+        }
+        this.logger.log("Elements Found:", this.enElements);
+        this.hideAll();
+    }
+    hideAll() {
+        this.enElements.forEach((element) => {
+            const item = Object.keys(element)[0];
+            const type = Object.values(element)[0];
+            this.hideItem(item, type);
+        });
+        return;
+    }
+    hideItem(item, type) {
+        const regEx = /engrid_hide\[([\w-]+)\]/g;
+        const itemData = [...item.matchAll(regEx)].map((match) => match[1])[0];
+        switch (type) {
+            case "id":
+                const element = document.getElementById(itemData);
+                if (element) {
+                    this.logger.log("Hiding By ID", itemData, element);
+                    element.setAttribute("hidden-via-url-argument", "");
+                }
+                else {
+                    this.logger.error("Element Not Found By ID", itemData);
+                }
+                break;
+            case "class":
+            default:
+                const elements = document.getElementsByClassName(itemData);
+                if (elements.length > 0) {
+                    for (let i = 0; i < elements.length; i++) {
+                        this.logger.log("Hiding By Class", itemData, elements[i]);
+                        elements[i].setAttribute("hidden-via-url-argument", "");
+                    }
+                }
+                else {
+                    this.logger.log("No Elements Found By Class", itemData);
+                }
+                break;
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/add-name-to-message.js
+/*
+ Adds first and last name when First Name and Last Name fields lose focus if name shortcodes aren't present
+*/
+
+class AddNameToMessage {
+    constructor() {
+        if (!this.shouldRun()) {
+            // Don't run the script if the page isn't email to target
+            return;
+        }
+        this.replaceNameShortcode("#en__field_supporter_firstName", "#en__field_supporter_lastName");
+    }
+    shouldRun() {
+        return engrid_ENGrid.getPageType() === "EMAILTOTARGET";
+    }
+    replaceNameShortcode(fName, lName) {
+        const firstName = document.querySelector(fName);
+        const lastName = document.querySelector(lName);
+        let message = document.querySelector('[name="contact.message"]');
+        let addedFirstName = false;
+        let addedLastName = false;
+        if (message) {
+            if (message.value.includes("{user_data~First Name") || message.value.includes("{user_data~Last Name")) {
+                return;
+            }
+            else {
+                if (!message.value.includes("{user_data~First Name") && firstName) {
+                    firstName.addEventListener("blur", (e) => {
+                        const target = e.target;
+                        if (message && !addedFirstName) {
+                            addedFirstName = true;
+                            message.value = message.value.concat("\n" + target.value);
+                        }
+                    });
+                }
+                if (!message.value.includes("{user_data~Last Name") && lastName) {
+                    lastName.addEventListener("blur", (e) => {
+                        const target = e.target;
+                        if (message && !addedLastName) {
+                            addedLastName = true;
+                            message.value = message.value.concat(" " + target.value);
+                        }
+                    });
+                }
+            }
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/expand-region-name.js
+// Populates hidden supporter field "Region Long Format" with expanded name (e.g FL becomes Florida)
+
+
+class ExpandRegionName {
+    constructor() {
+        this._form = EnForm.getInstance();
+        this.logger = new EngridLogger("ExpandRegionName", "#333333", "#00eb65", "🌍");
+        if (this.shouldRun()) {
+            const expandedRegionField = engrid_ENGrid.getOption("RegionLongFormat");
+            console.log("expandedRegionField", expandedRegionField);
+            const hiddenRegion = document.querySelector(`[name="${expandedRegionField}"]`);
+            if (!hiddenRegion) {
+                this.logger.log(`CREATED field ${expandedRegionField}`);
+                engrid_ENGrid.createHiddenInput(expandedRegionField);
+            }
+            this._form.onSubmit.subscribe(() => this.expandRegion());
+        }
+    }
+    shouldRun() {
+        return !!engrid_ENGrid.getOption("RegionLongFormat");
+    }
+    expandRegion() {
+        const userRegion = document.querySelector('[name="supporter.region"]'); // User entered region on the page
+        const expandedRegionField = engrid_ENGrid.getOption("RegionLongFormat");
+        const hiddenRegion = document.querySelector(`[name="${expandedRegionField}"]`); // Hidden region long form field
+        if (!userRegion) {
+            this.logger.log("No region field to populate the hidden region field with");
+            return; // Don't populate hidden region field if user region field isn't on page
+        }
+        if (userRegion.tagName === "SELECT" && "options" in userRegion) {
+            const regionValue = userRegion.options[userRegion.selectedIndex].innerText;
+            hiddenRegion.value = regionValue;
+            this.logger.log("Populated field", hiddenRegion.value);
+        }
+        else if (userRegion.tagName === "INPUT") {
+            const regionValue = userRegion.value;
+            hiddenRegion.value = regionValue;
+            this.logger.log("Populated field", hiddenRegion.value);
+        }
+        return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/url-to-form.js
+// Component that allows to set a field value from URL parameters
+// Workflow:
+// 1. Loop through all the URL parameters
+// 2. Check if there's a match with the field name
+// 3. If there's a match AND the field is empty, set the value
+
+class UrlToForm {
+    constructor() {
+        this.logger = new EngridLogger("UrlToForm", "white", "magenta", "🔗");
+        this.urlParams = new URLSearchParams(document.location.search);
+        if (!this.shouldRun())
+            return;
+        this.urlParams.forEach((value, key) => {
+            const field = document.getElementsByName(key)[0];
+            if (field) {
+                if (!["text", "textarea"].includes(field.type) || !field.value) {
+                    engrid_ENGrid.setFieldValue(key, value);
+                    this.logger.log(`Set: ${key} to ${value}`);
+                }
+            }
+        });
+    }
+    shouldRun() {
+        return !!document.location.search && this.hasFields();
+    }
+    hasFields() {
+        const ret = [...this.urlParams.keys()].map((key) => {
+            return document.getElementsByName(key).length > 0;
+        });
+        return ret.includes(true);
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/required-if-visible.js
+
+class RequiredIfVisible {
+    constructor() {
+        this.logger = new EngridLogger("RequiredIfVisible", "#FFFFFF", "#811212", "🚥");
+        this._form = EnForm.getInstance();
+        this.requiredIfVisibleElements = document.querySelectorAll(`
+    .i-required .en__field,
+    .i1-required .en__field:nth-of-type(1),
+    .i2-required .en__field:nth-of-type(2),
+    .i3-required .en__field:nth-of-type(3),
+    .i4-required .en__field:nth-of-type(4),
+    .i5-required .en__field:nth-of-type(5),
+    .i6-required .en__field:nth-of-type(6),
+    .i7-required .en__field:nth-of-type(7),
+    .i8-required .en__field:nth-of-type(8),
+    .i9-required .en__field:nth-of-type(9),
+    .i10-required .en__field:nth-of-type(10),
+    .i11-required .en__field:nth-of-type(11)
+    `);
+        if (!this.shouldRun())
+            return;
+        this._form.onValidate.subscribe(this.validate.bind(this));
+    }
+    shouldRun() {
+        return this.requiredIfVisibleElements.length > 0;
+    }
+    validate() {
+        // We're converting the NodeListOf<HTMLElement> to an Array<HTMLElement>
+        // because we need to reverse the order of the elements so the last error
+        // is the highest element to get focus()
+        Array.from(this.requiredIfVisibleElements)
+            .reverse()
+            .forEach((field) => {
+            engrid_ENGrid.removeError(field);
+            if (engrid_ENGrid.isVisible(field)) {
+                this.logger.log(`${field.getAttribute("class")} is visible`);
+                const fieldElement = field.querySelector("input, select, textarea");
+                if (fieldElement &&
+                    !engrid_ENGrid.getFieldValue(fieldElement.getAttribute("name"))) {
+                    const fieldLabel = field.querySelector(".en__field__label");
+                    if (fieldLabel) {
+                        this.logger.log(`${fieldLabel.innerText} is required`);
+                        engrid_ENGrid.setError(field, `${fieldLabel.innerText} is required`);
+                    }
+                    else {
+                        this.logger.log(`${fieldElement.getAttribute("name")} is required`);
+                        engrid_ENGrid.setError(field, `This field is required`);
+                    }
+                    fieldElement.focus();
+                    this._form.validate = false;
+                }
+            }
+        });
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/tidycontact.js
+var tidycontact_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+class TidyContact {
+    constructor() {
+        var _a, _b, _c, _d, _e;
+        this.logger = new EngridLogger("TidyContact", "#FFFFFF", "#4d9068", "📧");
+        this.endpoint = "https://api.tidycontact.io";
+        this.wasCalled = false; // True if the API endpoint was called
+        this.httpStatus = 0;
+        this.timeout = 5; // Seconds to API Timeout
+        this.isDirty = false; // True if the address was changed by the user
+        this._form = EnForm.getInstance();
+        this.countries_list = [
+            ["Afghanistan", "af", "93", "070 123 4567"],
+            ["Albania", "al", "355", "067 212 3456"],
+            ["Algeria", "dz", "213", "0551 23 45 67"],
+            ["American Samoa", "as", "1", "(684) 733-1234"],
+            ["Andorra", "ad", "376", "312 345"],
+            ["Angola", "ao", "244", "923 123 456"],
+            ["Anguilla", "ai", "1", "(264) 235-1234"],
+            ["Antigua and Barbuda", "ag", "1", "(268) 464-1234"],
+            ["Argentina", "ar", "54", "011 15-2345-6789"],
+            ["Armenia", "am", "374", "077 123456"],
+            ["Aruba", "aw", "297", "560 1234"],
+            ["Australia", "au", "61", "0412 345 678"],
+            ["Austria", "at", "43", "0664 123456"],
+            ["Azerbaijan", "az", "994", "040 123 45 67"],
+            ["Bahamas", "bs", "1", "(242) 359-1234"],
+            ["Bahrain", "bh", "973", "3600 1234"],
+            ["Bangladesh", "bd", "880", "01812-345678"],
+            ["Barbados", "bb", "1", "(246) 250-1234"],
+            ["Belarus", "by", "375", "8 029 491-19-11"],
+            ["Belgium", "be", "32", "0470 12 34 56"],
+            ["Belize", "bz", "501", "622-1234"],
+            ["Benin", "bj", "229", "90 01 12 34"],
+            ["Bermuda", "bm", "1", "(441) 370-1234"],
+            ["Bhutan", "bt", "975", "17 12 34 56"],
+            ["Bolivia", "bo", "591", "71234567"],
+            ["Bosnia and Herzegovina", "ba", "387", "061 123 456"],
+            ["Botswana", "bw", "267", "71 123 456"],
+            ["Brazil", "br", "55", "(11) 96123-4567"],
+            ["British Indian Ocean Territory", "io", "246", "380 1234"],
+            ["British Virgin Islands", "vg", "1", "(284) 300-1234"],
+            ["Brunei", "bn", "673", "712 3456"],
+            ["Bulgaria", "bg", "359", "048 123 456"],
+            ["Burkina Faso", "bf", "226", "70 12 34 56"],
+            ["Burundi", "bi", "257", "79 56 12 34"],
+            ["Cambodia", "kh", "855", "091 234 567"],
+            ["Cameroon", "cm", "237", "6 71 23 45 67"],
+            ["Canada", "ca", "1", "(506) 234-5678"],
+            ["Cape Verde", "cv", "238", "991 12 34"],
+            ["Caribbean Netherlands", "bq", "599", "318 1234"],
+            ["Cayman Islands", "ky", "1", "(345) 323-1234"],
+            ["Central African Republic", "cf", "236", "70 01 23 45"],
+            ["Chad", "td", "235", "63 01 23 45"],
+            ["Chile", "cl", "56", "(2) 2123 4567"],
+            ["China", "cn", "86", "131 2345 6789"],
+            ["Christmas Island", "cx", "61", "0412 345 678"],
+            ["Cocos Islands", "cc", "61", "0412 345 678"],
+            ["Colombia", "co", "57", "321 1234567"],
+            ["Comoros", "km", "269", "321 23 45"],
+            ["Congo", "cd", "243", "0991 234 567"],
+            ["Congo", "cg", "242", "06 123 4567"],
+            ["Cook Islands", "ck", "682", "71 234"],
+            ["Costa Rica", "cr", "506", "8312 3456"],
+            ["Côte d’Ivoire", "ci", "225", "01 23 45 6789"],
+            ["Croatia", "hr", "385", "092 123 4567"],
+            ["Cuba", "cu", "53", "05 1234567"],
+            ["Curaçao", "cw", "599", "9 518 1234"],
+            ["Cyprus", "cy", "357", "96 123456"],
+            ["Czech Republic", "cz", "420", "601 123 456"],
+            ["Denmark", "dk", "45", "32 12 34 56"],
+            ["Djibouti", "dj", "253", "77 83 10 01"],
+            ["Dominica", "dm", "1", "(767) 225-1234"],
+            ["Dominican Republic", "do", "1", "(809) 234-5678"],
+            ["Ecuador", "ec", "593", "099 123 4567"],
+            ["Egypt", "eg", "20", "0100 123 4567"],
+            ["El Salvador", "sv", "503", "7012 3456"],
+            ["Equatorial Guinea", "gq", "240", "222 123 456"],
+            ["Eritrea", "er", "291", "07 123 456"],
+            ["Estonia", "ee", "372", "5123 4567"],
+            ["Eswatini", "sz", "268", "7612 3456"],
+            ["Ethiopia", "et", "251", "091 123 4567"],
+            ["Falkland Islands", "fk", "500", "51234"],
+            ["Faroe Islands", "fo", "298", "211234"],
+            ["Fiji", "fj", "679", "701 2345"],
+            ["Finland", "fi", "358", "041 2345678"],
+            ["France", "fr", "33", "06 12 34 56 78"],
+            ["French Guiana", "gf", "594", "0694 20 12 34"],
+            ["French Polynesia", "pf", "689", "87 12 34 56"],
+            ["Gabon", "ga", "241", "06 03 12 34"],
+            ["Gambia", "gm", "220", "301 2345"],
+            ["Georgia", "ge", "995", "555 12 34 56"],
+            ["Germany", "de", "49", "01512 3456789"],
+            ["Ghana", "gh", "233", "023 123 4567"],
+            ["Gibraltar", "gi", "350", "57123456"],
+            ["Greece", "gr", "30", "691 234 5678"],
+            ["Greenland", "gl", "299", "22 12 34"],
+            ["Grenada", "gd", "1", "(473) 403-1234"],
+            ["Guadeloupe", "gp", "590", "0690 00 12 34"],
+            ["Guam", "gu", "1", "(671) 300-1234"],
+            ["Guatemala", "gt", "502", "5123 4567"],
+            ["Guernsey", "gg", "44", "07781 123456"],
+            ["Guinea", "gn", "224", "601 12 34 56"],
+            ["Guinea-Bissau", "gw", "245", "955 012 345"],
+            ["Guyana", "gy", "592", "609 1234"],
+            ["Haiti", "ht", "509", "34 10 1234"],
+            ["Honduras", "hn", "504", "9123-4567"],
+            ["Hong Kong", "hk", "852", "5123 4567"],
+            ["Hungary", "hu", "36", "06 20 123 4567"],
+            ["Iceland", "is", "354", "611 1234"],
+            ["India", "in", "91", "081234 56789"],
+            ["Indonesia", "id", "62", "0812-345-678"],
+            ["Iran", "ir", "98", "0912 345 6789"],
+            ["Iraq", "iq", "964", "0791 234 5678"],
+            ["Ireland", "ie", "353", "085 012 3456"],
+            ["Isle of Man", "im", "44", "07924 123456"],
+            ["Israel", "il", "972", "050-234-5678"],
+            ["Italy", "it", "39", "312 345 6789"],
+            ["Jamaica", "jm", "1", "(876) 210-1234"],
+            ["Japan", "jp", "81", "090-1234-5678"],
+            ["Jersey", "je", "44", "07797 712345"],
+            ["Jordan", "jo", "962", "07 9012 3456"],
+            ["Kazakhstan", "kz", "7", "8 (771) 000 9998"],
+            ["Kenya", "ke", "254", "0712 123456"],
+            ["Kiribati", "ki", "686", "72001234"],
+            ["Kosovo", "xk", "383", "043 201 234"],
+            ["Kuwait", "kw", "965", "500 12345"],
+            ["Kyrgyzstan", "kg", "996", "0700 123 456"],
+            ["Laos", "la", "856", "020 23 123 456"],
+            ["Latvia", "lv", "371", "21 234 567"],
+            ["Lebanon", "lb", "961", "71 123 456"],
+            ["Lesotho", "ls", "266", "5012 3456"],
+            ["Liberia", "lr", "231", "077 012 3456"],
+            ["Libya", "ly", "218", "091-2345678"],
+            ["Liechtenstein", "li", "423", "660 234 567"],
+            ["Lithuania", "lt", "370", "(8-612) 34567"],
+            ["Luxembourg", "lu", "352", "628 123 456"],
+            ["Macau", "mo", "853", "6612 3456"],
+            ["North Macedonia", "mk", "389", "072 345 678"],
+            ["Madagascar", "mg", "261", "032 12 345 67"],
+            ["Malawi", "mw", "265", "0991 23 45 67"],
+            ["Malaysia", "my", "60", "012-345 6789"],
+            ["Maldives", "mv", "960", "771-2345"],
+            ["Mali", "ml", "223", "65 01 23 45"],
+            ["Malta", "mt", "356", "9696 1234"],
+            ["Marshall Islands", "mh", "692", "235-1234"],
+            ["Martinique", "mq", "596", "0696 20 12 34"],
+            ["Mauritania", "mr", "222", "22 12 34 56"],
+            ["Mauritius", "mu", "230", "5251 2345"],
+            ["Mayotte", "yt", "262", "0639 01 23 45"],
+            ["Mexico", "mx", "52", "222 123 4567"],
+            ["Micronesia", "fm", "691", "350 1234"],
+            ["Moldova", "md", "373", "0621 12 345"],
+            ["Monaco", "mc", "377", "06 12 34 56 78"],
+            ["Mongolia", "mn", "976", "8812 3456"],
+            ["Montenegro", "me", "382", "067 622 901"],
+            ["Montserrat", "ms", "1", "(664) 492-3456"],
+            ["Morocco", "ma", "212", "0650-123456"],
+            ["Mozambique", "mz", "258", "82 123 4567"],
+            ["Myanmar", "mm", "95", "09 212 3456"],
+            ["Namibia", "na", "264", "081 123 4567"],
+            ["Nauru", "nr", "674", "555 1234"],
+            ["Nepal", "np", "977", "984-1234567"],
+            ["Netherlands", "nl", "31", "06 12345678"],
+            ["New Caledonia", "nc", "687", "75.12.34"],
+            ["New Zealand", "nz", "64", "021 123 4567"],
+            ["Nicaragua", "ni", "505", "8123 4567"],
+            ["Niger", "ne", "227", "93 12 34 56"],
+            ["Nigeria", "ng", "234", "0802 123 4567"],
+            ["Niue", "nu", "683", "888 4012"],
+            ["Norfolk Island", "nf", "672", "3 81234"],
+            ["North Korea", "kp", "850", "0192 123 4567"],
+            ["Northern Mariana Islands", "mp", "1", "(670) 234-5678"],
+            ["Norway", "no", "47", "406 12 345"],
+            ["Oman", "om", "968", "9212 3456"],
+            ["Pakistan", "pk", "92", "0301 2345678"],
+            ["Palau", "pw", "680", "620 1234"],
+            ["Palestine", "ps", "970", "0599 123 456"],
+            ["Panama", "pa", "507", "6123-4567"],
+            ["Papua New Guinea", "pg", "675", "7012 3456"],
+            ["Paraguay", "py", "595", "0961 456789"],
+            ["Peru", "pe", "51", "912 345 678"],
+            ["Philippines", "ph", "63", "0905 123 4567"],
+            ["Poland", "pl", "48", "512 345 678"],
+            ["Portugal", "pt", "351", "912 345 678"],
+            ["Puerto Rico", "pr", "1", "(787) 234-5678"],
+            ["Qatar", "qa", "974", "3312 3456"],
+            ["Réunion", "re", "262", "0692 12 34 56"],
+            ["Romania", "ro", "40", "0712 034 567"],
+            ["Russia", "ru", "7", "8 (912) 345-67-89"],
+            ["Rwanda", "rw", "250", "0720 123 456"],
+            ["Saint Barthélemy", "bl", "590", "0690 00 12 34"],
+            ["Saint Helena", "sh", "290", "51234"],
+            ["Saint Kitts and Nevis", "kn", "1", "(869) 765-2917"],
+            ["Saint Lucia", "lc", "1", "(758) 284-5678"],
+            ["Saint Martin", "mf", "590", "0690 00 12 34"],
+            ["Saint Pierre and Miquelon", "pm", "508", "055 12 34"],
+            ["Saint Vincent and the Grenadines", "vc", "1", "(784) 430-1234"],
+            ["Samoa", "ws", "685", "72 12345"],
+            ["San Marino", "sm", "378", "66 66 12 12"],
+            ["São Tomé and Príncipe", "st", "239", "981 2345"],
+            ["Saudi Arabia", "sa", "966", "051 234 5678"],
+            ["Senegal", "sn", "221", "70 123 45 67"],
+            ["Serbia", "rs", "381", "060 1234567"],
+            ["Seychelles", "sc", "248", "2 510 123"],
+            ["Sierra Leone", "sl", "232", "(025) 123456"],
+            ["Singapore", "sg", "65", "8123 4567"],
+            ["Sint Maarten", "sx", "1", "(721) 520-5678"],
+            ["Slovakia", "sk", "421", "0912 123 456"],
+            ["Slovenia", "si", "386", "031 234 567"],
+            ["Solomon Islands", "sb", "677", "74 21234"],
+            ["Somalia", "so", "252", "7 1123456"],
+            ["South Africa", "za", "27", "071 123 4567"],
+            ["South Korea", "kr", "82", "010-2000-0000"],
+            ["South Sudan", "ss", "211", "0977 123 456"],
+            ["Spain", "es", "34", "612 34 56 78"],
+            ["Sri Lanka", "lk", "94", "071 234 5678"],
+            ["Sudan", "sd", "249", "091 123 1234"],
+            ["Suriname", "sr", "597", "741-2345"],
+            ["Svalbard and Jan Mayen", "sj", "47", "412 34 567"],
+            ["Sweden", "se", "46", "070-123 45 67"],
+            ["Switzerland", "ch", "41", "078 123 45 67"],
+            ["Syria", "sy", "963", "0944 567 890"],
+            ["Taiwan", "tw", "886", "0912 345 678"],
+            ["Tajikistan", "tj", "992", "917 12 3456"],
+            ["Tanzania", "tz", "255", "0621 234 567"],
+            ["Thailand", "th", "66", "081 234 5678"],
+            ["Timor-Leste", "tl", "670", "7721 2345"],
+            ["Togo", "tg", "228", "90 11 23 45"],
+            ["Tokelau", "tk", "690", "7290"],
+            ["Tonga", "to", "676", "771 5123"],
+            ["Trinidad and Tobago", "tt", "1", "(868) 291-1234"],
+            ["Tunisia", "tn", "216", "20 123 456"],
+            ["Turkey", "tr", "90", "0501 234 56 78"],
+            ["Turkmenistan", "tm", "993", "8 66 123456"],
+            ["Turks and Caicos Islands", "tc", "1", "(649) 231-1234"],
+            ["Tuvalu", "tv", "688", "90 1234"],
+            ["U.S. Virgin Islands", "vi", "1", "(340) 642-1234"],
+            ["Uganda", "ug", "256", "0712 345678"],
+            ["Ukraine", "ua", "380", "050 123 4567"],
+            ["United Arab Emirates", "ae", "971", "050 123 4567"],
+            ["United Kingdom", "gb", "44", "07400 123456"],
+            ["United States", "us", "1", "(201) 555-0123"],
+            ["Uruguay", "uy", "598", "094 231 234"],
+            ["Uzbekistan", "uz", "998", "8 91 234 56 78"],
+            ["Vanuatu", "vu", "678", "591 2345"],
+            ["Vatican City", "va", "39", "312 345 6789"],
+            ["Venezuela", "ve", "58", "0412-1234567"],
+            ["Vietnam", "vn", "84", "091 234 56 78"],
+            ["Wallis and Futuna", "wf", "681", "82 12 34"],
+            ["Western Sahara", "eh", "212", "0650-123456"],
+            ["Yemen", "ye", "967", "0712 345 678"],
+            ["Zambia", "zm", "260", "095 5123456"],
+            ["Zimbabwe", "zw", "263", "071 234 5678"],
+            ["Åland Islands", "ax", "358", "041 2345678"],
+        ];
+        this.countries_dropdown = null;
+        this.country_ip = null;
+        this.options = engrid_ENGrid.getOption("TidyContact");
+        if (this.options === false || !((_a = this.options) === null || _a === void 0 ? void 0 : _a.cid))
+            return;
+        this.loadOptions();
+        if (!this.hasAddressFields() && !this.phoneEnabled()) {
+            this.logger.log("No address fields found");
+            return;
+        }
+        this.createFields();
+        this.addEventListeners();
+        if (engrid_ENGrid.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") &&
+            !window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() &&
+            engrid_ENGrid.getFieldValue((_c = (_b = this.options) === null || _b === void 0 ? void 0 : _b.address_fields) === null || _c === void 0 ? void 0 : _c.address1) !=
+                "") {
+            this.logger.log("Address Field is not empty");
+            this.isDirty = true;
+        }
+        if (this.phoneEnabled()) {
+            this.createPhoneFields();
+            this.createPhoneMarginVariable();
+            this.logger.log("Phone Standardization is enabled");
+            if (this.countryDropDownEnabled()) {
+                this.renderFlagsDropDown();
+            }
+            const phoneField = engrid_ENGrid.getField((_e = (_d = this.options) === null || _d === void 0 ? void 0 : _d.address_fields) === null || _e === void 0 ? void 0 : _e.phone);
+            if (phoneField) {
+                phoneField.addEventListener("keyup", (e) => {
+                    this.handlePhoneInputKeydown(e);
+                });
+                this.setDefaultPhoneCountry();
+            }
+        }
+    }
+    loadOptions() {
+        var _a, _b, _c;
+        if (this.options && !this.options.address_fields) {
+            this.options.address_fields = {
+                address1: "supporter.address1",
+                address2: "supporter.address2",
+                address3: "supporter.address3",
+                city: "supporter.city",
+                region: "supporter.region",
+                postalCode: "supporter.postcode",
+                country: "supporter.country",
+                phone: "supporter.phoneNumber2", // Phone field
+            };
+        }
+        if (this.options && this.options.phone_enable) {
+            this.options.phone_flags = (_a = this.options.phone_flags) !== null && _a !== void 0 ? _a : true;
+            this.options.phone_country_from_ip =
+                (_b = this.options.phone_country_from_ip) !== null && _b !== void 0 ? _b : true;
+            this.options.phone_preferred_countries =
+                (_c = this.options.phone_preferred_countries) !== null && _c !== void 0 ? _c : [];
+        }
+    }
+    createFields() {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options)
+            return;
+        if (!this.hasAddressFields())
+            return;
+        // Creating Latitude and Longitude fields
+        const latitudeField = engrid_ENGrid.getField("supporter.geo.latitude");
+        const longitudeField = engrid_ENGrid.getField("supporter.geo.longitude");
+        if (!latitudeField) {
+            engrid_ENGrid.createHiddenInput("supporter.geo.latitude", "");
+            this.logger.log("Creating Hidden Field: supporter.geo.latitude");
+        }
+        if (!longitudeField) {
+            engrid_ENGrid.createHiddenInput("supporter.geo.longitude", "");
+            this.logger.log("Creating Hidden Field: supporter.geo.longitude");
+        }
+        if (this.options.record_field) {
+            const recordField = engrid_ENGrid.getField(this.options.record_field);
+            if (!recordField) {
+                engrid_ENGrid.createHiddenInput(this.options.record_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.record_field);
+            }
+        }
+        if (this.options.date_field) {
+            const dateField = engrid_ENGrid.getField(this.options.date_field);
+            if (!dateField) {
+                engrid_ENGrid.createHiddenInput(this.options.date_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.date_field);
+            }
+        }
+        if (this.options.status_field) {
+            const statusField = engrid_ENGrid.getField(this.options.status_field);
+            if (!statusField) {
+                engrid_ENGrid.createHiddenInput(this.options.status_field, "");
+                this.logger.log("Creating Hidden Field: " + this.options.status_field);
+            }
+        }
+        // If there's no Address 2 or Address 3 field, create them
+        if (!engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address2)) {
+            engrid_ENGrid.createHiddenInput((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2, "");
+            this.logger.log("Creating Hidden Field: " + ((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.address2));
+        }
+        if (!engrid_ENGrid.getField((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.address3)) {
+            engrid_ENGrid.createHiddenInput((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.address3, "");
+            this.logger.log("Creating Hidden Field: " + ((_f = this.options.address_fields) === null || _f === void 0 ? void 0 : _f.address3));
+        }
+    }
+    createPhoneFields() {
+        if (!this.options)
+            return;
+        engrid_ENGrid.createHiddenInput("tc.phone.country", "");
+        this.logger.log("Creating hidden field: tc.phone.country");
+        if (this.options.phone_record_field) {
+            const recordField = engrid_ENGrid.getField(this.options.phone_record_field);
+            if (!recordField) {
+                engrid_ENGrid.createHiddenInput(this.options.phone_record_field, "");
+                this.logger.log("Creating hidden field: " + this.options.phone_record_field);
+            }
+        }
+        if (this.options.phone_date_field) {
+            const dateField = engrid_ENGrid.getField(this.options.phone_date_field);
+            if (!dateField) {
+                engrid_ENGrid.createHiddenInput(this.options.phone_date_field, "");
+                this.logger.log("Creating hidden field: " + this.options.phone_date_field);
+            }
+        }
+        if (this.options.phone_status_field) {
+            const statusField = engrid_ENGrid.getField(this.options.phone_status_field);
+            if (!statusField) {
+                engrid_ENGrid.createHiddenInput(this.options.phone_status_field, "");
+                this.logger.log("Creating hidden field: " + this.options.phone_status_field);
+            }
+        }
+    }
+    createPhoneMarginVariable() {
+        var _a;
+        if (!this.options)
+            return;
+        const phone = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+        if (phone) {
+            const phoneStyle = window.getComputedStyle(phone);
+            const marginTop = phoneStyle.marginTop;
+            const marginBottom = phoneStyle.marginBottom;
+            document.documentElement.style.setProperty("--tc-phone-margin-top", marginTop);
+            document.documentElement.style.setProperty("--tc-phone-margin-bottom", marginBottom);
+        }
+    }
+    addEventListeners() {
+        if (!this.options)
+            return;
+        // Add event listeners to fields
+        if (this.options.address_fields) {
+            for (const [key, value] of Object.entries(this.options.address_fields)) {
+                const field = engrid_ENGrid.getField(value);
+                if (!field)
+                    continue;
+                field.addEventListener("change", () => {
+                    this.logger.log("Changed " + field.name, true);
+                    this.isDirty = true;
+                });
+            }
+        }
+        // Add event listener to submit
+        this._form.onSubmit.subscribe(this.callAPI.bind(this));
+    }
+    checkSum(str) {
+        return tidycontact_awaiter(this, void 0, void 0, function* () {
+            // encode as UTF-8
+            const msgBuffer = new TextEncoder().encode(str);
+            // hash the message
+            const hashBuffer = yield crypto.subtle.digest("SHA-256", msgBuffer);
+            // convert ArrayBuffer to Array
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            // convert bytes to hex string
+            const hashHex = hashArray
+                .map((b) => ("00" + b.toString(16)).slice(-2))
+                .join("");
+            return hashHex;
+        });
+    }
+    todaysDate() {
+        return new Date()
+            .toLocaleString("en-ZA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+        })
+            .replace(/\/+/g, ""); // Format date as YYYYMMDD
+    }
+    countryAllowed(country) {
+        var _a;
+        if (!this.options)
+            return false;
+        return !!((_a = this.options.countries) === null || _a === void 0 ? void 0 : _a.includes(country.toLowerCase()));
+    }
+    fetchTimeOut(url, params) {
+        const abort = new AbortController();
+        const signal = abort.signal;
+        params = Object.assign(Object.assign({}, params), { signal });
+        const promise = fetch(url, params);
+        if (signal)
+            signal.addEventListener("abort", () => abort.abort());
+        const timeout = setTimeout(() => abort.abort(), this.timeout * 1000);
+        return promise.finally(() => clearTimeout(timeout));
+    }
+    writeError(error) {
+        if (!this.options)
+            return;
+        const recordField = engrid_ENGrid.getField(this.options.record_field);
+        const dateField = engrid_ENGrid.getField(this.options.date_field);
+        const statusField = engrid_ENGrid.getField(this.options.status_field);
+        if (recordField) {
+            let errorType = "";
+            switch (this.httpStatus) {
+                case 400:
+                    errorType = "Bad Request";
+                    break;
+                case 401:
+                    errorType = "Unauthorized";
+                    break;
+                case 403:
+                    errorType = "Forbidden";
+                    break;
+                case 404:
+                    errorType = "Not Found";
+                    break;
+                case 408:
+                    errorType = "API Request Timeout";
+                    break;
+                case 500:
+                    errorType = "Internal Server Error";
+                    break;
+                case 503:
+                    errorType = "Service Unavailable";
+                    break;
+                default:
+                    errorType = "Unknown Error";
+                    break;
+            }
+            const errorData = {
+                status: this.httpStatus,
+                error: typeof error === "string" ? error : errorType.toUpperCase(),
+            };
+            recordField.value = JSON.stringify(errorData);
+        }
+        if (dateField) {
+            dateField.value = this.todaysDate();
+        }
+        if (statusField) {
+            statusField.value = "ERROR-API";
+        }
+    }
+    setFields(data) {
+        var _a, _b, _c, _d, _e;
+        if (!this.options)
+            return {};
+        let response = {};
+        const country = this.getCountry();
+        const postalCodeValue = engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.postalCode);
+        const zipDivider = (_b = this.options.us_zip_divider) !== null && _b !== void 0 ? _b : "+";
+        // Check if there's no address2 field
+        const address2Field = engrid_ENGrid.getField((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.address2);
+        if ("address2" in data && !address2Field) {
+            const address = engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.address1);
+            if (address == data.address1 + " " + data.address2) {
+                delete data.address1;
+                delete data.address2;
+            }
+            else {
+                data.address1 = data.address1 + " " + data.address2;
+                delete data.address2;
+            }
+        }
+        if ("postalCode" in data &&
+            postalCodeValue.replace("+", zipDivider) ===
+                data.postalCode.replace("+", zipDivider)) {
+            // Postal code is the same
+            delete data.postalCode;
+        }
+        // Set the fields
+        for (const key in data) {
+            const fieldKey = this.options.address_fields &&
+                Object.keys(this.options.address_fields).includes(key)
+                ? this.options.address_fields[key]
+                : key;
+            const field = engrid_ENGrid.getField(fieldKey);
+            if (field) {
+                let value = data[key];
+                if (key === "postalCode" &&
+                    ["US", "USA", "United States"].includes(country)) {
+                    value = (_e = value.replace("+", zipDivider)) !== null && _e !== void 0 ? _e : ""; // Replace the "+" with the zip divider
+                }
+                response[key] = { from: field.value, to: value };
+                this.logger.log(`Set ${field.name} to ${value} (${field.value})`);
+                engrid_ENGrid.setFieldValue(fieldKey, value, false);
+            }
+            else {
+                this.logger.log(`Field ${key} not found`);
+            }
+        }
+        return response;
+    }
+    hasAddressFields() {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options)
+            return false;
+        const address1 = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const address2 = engrid_ENGrid.getField((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2);
+        const city = engrid_ENGrid.getField((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.city);
+        const region = engrid_ENGrid.getField((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.region);
+        const postalCode = engrid_ENGrid.getField((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.postalCode);
+        const country = engrid_ENGrid.getField((_f = this.options.address_fields) === null || _f === void 0 ? void 0 : _f.country);
+        return !!(address1 || address2 || city || region || postalCode || country);
+    }
+    canUseAPI() {
+        var _a, _b, _c, _d;
+        if (!this.options)
+            return false;
+        const country = !!this.getCountry();
+        const address1 = !!engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const city = !!engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.city);
+        const region = !!engrid_ENGrid.getFieldValue((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.region);
+        const postalCode = !!engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.postalCode);
+        if (country && address1) {
+            return (city && region) || postalCode;
+        }
+        return false;
+    }
+    canUsePhoneAPI() {
+        var _a;
+        if (!this.options)
+            return false;
+        if (this.phoneEnabled()) {
+            const phone = !!engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+            const countryPhone = !!engrid_ENGrid.getFieldValue("tc.phone.country");
+            return phone && countryPhone;
+        }
+        return false;
+    }
+    getCountry() {
+        var _a, _b;
+        if (!this.options)
+            return "";
+        const countryFallback = (_a = this.options.country_fallback) !== null && _a !== void 0 ? _a : "";
+        const country = engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.country);
+        return country || countryFallback.toUpperCase();
+    }
+    getCountryByCode(code) {
+        var _a;
+        const countryItem = (_a = this.countries_list.find((country) => country.includes(code))) !== null && _a !== void 0 ? _a : "";
+        if (countryItem) {
+            return {
+                name: countryItem[0],
+                code: countryItem[1],
+                dialCode: countryItem[2],
+                placeholder: countryItem[3],
+            };
+        }
+        return null;
+    }
+    phoneEnabled() {
+        return !!(this.options && this.options.phone_enable);
+    }
+    countryDropDownEnabled() {
+        return !!(this.options && this.options.phone_flags);
+    }
+    getCountryFromIP() {
+        return tidycontact_awaiter(this, void 0, void 0, function* () {
+            return fetch(`https://${window.location.hostname}/cdn-cgi/trace`)
+                .then((res) => res.text())
+                .then((t) => {
+                let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
+                data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
+                const jsondata = JSON.parse(data);
+                this.country_ip = jsondata.loc;
+                return this.country_ip;
+            });
+        });
+    }
+    renderFlagsDropDown() {
+        var _a;
+        if (!this.options)
+            return;
+        const phoneInput = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+        if (!phoneInput)
+            return;
+        this.countries_dropdown = document.createElement("div");
+        this.countries_dropdown.classList.add("tc-flags-container");
+        const selectedFlag = document.createElement("div");
+        selectedFlag.classList.add("tc-selected-flag");
+        selectedFlag.setAttribute("role", "combobox");
+        selectedFlag.setAttribute("aria-haspopup", "listbox");
+        selectedFlag.setAttribute("aria-expanded", "false");
+        selectedFlag.setAttribute("aria-owns", "tc-flags-list");
+        selectedFlag.setAttribute("aria-label", "Select Country");
+        selectedFlag.setAttribute("tabindex", "0");
+        const seletedFlagInner = document.createElement("div");
+        seletedFlagInner.classList.add("tc-flag");
+        // seletedFlagInner.innerHTML = this.getFlagImage("us", "United States");
+        const flagArrow = document.createElement("div");
+        flagArrow.classList.add("tc-flag-arrow");
+        // flagArrow.innerHTML = "&#x25BC;";
+        selectedFlag.appendChild(seletedFlagInner);
+        selectedFlag.appendChild(flagArrow);
+        selectedFlag.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            if (selectedFlag.classList.contains("tc-open")) {
+                this.closeCountryDropDown();
+            }
+            else {
+                this.openCountryDropDown();
+            }
+        });
+        const countryList = document.createElement("ul");
+        countryList.classList.add("tc-country-list");
+        countryList.classList.add("tc-hide");
+        countryList.setAttribute("id", "tc-country-list");
+        countryList.setAttribute("role", "listbox");
+        countryList.setAttribute("aria-label", "List of Countries");
+        countryList.setAttribute("aria-hidden", "true");
+        if (this.options.phone_preferred_countries.length > 0) {
+            const preferredCountries = [];
+            this.options.phone_preferred_countries.forEach((country) => {
+                const countryItem = this.getCountryByCode(country);
+                if (countryItem) {
+                    preferredCountries.push(countryItem);
+                }
+            });
+            this.appendCountryItems(countryList, preferredCountries, "tc-country-list-item", true);
+            const divider = document.createElement("li");
+            divider.classList.add("tc-divider");
+            divider.setAttribute("role", "separator");
+            divider.setAttribute("aria-disabled", "true");
+            countryList.appendChild(divider);
+            this.logger.log("Rendering preferred countries", JSON.stringify(preferredCountries));
+        }
+        const countryListItems = [];
+        this.countries_list.forEach((country) => {
+            countryListItems.push({
+                name: country[0],
+                code: country[1],
+                dialCode: country[2],
+                placeholder: country[3],
+            });
+        });
+        this.appendCountryItems(countryList, countryListItems, "tc-country-list-item");
+        countryList.addEventListener("click", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const target = e.target.closest("li");
+            if (target.classList.contains("tc-country-list-item")) {
+                const countryItem = this.getCountryByCode(target.getAttribute("data-country-code"));
+                if (countryItem) {
+                    this.setPhoneCountry(countryItem);
+                }
+            }
+        });
+        countryList.addEventListener("mouseover", (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const target = e.target.closest("li.tc-country-list-item");
+            if (target) {
+                this.highlightCountry(target.getAttribute("data-country-code"));
+            }
+        });
+        this.countries_dropdown.appendChild(selectedFlag);
+        this.countries_dropdown.appendChild(countryList);
+        phoneInput.parentNode.insertBefore(this.countries_dropdown, phoneInput);
+        phoneInput.parentNode.classList.add("tc-has-country-flags");
+        this.countries_dropdown.addEventListener("keydown", (e) => {
+            var _a, _b;
+            const isDropdownHidden = (_b = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-country-list")) === null || _b === void 0 ? void 0 : _b.classList.contains("tc-hide");
+            if (isDropdownHidden &&
+                ["ArrowUp", "Up", "ArrowDown", "Down", " ", "Enter"].indexOf(e.key) !==
+                    -1) {
+                // prevent form from being submitted if "ENTER" was pressed
+                e.preventDefault();
+                // prevent event from being handled again by document
+                e.stopPropagation();
+                this.openCountryDropDown();
+            }
+            // allow navigation from dropdown to input on TAB
+            if (e.key === "Tab")
+                this.closeCountryDropDown();
+        });
+        document.addEventListener("keydown", (e) => {
+            var _a, _b;
+            const isDropdownHidden = (_b = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-country-list")) === null || _b === void 0 ? void 0 : _b.classList.contains("tc-hide");
+            if (!isDropdownHidden) {
+                // prevent down key from scrolling the whole page,
+                // and enter key from submitting a form etc
+                e.preventDefault();
+                // up and down to navigate
+                if (e.key === "ArrowUp" ||
+                    e.key === "Up" ||
+                    e.key === "ArrowDown" ||
+                    e.key === "Down")
+                    this.handleUpDownKey(e.key);
+                // enter to select
+                else if (e.key === "Enter")
+                    this.handleEnterKey();
+                // esc to close
+                else if (e.key === "Escape")
+                    this.closeCountryDropDown();
+            }
+        });
+        document.addEventListener("click", (e) => {
+            var _a, _b;
+            const isDropdownHidden = (_b = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-country-list")) === null || _b === void 0 ? void 0 : _b.classList.contains("tc-hide");
+            if (!isDropdownHidden &&
+                !e.target.closest(".tc-country-list")) {
+                this.closeCountryDropDown();
+            }
+        });
+    }
+    handleUpDownKey(key) {
+        var _a;
+        const highlightedCountry = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-highlight");
+        if (highlightedCountry) {
+            let next = key === "ArrowUp" || key === "Up"
+                ? highlightedCountry.previousElementSibling
+                : highlightedCountry.nextElementSibling;
+            if (next) {
+                if (next.classList.contains("tc-divider")) {
+                    next =
+                        key === "ArrowUp" || key === "Up"
+                            ? next.previousElementSibling
+                            : next.nextElementSibling;
+                }
+                this.highlightCountry(next === null || next === void 0 ? void 0 : next.getAttribute("data-country-code"));
+            }
+        }
+    }
+    handleEnterKey() {
+        var _a;
+        const highlightedCountry = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-highlight");
+        if (highlightedCountry) {
+            const countryItem = this.getCountryByCode(highlightedCountry === null || highlightedCountry === void 0 ? void 0 : highlightedCountry.getAttribute("data-country-code"));
+            this.setPhoneCountry(countryItem);
+        }
+    }
+    handlePhoneInputKeydown(e) {
+        const phoneInput = e.target;
+        const phoneNumber = phoneInput.value;
+        if (phoneNumber.charAt(0) === "+") {
+            if (phoneNumber.length > 2) {
+                const countryItem = this.getCountryByCode(phoneNumber.substring(1, 3));
+                if (countryItem) {
+                    this.setPhoneCountry(countryItem);
+                }
+                else {
+                    this.setDefaultPhoneCountry();
+                }
+            }
+        }
+    }
+    openCountryDropDown() {
+        if (!this.countries_dropdown)
+            return;
+        const countryList = this.countries_dropdown.querySelector(".tc-country-list");
+        const selectedFlag = this.countries_dropdown.querySelector(".tc-selected-flag");
+        if (countryList && selectedFlag) {
+            countryList.classList.remove("tc-hide");
+            selectedFlag.setAttribute("aria-expanded", "true");
+            selectedFlag.classList.add("tc-open");
+        }
+    }
+    closeCountryDropDown() {
+        var _a;
+        if (!this.options)
+            return;
+        if (!this.countries_dropdown)
+            return;
+        const countryList = this.countries_dropdown.querySelector(".tc-country-list");
+        const selectedFlag = this.countries_dropdown.querySelector(".tc-selected-flag");
+        if (countryList && selectedFlag) {
+            countryList.classList.add("tc-hide");
+            selectedFlag.setAttribute("aria-expanded", "false");
+            selectedFlag.classList.remove("tc-open");
+        }
+        const phoneInput = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+        phoneInput.focus();
+    }
+    getFlagImage(code, name) {
+        return `<picture>
+      <source
+        loading="lazy"
+        type="image/webp"
+        srcset="https://flagcdn.com/h20/${code}.webp,
+          https://flagcdn.com/h40/${code}.webp 2x,
+          https://flagcdn.com/h60/${code}.webp 3x">
+      <source
+        loading="lazy"
+        type="image/png"
+        srcset="https://flagcdn.com/h20/${code}.png,
+          https://flagcdn.com/h40/${code}.png 2x,
+          https://flagcdn.com/h60/${code}.png 3x">
+      <img
+        loading="lazy"
+        src="https://flagcdn.com/h20/${code}.png"
+        height="20"
+        alt="${name}">
+    </picture>`;
+    }
+    appendCountryItems(countryContainer, countries, className, preferred = false) {
+        let html = "";
+        // for each country
+        for (let i = 0; i < countries.length; i++) {
+            const c = countries[i];
+            const idSuffix = !!preferred ? "-preferred" :  true && "" !== void 0 ? "" : "";
+            // open the list item
+            html += `<li class='tc-country ${className}' tabIndex='-1' id='tc-item-${c.code}${idSuffix}' role='option' data-dial-code='${c.dialCode}' data-country-code='${c.code}' aria-selected='false'>`;
+            // add the flag
+            html += `<div class='tc-flag-box'><div class='tc-flag tc-${c.code}'>${this.getFlagImage(c.code, c.name)}</div></div>`;
+            // and the country name and dial code
+            html += `<span class='tc-country-name'>${c.name}</span>`;
+            html += `<span class='tc-dial-code'>+${c.dialCode}</span>`;
+            // close the list item
+            html += "</li>";
+        }
+        countryContainer.insertAdjacentHTML("beforeend", html);
+    }
+    setDefaultPhoneCountry() {
+        var _a;
+        if (!this.options)
+            return;
+        // First, try to get the country from IP
+        if (this.options.phone_country_from_ip) {
+            this.getCountryFromIP()
+                .then((country) => {
+                this.logger.log("Country from IP:", country);
+                this.setPhoneCountry(this.getCountryByCode((country !== null && country !== void 0 ? country : "us").toLowerCase()));
+            })
+                .catch((error) => {
+                this.setPhoneCountry(this.getCountryByCode("us"));
+            });
+            return;
+        }
+        // Then, get the default country Text
+        const countryField = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.country);
+        if (countryField) {
+            const countryText = countryField.options[countryField.selectedIndex].text;
+            // Then, get the country code from the Text
+            const countryData = this.getCountryByCode(countryText);
+            if (countryData) {
+                this.setPhoneCountry(countryData);
+                return;
+            }
+            else if (this.options.phone_preferred_countries.length > 0) {
+                // If no country code is found, use the first priority country
+                this.setPhoneCountry(this.getCountryByCode(this.options.phone_preferred_countries[0]));
+                return;
+            }
+        }
+        // If nothing works, GO USA!
+        this.setPhoneCountry(this.getCountryByCode("us"));
+    }
+    setPhoneCountry(country) {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options || !country)
+            return;
+        const countryInput = engrid_ENGrid.getField("tc.phone.country");
+        if (countryInput.value === country.code)
+            return;
+        const phoneInput = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+        if (this.countryDropDownEnabled()) {
+            const selectedFlag = (_b = this.countries_dropdown) === null || _b === void 0 ? void 0 : _b.querySelector(".tc-selected-flag");
+            const flagElement = (_c = this.countries_dropdown) === null || _c === void 0 ? void 0 : _c.querySelector(".tc-flag");
+            if (selectedFlag && flagElement) {
+                flagElement.innerHTML = this.getFlagImage(country.code, country.name);
+                selectedFlag.setAttribute("data-country", country.code);
+            }
+            const currentSelectedCountry = (_d = this.countries_dropdown) === null || _d === void 0 ? void 0 : _d.querySelector(".tc-country-list-item[aria-selected='true']");
+            if (currentSelectedCountry) {
+                currentSelectedCountry.classList.remove("tc-selected");
+                currentSelectedCountry.setAttribute("aria-selected", "false");
+            }
+            const currentHighlightedCountry = (_e = this.countries_dropdown) === null || _e === void 0 ? void 0 : _e.querySelector(".tc-highlight");
+            if (currentHighlightedCountry) {
+                currentHighlightedCountry.classList.remove("tc-highlight");
+            }
+            const countryListItem = (_f = this.countries_dropdown) === null || _f === void 0 ? void 0 : _f.querySelector(`.tc-country-list-item[data-country-code='${country.code}']`);
+            if (countryListItem) {
+                countryListItem.classList.add("tc-selected");
+                countryListItem.setAttribute("aria-selected", "true");
+                countryListItem.classList.add("tc-highlight");
+            }
+            if (selectedFlag === null || selectedFlag === void 0 ? void 0 : selectedFlag.classList.contains("tc-open"))
+                this.closeCountryDropDown();
+        }
+        phoneInput.setAttribute("placeholder", country.placeholder);
+        countryInput.value = country.code;
+        this.logger.log(`Setting phone country to ${country.code} -  ${country.name}`);
+    }
+    highlightCountry(countryCode) {
+        var _a, _b;
+        if (!countryCode)
+            return;
+        const currentHighlightedCountry = (_a = this.countries_dropdown) === null || _a === void 0 ? void 0 : _a.querySelector(".tc-highlight");
+        if (currentHighlightedCountry) {
+            currentHighlightedCountry.classList.remove("tc-highlight");
+        }
+        const countryList = (_b = this.countries_dropdown) === null || _b === void 0 ? void 0 : _b.querySelector(".tc-country-list");
+        if (countryList) {
+            const country = countryList.querySelector(`.tc-country[data-country-code='${countryCode}']`);
+            if (country) {
+                country.classList.add("tc-highlight");
+                country.scrollIntoView({
+                    behavior: "smooth",
+                    block: "nearest",
+                    inline: "nearest",
+                });
+            }
+        }
+    }
+    setPhoneDataFromAPI(data, id) {
+        var _a;
+        return tidycontact_awaiter(this, void 0, void 0, function* () {
+            if (!this.options)
+                return;
+            const phoneField = engrid_ENGrid.getField((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.phone);
+            const recordField = engrid_ENGrid.getField(this.options.phone_record_field);
+            const dateField = engrid_ENGrid.getField(this.options.phone_date_field);
+            const statusField = engrid_ENGrid.getField(this.options.phone_status_field);
+            let record = {};
+            record["formData"] = { [phoneField.name]: phoneField.value };
+            record["formatted"] = data.formatted;
+            record["number_type"] = data.number_type;
+            if (data.valid === true) {
+                if (phoneField.value !== data.formatted.e164) {
+                    record["phone"] = {
+                        from: phoneField.value,
+                        to: data.formatted.e164,
+                    };
+                    phoneField.value = data.formatted.e164;
+                }
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Phone Checksum", checksum);
+                    record["requestId"] = id; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "SUCCESS" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value = "SUCCESS";
+                }
+            }
+            else {
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Phone Checksum", checksum);
+                    record["requestId"] = id; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "ERROR" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value =
+                        "error" in data ? `ERROR: ` + data.error : "INVALIDPHONE";
+                }
+            }
+        });
+    }
+    callAPI() {
+        var _a, _b, _c, _d, _e, _f;
+        if (!this.options)
+            return;
+        if (!this.isDirty || this.wasCalled)
+            return;
+        if (!this._form.submit) {
+            this.logger.log("Form Submission Interrupted by Other Component");
+            return;
+        }
+        const recordField = engrid_ENGrid.getField(this.options.record_field);
+        const dateField = engrid_ENGrid.getField(this.options.date_field);
+        const statusField = engrid_ENGrid.getField(this.options.status_field);
+        const latitudeField = engrid_ENGrid.getField("supporter.geo.latitude");
+        const longitudeField = engrid_ENGrid.getField("supporter.geo.longitude");
+        if (!this.canUseAPI() && !this.canUsePhoneAPI()) {
+            this.logger.log("Not Enough Data to Call API");
+            if (dateField) {
+                dateField.value = this.todaysDate();
+            }
+            if (statusField) {
+                statusField.value = "PARTIALADDRESS";
+            }
+            return true;
+        }
+        // Call the API
+        const address1 = engrid_ENGrid.getFieldValue((_a = this.options.address_fields) === null || _a === void 0 ? void 0 : _a.address1);
+        const address2 = engrid_ENGrid.getFieldValue((_b = this.options.address_fields) === null || _b === void 0 ? void 0 : _b.address2);
+        const city = engrid_ENGrid.getFieldValue((_c = this.options.address_fields) === null || _c === void 0 ? void 0 : _c.city);
+        const region = engrid_ENGrid.getFieldValue((_d = this.options.address_fields) === null || _d === void 0 ? void 0 : _d.region);
+        const postalCode = engrid_ENGrid.getFieldValue((_e = this.options.address_fields) === null || _e === void 0 ? void 0 : _e.postalCode);
+        const country = this.getCountry();
+        if (!this.countryAllowed(country)) {
+            this.logger.log("Country not allowed: " + country);
+            if (recordField) {
+                let record = {};
+                record = Object.assign({ date: this.todaysDate(), status: "DISALLOWED" }, record);
+                recordField.value = JSON.stringify(record);
+            }
+            if (dateField) {
+                dateField.value = this.todaysDate();
+            }
+            if (statusField) {
+                statusField.value = "DISALLOWED";
+            }
+            return true;
+        }
+        let formData = {
+            url: window.location.href,
+            cid: this.options.cid,
+        };
+        if (this.canUseAPI()) {
+            formData = Object.assign(formData, {
+                address1,
+                address2,
+                city,
+                region,
+                postalCode,
+                country,
+            });
+        }
+        if (this.canUsePhoneAPI()) {
+            formData.phone = engrid_ENGrid.getFieldValue((_f = this.options.address_fields) === null || _f === void 0 ? void 0 : _f.phone);
+            formData.phoneCountry = engrid_ENGrid.getFieldValue("tc.phone.country");
+        }
+        this.wasCalled = true;
+        this.logger.log("FormData", JSON.parse(JSON.stringify(formData)));
+        const ret = this.fetchTimeOut(this.endpoint, {
+            headers: { "Content-Type": "application/json; charset=utf-8" },
+            method: "POST",
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+            this.httpStatus = response.status;
+            return response.json();
+        })
+            .then((data) => tidycontact_awaiter(this, void 0, void 0, function* () {
+            this.logger.log("callAPI response", JSON.parse(JSON.stringify(data)));
+            if (data.valid === true) {
+                let record = {};
+                if ("changed" in data) {
+                    record = this.setFields(data.changed);
+                }
+                record["formData"] = formData;
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Checksum", checksum);
+                    record["requestId"] = data.requestId; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if ("latitude" in data) {
+                    latitudeField.value = data.latitude;
+                    record["latitude"] = data.latitude;
+                }
+                if ("longitude" in data) {
+                    longitudeField.value = data.longitude;
+                    record["longitude"] = data.longitude;
+                }
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "SUCCESS" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value = "SUCCESS";
+                }
+            }
+            else {
+                let record = {};
+                record["formData"] = formData;
+                yield this.checkSum(JSON.stringify(record)).then((checksum) => {
+                    this.logger.log("Checksum", checksum);
+                    record["requestId"] = data.requestId; // We don't want to add the requestId to the checksum
+                    record["checksum"] = checksum;
+                });
+                if (recordField) {
+                    record = Object.assign({ date: this.todaysDate(), status: "ERROR" }, record);
+                    recordField.value = JSON.stringify(record);
+                }
+                if (dateField) {
+                    dateField.value = this.todaysDate();
+                }
+                if (statusField) {
+                    statusField.value =
+                        "error" in data ? `ERROR: ` + data.error : "INVALIDADDRESS";
+                }
+            }
+            if (this.phoneEnabled() && "phone" in data) {
+                yield this.setPhoneDataFromAPI(data.phone, data.requestId);
+            }
+        }))
+            .catch((error) => {
+            if (error.toString().includes("AbortError")) {
+                // fetch aborted due to timeout
+                this.logger.log("Fetch aborted");
+                this.httpStatus = 408;
+            }
+            // network error or json parsing error
+            this.writeError(error);
+        });
+        this._form.submitPromise = ret;
+        return ret;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/live-currency.js
+// This script enables live currency symbol and code to the page.
+
+class LiveCurrency {
+    constructor() {
+        this.logger = new EngridLogger("LiveCurrency", "#1901b1", "#feb47a", "💲");
+        this.elementsFound = false;
+        this._amount = DonationAmount.getInstance();
+        this._frequency = DonationFrequency.getInstance();
+        this.searchElements();
+        if (!this.shouldRun())
+            return;
+        this.updateCurrency();
+        this.addEventListeners();
+    }
+    searchElements() {
+        const enElements = document.querySelectorAll(`
+      .en__component--copyblock,
+      .en__component--codeblock,
+      .en__field label,
+      .en__submit
+      `);
+        if (enElements.length > 0) {
+            this.elementsFound = true;
+            const currency = engrid_ENGrid.getCurrencySymbol();
+            const currencyCode = engrid_ENGrid.getCurrencyCode();
+            const currencyElement = `<span class="engrid-currency-symbol">${currency}</span>`;
+            const currencyCodeElement = `<span class="engrid-currency-code">${currencyCode}</span>`;
+            enElements.forEach((item) => {
+                if (item instanceof HTMLElement &&
+                    (item.innerHTML.includes("[$]") || item.innerHTML.includes("[$$$]"))) {
+                    this.logger.log("Old Value:", item.innerHTML);
+                    const currencyRegex = /\[\$\]/g;
+                    const currencyCodeRegex = /\[\$\$\$\]/g;
+                    item.innerHTML = item.innerHTML.replace(currencyCodeRegex, currencyCodeElement);
+                    item.innerHTML = item.innerHTML.replace(currencyRegex, currencyElement);
+                    this.logger.log("New Value:", item.innerHTML);
+                }
+            });
+        }
+    }
+    shouldRun() {
+        return this.elementsFound;
+    }
+    addEventListeners() {
+        this._amount.onAmountChange.subscribe(() => {
+            setTimeout(() => {
+                this.updateCurrency();
+            }, 10);
+        });
+        this._frequency.onFrequencyChange.subscribe(() => {
+            setTimeout(() => {
+                this.searchElements();
+                this.updateCurrency();
+            }, 10);
+        });
+        const currencyField = engrid_ENGrid.getField("transaction.paycurrency");
+        if (currencyField) {
+            currencyField.addEventListener("change", () => {
+                setTimeout(() => {
+                    this.updateCurrency();
+                    this._amount.load();
+                    const otherAmountDiv = document.querySelector(".en__field--donationAmt .en__field__item--other");
+                    if (otherAmountDiv) {
+                        otherAmountDiv.setAttribute("data-currency-symbol", engrid_ENGrid.getCurrencySymbol());
+                    }
+                    engrid_ENGrid.setBodyData("currency-code", engrid_ENGrid.getCurrencyCode());
+                }, 10);
+            });
+        }
+    }
+    updateCurrency() {
+        document.querySelectorAll(".engrid-currency-symbol").forEach((item) => {
+            item.innerHTML = engrid_ENGrid.getCurrencySymbol();
+        });
+        document.querySelectorAll(".engrid-currency-code").forEach((item) => {
+            item.innerHTML = engrid_ENGrid.getCurrencyCode();
+        });
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
+const AppVersion = "0.13.23";
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
 
@@ -14141,24 +17626,46 @@ class EngridLogger {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 // Events
+
+// Version
 
 
 // EXTERNAL MODULE: ./node_modules/smoothscroll-polyfill/dist/smoothscroll.js
 var smoothscroll = __webpack_require__(523);
 var smoothscroll_default = /*#__PURE__*/__webpack_require__.n(smoothscroll);
 ;// CONCATENATED MODULE: ./src/scripts/donation-lightbox-form.js
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+if (isSafari) {
+  window.__forceSmoothScrollPolyfill__ = true;
+}
+
 
 smoothscroll_default().polyfill();
 class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
-    if (!this.isIframe()) return;
+    if (!this.isIframe()) return; // Each EN Row is a Section
+
+    this.sections = document.querySelectorAll("form.en__component > .en__component"); // If there's 1 section or less, don't show the navigation
+
+    if (this.sections.length <= 1) return;
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
-    console.log("DonationLightboxForm: constructor"); // Each EN Row is a Section
-
-    this.sections = document.querySelectorAll("form.en__component > .en__component"); // Check if we're on the Thank You page
+    console.log("DonationLightboxForm: constructor"); // Check if we're on the Thank You page
 
     if (pageJson.pageNumber === pageJson.pageCount) {
       this.sendMessage("status", "loaded");
@@ -14282,7 +17789,10 @@ class DonationLightboxForm {
       countryField.addEventListener("change", e => {
         this.canadaOnly();
       });
-    }
+    } // Add a Multi-Step Data Attribute to the Body
+
+
+    document.querySelector("body").dataset.multiStep = "true";
   } // Send iframe message to parent
 
 
@@ -14303,6 +17813,8 @@ class DonationLightboxForm {
   buildSectionNavigation() {
     console.log("DonationLightboxForm: buildSectionNavigation");
     this.sections.forEach((section, key) => {
+      var _sectionNavigation$qu, _sectionNavigation$qu2, _sectionNavigation$qu3;
+
       section.dataset.sectionId = key;
       const sectionNavigation = document.createElement("div");
       sectionNavigation.classList.add("section-navigation");
@@ -14350,18 +17862,18 @@ class DonationLightboxForm {
         <span class="section-count__current">${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
-      sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {
+      (_sectionNavigation$qu = sectionNavigation.querySelector(".section-navigation__previous")) === null || _sectionNavigation$qu === void 0 ? void 0 : _sectionNavigation$qu.addEventListener("click", e => {
         e.preventDefault();
         this.scrollToSection(key - 1);
       });
-      sectionNavigation.querySelector(".section-navigation__next")?.addEventListener("click", e => {
+      (_sectionNavigation$qu2 = sectionNavigation.querySelector(".section-navigation__next")) === null || _sectionNavigation$qu2 === void 0 ? void 0 : _sectionNavigation$qu2.addEventListener("click", e => {
         e.preventDefault();
 
         if (this.validateForm(key)) {
           this.scrollToSection(key + 1);
         }
       });
-      sectionNavigation.querySelector(".section-navigation__submit")?.addEventListener("click", e => {
+      (_sectionNavigation$qu3 = sectionNavigation.querySelector(".section-navigation__submit")) === null || _sectionNavigation$qu3 === void 0 ? void 0 : _sectionNavigation$qu3.addEventListener("click", e => {
         e.preventDefault(); // Validate the entire form again
 
         if (this.validateForm()) {
