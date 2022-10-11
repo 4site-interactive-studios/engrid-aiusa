@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, October 11, 2022 @ 10:06:14 ET
+ *  Date: Tuesday, October 11, 2022 @ 11:41:44 ET
  *  By: fernando
  *  ENGrid styles: v0.13.19
- *  ENGrid scripts: v0.13.25
+ *  ENGrid scripts: v0.13.26
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -15345,7 +15345,9 @@ class RememberMe {
                 }
             }, (event) => {
                 let data;
-                if (event.data && typeof event.data === "string") {
+                if (event.data &&
+                    typeof event.data === "string" &&
+                    this.isJson(event.data)) {
                     data = JSON.parse(event.data);
                 }
                 if (data &&
@@ -15609,6 +15611,15 @@ class RememberMe {
                 }
             }
         }
+    }
+    isJson(str) {
+        try {
+            JSON.parse(str);
+        }
+        catch (e) {
+            return false;
+        }
+        return true;
     }
 }
 
@@ -17624,7 +17635,7 @@ class LiveCurrency {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.25";
+const AppVersion = "0.13.26";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
