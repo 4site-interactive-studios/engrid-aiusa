@@ -1406,9 +1406,10 @@
       line-height: 1.14;
       font-weight: bold;
       font-stretch: condensed;
-      text-align: center;
+      text-align: left;
       letter-spacing: -1.68px;
       -webkit-text-stroke: 0.2px #000;
+      margin: 0 auto;
       margin-top: 72px;
       text-transform: uppercase;
       color: black;
@@ -1425,12 +1426,12 @@
         line-height: 0.94;
         letter-spacing: normal;
         margin: 0 30px;
-        margin-top: 66px;
+        margin-top: 18px;
       }
     }
 
     h1 ~ p {
-      text-align: center;
+      text-align: left;
       margin: 0 auto;
       margin-top: 24px;
       margin-bottom: 40px;
