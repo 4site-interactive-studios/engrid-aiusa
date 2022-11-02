@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, August 16, 2022 @ 10:55:38 ET
- *  By: fernando
- *  ENGrid styles: v0.13.13
- *  ENGrid scripts: v0.13.14
+ *  Date: Monday, October 17, 2022 @ 13:57:01 ET
+ *  By: ryanoliver
+ *  ENGrid styles: v0.13.19
+ *  ENGrid scripts: v0.13.23
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11112,6 +11112,9 @@ class engrid_ENGrid {
     static get debug() {
         return !!this.getOption("Debug");
     }
+    static get demo() {
+        return this.getUrlParameter("mode") === "DEMO";
+    }
     // Return any parameter from the URL
     static getUrlParameter(name) {
         const searchParams = new URLSearchParams(window.location.search);
@@ -11315,10 +11318,10 @@ class engrid_ENGrid {
         scriptTag.src = url;
         scriptTag.onload = onload;
         if (head) {
-            document.getElementsByTagName("head")[0].appendChild(scriptTag);
+            document.head.appendChild(scriptTag);
             return;
         }
-        document.getElementsByTagName("body")[0].appendChild(scriptTag);
+        document.body.appendChild(scriptTag);
         return;
     }
     // Format a number
@@ -11792,8 +11795,8 @@ class App extends engrid_ENGrid {
                 this._amount.load();
             }, 150);
         });
-        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + s));
-        this._form.onError.subscribe((s) => this.logger.danger("Error: " + s));
+        this._form.onSubmit.subscribe((s) => this.logger.success("Submit: " + JSON.stringify(s)));
+        this._form.onError.subscribe((s) => this.logger.danger("Error: " + JSON.stringify(s)));
         window.enOnSubmit = () => {
             this._form.submit = true;
             this._form.submitPromise = false;
@@ -11802,6 +11805,7 @@ class App extends engrid_ENGrid {
                 return false;
             if (this._form.submitPromise)
                 return this._form.submitPromise;
+            this.logger.success("enOnSubmit Success");
             return true;
         };
         window.enOnError = () => {
@@ -11815,6 +11819,7 @@ class App extends engrid_ENGrid {
                 return false;
             if (this._form.validatePromise)
                 return this._form.validatePromise;
+            this.logger.success("Validation Passed");
             return true;
         };
         // Live Currency
@@ -11875,6 +11880,7 @@ class App extends engrid_ENGrid {
         new OtherAmount();
         new MinMaxAmount();
         new Ticker();
+        new A11y();
         new AddNameToMessage();
         new ExpandRegionName();
         // Page Background
@@ -11926,7 +11932,7 @@ class App extends engrid_ENGrid {
     }
     // Use this function to add any Data Attributes to the Body tag
     setDataAttributes() {
-        // Add the Page Type as a Data Attribute on the video
+        // Add the Page Type as a Data Attribute on the Body Tag
         if (engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
             App.setBodyData("page-type", window.pageJson.pageType);
             this.logger.log("Page Type: " + window.pageJson.pageType);
@@ -11934,6 +11940,8 @@ class App extends engrid_ENGrid {
         else {
             this.logger.log("Page Type: Not Found");
         }
+        // Add the currency code as a Data Attribute on the Body Tag
+        App.setBodyData("currency-code", App.getCurrencyCode());
         // Add a body banner data attribute if the banner contains no image or video
         if (!document.querySelector(".body-banner img, .body-banner video")) {
             App.setBodyData("body-banner", "empty");
@@ -12022,6 +12030,17 @@ class App extends engrid_ENGrid {
         if (otherAmountDiv) {
             otherAmountDiv.setAttribute("data-currency-symbol", App.getCurrencySymbol());
         }
+        // Add a payment type data attribute
+        const paymentTypeSelect = App.getField("transaction.paymenttype");
+        if (paymentTypeSelect) {
+            App.setBodyData("payment-type", paymentTypeSelect.value);
+            paymentTypeSelect.addEventListener("change", () => {
+                App.setBodyData("payment-type", paymentTypeSelect.value);
+            });
+        }
+        // Add demo data attribute
+        if (App.demo)
+            App.setBodyData("demo", "");
     }
 }
 
@@ -12222,6 +12241,54 @@ class ApplePay {
         }
         this._form.submit = true;
         return true;
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/a11y.js
+// a11y means accessibility
+// This Component is supposed to be used as a helper for Arria Attributes & Other Accessibility Features
+class A11y {
+    constructor() {
+        this.addRequired();
+        this.addLabel();
+        this.addGroupRole();
+    }
+    addGroupRole() {
+        // Add role="group" to all EN Radio fields
+        const radioFields = document.querySelectorAll(".en__field--radio");
+        radioFields.forEach((field) => {
+            field.setAttribute("role", "group");
+            // Add random ID to the label
+            const label = field.querySelector("label");
+            if (label) {
+                label.setAttribute("id", `en__field__label--${Math.random().toString(36).slice(2, 7)}`);
+                field.setAttribute("aria-labelledby", label.id);
+            }
+        });
+    }
+    addRequired() {
+        const mandatoryFields = document.querySelectorAll(".en__mandatory .en__field__input");
+        mandatoryFields.forEach((field) => {
+            field.setAttribute("aria-required", "true");
+        });
+    }
+    addLabel() {
+        const otherAmount = document.querySelector(".en__field__input--otheramount");
+        if (otherAmount) {
+            otherAmount.setAttribute("aria-label", "Enter your custom donation amount");
+        }
+        // Split selects usually don't have a label, so let's make the first option the label
+        const splitSelects = document.querySelectorAll(".en__field__input--splitselect");
+        splitSelects.forEach((select) => {
+            var _a, _b, _c, _d;
+            const firstOption = select.querySelector("option");
+            if (firstOption &&
+                firstOption.value === "" &&
+                !((_b = (_a = firstOption.textContent) === null || _a === void 0 ? void 0 : _a.toLowerCase()) === null || _b === void 0 ? void 0 : _b.includes("select")) &&
+                !((_d = (_c = firstOption.textContent) === null || _c === void 0 ? void 0 : _c.toLowerCase()) === null || _d === void 0 ? void 0 : _d.includes("choose"))) {
+                select.setAttribute("aria-label", firstOption.textContent || "");
+            }
+        });
     }
 }
 
@@ -13240,14 +13307,10 @@ const isInViewport = (e) => {
 };
 // Checks to see if the page is so short, the footer is above the fold. If the footer is above the folde we'll use this class to ensure at a minimum the page fills the full viewport height.
 if (contentFooter && isInViewport(contentFooter)) {
-    document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute("data-engrid-footer-above-fold", "");
+    document.body.setAttribute("data-engrid-footer-above-fold", "");
 }
 else {
-    document
-        .getElementsByTagName("BODY")[0]
-        .setAttribute("data-engrid-footer-below-fold", "");
+    document.body.setAttribute("data-engrid-footer-below-fold", "");
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/iframe.js
@@ -13291,6 +13354,11 @@ class iFrame {
                 this.sendIframeFormStatus("chained");
                 this.hideFormComponents();
                 this.addChainedBanner();
+            }
+            // Remove the skip link markup when inside an iFrame
+            const skipLink = document.querySelector(".skip-link");
+            if (skipLink) {
+                skipLink.remove();
             }
         }
         else {
@@ -13722,7 +13790,7 @@ class UpsellLightbox {
                     </p>
                   </div>
                   <div class="upsellOtherAmountInput">
-                    <input href="#" id="secondOtherField" name="secondOtherField" size="12" type="number" inputmode="numeric" step="1" value="" autocomplete="off">
+                    <input href="#" id="secondOtherField" name="secondOtherField" type="text" value="" inputmode="decimal" aria-label="Enter your custom donation amount" autocomplete="off" data-lpignore="true" aria-required="true" size="12">
                     <small>Minimum ${this.getAmountTxt(this.options.minAmount)}</small>
                   </div>
                 </div>
@@ -14994,7 +15062,7 @@ class NeverBounce {
                 this.init();
             }, 1000);
         }
-        this.form.onValidate.subscribe(() => (this.form.validate = this.validate()));
+        this.form.onValidate.subscribe(this.validate.bind(this));
     }
     init() {
         if (this.nbLoaded || !this.shouldRun)
@@ -15017,9 +15085,7 @@ class NeverBounce {
             '<div id="nb-feedback" class="en__field__error nb-hidden">Enter a valid email.</div>';
         this.insertAfter(nbCustomMessageHTML, this.emailField);
         const NBClass = this;
-        document
-            .getElementsByTagName("body")[0]
-            .addEventListener("nb:registered", function (event) {
+        document.body.addEventListener("nb:registered", function (event) {
             const field = document.querySelector('[data-nb-id="' + event.detail.id + '"]');
             field.addEventListener("nb:loading", function (e) {
                 engrid_ENGrid.disableSubmit("Validating Your Email");
@@ -15161,19 +15227,20 @@ class NeverBounce {
     }
     validate() {
         var _a;
-        if (!this.emailField || !this.shouldRun || !this.nbLoaded) {
+        const nbResult = engrid_ENGrid.getFieldValue("nb-result");
+        if (!this.emailField || !this.shouldRun || !this.nbLoaded || !nbResult) {
             this.logger.log("validate(): Should Not Run. Returning true.");
-            return true;
+            return;
         }
         if (this.nbStatus) {
-            this.nbStatus.value = engrid_ENGrid.getFieldValue("nb-result");
+            this.nbStatus.value = nbResult;
         }
-        if (!["catchall", "unknown", "valid"].includes(engrid_ENGrid.getFieldValue("nb-result"))) {
+        if (!["catchall", "unknown", "valid"].includes(nbResult)) {
             this.setEmailStatus("required");
             (_a = this.emailField) === null || _a === void 0 ? void 0 : _a.focus();
-            return false;
+            this.logger.log("NB-Result:", engrid_ENGrid.getFieldValue("nb-result"));
+            this.form.validate = false;
         }
-        return true;
     }
 }
 
@@ -17506,6 +17573,7 @@ class LiveCurrency {
                     if (otherAmountDiv) {
                         otherAmountDiv.setAttribute("data-currency-symbol", engrid_ENGrid.getCurrencySymbol());
                     }
+                    engrid_ENGrid.setBodyData("currency-code", engrid_ENGrid.getCurrencyCode());
                 }, 10);
             });
         }
@@ -17521,10 +17589,11 @@ class LiveCurrency {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.14";
+const AppVersion = "0.13.23";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
@@ -19371,6 +19440,33 @@ const customScript = function () {
       }
     }
   }
+
+  const upsellLabel = document.querySelector("#upsellYesButton .label");
+  const upsellCandle = document.createElement("div");
+  upsellCandle.classList.add("candle");
+  upsellCandle.innerHTML = `
+      <div class="candle-flame">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.5 24.978"><g data-name="Layer 2"><g data-name="flame b"><path d="M0 15.157c0 6.897 6.25 9.821 6.25 9.821s6.25-2.924 6.25-9.821S6.25 0 6.25 0 0 8.26 0 15.157z" style="fill:#ff4700"/><path d="M3.375 18.383a6.768 6.768 0 0 0 2.875 5.763 6.768 6.768 0 0 0 2.875-5.763c0-4.047-2.875-8.893-2.875-8.893s-2.875 4.846-2.875 8.893z" style="fill:#ffbf00"/></g></g></svg>
+      </div>
+      <div class="candle-base">
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+        <span class="spark"></span>
+      </div>
+      `;
+  upsellLabel.prepend(upsellCandle);
 };
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
