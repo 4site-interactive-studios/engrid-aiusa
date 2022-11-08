@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, October 17, 2022 @ 13:57:01 ET
- *  By: ryanoliver
+ *  Date: Wednesday, November 2, 2022 @ 15:37:01 ET
+ *  By: fernando
  *  ENGrid styles: v0.13.19
- *  ENGrid scripts: v0.13.23
+ *  ENGrid scripts: v0.13.30
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -10788,6 +10788,7 @@ const UpsellOptionsDefaults = {
     minAmount: 0,
     canClose: true,
     submitOnClose: false,
+    disablePaymentMethods: [],
 };
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/translate-options.js
@@ -11838,6 +11839,8 @@ class App extends engrid_ENGrid {
         new DataReplace();
         // ENgrid Hide Script
         new DataHide();
+        // Autosubmit script
+        new Autosubmit();
         // On the end of the script, after all subscribers defined, let's load the current value
         this._amount.load();
         this._frequency.load();
@@ -13911,11 +13914,13 @@ class UpsellLightbox {
     shouldOpen() {
         const freq = this._frequency.frequency;
         const upsellAmount = this.getUpsellAmount();
+        const paymenttype = engrid_ENGrid.getFieldValue("transaction.paymenttype") || "";
         // If frequency is not onetime or
         // the modal is already opened or
         // there's no suggestion for this donation amount,
         // we should not open
         if (freq == "onetime" &&
+            !this.options.disablePaymentMethods.includes(paymenttype.toLowerCase()) &&
             !this.overlay.classList.contains("is-submitting") &&
             upsellAmount > 0) {
             this.logger.log("Upsell Frequency " + this._frequency.frequency);
@@ -15335,7 +15340,7 @@ class RememberMe {
         if (this.useRemote()) {
             this.createIframe(() => {
                 if (this.iframe && this.iframe.contentWindow) {
-                    this.iframe.contentWindow.postMessage({ key: this.cookieName, operation: "read" }, "*");
+                    this.iframe.contentWindow.postMessage(JSON.stringify({ key: this.cookieName, operation: "read" }), "*");
                     this._form.onSubmit.subscribe(() => {
                         if (this.rememberMeOptIn) {
                             this.readFields();
@@ -15344,11 +15349,17 @@ class RememberMe {
                     });
                 }
             }, (event) => {
+                let data;
                 if (event.data &&
-                    event.data.key &&
-                    event.data.value !== undefined &&
-                    event.data.key === this.cookieName) {
-                    this.updateFieldData(event.data.value);
+                    typeof event.data === "string" &&
+                    this.isJson(event.data)) {
+                    data = JSON.parse(event.data);
+                }
+                if (data &&
+                    data.key &&
+                    data.value !== undefined &&
+                    data.key === this.cookieName) {
+                    this.updateFieldData(data.value);
                     this.writeFields();
                     let hasFieldData = Object.keys(this.fieldData).length > 0;
                     if (!hasFieldData) {
@@ -15504,7 +15515,12 @@ class RememberMe {
             this.iframe = iframe;
             document.body.appendChild(this.iframe);
             this.iframe.addEventListener("load", () => iframeLoaded(), false);
-            window.addEventListener("message", (event) => messageReceived(event), false);
+            window.addEventListener("message", (event) => {
+                var _a;
+                if (((_a = this.iframe) === null || _a === void 0 ? void 0 : _a.contentWindow) === event.source) {
+                    messageReceived(event);
+                }
+            }, false);
         }
     }
     clearCookie() {
@@ -15517,12 +15533,12 @@ class RememberMe {
     }
     saveCookieToRemote() {
         if (this.iframe && this.iframe.contentWindow) {
-            this.iframe.contentWindow.postMessage({
+            this.iframe.contentWindow.postMessage(JSON.stringify({
                 key: this.cookieName,
-                value: JSON.stringify(this.fieldData),
+                value: this.fieldData,
                 operation: "write",
                 expires: this.cookieExpirationDays,
-            }, "*");
+            }), "*");
         }
     }
     readCookie() {
@@ -15605,6 +15621,15 @@ class RememberMe {
                 }
             }
         }
+    }
+    isJson(str) {
+        try {
+            JSON.parse(str);
+        }
+        catch (e) {
+            return false;
+        }
+        return true;
     }
 }
 
@@ -16000,6 +16025,16 @@ class DataLayer {
         this.onLoad();
         this._form.onSubmit.subscribe(() => this.onSubmit());
     }
+    transformJSON(value) {
+        if (typeof value === "string") {
+            return value.toUpperCase().split(" ").join("-").replace(":-", "-");
+        }
+        else if (typeof value === "boolean") {
+            value = value ? "TRUE" : "FALSE";
+            return value;
+        }
+        return "";
+    }
     onLoad() {
         if (engrid_ENGrid.getGiftProcess()) {
             this.logger.log("EN_SUCCESSFUL_DONATION");
@@ -16012,6 +16047,27 @@ class DataLayer {
             this.dataLayer.push({
                 event: "EN_PAGE_VIEW",
             });
+        }
+        if (window.pageJson) {
+            const pageJson = window.pageJson;
+            for (const property in pageJson) {
+                if (Number.isInteger(pageJson[property])) {
+                    this.dataLayer.push({
+                        event: `EN_PAGEJSON_${property.toUpperCase()}-${pageJson[property]}`,
+                    });
+                    this.dataLayer.push({
+                        [`'EN_PAGEJSON_${property.toUpperCase()}'`]: pageJson[property],
+                    });
+                }
+                else {
+                    this.dataLayer.push({
+                        event: `EN_PAGEJSON_${property.toUpperCase()}-${this.transformJSON(pageJson[property])}`,
+                    });
+                    this.dataLayer.push({
+                        [`'EN_PAGEJSON_${property.toUpperCase()}'`]: this.transformJSON(pageJson[property]),
+                    });
+                }
+            }
         }
     }
     onSubmit() {
@@ -17516,6 +17572,7 @@ class LiveCurrency {
         this.elementsFound = false;
         this._amount = DonationAmount.getInstance();
         this._frequency = DonationFrequency.getInstance();
+        this._fees = ProcessingFees.getInstance();
         this.searchElements();
         if (!this.shouldRun())
             return;
@@ -17552,6 +17609,11 @@ class LiveCurrency {
         return this.elementsFound;
     }
     addEventListeners() {
+        this._fees.onFeeChange.subscribe(() => {
+            setTimeout(() => {
+                this.updateCurrency();
+            }, 10);
+        });
         this._amount.onAmountChange.subscribe(() => {
             setTimeout(() => {
                 this.updateCurrency();
@@ -17579,20 +17641,44 @@ class LiveCurrency {
         }
     }
     updateCurrency() {
-        document.querySelectorAll(".engrid-currency-symbol").forEach((item) => {
-            item.innerHTML = engrid_ENGrid.getCurrencySymbol();
-        });
-        document.querySelectorAll(".engrid-currency-code").forEach((item) => {
-            item.innerHTML = engrid_ENGrid.getCurrencyCode();
-        });
+        const currencySymbolElements = document.querySelectorAll(".engrid-currency-symbol");
+        const currencyCodeElements = document.querySelectorAll(".engrid-currency-code");
+        if (currencySymbolElements.length > 0) {
+            currencySymbolElements.forEach((item) => {
+                item.innerHTML = engrid_ENGrid.getCurrencySymbol();
+            });
+        }
+        if (currencyCodeElements.length > 0) {
+            currencyCodeElements.forEach((item) => {
+                item.innerHTML = engrid_ENGrid.getCurrencyCode();
+            });
+        }
+        this.logger.log(`Currency updated for ${currencySymbolElements.length + currencyCodeElements.length} elements`);
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/autosubmit.js
+// Automatically submits the page if a URL argument is present
+
+class Autosubmit {
+    constructor() {
+        this.logger = new EngridLogger("Autosubmit", "#f0f0f0", "#ff0000", "🚀");
+        this._form = EnForm.getInstance();
+        if (engrid_ENGrid.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") &&
+            !window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() &&
+            engrid_ENGrid.getUrlParameter("autosubmit") === "Y") {
+            this.logger.log("Autosubmitting Form");
+            this._form.submitForm();
+        }
     }
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.23";
+const AppVersion = "0.13.30";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
