@@ -47,7 +47,7 @@ const options: Options = {
   onLoad: () => {
     (<any>window).DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
-    customScript();
+    customScript(App);
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
