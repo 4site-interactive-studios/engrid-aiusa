@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, January 10, 2023 @ 11:08:36 ET
+ *  Date: Tuesday, January 10, 2023 @ 11:10:15 ET
  *  By: fernando
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -18507,7 +18507,7 @@ class DonationLightboxForm {
 ;// CONCATENATED MODULE: ./src/scripts/main.js
 const main_tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 
-const customScript = function () {
+const customScript = function (App) {
   console.log("ENGrid client scripts are executing"); // Add your client scripts here
   // Render Critical because it moves DOM elements that can be above the fold
   // Has also been added to the Page Template after main.js in a <script> tag that fires after DomContentLoaded
@@ -19567,7 +19567,24 @@ const customScript = function () {
         <span class="spark"></span>
       </div>
       `;
-  upsellLabel.prepend(upsellCandle);
+  upsellLabel.prepend(upsellCandle); // If nore=true is present on the URL, hide the monthly frequency option & disable the monthly upsell
+
+  if (App.getUrlParameter("nore") == "true") {
+    window.EngridUpsell.skipUpsell = true; // Force the frequency to be one-time
+
+    const oneTimeRadio = document.querySelector("[name='transaction.recurrfreq'][value='ONETIME']");
+
+    if (oneTimeRadio) {
+      oneTimeRadio.checked = true;
+    } // Hide the payment frequency options
+
+
+    const paymentFrequencyOptions = document.querySelector(".en__field--recurrfreq");
+
+    if (paymentFrequencyOptions) {
+      paymentFrequencyOptions.classList.add("hide");
+    }
+  }
 };
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
@@ -19604,7 +19621,7 @@ const options = {
   onLoad: () => {
     window.DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
-    customScript();
+    customScript(App);
   },
   onResize: () => console.log("Starter Theme Window Resized")
 };
