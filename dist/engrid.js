@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, January 10, 2023 @ 11:10:15 ET
+ *  Date: Tuesday, January 10, 2023 @ 11:16:06 ET
  *  By: fernando
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -19608,15 +19608,28 @@ const options = {
   SkipToMainContentLink: true,
   SrcDefer: true,
   ProgressBar: true,
-  RememberMe: {
-    checked: true,
-    remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
-    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
-    fieldOptInSelectorTargetLocation: "after",
-    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
-    fieldClearSelectorTargetLocation: "after",
-    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.emailAddress", "supporter.phoneNumber", "supporter.address1", "supporter.address2", "supporter.city", "supporter.region", "supporter.postcode", "supporter.country"]
-  },
+  // RememberMe: {
+  //   checked: true,
+  //   remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
+  //   fieldOptInSelectorTarget:
+  //     '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
+  //   fieldOptInSelectorTargetLocation: "after",
+  //   fieldClearSelectorTarget:
+  //     'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
+  //   fieldClearSelectorTargetLocation: "after",
+  //   fieldNames: [
+  //     "supporter.firstName",
+  //     "supporter.lastName",
+  //     "supporter.emailAddress",
+  //     "supporter.phoneNumber",
+  //     "supporter.address1",
+  //     "supporter.address2",
+  //     "supporter.city",
+  //     "supporter.region",
+  //     "supporter.postcode",
+  //     "supporter.country",
+  //   ],
+  // },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     window.DonationLightboxForm = DonationLightboxForm;
