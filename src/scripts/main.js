@@ -1,6 +1,6 @@
 const tippy = require("tippy.js").default;
 
-export const customScript = function () {
+export const customScript = function (App) {
   console.log("ENGrid client scripts are executing");
   // Add your client scripts here
   // Render Critical because it moves DOM elements that can be above the fold
@@ -1081,4 +1081,23 @@ export const customScript = function () {
       </div>
       `;
   upsellLabel.prepend(upsellCandle);
+
+  // If nore=true is present on the URL, hide the monthly frequency option & disable the monthly upsell
+  if (App.getUrlParameter("nore") == "true") {
+    window.EngridUpsell.skipUpsell = true;
+    // Force the frequency to be one-time
+    const oneTimeRadio = document.querySelector(
+      "[name='transaction.recurrfreq'][value='ONETIME']"
+    );
+    if (oneTimeRadio) {
+      oneTimeRadio.checked = true;
+    }
+    // Hide the payment frequency options
+    const paymentFrequencyOptions = document.querySelector(
+      ".en__field--recurrfreq"
+    );
+    if (paymentFrequencyOptions) {
+      paymentFrequencyOptions.classList.add("hide");
+    }
+  }
 };
