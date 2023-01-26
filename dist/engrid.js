@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, January 10, 2023 @ 11:16:06 ET
+ *  Date: Wednesday, January 25, 2023 @ 21:30:06 ET
  *  By: fernando
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -19608,6 +19608,10 @@ const options = {
   SkipToMainContentLink: true,
   SrcDefer: true,
   ProgressBar: true,
+  MinAmount: 5,
+  MaxAmount: 100000000,
+  MinAmountMessage: "Please enter a minimum donation of $5",
+  MaxAmountMessage: "Amount must be less than $100,000,000",
   // RememberMe: {
   //   checked: true,
   //   remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",

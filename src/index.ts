@@ -24,6 +24,10 @@ const options: Options = {
   SkipToMainContentLink: true,
   SrcDefer: true,
   ProgressBar: true,
+  MinAmount: 5,
+  MaxAmount: 100000000,
+  MinAmountMessage: "Please enter a minimum donation of $5",
+  MaxAmountMessage: "Amount must be less than $100,000,000",
   // RememberMe: {
   //   checked: true,
   //   remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
