@@ -1,8 +1,8 @@
 name: Purge JSDelivr cache
 on: [push, pull_request]
 env:
-  JSDELIVR_CSS_PATH: gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.css
-  JSDELIVR_JS_PATH: gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.js
+  JSDELIVR_CSS_PATH: /gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.css
+  JSDELIVR_JS_PATH: /gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.js
 jobs:
   purge:
     runs-on: ubuntu-latest
@@ -11,13 +11,13 @@ jobs:
       id: jsdelivr-css
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/${{ env.JSDELIVR_CSS_PATH }}'
+        url: 'https://purge.jsdelivr.net${{ env.JSDELIVR_CSS_PATH }}'
         method: 'GET'
     - name: Purge JSDelivr JS
       id: jsdelivr-js
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/gh/${{ env.JSDELIVR_JS_PATH }}'
+        url: 'https://purge.jsdelivr.net${{ env.JSDELIVR_JS_PATH }}'
         method: 'GET'
     - name: Response
       run: |
