@@ -23,14 +23,16 @@ jobs:
       run: |
           echo "The repo name is: ${{ github.event.repository.name }}" 
           echo "The branch name is: ${{ github.head_ref || github.ref_name }}" 
-          echo "test throttled: "${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttled }}
+          if [[ ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttled }} == "true" ]]; then
+            echo "CSS file at ${{ env.JSDELIVR_CSS_PATH }} is throttled for ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttlingReset }} seconds longer"
+          else 
+            echo "CSS file at ${{ env.JSDELIVR_CSS_PATH }} cache has been purged."
+          fi
+          if [[ ${{ fromJson(steps.jsdelivr-js.outputs.response).paths[env.JSDELIVR_JS_PATH].throttled }} == "true" ]]; then
+            echo "JS file at ${{ env.JSDELIVR_JS_PATH }} is throttled for ${{ fromJson(steps.jsdelivr-js.outputs.response).paths[env.JSDELIVR_JS_PATH].throttlingReset }} seconds longer"
+          else 
+            echo "JS file at ${{ env.JSDELIVR_JS_PATH }} cache has been purged."
+          fi
+          echo "test throttled: ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttled }}"
           echo "Purge status for CSS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
           echo "Purge status for JS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
-      #env: 
-        # CSS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}
-        # JS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}
-        # CSS_THROTTLE: ${{ fromJson(steps.jsdelivr-css.outputs.response).paths["/$JSDELIVR_PATH/dist/engrid.css"].throttled }}
-        # JS_THROTTLE:
-        # CSS_THROTTLE_TIME:
-        # JS_THROTTLE_TIME: 
-        #fromJson(steps.jsdelivr-css.outputs.response).paths["/$JSDELIVR_PATH/dist/engrid.css"].throttled 
