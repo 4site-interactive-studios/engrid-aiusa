@@ -1,7 +1,7 @@
 name: Purge JSDelivr cache
 on: [push, pull_request]
 jobs:
-  deployment:
+  purge:
     runs-on: ubuntu-latest
     steps:
     - name: Purge JSDelivr CSS
