@@ -1,4 +1,3 @@
-# GitHub Action for Laravel with MySQL and Redis
 name: Purge JSDelivr cache
 on: [push, pull_request]
 jobs:
@@ -21,5 +20,5 @@ jobs:
       run: |
           echo "The repo name is: ${{ github.event.repository.name }}" 
           echo "The branch name is: ${{ github.head_ref || github.ref_name }}" 
-          echo "Purge status for CSS: echo ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
-          echo "Purge status for JS: echo ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
+          echo "Purge status for CSS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
+          echo "Purge status for JS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
