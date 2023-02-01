@@ -11,13 +11,13 @@ jobs:
       id: jsdelivr-css
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/${{ $JSDELIVR_CSS_PATH }}'
+        url: 'https://purge.jsdelivr.net/${{ env.JSDELIVR_CSS_PATH }}'
         method: 'GET'
     - name: Purge JSDelivr JS
       id: jsdelivr-js
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/gh/${{ $JSDELIVR_JS_PATH }}'
+        url: 'https://purge.jsdelivr.net/gh/${{ env.JSDELIVR_JS_PATH }}'
         method: 'GET'
     - name: Response
       run: |
