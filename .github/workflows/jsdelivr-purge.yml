@@ -26,7 +26,7 @@ jobs:
           echo "test: paths["/$JSDELIVR_PATH/dist/engrid.css"].throttled"
           echo "Purge status for CSS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
           echo "Purge status for JS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
-      env: 
+      #env: 
         # CSS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}
         # JS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}
         # CSS_THROTTLE: ${{ fromJson(steps.jsdelivr-css.outputs.response).paths["/$JSDELIVR_PATH/dist/engrid.css"].throttled }}
