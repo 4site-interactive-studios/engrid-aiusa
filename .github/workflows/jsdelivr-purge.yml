@@ -1,5 +1,7 @@
 name: Purge JSDelivr cache
 on: [push, pull_request]
+env:
+  JSDELIVR_PATH: gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}
 jobs:
   purge:
     runs-on: ubuntu-latest
@@ -8,17 +10,25 @@ jobs:
       id: jsdelivr-css
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.css'
+        url: 'https://purge.jsdelivr.net/$JSDELIVR_PATH/dist/engrid.css'
         method: 'GET'
     - name: Purge JSDelivr JS
       id: jsdelivr-js
       uses: fjogeleit/http-request-action@v1
       with:
-        url: 'https://purge.jsdelivr.net/gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.js'
+        url: 'https://purge.jsdelivr.net/gh/$JSDELIVR_PATH/dist/engrid.js'
         method: 'GET'
     - name: Response
+
       run: |
           echo "The repo name is: ${{ github.event.repository.name }}" 
           echo "The branch name is: ${{ github.head_ref || github.ref_name }}" 
-          echo "Purge status for CSS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
+          echo "Purge status for CSS: ${{ $CSS_THROTTLE ||fromJson(steps.jsdelivr-css.outputs.response).status }}"
           echo "Purge status for JS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
+      env: 
+        CSS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}
+        JS_RESP_STATUS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}
+        CSS_THROTTLE: ${{ fromJson(steps.jsdelivr-css.outputs.response).paths["/$JSDELIVR_PATH/dist/engrid.css"].throttled }}
+        # JS_THROTTLE:
+        # CSS_THROTTLE_TIME:
+        # JS_THROTTLE_TIME: 
