@@ -6,16 +6,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Purge JSDelivr CSS
+      id: jsdelivr-css
       uses: fjogeleit/http-request-action@v1
       with:
         url: 'https://purge.jsdelivr.net/gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.css'
         method: 'GET'
     - name: Purge JSDelivr JS
+      id: jsdelivr-js
       uses: fjogeleit/http-request-action@v1
       with:
         url: 'https://purge.jsdelivr.net/gh/4site-interactive-studios/${{ github.event.repository.name }}@${{ github.head_ref || github.ref_name }}/dist/engrid.js'
         method: 'GET'
-    - name: Debug
+    - name: Response
       run: |
           echo "The repo name is: ${{ github.event.repository.name }}" 
           echo "The branch name is: ${{ github.head_ref || github.ref_name }}" 
+          echo "Purge status for CSS: echo ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
+          echo "Purge status for JS: echo ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
