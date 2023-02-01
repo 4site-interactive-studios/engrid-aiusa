@@ -21,8 +21,6 @@ jobs:
         method: 'GET'
     - name: Response
       run: |
-          echo "The repo name is: ${{ github.event.repository.name }}" 
-          echo "The branch name is: ${{ github.head_ref || github.ref_name }}" 
           if [[ ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttled }} == "true" ]]; then
             echo "CSS file at ${{ env.JSDELIVR_CSS_PATH }} is throttled for ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttlingReset }} seconds longer"
           else 
@@ -33,6 +31,3 @@ jobs:
           else 
             echo "JS file at ${{ env.JSDELIVR_JS_PATH }} cache has been purged."
           fi
-          echo "test throttled: ${{ fromJson(steps.jsdelivr-css.outputs.response).paths[env.JSDELIVR_CSS_PATH].throttled }}"
-          echo "Purge status for CSS: ${{ fromJson(steps.jsdelivr-css.outputs.response).status }}"
-          echo "Purge status for JS: ${{ fromJson(steps.jsdelivr-js.outputs.response).status }}"
