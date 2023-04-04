@@ -19,10 +19,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, April 3, 2023 @ 16:07:41 ET
+ *  Date: Tuesday, April 4, 2023 @ 14:19:23 ET
  *  By: fernando
- *  ENGrid styles: v0.13.47
- *  ENGrid scripts: v0.13.51
+ *  ENGrid styles: v0.13.52
+ *  ENGrid scripts: v0.13.52
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -2092,7 +2092,7 @@ a:focus,a:hover{
   margin-left:calc(var(--fields_spacing-inline)*-1);
   margin-right:calc(var(--fields_spacing-inline)*-1);
 }
-.en__component--formblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--radio .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--rating .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--withOther .en__field__item{
+.en__component--formblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--checkbox>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--imgselect>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--radio>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--rating>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splitselect>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--splittext>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripleselect>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--tripletext>[unhidden],.en__component--formblock .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__component--formblock .en__field .en__field__element.en__field__element--withOther>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--checkbox>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--imgselect>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--radio .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--radio>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--rating .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--rating>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splitselect>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--splittext>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripleselect>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--tripletext>[unhidden],.en__component--svblock .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__component--svblock .en__field .en__field__element.en__field__element--withOther>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--checkbox .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--checkbox>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--imgselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--imgselect>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--radio .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--radio>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--rating .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--rating>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splitselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splitselect>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splittext .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--splittext>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripleselect .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripleselect>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripletext .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--tripletext>[unhidden],.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--withOther .en__field__item,.en__registrants__registrantDetails .en__field .en__field__element.en__field__element--withOther>[unhidden]{
   padding:calc(var(--fields_spacing-block)*.5) var(--fields_spacing-inline) var(--fields_spacing-block);
 }
 .en__component--formblock .en__field .en__field__element>input,.en__component--formblock .en__field .en__field__element>select,.en__component--formblock .en__field .en__field__element>textarea,.en__component--svblock .en__field .en__field__element>input,.en__component--svblock .en__field .en__field__element>select,.en__component--svblock .en__field .en__field__element>textarea,.en__registrants__registrantDetails .en__field .en__field__element>input,.en__registrants__registrantDetails .en__field .en__field__element>select,.en__registrants__registrantDetails .en__field .en__field__element>textarea{
@@ -2107,12 +2107,15 @@ a:focus,a:hover{
   padding-left:var(--fields_spacing-inline);
   padding-right:var(--fields_spacing-inline);
 }
-.en__component--formblock .en__field.en__field--checkbox.en__field--question .en__field__element,.en__component--formblock .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__component--formblock .en__field.en__field--radio.en__field--question .en__field__element,.en__component--formblock .en__field.en__field--radio.en__field--survey .en__field__element,.en__component--formblock.direction-column .en__field--checkbox .en__field__element,.en__component--formblock.direction-column .en__field--radio .en__field__element,.en__component--svblock .en__field.en__field--checkbox.en__field--question .en__field__element,.en__component--svblock .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__component--svblock .en__field.en__field--radio.en__field--question .en__field__element,.en__component--svblock .en__field.en__field--radio.en__field--survey .en__field__element,.en__component--svblock.direction-column .en__field--checkbox .en__field__element,.en__component--svblock.direction-column .en__field--radio .en__field__element,.en__registrants__registrantDetails .en__field.en__field--checkbox.en__field--question .en__field__element,.en__registrants__registrantDetails .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__registrants__registrantDetails .en__field.en__field--radio.en__field--question .en__field__element,.en__registrants__registrantDetails .en__field.en__field--radio.en__field--survey .en__field__element,.en__registrants__registrantDetails.direction-column .en__field--checkbox .en__field__element,.en__registrants__registrantDetails.direction-column .en__field--radio .en__field__element{
+.en__component--eccheckout__additional .en__field__element--radio.en__field__element,.en__component--formblock .en__field.en__field--checkbox.en__field--question .en__field__element,.en__component--formblock .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__component--formblock .en__field.en__field--radio.en__field--question .en__field__element,.en__component--formblock .en__field.en__field--radio.en__field--survey .en__field__element,.en__component--formblock.direction-column .en__field--checkbox .en__field__element,.en__component--formblock.direction-column .en__field--radio .en__field__element,.en__component--svblock .en__field.en__field--checkbox.en__field--question .en__field__element,.en__component--svblock .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__component--svblock .en__field.en__field--radio.en__field--question .en__field__element,.en__component--svblock .en__field.en__field--radio.en__field--survey .en__field__element,.en__component--svblock.direction-column .en__field--checkbox .en__field__element,.en__component--svblock.direction-column .en__field--radio .en__field__element,.en__registrants__registrantDetails .en__field.en__field--checkbox.en__field--question .en__field__element,.en__registrants__registrantDetails .en__field.en__field--checkbox.en__field--survey .en__field__element,.en__registrants__registrantDetails .en__field.en__field--radio.en__field--question .en__field__element,.en__registrants__registrantDetails .en__field.en__field--radio.en__field--survey .en__field__element,.en__registrants__registrantDetails.direction-column .en__field--checkbox .en__field__element,.en__registrants__registrantDetails.direction-column .en__field--radio .en__field__element{
   align-items:center;
   display:grid;
   grid-auto-rows:auto;
   margin-bottom:var(--fields_spacing-block);
+  max-width:100%;
+  width:fit-content;
 }
+
 .en__component--formblock.inline-other .en__field--checkbox.en__field--withOther--active .en__field__element,.en__component--formblock.inline-other .en__field--radio.en__field--withOther--active .en__field__element,.en__component--svblock.inline-other .en__field--checkbox.en__field--withOther--active .en__field__element,.en__component--svblock.inline-other .en__field--radio.en__field--withOther--active .en__field__element,.en__registrants__registrantDetails.inline-other .en__field--checkbox.en__field--withOther--active .en__field__element,.en__registrants__registrantDetails.inline-other .en__field--radio.en__field--withOther--active .en__field__element{
   grid-template-columns:min-content;
 }
@@ -3126,7 +3129,7 @@ body:not(#en__pagebuilder) .click-to-expand.expanded .click-to-expand-text-wrapp
   align-items:flex-start;
   flex-direction:column;
 }
-#en__pagebuilder .hide,#en__pagebuilder .hide-until-client-js-loading-finished,#en__pagebuilder .hide-until-engrid-js-loading-finished,#en__pagebuilder .i1-hide .en__field:first-of-type,#en__pagebuilder .i1-hide-label .en__field:first-of-type>label,#en__pagebuilder .i10-hide .en__field:nth-of-type(10),#en__pagebuilder .i10-hide-label .en__field:nth-of-type(10)>label,#en__pagebuilder .i11-hide .en__field:nth-of-type(11),#en__pagebuilder .i11-hide-label .en__field:nth-of-type(11)>label,#en__pagebuilder .i2-hide .en__field:nth-of-type(2),#en__pagebuilder .i2-hide-label .en__field:nth-of-type(2)>label,#en__pagebuilder .i3-hide .en__field:nth-of-type(3),#en__pagebuilder .i3-hide-label .en__field:nth-of-type(3)>label,#en__pagebuilder .i4-hide .en__field:nth-of-type(4),#en__pagebuilder .i4-hide-label .en__field:nth-of-type(4)>label,#en__pagebuilder .i5-hide .en__field:nth-of-type(5),#en__pagebuilder .i5-hide-label .en__field:nth-of-type(5)>label,#en__pagebuilder .i6-hide .en__field:nth-of-type(6),#en__pagebuilder .i6-hide-label .en__field:nth-of-type(6)>label,#en__pagebuilder .i7-hide .en__field:nth-of-type(7),#en__pagebuilder .i7-hide-label .en__field:nth-of-type(7)>label,#en__pagebuilder .i8-hide .en__field:nth-of-type(8),#en__pagebuilder .i8-hide-label .en__field:nth-of-type(8)>label,#en__pagebuilder .i9-hide .en__field:nth-of-type(9),#en__pagebuilder .i9-hide-label .en__field:nth-of-type(9)>label,#en__pagebuilder [hidden-via-url-argument],#en__pagebuilder input[unhidden],#en__pagebuilder label.hide-label,[data-engrid-debug] .hide,[data-engrid-debug] .hide-until-client-js-loading-finished,[data-engrid-debug] .hide-until-engrid-js-loading-finished,[data-engrid-debug] .i1-hide .en__field:first-of-type,[data-engrid-debug] .i1-hide-label .en__field:first-of-type>label,[data-engrid-debug] .i10-hide .en__field:nth-of-type(10),[data-engrid-debug] .i10-hide-label .en__field:nth-of-type(10)>label,[data-engrid-debug] .i11-hide .en__field:nth-of-type(11),[data-engrid-debug] .i11-hide-label .en__field:nth-of-type(11)>label,[data-engrid-debug] .i2-hide .en__field:nth-of-type(2),[data-engrid-debug] .i2-hide-label .en__field:nth-of-type(2)>label,[data-engrid-debug] .i3-hide .en__field:nth-of-type(3),[data-engrid-debug] .i3-hide-label .en__field:nth-of-type(3)>label,[data-engrid-debug] .i4-hide .en__field:nth-of-type(4),[data-engrid-debug] .i4-hide-label .en__field:nth-of-type(4)>label,[data-engrid-debug] .i5-hide .en__field:nth-of-type(5),[data-engrid-debug] .i5-hide-label .en__field:nth-of-type(5)>label,[data-engrid-debug] .i6-hide .en__field:nth-of-type(6),[data-engrid-debug] .i6-hide-label .en__field:nth-of-type(6)>label,[data-engrid-debug] .i7-hide .en__field:nth-of-type(7),[data-engrid-debug] .i7-hide-label .en__field:nth-of-type(7)>label,[data-engrid-debug] .i8-hide .en__field:nth-of-type(8),[data-engrid-debug] .i8-hide-label .en__field:nth-of-type(8)>label,[data-engrid-debug] .i9-hide .en__field:nth-of-type(9),[data-engrid-debug] .i9-hide-label .en__field:nth-of-type(9)>label,[data-engrid-debug] [hidden-via-url-argument],[data-engrid-debug] input[unhidden],[data-engrid-debug] label.hide-label{
+#en__pagebuilder .hide,#en__pagebuilder .hide-until-client-js-loading-finished,#en__pagebuilder .hide-until-engrid-js-loading-finished,#en__pagebuilder .i1-hide .en__field:first-of-type,#en__pagebuilder .i1-hide-label .en__field:first-of-type>label,#en__pagebuilder .i10-hide .en__field:nth-of-type(10),#en__pagebuilder .i10-hide-label .en__field:nth-of-type(10)>label,#en__pagebuilder .i11-hide .en__field:nth-of-type(11),#en__pagebuilder .i11-hide-label .en__field:nth-of-type(11)>label,#en__pagebuilder .i2-hide .en__field:nth-of-type(2),#en__pagebuilder .i2-hide-label .en__field:nth-of-type(2)>label,#en__pagebuilder .i3-hide .en__field:nth-of-type(3),#en__pagebuilder .i3-hide-label .en__field:nth-of-type(3)>label,#en__pagebuilder .i4-hide .en__field:nth-of-type(4),#en__pagebuilder .i4-hide-label .en__field:nth-of-type(4)>label,#en__pagebuilder .i5-hide .en__field:nth-of-type(5),#en__pagebuilder .i5-hide-label .en__field:nth-of-type(5)>label,#en__pagebuilder .i6-hide .en__field:nth-of-type(6),#en__pagebuilder .i6-hide-label .en__field:nth-of-type(6)>label,#en__pagebuilder .i7-hide .en__field:nth-of-type(7),#en__pagebuilder .i7-hide-label .en__field:nth-of-type(7)>label,#en__pagebuilder .i8-hide .en__field:nth-of-type(8),#en__pagebuilder .i8-hide-label .en__field:nth-of-type(8)>label,#en__pagebuilder .i9-hide .en__field:nth-of-type(9),#en__pagebuilder .i9-hide-label .en__field:nth-of-type(9)>label,#en__pagebuilder [hidden-via-url-argument],#en__pagebuilder label.hide-label,[data-engrid-debug] .hide,[data-engrid-debug] .hide-until-client-js-loading-finished,[data-engrid-debug] .hide-until-engrid-js-loading-finished,[data-engrid-debug] .i1-hide .en__field:first-of-type,[data-engrid-debug] .i1-hide-label .en__field:first-of-type>label,[data-engrid-debug] .i10-hide .en__field:nth-of-type(10),[data-engrid-debug] .i10-hide-label .en__field:nth-of-type(10)>label,[data-engrid-debug] .i11-hide .en__field:nth-of-type(11),[data-engrid-debug] .i11-hide-label .en__field:nth-of-type(11)>label,[data-engrid-debug] .i2-hide .en__field:nth-of-type(2),[data-engrid-debug] .i2-hide-label .en__field:nth-of-type(2)>label,[data-engrid-debug] .i3-hide .en__field:nth-of-type(3),[data-engrid-debug] .i3-hide-label .en__field:nth-of-type(3)>label,[data-engrid-debug] .i4-hide .en__field:nth-of-type(4),[data-engrid-debug] .i4-hide-label .en__field:nth-of-type(4)>label,[data-engrid-debug] .i5-hide .en__field:nth-of-type(5),[data-engrid-debug] .i5-hide-label .en__field:nth-of-type(5)>label,[data-engrid-debug] .i6-hide .en__field:nth-of-type(6),[data-engrid-debug] .i6-hide-label .en__field:nth-of-type(6)>label,[data-engrid-debug] .i7-hide .en__field:nth-of-type(7),[data-engrid-debug] .i7-hide-label .en__field:nth-of-type(7)>label,[data-engrid-debug] .i8-hide .en__field:nth-of-type(8),[data-engrid-debug] .i8-hide-label .en__field:nth-of-type(8)>label,[data-engrid-debug] .i9-hide .en__field:nth-of-type(9),[data-engrid-debug] .i9-hide-label .en__field:nth-of-type(9)>label,[data-engrid-debug] [hidden-via-url-argument],[data-engrid-debug] label.hide-label{
   background-color:#ff00001a !important;
 }
 body:not(#en__pagebuilder):not([data-engrid-debug]) .hide:not(.en__field--validationFailed),body:not(#en__pagebuilder):not([data-engrid-debug]) .i1-hide .en__field:not(.en__field--validationFailed):first-of-type,body:not(#en__pagebuilder):not([data-engrid-debug]) .i10-hide .en__field:not(.en__field--validationFailed):nth-of-type(10),body:not(#en__pagebuilder):not([data-engrid-debug]) .i11-hide .en__field:not(.en__field--validationFailed):nth-of-type(11),body:not(#en__pagebuilder):not([data-engrid-debug]) .i2-hide .en__field:not(.en__field--validationFailed):nth-of-type(2),body:not(#en__pagebuilder):not([data-engrid-debug]) .i3-hide .en__field:not(.en__field--validationFailed):nth-of-type(3),body:not(#en__pagebuilder):not([data-engrid-debug]) .i4-hide .en__field:not(.en__field--validationFailed):nth-of-type(4),body:not(#en__pagebuilder):not([data-engrid-debug]) .i5-hide .en__field:not(.en__field--validationFailed):nth-of-type(5),body:not(#en__pagebuilder):not([data-engrid-debug]) .i6-hide .en__field:not(.en__field--validationFailed):nth-of-type(6),body:not(#en__pagebuilder):not([data-engrid-debug]) .i7-hide .en__field:not(.en__field--validationFailed):nth-of-type(7),body:not(#en__pagebuilder):not([data-engrid-debug]) .i8-hide .en__field:not(.en__field--validationFailed):nth-of-type(8),body:not(#en__pagebuilder):not([data-engrid-debug]) .i9-hide .en__field:not(.en__field--validationFailed):nth-of-type(9),body:not(#en__pagebuilder):not([data-engrid-debug]) [hidden-via-url-argument],body:not(#en__pagebuilder):not([data-engrid-debug]) div:not(.en__field--validationFailed) .hide,body:not(#en__pagebuilder):not([data-engrid-debug]):not([data-engrid-client-js-loading=finished]) .hide-until-client-js-loading-finished,body:not(#en__pagebuilder):not([data-engrid-debug]):not([data-engrid-scripts-js-loading=finished]) .hide-until-engrid-js-loading-finished{
@@ -3490,27 +3493,27 @@ body:not(#en__pagebuilder):not([data-engrid-debug]) .i1-hide-label .en__field:no
 .recurring-payment_count_5{
   --recurring-payment__button_count:5;
 }
-.radio-to-buttons .en__field--radio .en__field__item:hover input[type=radio]+label{
+.radio-to-buttons .en__field--radio .en__field__item input[type=radio]+label:hover{
   background-color:var(--button_background-color_hover);
   border-color:var(--button_border-color_hover);
   color:var(--button_color_hover);
 }
-.en__field--give-by-select.en__field--radio .en__field__item:hover input[type=radio]+label{
+.en__field--give-by-select.en__field--radio .en__field__item input[type=radio]+label:hover{
   background-color:var(--give-by-select__button_background-color_hover);
   border-color:var(--give-by-select__button_border-color_hover);
   color:var(--give-by-select__button_color_hover);
 }
-.radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio .en__field__item:hover input[type=radio]+label{
+.radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio .en__field__item input[type=radio]+label:hover{
   background-color:var(--donation-amount__button_background-color_hover);
   border-color:var(--donation-amount__button_border-color_hover);
   color:var(--donation-amount__button_color_hover);
 }
-.radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio .en__field__item:hover input[type=radio]+label{
+.radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio .en__field__item input[type=radio]+label:hover{
   background-color:var(--recurring-frequency__button_background-color_hover);
   border-color:var(--recurring-frequency__button_border-color_hover);
   color:var(--recurring-frequency__button_color_hover);
 }
-.radio-to-buttons_recurrpay .en__field--recurrpay.en__field--radio .en__field__item:hover input[type=radio]+label{
+.radio-to-buttons_recurrpay .en__field--recurrpay.en__field--radio .en__field__item input[type=radio]+label:hover{
   background-color:var(--recurring-payment__button_background-color_hover);
   border-color:var(--recurring-paymnet__button_border-color_hover);
   color:var(--recurring-payment__button_color_hover);
@@ -3541,27 +3544,27 @@ body:not(#en__pagebuilder):not([data-engrid-debug]) .i1-hide-label .en__field:no
   border-color:var(--recurring-payment__button_border-color_checked);
   color:var(--recurring-payment__button_color_checked);
 }
-.radio-to-buttons .en__field--radio .en__field__item:hover input[type=radio]:checked+label{
+.radio-to-buttons .en__field--radio .en__field__item input[type=radio]:checked+label:hover{
   background-color:var(--button_background-color_checked);
   border-color:var(--button_border-color_checked);
   color:var(--button_color_checked);
 }
-.en__field--give-by-select.en__field--radio .en__field__item:hover input[type=radio]:checked+label{
+.en__field--give-by-select.en__field--radio .en__field__item input[type=radio]:checked+label:hover{
   background-color:var(--give-by-select__button_background-color_checked);
   border-color:var(--give-by-select__button_border-color_checked);
   color:var(--give-by-select__button_color_checked);
 }
-.radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio .en__field__item:hover input[type=radio]:checked+label{
+.radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio .en__field__item input[type=radio]:checked+label:hover{
   background-color:var(--donation-amount__button_background-color_checked);
   border-color:var(--donation-amount__button_border-color_checked);
   color:var(--donation-amount__button_color_checked);
 }
-.radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio .en__field__item:hover input[type=radio]:checked+label{
+.radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio .en__field__item input[type=radio]:checked+label:hover{
   background-color:var(--recurring-frequency__button_background-color_checked);
   border-color:var(--recurring-frequency__button_border-color_checked);
   color:var(--recurring-frequency__button_color_checked);
 }
-.radio-to-buttons_recurrpay .en__field--recurrpay.en__field--radio .en__field__item:hover input[type=radio]:checked+label{
+.radio-to-buttons_recurrpay .en__field--recurrpay.en__field--radio .en__field__item input[type=radio]:checked+label:hover{
   background-color:var(--recurring-payment__button_background-color_checked);
   border-color:var(--recurring-payment__button_border-color_checked);
   color:var(--recurring-payment__button_color_checked);
@@ -6633,6 +6636,9 @@ body:not(#en__pagebuilder)[data-engrid-no-body-bannerOverlay] .en__component--ad
 [data-engrid-debug=layout] wbr{
   outline:1px solid #db175b !important;
 }
+[data-engrid-debug=layout] div.debug-panel,[data-engrid-debug=layout] div.debug-panel *{
+  outline:none !important;
+}
 
 body[data-engrid-debug]:before{
   z-index:2147483641;
@@ -6640,6 +6646,7 @@ body[data-engrid-debug]:before{
 
 .debug-panel{
   background-color:#fff;
+  border:2px solid #3b3b3b;
   border-radius:50%;
   bottom:50px;
   box-shadow:0 10px 15px -3px #0000001a,0 4px 6px -4px #0000001a;
@@ -6654,6 +6661,7 @@ body[data-engrid-debug]:before{
 
 .debug-panel:not(.debug-panel--open){
   align-items:center;
+  background-color:#ffffffbf;
   cursor:pointer;
   justify-content:center;
 }
@@ -6677,7 +6685,12 @@ body[data-engrid-debug]:before{
   display:block;
 }
 
+.debug-panel__closed-title{
+  font-family:sans-serif;
+}
+
 .debug-panel__title{
+  align-items:center;
   display:none;
   justify-content:space-between;
   margin-bottom:15px;
@@ -6689,7 +6702,8 @@ body[data-engrid-debug]:before{
 
 .debug-panel__close{
   cursor:pointer;
-  padding:5px;
+  font-family:sans-serif;
+  padding:10px;
 }
 
 .debug-panel__option{
@@ -6701,8 +6715,26 @@ body[data-engrid-debug]:before{
   margin-bottom:0;
 }
 
+.debug-panel__link-label{
+  display:flex;
+}
+.debug-panel__link-label:not(.link-left){
+  justify-content:center;
+}
+.debug-panel__link-label a,.debug-panel__link-label a:hover{
+  color:#000;
+  cursor:pointer;
+  text-align:center;
+  text-decoration:none;
+}
+.debug-panel__link-label .debug-panel__edit-link,.debug-panel__link-label .debug-panel__edit-link:hover{
+  color:#155cb7;
+  font-weight:700;
+  justify-self:left;
+}
+
 .debug-panel__btn{
-  color:#fff;
+  border:none;
   font-size:1.2rem;
   margin:0;
   width:100%;
@@ -6710,18 +6742,12 @@ body[data-engrid-debug]:before{
 
 .debug-panel__btn,.debug-panel__btn:active,.debug-panel__btn:focus{
   background-color:#1a73e5;
+  color:#fff;
 }
 
 .debug-panel__btn:hover{
   background-color:#155cb7;
-}
-
-.debug-panel__btn--end,.debug-panel__btn--end:active,.debug-panel__btn--end:focus{
-  background-color:#e13232;
-}
-
-.debug-panel__btn--end:hover{
-  background-color:#c31d1d;
+  color:#fff;
 }
 
 .debug-panel__btn--submit,.debug-panel__btn--submit:active,.debug-panel__btn--submit:focus{
@@ -6754,6 +6780,13 @@ body[data-engrid-debug]:before{
 
 [data-engrid-debug]{
   margin-top:56px;
+}
+[data-engrid-debug] .en__component--page>[unhidden]{
+  display:flex;
+  flex-basis:100%;
+  flex-direction:column;
+  margin-bottom:var(--fields_spacing-block);
+  padding-bottom:0;
 }
 
 body:not([data-engrid-debug]) #debug-bar{

@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, April 3, 2023 @ 16:07:41 ET
+ *  Date: Tuesday, April 4, 2023 @ 14:19:23 ET
  *  By: fernando
- *  ENGrid styles: v0.13.47
- *  ENGrid scripts: v0.13.51
+ *  ENGrid styles: v0.13.52
+ *  ENGrid scripts: v0.13.52
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11404,6 +11404,9 @@ class engrid_ENGrid {
                 case "unsubscribe":
                     return "UNSUBSCRIBE";
                     break;
+                case "tweetpage":
+                    return "TWEETPAGE";
+                    break;
                 default:
                     return "UNKNOWN";
             }
@@ -12076,7 +12079,7 @@ class App extends engrid_ENGrid {
             new DebugPanel(this.options.PageLayouts);
         }
         if (engrid_ENGrid.getUrlParameter("development") === "branding") {
-            new BrandingHtml();
+            new BrandingHtml().show();
         }
         engrid_ENGrid.setBodyData("data-engrid-scripts-js-loading", "finished");
         window.EngridVersion = AppVersion;
@@ -18155,6 +18158,7 @@ class DebugPanel {
     constructor(pageLayouts) {
         var _a, _b;
         this.logger = new EngridLogger("Debug Panel", "#f0f0f0", "#ff0000", "💥");
+        this.brandingHtml = new BrandingHtml();
         this.element = null;
         this.currentTimestamp = this.getCurrentTimestamp();
         this.quickFills = {
@@ -18352,23 +18356,9 @@ class DebugPanel {
             </div>
             <div class="debug-panel__options">
               <div class="debug-panel__option">
-                <label for="engrid-layout-switch">Switch layout</label>
-                <select name="engrid-layout" id="engrid-layout-switch">
-                </select>
-              </div>
-              <div class="debug-panel__option">
-                <div class="debug-panel__checkbox">
-                  <input type="checkbox" name="engrid-embedded-layout" id="engrid-embedded-layout">
-                  <label for="engrid-embedded-layout">Embedded layout</label>            
-                </div>
-              </div>
-              <div class="debug-panel__option">
-                <label for="engrid-theme">Theme</label>
-                <input type="text" id="engrid-theme">
-              </div>
-              <div class="debug-panel__option">
-                <label for="engrid-theme">Sub-theme</label>
-                <input type="text" id="engrid-subtheme">
+                <label class="debug-panel__link-label link-left">
+                  <a class="debug-panel__edit-link">Edit page</a>
+                </label>
               </div>
               <div class="debug-panel__option">
                 <label for="engrid-form-quickfill">Form Quick-fill</label>
@@ -18385,10 +18375,15 @@ class DebugPanel {
                 </select>
               </div>
               <div class="debug-panel__option">
-                <button class="btn debug-panel__btn debug-panel__btn--edit" type="button">Open edit page</button>
+                <label for="engrid-layout-switch">Switch layout</label>
+                <select name="engrid-layout" id="engrid-layout-switch">
+                </select>
               </div>
               <div class="debug-panel__option">
-                <button class="btn debug-panel__btn debug-panel__btn--submit" type="button">Submit form</button>
+                <div class="debug-panel__checkbox">
+                  <input type="checkbox" name="engrid-embedded-layout" id="engrid-embedded-layout">
+                  <label for="engrid-embedded-layout">Embedded layout</label>            
+                </div>
               </div>
               <div class="debug-panel__option debug-panel__option--local">
                 <div class="debug-panel__checkbox">
@@ -18397,10 +18392,31 @@ class DebugPanel {
                 </div>
               </div>
               <div class="debug-panel__option debug-panel__option--local">
-                <button class="btn debug-panel__btn debug-panel__btn--branding" type="button">Insert branding HTML</button>
+                <div class="debug-panel__checkbox">
+                  <input type="checkbox" name="engrid-branding" id="engrid-branding">
+                  <label for="engrid-branding">Branding HTML</label>            
+                </div>
               </div>
               <div class="debug-panel__option">
-                <button class="btn debug-panel__btn debug-panel__btn--end" type="button">End debug session</button>
+                <label for="engrid-theme">Theme</label>
+                <input type="text" id="engrid-theme">
+              </div>
+              <div class="debug-panel__option">
+                <label for="engrid-theme">Sub-theme</label>
+                <input type="text" id="engrid-subtheme">
+              </div>
+              <div class="debug-panel__option">
+                <button class="btn debug-panel__btn debug-panel__btn--submit" type="button">Submit form</button>
+              </div>
+              <div class="debug-panel__option">
+                <label class="debug-panel__link-label">
+                  <a class="debug-panel__force-submit-link">Force submit form</a>
+                </label>
+              </div>
+             <div class="debug-panel__option">
+                <label class="debug-panel__link-label">
+                  <a class="debug-panel__end-debug-link">End debug</a>
+                </label>
               </div>
             </div>
           </div>
@@ -18414,6 +18430,7 @@ class DebugPanel {
         this.setupDebugLayoutSwitcher();
         this.setupBrandingHtmlHandler();
         this.setupEditBtnHandler();
+        this.setupForceSubmitLinkHandler();
         this.setupSubmitBtnHandler();
     }
     switchENGridLayout(layout) {
@@ -18502,7 +18519,7 @@ class DebugPanel {
         return `${year}${month}${day}-${hours}${minutes}`;
     }
     createDebugSessionEndHandler() {
-        const debugSessionEndBtn = document.querySelector(".debug-panel__btn--end");
+        const debugSessionEndBtn = document.querySelector(".debug-panel__end-debug-link");
         debugSessionEndBtn === null || debugSessionEndBtn === void 0 ? void 0 : debugSessionEndBtn.addEventListener("click", () => {
             var _a;
             this.logger.log("Removing panel and ending debug session");
@@ -18536,27 +18553,36 @@ class DebugPanel {
         }
     }
     setupBrandingHtmlHandler() {
-        const brandingHtmlBtn = document.querySelector(".debug-panel__btn--branding");
-        if (engrid_ENGrid.getUrlParameter("development") === "branding") {
-            brandingHtmlBtn.setAttribute("disabled", "");
-        }
-        brandingHtmlBtn === null || brandingHtmlBtn === void 0 ? void 0 : brandingHtmlBtn.addEventListener("click", (e) => {
-            new BrandingHtml();
-            const el = e.target;
-            el.setAttribute("disabled", "");
+        const brandingInput = document.getElementById("engrid-branding");
+        brandingInput.checked =
+            engrid_ENGrid.getUrlParameter("development") === "branding";
+        brandingInput.addEventListener("change", (e) => {
+            if (brandingInput.checked) {
+                this.brandingHtml.show();
+            }
+            else {
+                this.brandingHtml.hide();
+            }
         });
     }
     setupEditBtnHandler() {
-        const editBtn = document.querySelector(".debug-panel__btn--edit");
+        const editBtn = document.querySelector(".debug-panel__edit-link");
         editBtn === null || editBtn === void 0 ? void 0 : editBtn.addEventListener("click", () => {
             window.open(`https://${engrid_ENGrid.getDataCenter()}.engagingnetworks.app/index.html#pages/${engrid_ENGrid.getPageID()}/edit`, "_blank");
+        });
+    }
+    setupForceSubmitLinkHandler() {
+        const submitBtn = document.querySelector(".debug-panel__force-submit-link");
+        submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", () => {
+            const enForm = document.querySelector("form.en__component");
+            enForm === null || enForm === void 0 ? void 0 : enForm.submit();
         });
     }
     setupSubmitBtnHandler() {
         const submitBtn = document.querySelector(".debug-panel__btn--submit");
         submitBtn === null || submitBtn === void 0 ? void 0 : submitBtn.addEventListener("click", () => {
-            const enForm = document.querySelector("form.en__component");
-            enForm === null || enForm === void 0 ? void 0 : enForm.submit();
+            const enForm = document.querySelector(".en__submit button");
+            enForm === null || enForm === void 0 ? void 0 : enForm.click();
         });
     }
 }
@@ -18568,19 +18594,39 @@ DebugPanel.debugSessionStorageKey = "engrid_debug_panel";
 class DebugHiddenFields {
     constructor() {
         this.logger = new EngridLogger("Debug hidden fields", "#f0f0f0", "#ff0000", "🫣");
+        // Query all hidden input elements within the specified selectors
         const fields = document.querySelectorAll(".en__component--row [type='hidden'], .engrid-added-input[type='hidden']");
+        // Check if there are any hidden fields
         if (fields.length > 0) {
+            // Log the names of the hidden fields being changed to type 'text'
             this.logger.log(`Switching the following type 'hidden' fields to type 'text':  ${[
                 ...fields,
             ]
                 .map((f) => f.name)
                 .join(", ")}`);
+            // Iterate through each hidden input element
             fields.forEach((el) => {
+                // Change the input type to 'text' and add the required classes
                 el.type = "text";
-                el.setAttribute("unhidden", "");
+                el.classList.add("en__field__input", "en__field__input--text");
+                // Create a new label element and set its text and classes
                 const label = document.createElement("label");
-                label.textContent = "Hidden field:" + el.name;
-                el.insertAdjacentElement("beforebegin", label);
+                label.textContent = "Hidden field: " + el.name;
+                label.classList.add("en__field__label");
+                // Create a new 'div' element for the input field and add the required classes
+                const fieldElement = document.createElement("div");
+                fieldElement.classList.add("en__field__element", "en__field__element--text");
+                // Create a new 'div' container for the label and input field, and add the required classes and attribute
+                const fieldContainer = document.createElement("div");
+                fieldContainer.classList.add("en__field", "en__field--text", "hide");
+                fieldContainer.setAttribute("unhidden", "");
+                fieldContainer.appendChild(label);
+                fieldContainer.appendChild(fieldElement);
+                // Insert the new field container before the original input element and move the input element into the field element div
+                if (el.parentNode) {
+                    el.parentNode.insertBefore(fieldContainer, el);
+                    fieldElement.appendChild(el);
+                }
             });
         }
     }
@@ -18622,7 +18668,7 @@ class BrandingHtml {
             "tweet-to-target.html",
         ];
         this.bodyMain = document.querySelector(".body-main");
-        this.fetchHtml().then((html) => html.forEach((h) => { var _a; return (_a = this.bodyMain) === null || _a === void 0 ? void 0 : _a.insertAdjacentHTML("beforeend", h); }));
+        this.htmlFetched = false;
     }
     fetchHtml() {
         return branding_html_awaiter(this, void 0, void 0, function* () {
@@ -18633,6 +18679,28 @@ class BrandingHtml {
             const brandingHtmls = yield Promise.all(htmlRequests);
             return brandingHtmls;
         });
+    }
+    appendHtml() {
+        this.fetchHtml().then((html) => html.forEach((h) => {
+            var _a;
+            const brandingSection = document.createElement("div");
+            brandingSection.classList.add("brand-guide-section");
+            brandingSection.innerHTML = h;
+            (_a = this.bodyMain) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement("beforeend", brandingSection);
+        }));
+        this.htmlFetched = true;
+    }
+    show() {
+        if (!this.htmlFetched) {
+            this.appendHtml();
+            return;
+        }
+        const guides = document.querySelectorAll(".brand-guide-section");
+        guides === null || guides === void 0 ? void 0 : guides.forEach((g) => (g.style.display = "block"));
+    }
+    hide() {
+        const guides = document.querySelectorAll(".brand-guide-section");
+        guides === null || guides === void 0 ? void 0 : guides.forEach((g) => (g.style.display = "none"));
     }
 }
 
@@ -18751,7 +18819,7 @@ class PremiumGift {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.51";
+const AppVersion = "0.13.52";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
@@ -20680,28 +20748,6 @@ const options = {
   MaxAmount: 100000000,
   MinAmountMessage: "Please enter a minimum donation of $5",
   MaxAmountMessage: "Amount must be less than $100,000,000",
-  // RememberMe: {
-  //   checked: true,
-  //   remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
-  //   fieldOptInSelectorTarget:
-  //     '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
-  //   fieldOptInSelectorTargetLocation: "after",
-  //   fieldClearSelectorTarget:
-  //     'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
-  //   fieldClearSelectorTargetLocation: "after",
-  //   fieldNames: [
-  //     "supporter.firstName",
-  //     "supporter.lastName",
-  //     "supporter.emailAddress",
-  //     "supporter.phoneNumber",
-  //     "supporter.address1",
-  //     "supporter.address2",
-  //     "supporter.city",
-  //     "supporter.region",
-  //     "supporter.postcode",
-  //     "supporter.country",
-  //   ],
-  // },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     window.DonationLightboxForm = DonationLightboxForm;
@@ -20710,6 +20756,19 @@ const options = {
   },
   onResize: () => console.log("Starter Theme Window Resized")
 };
+
+if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
+  options.RememberMe = {
+    checked: true,
+    remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
+    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
+    fieldOptInSelectorTargetLocation: "after",
+    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
+    fieldClearSelectorTargetLocation: "after",
+    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.emailAddress", "supporter.phoneNumber", "supporter.address1", "supporter.address2", "supporter.city", "supporter.region", "supporter.postcode", "supporter.country"]
+  };
+}
+
 new App(options);
 })();
 
