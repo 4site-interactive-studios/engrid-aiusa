@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, April 4, 2023 @ 14:19:23 ET
+ *  Date: Thursday, April 6, 2023 @ 10:46:12 ET
  *  By: fernando
  *  ENGrid styles: v0.13.52
  *  ENGrid scripts: v0.13.52
@@ -20755,19 +20755,30 @@ const options = {
     customScript(App);
   },
   onResize: () => console.log("Starter Theme Window Resized")
-};
-
-if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
-  options.RememberMe = {
-    checked: true,
-    remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
-    fieldOptInSelectorTarget: '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
-    fieldOptInSelectorTargetLocation: "after",
-    fieldClearSelectorTarget: 'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
-    fieldClearSelectorTargetLocation: "after",
-    fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.emailAddress", "supporter.phoneNumber", "supporter.address1", "supporter.address2", "supporter.city", "supporter.region", "supporter.postcode", "supporter.country"]
-  };
-}
+}; // if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
+//   options.RememberMe = {
+//     checked: true,
+//     remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
+//     fieldOptInSelectorTarget:
+//       '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
+//     fieldOptInSelectorTargetLocation: "after",
+//     fieldClearSelectorTarget:
+//       'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
+//     fieldClearSelectorTargetLocation: "after",
+//     fieldNames: [
+//       "supporter.firstName",
+//       "supporter.lastName",
+//       "supporter.emailAddress",
+//       "supporter.phoneNumber",
+//       "supporter.address1",
+//       "supporter.address2",
+//       "supporter.city",
+//       "supporter.region",
+//       "supporter.postcode",
+//       "supporter.country",
+//     ],
+//   };
+// }
 
 new App(options);
 })();
