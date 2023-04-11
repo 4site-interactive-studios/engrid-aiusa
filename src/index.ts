@@ -28,28 +28,6 @@ const options: Options = {
   MaxAmount: 100000000,
   MinAmountMessage: "Please enter a minimum donation of $5",
   MaxAmountMessage: "Amount must be less than $100,000,000",
-  // RememberMe: {
-  //   checked: true,
-  //   remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
-  //   fieldOptInSelectorTarget:
-  //     '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
-  //   fieldOptInSelectorTargetLocation: "after",
-  //   fieldClearSelectorTarget:
-  //     'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
-  //   fieldClearSelectorTargetLocation: "after",
-  //   fieldNames: [
-  //     "supporter.firstName",
-  //     "supporter.lastName",
-  //     "supporter.emailAddress",
-  //     "supporter.phoneNumber",
-  //     "supporter.address1",
-  //     "supporter.address2",
-  //     "supporter.city",
-  //     "supporter.region",
-  //     "supporter.postcode",
-  //     "supporter.country",
-  //   ],
-  // },
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     (<any>window).DonationLightboxForm = DonationLightboxForm;
@@ -58,4 +36,28 @@ const options: Options = {
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
+// if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
+//   options.RememberMe = {
+//     checked: true,
+//     remoteUrl: "https://amnestyusa.org/en_cookies_4676876234786091256.html",
+//     fieldOptInSelectorTarget:
+//       '.en__field.en__field--checkbox.en__field--28051, .en__field.en__field--checkbox.en__field--871601.en__field--NOT_TAGGED_81, input[name="supporter.emailAddress"]',
+//     fieldOptInSelectorTargetLocation: "after",
+//     fieldClearSelectorTarget:
+//       'label[for="en__field_supporter_firstName"], label[for="en__field_supporter_emailAddress"]',
+//     fieldClearSelectorTargetLocation: "after",
+//     fieldNames: [
+//       "supporter.firstName",
+//       "supporter.lastName",
+//       "supporter.emailAddress",
+//       "supporter.phoneNumber",
+//       "supporter.address1",
+//       "supporter.address2",
+//       "supporter.city",
+//       "supporter.region",
+//       "supporter.postcode",
+//       "supporter.country",
+//     ],
+//   };
+// }
 new App(options);
