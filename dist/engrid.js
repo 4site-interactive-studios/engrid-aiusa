@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 6, 2023 @ 10:46:12 ET
+ *  Date: Tuesday, April 11, 2023 @ 13:50:59 ET
  *  By: fernando
- *  ENGrid styles: v0.13.52
- *  ENGrid scripts: v0.13.52
+ *  ENGrid styles: v0.13.53
+ *  ENGrid scripts: v0.13.53
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -16732,6 +16732,7 @@ class RequiredIfVisible {
                 this.logger.log(`${field.getAttribute("class")} is visible`);
                 const fieldElement = field.querySelector("input, select, textarea");
                 if (fieldElement &&
+                    fieldElement.closest("[data-unhidden]") === null &&
                     !engrid_ENGrid.getFieldValue(fieldElement.getAttribute("name"))) {
                     const fieldLabel = field.querySelector(".en__field__label");
                     if (fieldLabel) {
@@ -18619,7 +18620,7 @@ class DebugHiddenFields {
                 // Create a new 'div' container for the label and input field, and add the required classes and attribute
                 const fieldContainer = document.createElement("div");
                 fieldContainer.classList.add("en__field", "en__field--text", "hide");
-                fieldContainer.setAttribute("unhidden", "");
+                fieldContainer.dataset.unhidden = "";
                 fieldContainer.appendChild(label);
                 fieldContainer.appendChild(fieldElement);
                 // Insert the new field container before the original input element and move the input element into the field element div
@@ -18819,7 +18820,7 @@ class PremiumGift {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.13.52";
+const AppVersion = "0.13.53";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires

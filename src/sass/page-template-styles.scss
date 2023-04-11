@@ -2029,15 +2029,15 @@
 
   // Universal stylings
   &[data-engrid-layout] {
-    @include mq($until: mobile) {
+    @media (max-width: 320px) {
       @include until-mobile;
     }
 
-    @include mq($until: mobile-l) {
+    @media (max-width: 425px) {
       @include until-mobile-l;
     }
 
-    @include mq($from: mobile-l) {
+    @media (min-width: 426px) {
       @include from-mobile-l;
     }
   }
