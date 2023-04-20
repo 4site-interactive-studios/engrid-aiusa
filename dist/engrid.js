@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, April 19, 2023 @ 21:18:30 ET
+ *  Date: Wednesday, April 19, 2023 @ 21:44:23 ET
  *  By: fernando
  *  ENGrid styles: v0.13.53
  *  ENGrid scripts: v0.13.53
@@ -18899,9 +18899,7 @@ class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
     if (!this.isIframe()) return; // Each EN Row is a Section
 
-    this.sections = document.querySelectorAll("form.en__component > .en__component"); // If there's 1 section or less, don't show the navigation
-
-    if (this.sections.length <= 1) return;
+    this.sections = document.querySelectorAll("form.en__component > .en__component");
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
@@ -18944,11 +18942,12 @@ class DonationLightboxForm {
       }
 
       return false;
-    }
+    } // If there's 1 section or less, exit
 
-    if (!this.sections.length) {
+
+    if (!this.sections.length || this.sections.length <= 1) {
       // No section or no Donation Page was found
-      this.sendMessage("error", "No sections found");
+      this.sendMessage("error", `Sections: ${this.sections.length}`);
       return false;
     }
 

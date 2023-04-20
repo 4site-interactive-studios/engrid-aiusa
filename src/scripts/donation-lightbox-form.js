@@ -11,8 +11,6 @@ export default class DonationLightboxForm {
     this.sections = document.querySelectorAll(
       "form.en__component > .en__component"
     );
-    // If there's 1 section or less, don't show the navigation
-    if (this.sections.length <= 1) return;
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
@@ -71,9 +69,10 @@ export default class DonationLightboxForm {
       }
       return false;
     }
-    if (!this.sections.length) {
+    // If there's 1 section or less, exit
+    if (!this.sections.length || this.sections.length <= 1) {
       // No section or no Donation Page was found
-      this.sendMessage("error", "No sections found");
+      this.sendMessage("error", `Sections: ${this.sections.length}`);
       return false;
     }
     console.log(this.sections);
