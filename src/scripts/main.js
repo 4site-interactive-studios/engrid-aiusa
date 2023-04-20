@@ -1080,7 +1080,7 @@ export const customScript = function (App) {
         <span class="spark"></span>
       </div>
       `;
-  upsellLabel.prepend(upsellCandle);
+  if (upsellLabel) upsellLabel.prepend(upsellCandle);
 
   // If nore=true is present on the URL, hide the monthly frequency option & disable the monthly upsell
   if (App.getUrlParameter("nore") == "true") {

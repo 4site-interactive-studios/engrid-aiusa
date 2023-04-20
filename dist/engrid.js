@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, April 11, 2023 @ 13:51:48 ET
+ *  Date: Wednesday, April 19, 2023 @ 21:18:30 ET
  *  By: fernando
  *  ENGrid styles: v0.13.53
  *  ENGrid scripts: v0.13.53
@@ -20704,7 +20704,7 @@ const customScript = function (App) {
         <span class="spark"></span>
       </div>
       `;
-  upsellLabel.prepend(upsellCandle); // If nore=true is present on the URL, hide the monthly frequency option & disable the monthly upsell
+  if (upsellLabel) upsellLabel.prepend(upsellCandle); // If nore=true is present on the URL, hide the monthly frequency option & disable the monthly upsell
 
   if (App.getUrlParameter("nore") == "true") {
     window.EngridUpsell.skipUpsell = true; // Force the frequency to be one-time
