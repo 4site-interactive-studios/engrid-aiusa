@@ -2366,7 +2366,6 @@
     transition: all 0.3s;
 
     .candle {
-      position: absolute;
       top: 42px;
       left: -20px;
       opacity: 1;
@@ -2550,6 +2549,11 @@
     > .en__field__element
     .en__field__item:not(:first-child) {
     display: none !important;
+  }
+  &[data-engrid-payment-type="paypal"] {
+    .inline-monthly-upsell {
+      display: none;
+    }
   }
 }
 
