@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 27, 2023 @ 11:53:05 ET
+ *  Date: Thursday, April 27, 2023 @ 12:11:40 ET
  *  By: michael
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -22176,15 +22176,11 @@ class ExitIntentLightbox {
     this.logger = new EngridLogger("ExitIntentLightbox", "yellow", "black", "🚪");
     let options = "EngridExitIntent" in window ? window.EngridExitIntent : {};
     this.options = Object.assign(Object.assign({}, ExitIntentOptionsDefaults), options);
-    console.log(this.options);
 
     if (!this.options.enabled) {
       this.logger.log("ExitIntentLightbox not enabled");
       return;
     }
-
-    this.open();
-    return;
 
     if (get(this.options.cookieName)) {
       this.logger.log("ExitIntentLightbox not showing - cookie found.");
@@ -22214,7 +22210,11 @@ class ExitIntentLightbox {
       // user switching active program
 
       const from = e.relatedTarget;
-      if (!from) this.open();
+
+      if (!from) {
+        this.logger.log("ExitIntentLightbox triggered by mouse position");
+        this.open();
+      }
     });
   }
 
@@ -22255,12 +22255,15 @@ class ExitIntentLightbox {
         event: "exit_intent_lightbox_closed"
       });
     });
-    (_b = document.querySelector(".ExitIntent__overlay")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function (event) {
+    (_b = document.querySelector(".ExitIntent__overlay")) === null || _b === void 0 ? void 0 : _b.addEventListener("click", event => {
       var _a;
 
-      if (event.target === this) {
-        (_a = this.closest(".ExitIntent")) === null || _a === void 0 ? void 0 : _a.remove();
-        engrid_ENGrid.setBodyData("exit-intent-lightbox", "closed"); //this.dataLayer.push({ event: "exit_intent_lightbox_closed" });
+      if (event.target === event.currentTarget) {
+        (_a = document.querySelector(".ExitIntent")) === null || _a === void 0 ? void 0 : _a.remove();
+        engrid_ENGrid.setBodyData("exit-intent-lightbox", "closed");
+        this.dataLayer.push({
+          event: "exit_intent_lightbox_closed"
+        });
       }
     });
   }
