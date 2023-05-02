@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 27, 2023 @ 12:11:40 ET
+ *  Date: Tuesday, May 2, 2023 @ 12:40:44 ET
  *  By: michael
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -12767,7 +12767,11 @@ const ExitIntentOptionsDefaults = {
   buttonText: "Send us your comments",
   buttonLink: "https://www.4sitestudios.com/",
   cookieName: "engrid-exit-intent-lightbox",
-  cookieDuration: 30
+  cookieDuration: 30,
+  triggers: {
+    visibilityState: true,
+    mousePosition: true
+  }
 };
 ;// CONCATENATED MODULE: ../engrid-scripts/packages/common/dist/loader.js
 // Ref: https://app.getguru.com/card/iMgx968T/ENgrid-Loader
@@ -14735,9 +14739,15 @@ class Autocomplete {
     this.autoCompleteField('[name="supporter.address2"]', "address-line2");
     this.autoCompleteField('[name="supporter.city"]', "address-level2");
     this.autoCompleteField('[name="supporter.region"]', "address-level1");
-    this.autoCompleteField('[name="supporter.postcode"]', "postal-code"); // Ignore Autocomplete on the Recipient Email Field
+    this.autoCompleteField('[name="supporter.postcode"]', "postal-code"); // Ignore Autocomplete on the Recipient Email Field & Address ("none" is intentional because "off" doesn't work)
 
+    this.autoCompleteField('[name="transaction.honname"]', "none");
     this.autoCompleteField('[name="transaction.infemail"]', "none");
+    this.autoCompleteField('[name="transaction.infname"]', "none");
+    this.autoCompleteField('[name="transaction.infadd1"]', "none");
+    this.autoCompleteField('[name="transaction.infadd2"]', "none");
+    this.autoCompleteField('[name="transaction.infcity"]', "none");
+    this.autoCompleteField('[name="transaction.infpostcd"]', "none");
   }
 
   autoCompleteField(querySelector, autoCompleteValue) {
@@ -14748,7 +14758,7 @@ class Autocomplete {
       return true;
     }
 
-    if (this.debug) console.log("AutoComplete: Field Not Found", querySelector);
+    if (this.debug && autoCompleteValue !== "none") console.log("AutoComplete: Field Not Found", querySelector);
     return false;
   }
 
@@ -15099,7 +15109,8 @@ const inputPlaceholder = () => {
   let enFieldPhoneNumber = document.querySelector("input#en__field_supporter_phoneNumber");
   let enFieldPhoneNumberRequired = document.querySelector(".en__mandatory > * > input#en__field_supporter_phoneNumber");
   let enFieldPhoneNumber2 = document.querySelector("input#en__field_supporter_phoneNumber2");
-  let enFieldPhoneNumber2Required = document.querySelector(".en__mandatory > * > input#en__field_supporter_phoneNumber2"); // Address
+  let enFieldPhoneNumber2Required = document.querySelector(".en__mandatory > * > input#en__field_supporter_phoneNumber2");
+  let enFieldPhoneNumber2HideOptionalPlaceholder = document.querySelector(".hide-optional-phone-placeholder [name='supporter.phoneNumber2']"); // Address
 
   let enFieldCountry = document.querySelector("input#en__field_supporter_country");
   let enFieldAddress1 = document.querySelector("input#en__field_supporter_address1");
@@ -15174,6 +15185,8 @@ const inputPlaceholder = () => {
   }
 
   if (enAddInputPlaceholder && enFieldPhoneNumber2 && enFieldPhoneNumber2Required) {
+    enFieldPhoneNumber2.placeholder = "000-000-0000";
+  } else if (enAddInputPlaceholder && enFieldPhoneNumber2 && !enFieldPhoneNumber2Required && enFieldPhoneNumber2HideOptionalPlaceholder) {
     enFieldPhoneNumber2.placeholder = "000-000-0000";
   } else if (enAddInputPlaceholder && enFieldPhoneNumber2 && !enFieldPhoneNumber2Required) {
     enFieldPhoneNumber2.placeholder = "000-000-0000 (Optional)";
@@ -18620,21 +18633,23 @@ class RememberMe {
 			`;
       const rememberMeOptInFieldChecked = this.rememberMeOptIn ? "checked" : "";
       const rememberMeOptInField = document.createElement("div");
-      rememberMeOptInField.classList.add("en__field", "en__field--checkbox");
+      rememberMeOptInField.classList.add("en__field", "en__field--checkbox", "en__field--question", "rememberme-wrapper");
       rememberMeOptInField.setAttribute("id", "remember-me-opt-in");
       rememberMeOptInField.setAttribute("style", "overflow-x: hidden;");
       rememberMeOptInField.innerHTML = `
-				<div class="en__field__item rememberme-wrapper">
-					<input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${rememberMeOptInFieldChecked} />
-					<label for="remember-me-checkbox" class="en__field__label en__field__label--item" style="white-space: nowrap;">
-						<div class="rememberme-content" style="display: inline-flex; align-items: center;">
-							${rememberMeLabel}
-							<a id="rememberme-learn-more-toggle" style="display: inline-block; display: inline-flex; align-items: center; cursor: pointer; margin-left: 10px;">
-								<svg style="height: 14px; width: auto; z-index: 1;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7H9V5H11V7ZM11 9H9V15H11V9ZM10 2C5.59 2 2 5.59 2 10C2 14.41 5.59 18 10 18C14.41 18 18 14.41 18 10C18 5.59 14.41 2 10 2ZM10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0Z" fill="currentColor"/></svg>
-							</a>
-						</div>
-					</label>
-				</div>
+        <div class="en__field__element en__field__element--checkbox">
+          <div class="en__field__item">
+            <input id="remember-me-checkbox" type="checkbox" class="en__field__input en__field__input--checkbox" ${rememberMeOptInFieldChecked} />
+            <label for="remember-me-checkbox" class="en__field__label en__field__label--item" style="white-space: nowrap;">
+              <div class="rememberme-content" style="display: inline-flex; align-items: center;">
+                ${rememberMeLabel}
+                <a id="rememberme-learn-more-toggle" style="display: inline-block; display: inline-flex; align-items: center; cursor: pointer; margin-left: 10px; margin-top: var(--rememberme-learn-more-toggle_margin-top)">
+                  <svg style="height: 14px; width: auto; z-index: 1;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7H9V5H11V7ZM11 9H9V15H11V9ZM10 2C5.59 2 2 5.59 2 10C2 14.41 5.59 18 10 18C14.41 18 18 14.41 18 10C18 5.59 14.41 2 10 2ZM10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0Z" fill="currentColor"/></svg>
+                </a>
+              </div>
+            </label>
+          </div>
+        </div>
 			`;
       const targetField = this.getElementByFirstSelector(this.fieldOptInSelectorTarget);
 
@@ -22187,12 +22202,19 @@ class ExitIntentLightbox {
       return;
     }
 
-    this.logger.log("ExitIntentLightbox enabled, waiting for trigger..");
-    this.watchForTrigger();
+    const activeTriggers = Object.keys(this.options.triggers).filter(t => this.options.triggers[t]).join(', ');
+    this.logger.log("ExitIntentLightbox enabled, waiting for trigger. Active triggers: " + activeTriggers);
+    this.watchForTriggers();
   }
 
-  watchForTrigger() {
-    this.watchMouse();
+  watchForTriggers() {
+    if (this.options.triggers.mousePosition) {
+      this.watchMouse();
+    }
+
+    if (this.options.triggers.visibilityState) {
+      this.watchDocumentVisibility();
+    }
   }
 
   watchMouse() {
@@ -22216,6 +22238,18 @@ class ExitIntentLightbox {
         this.open();
       }
     });
+  }
+
+  watchDocumentVisibility() {
+    const visibilityListener = () => {
+      if (document.visibilityState === "hidden") {
+        this.logger.log("ExitIntentLightbox triggered by visibilityState is hidden");
+        this.open();
+        document.removeEventListener("visibilitychange", visibilityListener);
+      }
+    };
+
+    document.addEventListener("visibilitychange", visibilityListener);
   }
 
   open() {
@@ -22270,7 +22304,7 @@ class ExitIntentLightbox {
 
 }
 ;// CONCATENATED MODULE: ../engrid-scripts/packages/common/dist/version.js
-const AppVersion = "0.13.62";
+const AppVersion = "0.13.65";
 ;// CONCATENATED MODULE: ../engrid-scripts/packages/common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
 
