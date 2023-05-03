@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, May 2, 2023 @ 12:40:44 ET
+ *  Date: Wednesday, May 3, 2023 @ 12:28:17 ET
  *  By: michael
  *  ENGrid styles: v0.13.32
  *  ENGrid scripts: v0.13.32
@@ -22202,7 +22202,7 @@ class ExitIntentLightbox {
       return;
     }
 
-    const activeTriggers = Object.keys(this.options.triggers).filter(t => this.options.triggers[t]).join(', ');
+    const activeTriggers = Object.keys(this.options.triggers).filter(t => this.options.triggers[t]).join(", ");
     this.logger.log("ExitIntentLightbox enabled, waiting for trigger. Active triggers: " + activeTriggers);
     this.watchForTriggers();
   }
@@ -22253,7 +22253,7 @@ class ExitIntentLightbox {
   }
 
   open() {
-    var _a, _b;
+    var _a, _b, _c;
 
     if (this.opened) return;
     engrid_ENGrid.setBodyData("exit-intent-lightbox", "open");
@@ -22268,7 +22268,7 @@ class ExitIntentLightbox {
               <div class="ExitIntent__body">
                 <h2>${this.options.title}</h2>
                 <p>${this.options.text}</p>
-                <a class="ExitIntent__button" href="${this.options.buttonLink}">
+                <a class="ExitIntent__button" href="${this.options.buttonLink}" target="_blank">
                   ${this.options.buttonText}
                 </a>
               </div>
@@ -22299,6 +22299,11 @@ class ExitIntentLightbox {
           event: "exit_intent_lightbox_closed"
         });
       }
+    });
+    (_c = document.querySelector(".ExitIntent__button")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", () => {
+      this.dataLayer.push({
+        event: "exit_intent_lightbox_cta_clicked"
+      });
     });
   }
 
