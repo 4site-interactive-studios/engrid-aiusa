@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, April 24, 2023 @ 15:50:12 ET
+ *  Date: Thursday, June 8, 2023 @ 24:07:46 ET
  *  By: fernando
  *  ENGrid styles: v0.13.53
  *  ENGrid scripts: v0.13.53
@@ -19011,25 +19011,15 @@ class DonationLightboxForm {
 
     if (urlParams.get("color")) {
       document.body.style.setProperty("--color_primary", urlParams.get("color"));
-    } // Check your IP Country
+    } // Check if theres a height value in the url
 
 
-    fetch("https://www.cloudflare.com/cdn-cgi/trace").then(res => res.text()).then(t => {
-      let data = t.replace(/[\r\n]+/g, '","').replace(/\=+/g, '":"');
-      data = '{"' + data.slice(0, data.lastIndexOf('","')) + '"}';
-      const jsondata = JSON.parse(data);
-      this.ipCountry = jsondata.loc;
-      this.canadaOnly();
-      console.log("Country:", this.ipCountry);
-    });
-    const countryField = document.querySelector("#en__field_supporter_country");
+    if (urlParams.get("height")) {
+      document.body.style.setProperty("--section_height", urlParams.get("height"));
+    } // Add an active class to the first section
 
-    if (countryField) {
-      countryField.addEventListener("change", e => {
-        this.canadaOnly();
-      });
-    } // Add a Multi-Step Data Attribute to the Body
 
+    this.sections[0].classList.add("active"); // Add a Multi-Step Data Attribute to the Body
 
     document.querySelector("body").dataset.multiStep = "true";
   } // Send iframe message to parent
@@ -19046,6 +19036,21 @@ class DonationLightboxForm {
 
   isIframe() {
     return window.self !== window.top;
+  }
+
+  sendIframeHeight() {
+    let scroll = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+    let height = document.body.offsetHeight;
+    const data = {
+      frameHeight: height
+    };
+
+    if (scroll) {
+      data.scroll = true;
+    }
+
+    window.parent.postMessage(data, "*");
+    console.log("Sent height & scroll:", data);
   } // Build Section Navigation
 
 
@@ -19153,11 +19158,18 @@ class DonationLightboxForm {
 
     if (this.sections[sectionId]) {
       console.log(section);
+      this.sections.forEach(section => {
+        section.classList.remove("active");
+      });
       this.sections[sectionId].scrollIntoView({
         behavior: "smooth",
         block: "start",
         inline: "start"
       });
+      this.sections[sectionId].classList.add("active");
+      window.setTimeout(() => {
+        this.sendIframeHeight(true);
+      }, 400);
     }
   } // Scroll to an element's section
 
@@ -19595,37 +19607,6 @@ class DonationLightboxForm {
     }
 
     return false;
-  } // Display and check the class canada-only if you are in Canada
-
-
-  canadaOnly() {
-    const canadaOnly = document.querySelectorAll(".canada-only");
-
-    if (canadaOnly.length) {
-      if (this.isCanada()) {
-        canadaOnly.forEach(item => {
-          item.style.display = "";
-          const input = item.querySelectorAll("input[type='checkbox']");
-
-          if (input.length) {
-            input.forEach(input => {
-              input.checked = false;
-            });
-          }
-        });
-      } else {
-        canadaOnly.forEach(item => {
-          item.style.display = "none";
-          const input = item.querySelectorAll("input[type='checkbox']");
-
-          if (input.length) {
-            input.forEach(input => {
-              input.checked = true;
-            });
-          }
-        });
-      }
-    }
   }
 
   checkNested(obj, level) {

@@ -3355,23 +3355,30 @@ body#en__pagebuilder .content-footerSpacer {
   }
 
   &[data-engrid-embedded][data-multi-step] {
-    height: 100vh;
     form.en__component {
-      scroll-snap-type: x mandatory;
+      // scroll-snap-type: x mandatory;
       margin: 0 auto;
       display: grid;
       grid-auto-flow: column;
-      overscroll-behavior-x: contain;
+      // overscroll-behavior-x: contain;
       // scroll-behavior: smooth;
 
       & > .en__component {
-        height: 100vh;
         width: 350px;
         padding: 45px;
         scroll-snap-align: start;
+        transition: 0.3s max-height linear;
+        max-height: var(--section_height, auto);
+        min-height: var(--section_height, auto);
+        overflow: hidden;
+        &.active {
+          max-height: 10000px;
+          overflow-y: auto;
+        }
 
         & > .en__component {
           height: 100%;
+          padding-bottom: 65px;
         }
       }
 
