@@ -3549,4 +3549,23 @@ body#en__pagebuilder .content-footerSpacer {
     top: -1px;
   }
 }
+
+// Hide Annual Giving Amount
+&#en__pagebuilder
+  .hide-annual
+  .en__field--recurrfreq
+  .en__field__item:last-child,
+&[data-engrid-debug]
+  .hide-annual
+  .en__field--recurrfreq
+  .en__field__item:last-child {
+  background-color: #ff00001a;
+}
+
+&:not(#en__pagebuilder):not([data-engrid-debug])
+  .hide-annual
+  .en__field--recurrfreq
+  .en__field__item:last-child {
+  display: none;
+}
 // END AIUSA ENGRID CUSTOM LAYOUTS
