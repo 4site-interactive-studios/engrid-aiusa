@@ -1,3 +1,5 @@
+import {ENGrid} from "@4site/engrid-common";
+
 const tippy = require("tippy.js").default;
 
 export const customScript = function (App) {
@@ -1099,5 +1101,18 @@ export const customScript = function (App) {
     if (paymentFrequencyOptions) {
       paymentFrequencyOptions.classList.add("hide");
     }
+  }
+
+  //fix to ensure "monthly" option re-appears when switching back from paypal to card without a card number entered
+  const giveBySelect = document.getElementsByName("transaction.giveBySelect");
+  const ccField = document.getElementById('en__field_transaction_ccnumber');
+  if (giveBySelect && ccField) {
+    giveBySelect.forEach((el) => {
+      el.addEventListener("change", (e) => {
+        if (e.target.value === "Card" && !ccField.value) {
+          ENGrid.setBodyData("payment-type", "");
+        }
+      });
+    });
   }
 };
