@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, November 2, 2023 @ 14:10:01 ET
- *  By: michael
+ *  Date: Thursday, November 2, 2023 @ 14:45:06 ET
+ *  By: fernando
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
  *
@@ -20365,8 +20365,6 @@ class DonationLightboxForm {
 
 }
 ;// CONCATENATED MODULE: ./src/scripts/main.js
-
-
 const main_tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
 
 const customScript = function (App) {
@@ -21446,20 +21444,6 @@ const customScript = function (App) {
     if (paymentFrequencyOptions) {
       paymentFrequencyOptions.classList.add("hide");
     }
-  } //fix to ensure "monthly" option re-appears when switching back from paypal to card without a card number entered
-
-
-  const giveBySelect = document.getElementsByName("transaction.giveBySelect");
-  const ccField = document.getElementById('en__field_transaction_ccnumber');
-
-  if (giveBySelect && ccField) {
-    giveBySelect.forEach(el => {
-      el.addEventListener("change", e => {
-        if (e.target.value.toLowerCase() === "card" && !ccField.value) {
-          engrid_ENGrid.setBodyData("payment-type", "");
-        }
-      });
-    });
   }
 };
 ;// CONCATENATED MODULE: ./src/index.ts
