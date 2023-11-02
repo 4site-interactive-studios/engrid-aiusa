@@ -1100,4 +1100,17 @@ export const customScript = function (App) {
       paymentFrequencyOptions.classList.add("hide");
     }
   }
+
+  //fix to ensure "monthly" option re-appears when switching back from paypal to card without a card number entered
+  const giveBySelect = document.getElementsByName("transaction.giveBySelect");
+  const ccField = document.getElementById('en__field_transaction_ccnumber');
+  if (giveBySelect && ccField) {
+    giveBySelect.forEach((el) => {
+      el.addEventListener("change", (e) => {
+        if (e.target.value.toLowerCase() === "card" && !ccField.value) {
+          App.setBodyData("payment-type", "");
+        }
+      });
+    });
+  }
 };
