@@ -1,5 +1,3 @@
-import {ENGrid} from "@4site/engrid-common";
-
 const tippy = require("tippy.js").default;
 
 export const customScript = function (App) {
@@ -1110,7 +1108,7 @@ export const customScript = function (App) {
     giveBySelect.forEach((el) => {
       el.addEventListener("change", (e) => {
         if (e.target.value.toLowerCase() === "card" && !ccField.value) {
-          ENGrid.setBodyData("payment-type", "");
+          App.setBodyData("payment-type", "");
         }
       });
     });
