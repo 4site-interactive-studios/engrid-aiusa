@@ -732,6 +732,25 @@
     display: none;
   }
 
+  // Hide Annual Giving Amount
+  &#en__pagebuilder
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child,
+  &[data-engrid-debug]
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child {
+    background-color: #ff00001a;
+  }
+
+  &:not(#en__pagebuilder):not([data-engrid-debug])
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child {
+    display: none;
+  }
+
   // .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows {
   //   margin-left: 41px;
   //   width: 100%;
@@ -3550,22 +3569,4 @@ body#en__pagebuilder .content-footerSpacer {
   }
 }
 
-// Hide Annual Giving Amount
-&#en__pagebuilder
-  .hide-annual
-  .en__field--recurrfreq
-  .en__field__item:last-child,
-&[data-engrid-debug]
-  .hide-annual
-  .en__field--recurrfreq
-  .en__field__item:last-child {
-  background-color: #ff00001a;
-}
-
-&:not(#en__pagebuilder):not([data-engrid-debug])
-  .hide-annual
-  .en__field--recurrfreq
-  .en__field__item:last-child {
-  display: none;
-}
 // END AIUSA ENGRID CUSTOM LAYOUTS
