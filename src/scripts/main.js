@@ -1109,7 +1109,7 @@ export const customScript = function (App) {
   if (giveBySelect && ccField) {
     giveBySelect.forEach((el) => {
       el.addEventListener("change", (e) => {
-        if (e.target.value === "Card" && !ccField.value) {
+        if (e.target.value.toLowerCase() === "card" && !ccField.value) {
           ENGrid.setBodyData("payment-type", "");
         }
       });

@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, November 2, 2023 @ 14:08:20 ET
+ *  Date: Thursday, November 2, 2023 @ 14:10:01 ET
  *  By: michael
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
@@ -21455,7 +21455,7 @@ const customScript = function (App) {
   if (giveBySelect && ccField) {
     giveBySelect.forEach(el => {
       el.addEventListener("change", e => {
-        if (e.target.value === "Card" && !ccField.value) {
+        if (e.target.value.toLowerCase() === "card" && !ccField.value) {
           engrid_ENGrid.setBodyData("payment-type", "");
         }
       });
