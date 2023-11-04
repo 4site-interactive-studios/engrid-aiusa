@@ -4,6 +4,7 @@ import {
   DonationAmount,
   DonationFrequency,
 } from "@4site/engrid-common"; // Uses ENGrid via NPM
+import { MonthlyAmounts } from "./scripts/monthly-amounts";
 // import {
 //   Options,
 //   App,
@@ -33,6 +34,7 @@ const options: Options = {
     (<any>window).DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
     customScript(App);
+    new MonthlyAmounts();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };

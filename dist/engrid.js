@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, November 2, 2023 @ 14:50:21 ET
- *  By: michael
+ *  Date: Saturday, November 4, 2023 @ 24:27:23 ET
+ *  By: fernando
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
  *
@@ -19626,6 +19626,121 @@ const AppVersion = "0.14.14";
 // Version
 
 
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/defineProperty.js
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+;// CONCATENATED MODULE: ./src/scripts/monthly-amounts.ts
+
+// This script allows you to set a window.EngridMonthlyAmounts object with custom amounts
+// for the monthly donation frequency.
+// Example:
+// window.EngridMonthlyAmounts = {
+//   amounts: {
+//     "5": 5,
+//     "15": 15,
+//     "25": 25,
+//     "30": 30,
+//     "Other": "other",
+//   },
+//   default: 25,
+// };
+
+class MonthlyAmounts {
+  constructor() {
+    _defineProperty(this, "logger", new EngridLogger("MonthlyAmounts", "blueviolet", "aliceblue", "💰"));
+
+    _defineProperty(this, "_amount", DonationAmount.getInstance());
+
+    _defineProperty(this, "_frequency", DonationFrequency.getInstance());
+
+    _defineProperty(this, "defaultChange", false);
+
+    _defineProperty(this, "swapped", false);
+
+    _defineProperty(this, "defaultAmounts", {});
+
+    if (!this.shouldRun()) return;
+    const amountContainer = document.querySelector(".en__field--donationAmt");
+    if (!amountContainer) return;
+    let amountID = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)?.join("") || "";
+    if (!amountID) return;
+    this.logger.log("Amount ID", amountID);
+
+    if (window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0) {
+      this.defaultAmounts = window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0;
+    }
+
+    this._frequency.onFrequencyChange.subscribe(() => this.setMonthlyAmounts());
+
+    this._amount.onAmountChange.subscribe(() => {
+      this.defaultChange = false;
+      if (!this.swapped) return; // Check if the amount is not default amount for the frequency
+
+      if (this._amount.amount != window.EngridMonthlyAmounts.default && this._frequency.frequency === "monthly") {
+        this.defaultChange = true;
+      }
+    });
+
+    this.setMonthlyAmounts();
+  }
+
+  setMonthlyAmounts() {
+    if (this._frequency.frequency === "monthly") {
+      window.EngagingNetworks.require._defined.enjs.swapList("donationAmt", this.loadEnAmounts(window.EngridMonthlyAmounts), {
+        ignoreCurrentValue: this.ignoreCurrentValue()
+      });
+
+      this._amount.load();
+
+      this.logger.log("Amounts Swapped To", window.EngridMonthlyAmounts);
+      this.swapped = true;
+    } else if (this.defaultAmounts) {
+      window.EngagingNetworks.require._defined.enjs.swapList("donationAmt", this.defaultAmounts, {
+        ignoreCurrentValue: this.ignoreCurrentValue()
+      });
+
+      this._amount.load();
+
+      this.logger.log("Amounts Swapped To", this.defaultAmounts);
+      this.swapped = true;
+    }
+  }
+
+  loadEnAmounts(amountArray) {
+    let ret = [];
+
+    for (let amount in amountArray.amounts) {
+      ret.push({
+        selected: amountArray.amounts[amount] === amountArray.default,
+        label: amount,
+        value: amountArray.amounts[amount].toString()
+      });
+    }
+
+    return ret;
+  }
+
+  shouldRun() {
+    return "EngridMonthlyAmounts" in window;
+  }
+
+  ignoreCurrentValue() {
+    return !(window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() || engrid_ENGrid.getUrlParameter("transaction.donationAmt") !== null || this.defaultChange);
+  }
+
+}
 // EXTERNAL MODULE: ./node_modules/smoothscroll-polyfill/dist/smoothscroll.js
 var smoothscroll = __webpack_require__(523);
 var smoothscroll_default = /*#__PURE__*/__webpack_require__.n(smoothscroll);
@@ -21462,7 +21577,8 @@ const customScript = function (App) {
 };
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
-// import {
+
+ // import {
 //   Options,
 //   App,
 //   DonationAmount,
@@ -21491,6 +21607,7 @@ const options = {
     window.DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
     customScript(App);
+    new MonthlyAmounts();
   },
   onResize: () => console.log("Starter Theme Window Resized")
 }; // if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
