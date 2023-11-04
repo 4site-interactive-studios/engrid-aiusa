@@ -117,8 +117,7 @@ export class MonthlyAmounts {
             label: single[amount].value.toString(),
             value: single[amount].value.toString(),
           });
-        }
-        if (single[amount].value === -1) {
+        } else if (single[amount].value === -1) {
           // Other
           defaultAmount.push({
             selected: false,
