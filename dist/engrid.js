@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, November 4, 2023 @ 24:27:23 ET
+ *  Date: Saturday, November 4, 2023 @ 01:21:43 ET
  *  By: fernando
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
@@ -19669,18 +19669,10 @@ class MonthlyAmounts {
 
     _defineProperty(this, "swapped", false);
 
-    _defineProperty(this, "defaultAmounts", {});
+    _defineProperty(this, "defaultAmounts", null);
 
     if (!this.shouldRun()) return;
-    const amountContainer = document.querySelector(".en__field--donationAmt");
-    if (!amountContainer) return;
-    let amountID = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)?.join("") || "";
-    if (!amountID) return;
-    this.logger.log("Amount ID", amountID);
-
-    if (window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0) {
-      this.defaultAmounts = window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0;
-    }
+    this.loadDefaultAmounts();
 
     this._frequency.onFrequencyChange.subscribe(() => this.setMonthlyAmounts());
 
@@ -19734,6 +19726,48 @@ class MonthlyAmounts {
 
   shouldRun() {
     return "EngridMonthlyAmounts" in window;
+  }
+
+  loadDefaultAmounts() {
+    const amountContainer = document.querySelector(".en__field--donationAmt");
+    if (!amountContainer) return;
+    let amountID = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)?.join("") || "";
+    if (!amountID) return;
+    this.logger.log("Amount ID", amountID);
+
+    if (window.EngagingNetworks.suggestedGift && "single" in window.EngagingNetworks.suggestedGift) {
+      let defaultAmount = [];
+      const single = window.EngagingNetworks.suggestedGift.single;
+
+      for (let amount in single) {
+        if (single[amount].nextSuggestedGift) {
+          defaultAmount.push({
+            selected: true,
+            label: amount,
+            value: single[amount].amount.toString()
+          });
+        }
+
+        if (single[amount].value === -1) {
+          // Other
+          defaultAmount.push({
+            selected: false,
+            label: "Other",
+            value: "other"
+          });
+        } else {
+          defaultAmount.push({
+            selected: false,
+            label: amount,
+            value: single[amount].value.toString()
+          });
+        }
+      }
+
+      this.defaultAmounts = defaultAmount;
+    } else if (window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0) {
+      this.defaultAmounts = window.EngagingNetworks.require._defined.enjs.dependencies.altLists[amountID].alt0;
+    }
   }
 
   ignoreCurrentValue() {

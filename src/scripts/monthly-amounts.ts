@@ -29,31 +29,12 @@ export class MonthlyAmounts {
   private _frequency: DonationFrequency = DonationFrequency.getInstance();
   private defaultChange: boolean = false;
   private swapped: boolean = false;
-  private defaultAmounts: { [key: string]: string } = {};
+  private defaultAmounts:
+    | { selected: boolean; label: string; value: any }[]
+    | null = null;
   constructor() {
     if (!this.shouldRun()) return;
-    const amountContainer = document.querySelector(".en__field--donationAmt");
-    if (!amountContainer) return;
-    let amountID =
-      [...amountContainer.classList.values()]
-        .filter(
-          (v) => v.startsWith("en__field--") && Number(v.substring(11)) > 0
-        )
-        .toString()
-        .match(/\d/g)
-        ?.join("") || "";
-    if (!amountID) return;
-    this.logger.log("Amount ID", amountID);
-    if (
-      (window as any).EngagingNetworks.require._defined.enjs.dependencies
-        .altLists[amountID].alt0
-    ) {
-      this.defaultAmounts = (
-        window as any
-      ).EngagingNetworks.require._defined.enjs.dependencies.altLists[
-        amountID
-      ].alt0;
-    }
+    this.loadDefaultAmounts();
     this._frequency.onFrequencyChange.subscribe(() => this.setMonthlyAmounts());
     this._amount.onAmountChange.subscribe(() => {
       this.defaultChange = false;
@@ -109,6 +90,60 @@ export class MonthlyAmounts {
   }
   shouldRun() {
     return "EngridMonthlyAmounts" in window;
+  }
+  loadDefaultAmounts() {
+    const amountContainer = document.querySelector(".en__field--donationAmt");
+    if (!amountContainer) return;
+    let amountID =
+      [...amountContainer.classList.values()]
+        .filter(
+          (v) => v.startsWith("en__field--") && Number(v.substring(11)) > 0
+        )
+        .toString()
+        .match(/\d/g)
+        ?.join("") || "";
+    if (!amountID) return;
+    this.logger.log("Amount ID", amountID);
+    if (
+      (window as any).EngagingNetworks.suggestedGift &&
+      "single" in (window as any).EngagingNetworks.suggestedGift
+    ) {
+      let defaultAmount = [];
+      const single = (window as any).EngagingNetworks.suggestedGift.single;
+      for (let amount in single) {
+        if (single[amount].nextSuggestedGift) {
+          defaultAmount.push({
+            selected: true,
+            label: amount,
+            value: single[amount].amount.toString(),
+          });
+        }
+        if (single[amount].value === -1) {
+          // Other
+          defaultAmount.push({
+            selected: false,
+            label: "Other",
+            value: "other",
+          });
+        } else {
+          defaultAmount.push({
+            selected: false,
+            label: amount,
+            value: single[amount].value.toString(),
+          });
+        }
+      }
+      this.defaultAmounts = defaultAmount;
+    } else if (
+      (window as any).EngagingNetworks.require._defined.enjs.dependencies
+        .altLists[amountID].alt0
+    ) {
+      this.defaultAmounts = (
+        window as any
+      ).EngagingNetworks.require._defined.enjs.dependencies.altLists[
+        amountID
+      ].alt0;
+    }
   }
   ignoreCurrentValue() {
     return !(
