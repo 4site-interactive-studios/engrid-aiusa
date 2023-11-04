@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, November 4, 2023 @ 01:21:43 ET
+ *  Date: Saturday, November 4, 2023 @ 01:36:07 ET
  *  By: fernando
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
@@ -19744,7 +19744,7 @@ class MonthlyAmounts {
           defaultAmount.push({
             selected: true,
             label: amount,
-            value: single[amount].amount.toString()
+            value: single[amount].value.toString()
           });
         }
 
