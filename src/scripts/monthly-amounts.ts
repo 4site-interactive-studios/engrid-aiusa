@@ -114,7 +114,7 @@ export class MonthlyAmounts {
         if (single[amount].nextSuggestedGift) {
           defaultAmount.push({
             selected: true,
-            label: amount,
+            label: single[amount].value.toString(),
             value: single[amount].value.toString(),
           });
         }
@@ -128,7 +128,7 @@ export class MonthlyAmounts {
         } else {
           defaultAmount.push({
             selected: false,
-            label: amount,
+            label: single[amount].value.toString(),
             value: single[amount].value.toString(),
           });
         }
