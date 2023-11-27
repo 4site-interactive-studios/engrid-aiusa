@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, November 4, 2023 @ 01:59:01 ET
- *  By: fernando
+ *  Date: Monday, November 27, 2023 @ 07:40:55 ET
+ *  By: michael
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
  *
@@ -20531,6 +20531,16 @@ const customScript = function (App) {
 
   if (inlineDonationAmountHeader && donationAmtField) {
     donationAmtField.insertAdjacentElement("afterbegin", inlineDonationAmountHeader); // inlineGiftAmountHeader.style.visibility='visible';
+  }
+
+  let amountNudge = document.querySelector(".amount-nudge");
+
+  if (amountNudge && donationAmtField) {
+    if (inlineDonationAmountHeader) {
+      inlineDonationAmountHeader.insertAdjacentElement("afterend", amountNudge);
+    } else {
+      donationAmtField.insertAdjacentElement("afterbegin", amountNudge);
+    }
   } // Add placeholder to the Mobile Phone Field
 
 
@@ -21595,7 +21605,7 @@ const customScript = function (App) {
 
 
   const giveBySelect = document.getElementsByName("transaction.giveBySelect");
-  const ccField = document.getElementById('en__field_transaction_ccnumber');
+  const ccField = document.getElementById("en__field_transaction_ccnumber");
 
   if (giveBySelect && ccField) {
     giveBySelect.forEach(el => {

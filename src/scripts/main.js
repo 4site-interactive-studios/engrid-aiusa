@@ -33,6 +33,15 @@ export const customScript = function (App) {
     // inlineGiftAmountHeader.style.visibility='visible';
   }
 
+  let amountNudge = document.querySelector(".amount-nudge");
+  if (amountNudge && donationAmtField) {
+    if (inlineDonationAmountHeader) {
+      inlineDonationAmountHeader.insertAdjacentElement("afterend", amountNudge);
+    } else {
+      donationAmtField.insertAdjacentElement("afterbegin", amountNudge);
+    }
+  }
+
   // Add placeholder to the Mobile Phone Field
   let enFieldMobilePhone = document.querySelectorAll(
     "input#en__field_supporter_NOT_TAGGED_13"
@@ -1103,7 +1112,7 @@ export const customScript = function (App) {
 
   //fix to ensure "monthly" option re-appears when switching back from paypal to card without a card number entered
   const giveBySelect = document.getElementsByName("transaction.giveBySelect");
-  const ccField = document.getElementById('en__field_transaction_ccnumber');
+  const ccField = document.getElementById("en__field_transaction_ccnumber");
   if (giveBySelect && ccField) {
     giveBySelect.forEach((el) => {
       el.addEventListener("change", (e) => {

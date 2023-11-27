@@ -2574,6 +2574,29 @@
       display: none;
     }
   }
+
+  .amount-nudge {
+    display: flex;
+    align-items: center;
+
+    p {
+      width: 41%;
+      margin: 0 0 1rem;
+      font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
+      font-size: 1rem;
+
+      @media screen and (max-width: 720px) {
+        width: 66%;
+      }
+    }
+
+    svg {
+      align-self: flex-end;
+      margin-left: 5px;
+      flex-basis: 45px;
+      transform: rotate(-45deg) scale(0.9);
+    }
+  }
 }
 
 /*
