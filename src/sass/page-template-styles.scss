@@ -2577,24 +2577,31 @@
 
   .amount-nudge {
     display: flex;
+    align-self: center;
     align-items: center;
+    flex-direction: column;
 
     p {
-      width: 41%;
-      margin: 0 0 1rem;
+      //width: 41%;
+      text-align: center;
+      margin: 0 0 -5px;
       font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
-      font-size: 1rem;
+      font-size: 15px;
 
       @media screen and (max-width: 720px) {
-        width: 66%;
+        //width: 66%;
       }
     }
 
     svg {
-      align-self: flex-end;
+      //align-self: flex-end;
       margin-left: 5px;
       flex-basis: 45px;
       transform: rotate(-45deg) scale(0.9);
+      @media screen and (max-width: 720px) {
+        margin-left: auto;
+        margin-right: 23%;
+      }
     }
   }
 }
