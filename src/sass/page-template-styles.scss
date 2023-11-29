@@ -2583,13 +2583,15 @@
 
     p {
       //width: 41%;
+      color: #ff4700;
       text-align: center;
-      margin: 0 0 -5px;
+      margin: 0 -5px -5px;
       font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
       font-size: 15px;
 
       @media screen and (max-width: 720px) {
         //width: 66%;
+        margin: 0 0 -5px;
       }
     }
 

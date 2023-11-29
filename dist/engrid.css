@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, November 27, 2023 @ 11:15:37 ET
+ *  Date: Wednesday, November 29, 2023 @ 05:59:17 ET
  *  By: michael
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
@@ -9343,10 +9343,16 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   flex-direction:column;
 }
 [data-engrid-theme=aiusa] .amount-nudge p{
+  color:#ff4700;
   font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
   font-size:15px;
-  margin:0 0 -5px;
+  margin:0 -5px -5px;
   text-align:center;
+}
+@media screen and (max-width:720px){
+  [data-engrid-theme=aiusa] .amount-nudge p{
+    margin:0 0 -5px;
+  }
 }
 [data-engrid-theme=aiusa] .amount-nudge svg{
   flex-basis:45px;
