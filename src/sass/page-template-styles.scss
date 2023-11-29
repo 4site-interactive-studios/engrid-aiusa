@@ -2574,6 +2574,38 @@
       display: none;
     }
   }
+
+  .amount-nudge {
+    display: flex;
+    align-self: center;
+    align-items: center;
+    flex-direction: column;
+
+    p {
+      //width: 41%;
+      color: #ff4700;
+      text-align: center;
+      margin: 0 -5px -5px;
+      font-family: "Kalam", var(--font-stack-aiusa-bold-condensed);
+      font-size: 15px;
+
+      @media screen and (max-width: 720px) {
+        //width: 66%;
+        margin: 0 0 -5px;
+      }
+    }
+
+    svg {
+      //align-self: flex-end;
+      margin-left: 5px;
+      flex-basis: 45px;
+      transform: rotate(-45deg) scale(0.9);
+      @media screen and (max-width: 720px) {
+        margin-left: auto;
+        margin-right: 23%;
+      }
+    }
+  }
 }
 
 /*

@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, November 4, 2023 @ 01:59:01 ET
- *  By: fernando
+ *  Date: Wednesday, November 29, 2023 @ 05:59:17 ET
+ *  By: michael
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
  *
@@ -9335,6 +9335,35 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 }
 [data-engrid-theme=aiusa][data-engrid-payment-type=paypal] .inline-monthly-upsell{
   display:none;
+}
+[data-engrid-theme=aiusa] .amount-nudge{
+  align-items:center;
+  align-self:center;
+  display:flex;
+  flex-direction:column;
+}
+[data-engrid-theme=aiusa] .amount-nudge p{
+  color:#ff4700;
+  font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
+  font-size:15px;
+  margin:0 -5px -5px;
+  text-align:center;
+}
+@media screen and (max-width:720px){
+  [data-engrid-theme=aiusa] .amount-nudge p{
+    margin:0 0 -5px;
+  }
+}
+[data-engrid-theme=aiusa] .amount-nudge svg{
+  flex-basis:45px;
+  margin-left:5px;
+  transform:rotate(-45deg) scale(.9);
+}
+@media screen and (max-width:720px){
+  [data-engrid-theme=aiusa] .amount-nudge svg{
+    margin-left:auto;
+    margin-right:23%;
+  }
 }
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
