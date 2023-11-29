@@ -79,6 +79,9 @@
   }
 
   //END AIUSA SPECIFIC
+  [data-multistep-change-step] {
+    cursor: pointer;
+  }
 
   .multistep-stepper {
     display: flex;

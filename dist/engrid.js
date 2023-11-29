@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Sunday, November 19, 2023 @ 17:37:15 ET
+ *  Date: Wednesday, November 29, 2023 @ 06:57:06 ET
  *  By: michael
  *  ENGrid styles: v0.14.13
  *  ENGrid scripts: v0.14.14
@@ -20279,16 +20279,40 @@ class MultistepForm {
     });
   }
 
-  activateStep(multistepStep) {
+  activateStep(targetStep) {
     let bypassValidation = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    if (!multistepStep) return;
-    const activeStep = engrid_ENGrid.getBodyData("multistep-active-step") ?? 1;
+    if (!targetStep) return;
+    const activeStep = engrid_ENGrid.getBodyData("multistep-active-step") ?? "1"; //If no validation or we're going backwards, activate the step
 
-    if (bypassValidation || multistepStep < activeStep || this.validateStep()) {
-      this.logger.log(`Activating step ${multistepStep}`);
-      engrid_ENGrid.setBodyData("multistep-active-step", multistepStep);
+    if (bypassValidation || targetStep < activeStep) {
+      this.logger.log(`Bypassing validation or going backwards. Activating step ${targetStep}`);
+      engrid_ENGrid.setBodyData("multistep-active-step", targetStep);
       window.scrollTo(0, 0);
-    }
+      return;
+    } // If we're going forwards, validate the steps between the current and target step
+    // if validation fields, find first error on the page, activate that step and scroll to it
+
+
+    if (!this.validateStepsBetweenCurrentAndTargetStep(activeStep, targetStep)) {
+      const field = document.querySelector(".en__field--validationFailed");
+      const invalidStep = field?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") ?? "1";
+      engrid_ENGrid.setBodyData("multistep-active-step", invalidStep);
+      window.scrollTo(0, 0);
+
+      if (field) {
+        field.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+
+      this.logger.log(`Found error on step ${invalidStep}. Going to that step.`);
+      return;
+    } // If validation passes, activate the step
+
+
+    this.logger.log(`Validation passed. Activating step ${targetStep}`);
+    engrid_ENGrid.setBodyData("multistep-active-step", targetStep);
+    window.scrollTo(0, 0);
   }
 
   addBackButtonToFinalStep() {
@@ -20301,30 +20325,33 @@ class MultistepForm {
        </button>`);
   }
 
-  validateStep() {
-    if (this.validators.length === 0) return true; //Filter our validators to only the ones on the current step
+  validateStepsBetweenCurrentAndTargetStep(currentStep, targetStep) {
+    const stepsBetween = this.getStepsBetween(currentStep, targetStep);
+    return stepsBetween.every(step => this.validateStep(step));
+  }
 
+  validateStep(step) {
+    if (this.validators.length === 0) return true;
     const validators = this.validators.filter(validator => {
-      return document.querySelector(`.en__field--${validator.field}`)?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") === engrid_ENGrid.getBodyData("multistep-active-step");
-    }); //Run each validator and return true if it passes
-
+      return document.querySelector(`.en__field--${validator.field}`)?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") === step;
+    });
     const validationResults = validators.map(validator => {
       validator.hideMessage();
       return !validator.isVisible() || validator.test();
     });
-    const validationPassed = validationResults.every(result => result);
+    return validationResults.every(result => result);
+  }
 
-    if (!validationPassed) {
-      const field = document.querySelector(".en__field--validationFailed");
+  getStepsBetween(currentStep, targetStep) {
+    const start = parseInt(currentStep);
+    const end = parseInt(targetStep);
+    let stepsBetween = [];
 
-      if (field) {
-        field.scrollIntoView({
-          behavior: "smooth"
-        });
-      }
+    for (let i = start; i < end; i++) {
+      stepsBetween.push(i.toString());
     }
 
-    return validationPassed;
+    return stepsBetween;
   }
 
   startConfetti() {

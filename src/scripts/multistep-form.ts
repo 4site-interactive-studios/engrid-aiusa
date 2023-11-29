@@ -124,17 +124,47 @@ export default class MultistepForm {
     });
   }
 
-  private activateStep(
-    multistepStep: string,
-    bypassValidation: boolean = false
-  ) {
-    if (!multistepStep) return;
-    const activeStep = ENGrid.getBodyData("multistep-active-step") ?? 1;
-    if (bypassValidation || multistepStep < activeStep || this.validateStep()) {
-      this.logger.log(`Activating step ${multistepStep}`);
-      ENGrid.setBodyData("multistep-active-step", multistepStep);
+  private activateStep(targetStep: string, bypassValidation: boolean = false) {
+    if (!targetStep) return;
+    const activeStep = ENGrid.getBodyData("multistep-active-step") ?? "1";
+
+    //If no validation or we're going backwards, activate the step
+    if (bypassValidation || targetStep < activeStep) {
+      this.logger.log(
+        `Bypassing validation or going backwards. Activating step ${targetStep}`
+      );
+      ENGrid.setBodyData("multistep-active-step", targetStep);
       window.scrollTo(0, 0);
+      return;
     }
+
+    // If we're going forwards, validate the steps between the current and target step
+    // if validation fields, find first error on the page, activate that step and scroll to it
+    if (
+      !this.validateStepsBetweenCurrentAndTargetStep(activeStep, targetStep)
+    ) {
+      const field: HTMLElement | null = document.querySelector(
+        ".en__field--validationFailed"
+      );
+      const invalidStep =
+        field
+          ?.closest(".en__component--formblock")
+          ?.getAttribute("data-multistep-step") ?? "1";
+      ENGrid.setBodyData("multistep-active-step", invalidStep);
+      window.scrollTo(0, 0);
+      if (field) {
+        field.scrollIntoView({ behavior: "smooth" });
+      }
+      this.logger.log(
+        `Found error on step ${invalidStep}. Going to that step.`
+      );
+      return;
+    }
+
+    // If validation passes, activate the step
+    this.logger.log(`Validation passed. Activating step ${targetStep}`);
+    ENGrid.setBodyData("multistep-active-step", targetStep);
+    window.scrollTo(0, 0);
   }
 
   private addBackButtonToFinalStep() {
@@ -152,38 +182,44 @@ export default class MultistepForm {
     );
   }
 
-  private validateStep() {
+  private validateStepsBetweenCurrentAndTargetStep(
+    currentStep: string,
+    targetStep: string
+  ) {
+    const stepsBetween = this.getStepsBetween(currentStep, targetStep);
+    return stepsBetween.every((step) => this.validateStep(step));
+  }
+
+  private validateStep(step: string) {
     if (this.validators.length === 0) return true;
 
-    //Filter our validators to only the ones on the current step
     const validators = this.validators.filter((validator) => {
       return (
         document
           .querySelector(`.en__field--${validator.field}`)
           ?.closest(".en__component--formblock")
-          ?.getAttribute("data-multistep-step") ===
-        ENGrid.getBodyData("multistep-active-step")
+          ?.getAttribute("data-multistep-step") === step
       );
     });
 
-    //Run each validator and return true if it passes
     const validationResults = validators.map((validator) => {
       validator.hideMessage();
       return !validator.isVisible() || validator.test();
     });
 
-    const validationPassed = validationResults.every((result) => result);
+    return validationResults.every((result) => result);
+  }
 
-    if (!validationPassed) {
-      const field: HTMLElement | null = document.querySelector(
-        ".en__field--validationFailed"
-      );
-      if (field) {
-        field.scrollIntoView({ behavior: "smooth" });
-      }
+  private getStepsBetween(currentStep: string, targetStep: string) {
+    const start = parseInt(currentStep);
+    const end = parseInt(targetStep);
+    let stepsBetween = [];
+
+    for (let i = start; i < end; i++) {
+      stepsBetween.push(i.toString());
     }
 
-    return validationPassed;
+    return stepsBetween;
   }
 
   private startConfetti() {
