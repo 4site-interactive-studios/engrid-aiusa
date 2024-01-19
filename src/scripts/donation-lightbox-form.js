@@ -419,7 +419,7 @@ export default class DonationLightboxForm {
             ccnumberBlock.classList.remove("has-error");
           }
         }
-        if (/^\d+$/.test(ccnumber.value) === false) {
+        if (/^[0-9\s]+$/.test(ccnumber.value) === false) {
           this.scrollToElement(ccnumber);
           this.sendMessage("error", "Only numbers are allowed on credit card");
           if (ccnumberBlock) {
