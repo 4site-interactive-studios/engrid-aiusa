@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, February 21, 2024 @ 15:10:57 ET
+ *  Date: Monday, February 26, 2024 @ 11:14:24 ET
  *  By: bryancasler
  *  ENGrid styles: v0.16.11
  *  ENGrid scripts: v0.16.11
@@ -9585,6 +9585,11 @@ body[data-engrid-debug]:before{
 [data-engrid-theme=aiusa] .credit-card-flags{
   margin-bottom:25px;
   text-align:center;
+}
+@media screen and (min-width:1150px){
+  [data-engrid-theme=aiusa] [data-engrid-layout=centercenter2col][data-engrid-page-type=event] .body-top{
+    padding-bottom:3rem;
+  }
 }
 
 [data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio]+label:after{
