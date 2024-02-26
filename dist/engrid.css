@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, February 26, 2024 @ 11:14:24 ET
+ *  Date: Monday, February 26, 2024 @ 12:42:52 ET
  *  By: bryancasler
  *  ENGrid styles: v0.16.11
  *  ENGrid scripts: v0.16.11
@@ -3969,8 +3969,17 @@ body:not[data-engrid-show-ecard-options] .show-if-ecard{
   border-color:var(--error__color);
 }
 
+[data-engrid-theme]{
+  --ticket_selector-top-offset:-4px;
+}
+
 .en__additional__amount,.en__additional__label,.en__ticket__currency,.en__ticket__name,.en__ticket__price{
   font-size:inherit;
+}
+
+.en__ticket__selector{
+  position:relative;
+  top:var(--ticket_selector-top-offset);
 }
 
 .en__additional__amount,.en__ticket__field--cost{
@@ -4193,12 +4202,11 @@ button.en__eventOccurrence__select>label{
 }
 
 .en__additional{
-  border-bottom:1px solid #bfbfbf;
   display:grid;
   gap:1em;
   grid-auto-flow:column;
   grid-template-areas:"en__additional__label en__additional__amount en__additional__promo";
-  grid-template-columns:1fr minmax(5ch, max-content) min-content;
+  grid-template-columns:minmax(5ch, max-content) min-content auto;
   grid-template-rows:1fr;
   margin-bottom:1rem;
   padding-bottom:1rem;
