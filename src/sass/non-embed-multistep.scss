@@ -6,6 +6,15 @@
   --give-by-select__button_count: 2;
   --h1_font-size: 60px;
 
+  //VGS styles
+  --en-vgs-height: 51px;
+  --en-vgs-width: 244px;
+  --en-vgs-borderWidth: 2px;
+  --en-vgs-borderStyle: solid;
+  --en-vgs-borderColor: rgb(245, 245, 245);
+  --en-vgs-borderRadius: 0px;
+  --en-vgs-backgroundColor: rgb(245, 245, 245);
+
   .en__component--copyblock:not(.move-before-transaction-donationamt){
     h2.section-header {
       font-size: 60px;

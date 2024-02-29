@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, February 29, 2024 @ 11:55:52 ET
+ *  Date: Thursday, February 29, 2024 @ 12:16:07 ET
  *  By: michael
  *  ENGrid styles: v0.17.16
  *  ENGrid scripts: v0.17.16
@@ -10237,6 +10237,13 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   --engrid__content-footerSpacer_background-color:#fff;
   --give-by-select__button_count:2;
   --h1_font-size:60px;
+  --en-vgs-height:51px;
+  --en-vgs-width:244px;
+  --en-vgs-borderWidth:2px;
+  --en-vgs-borderStyle:solid;
+  --en-vgs-borderColor:#f5f5f5;
+  --en-vgs-borderRadius:0px;
+  --en-vgs-backgroundColor:#f5f5f5;
 }
 [data-engrid-theme=aiusa][data-engrid-multistep] .en__component--copyblock:not(.move-before-transaction-donationamt) h2.section-header{
   font-size:60px;
