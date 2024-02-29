@@ -5,6 +5,7 @@ import {
   DonationFrequency,
 } from "@4site/engrid-common"; // Uses ENGrid via NPM
 import { MonthlyAmounts } from "./scripts/monthly-amounts";
+import MultistepForm from "./scripts/multistep-form";
 // import {
 //   Options,
 //   App,
@@ -35,6 +36,7 @@ const options: Options = {
     new DonationLightboxForm(DonationAmount, DonationFrequency);
     customScript(App);
     new MonthlyAmounts();
+    new MultistepForm();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };

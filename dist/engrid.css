@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, February 28, 2024 @ 10:20:37 ET
+ *  Date: Thursday, February 29, 2024 @ 11:06:55 ET
  *  By: michael
  *  ENGrid styles: v0.17.16
  *  ENGrid scripts: v0.17.16
@@ -6369,10 +6369,10 @@ body:not(#en__pagebuilder)[data-engrid-no-body-bannerOverlay] .en__component--ad
 }
 @media screen and (min-width:720px){
   [data-engrid-layout=leftleft1col] #engrid>.en__component--advrow,[data-engrid-layout=leftleft1col] form>.en__component--advrow{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 0) [lpc-end cc-start lcc-start] minmax(0, 0) [lcc-end bc-start lbc-start] minmax(260px, 260px) [lbc-end rbc-start] minmax(260px, 260px) [rbc-end bc-end rcc-start] minmax(0, 0) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 0) [lpc-end cc-start lcc-start] minmax(0, 0) [lcc-end bc-start lbc-start] minmax(300px, 300px) [lbc-end rbc-start] minmax(300px, 300px) [rbc-end bc-end rcc-start] minmax(0, 0) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
   }
   [data-engrid-layout=leftleft1col] form>.en__component--advrow>*{
-    grid-template-columns:[pc-start lpc-start] minmax(0, 0) [lpc-end cc-start lcc-start] minmax(0, 0) [lcc-end bc-start lbc-start] minmax(0, 260px) [lbc-end rbc-start] minmax(0, 260px) [rbc-end bc-end rcc-start] minmax(0, 0) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
+    grid-template-columns:[pc-start lpc-start] minmax(0, 0) [lpc-end cc-start lcc-start] minmax(0, 0) [lcc-end bc-start lbc-start] minmax(0, 300px) [lbc-end rbc-start] minmax(0, 300px) [rbc-end bc-end rcc-start] minmax(0, 0) [rcc-end cc-end rpc-start] minmax(0, 1fr) [rpc-end pc-end];
   }
   [data-engrid-layout=leftleft1col]:not(#en__pagebuilder) .page-backgroundImage{
     grid-row:page-start /  content-footerSpacer-end;
@@ -10228,6 +10228,181 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   left:-1px;
   position:fixed;
   top:-1px;
+}
+
+[data-engrid-theme=aiusa][data-engrid-multistep]{
+  --color-gray:#f2f4f7;
+  --body-side-padding:48px;
+  --engrid__body_padding:0 var(--body-side-padding);
+  --engrid__content-footerSpacer_background-color:#fff;
+  --give-by-select__button_count:2;
+  --h1_font-size:60px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .en__component--copyblock:not(.move-before-transaction-donationamt) h2.section-header{
+  font-size:60px;
+  line-height:1;
+  margin:40px 0 20px;
+  text-align:left;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .en__component--copyblock:not(.move-before-transaction-donationamt) h2.section-header:after,[data-engrid-theme=aiusa][data-engrid-multistep] .en__component--copyblock:not(.move-before-transaction-donationamt) h2.section-header:before{
+  content:none;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit{
+  margin-top:50px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col]{
+  --engrid__content-footer_background-color:var(--color-gray);
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .body-main{
+  padding-top:0;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .content-header{
+  margin-bottom:0;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .content-footer{
+  margin-top:0;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .body-headerOutside{
+  background:#fff;
+  display:grid !important;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .page-backgroundImage{
+  grid-column:rpc /  pc;
+  position:relative;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep][data-engrid-layout=leftleft1col] .page-backgroundImage:before{
+  background-position:50% !important;
+  position:absolute;
+}
+@media screen and (max-width:720px){
+  [data-engrid-theme=aiusa][data-engrid-multistep]{
+    --body-side-padding:16px;
+    --recurring-frequency__button_count:2;
+    --h1_font-size:48px;
+  }
+  [data-engrid-theme=aiusa][data-engrid-multistep] .en__field,[data-engrid-theme=aiusa][data-engrid-multistep] .en__submit{
+    padding-left:var(--fields_spacing-inline);
+    padding-right:var(--fields_spacing-inline);
+  }
+  [data-engrid-theme=aiusa][data-engrid-multistep] h1{
+    letter-spacing:-1px;
+  }
+  [data-engrid-theme=aiusa][data-engrid-multistep] .en__component--copyblock:not(.move-before-transaction-donationamt) h2.section-header{
+    font-size:48px;
+    letter-spacing:-1px;
+  }
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] [data-multistep-change-step]{
+  cursor:pointer;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-stepper{
+  align-items:center;
+  display:flex;
+  margin:0 calc(var(--body-side-padding)*-1);
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-stepper__step{
+  background-color:#e4e4e45c;
+  border-bottom:4px solid #0000;
+  color:#667085;
+  display:flex;
+  flex:1;
+  font-size:12px;
+  font-weight:700;
+  justify-content:center;
+  padding:10px 0 6px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-stepper__number{
+  align-items:center;
+  border:1px solid #667085;
+  border-radius:50%;
+  display:flex;
+  height:18px;
+  justify-content:center;
+  margin-right:6px;
+  width:18px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-stepper__step--active{
+  background-color:#fff;
+  border-color:#000;
+  color:#000;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-stepper__step--active .multistep-stepper__number{
+  background-color:#000;
+  border-color:#000;
+  color:#fff;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="1"]) [data-multistep-step="1"],[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="2"]) [data-multistep-step="2"],[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="3"]) [data-multistep-step="3"],[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="4"]) [data-multistep-step="4"],[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="5"]) [data-multistep-step="5"],[data-engrid-theme=aiusa][data-engrid-multistep]:not([data-engrid-multistep-active-step="6"]) [data-multistep-step="6"]{
+  display:none;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-button-container{
+  display:flex;
+  flex-basis:60px;
+  margin-bottom:30px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-button-container .btn-back+button{
+  box-shadow:0 8px 12px 0 #0000001a,-22px 21px 29px 0 #0000001f;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-button-container button:not(.btn-back){
+  align-items:center;
+  display:flex;
+  justify-content:center;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-button-container button:not(.btn-back) svg{
+  left:16px;
+  position:relative;
+  top:-1px;
+  transition:left .3s;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-button-container button:not(.btn-back):hover svg{
+  left:21px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .btn-back{
+  background-color:var(--submit__button_background-color);
+  border-color:var(--submit__button_border-color);
+  color:var(--submit__button_color);
+  flex-basis:60px;
+  font-size:var(--submit__button_font-size);
+  margin-right:20px;
+  margin-top:2rem;
+  opacity:.3;
+  padding-bottom:var(--submit__button_padding-bottom);
+  padding-top:var(--submit__button_padding-top);
+  text-transform:var(--submit__button_text-transform);
+  transition:opacity .2s;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .btn-back:hover{
+  opacity:.6;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit{
+  grid-column-gap:20px;
+  display:grid;
+  grid-template-columns:60px 1fr;
+  grid-template-rows:auto;
+  margin-bottom:30px;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit .en__captcha{
+  grid-column:span 2;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit .btn-back{
+  grid-column:1;
+  margin-right:0;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit .en__submit{
+  grid-column:2;
+  padding:0;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .multistep-submit .en__submit button{
+  box-shadow:0 8px 12px 0 #0000001a,-22px 21px 29px 0 #0000001f;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .en__submit button .live-variable-frequency:after{
+  content:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' fill='none'%3E%3Cpath d='M8.187 13.313a.972.972 0 1 1-1.374-1.375L10.5 8.25H1.6a1.1 1.1 0 0 1 0-2.2h9.2L6.813 2.062A.972.972 0 1 1 8.187.687L14.5 7l-6.313 6.313Z' fill='%23000'/%3E%3C/svg%3E");
+  left:16px;
+  position:relative;
+  top:-1px;
+  transition:left .3s;
+}
+[data-engrid-theme=aiusa][data-engrid-multistep] .en__submit button:hover .live-variable-frequency:after{
+  left:21px;
 }
 body{
   opacity:1;
