@@ -1,17 +1,17 @@
-import {
-  Options,
-  App,
-  DonationAmount,
-  DonationFrequency,
-} from "@4site/engrid-common"; // Uses ENGrid via NPM
-import { MonthlyAmounts } from "./scripts/monthly-amounts";
-import MultistepForm from "./scripts/multistep-form";
 // import {
 //   Options,
 //   App,
 //   DonationAmount,
 //   DonationFrequency,
-// } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+// } from "@4site/engrid-common"; // Uses ENGrid via NPM
+import { MonthlyAmounts } from "./scripts/monthly-amounts";
+import MultistepForm from "./scripts/multistep-form";
+import {
+  Options,
+  App,
+  DonationAmount,
+  DonationFrequency,
+} from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
 import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
@@ -31,6 +31,30 @@ const options: Options = {
   MinAmountMessage: "Please enter a minimum donation of $5",
   MaxAmountMessage: "Amount must be less than $100,000,000",
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
+  VGS: {
+    "transaction.ccnumber": {
+      css: {
+        "@font-face": {
+          "font-family": "AmnestyTradeGothic",
+          "font-style": "normal",
+          "font-weight": "400",
+          "font-display": "swap",
+          src: "url('https://c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/AmnestyTradeGothic-Light.woff') format('woff');",
+        },
+      },
+    },
+    "transaction.ccvv": {
+      css: {
+        "@font-face": {
+          "font-family": "AmnestyTradeGothic",
+          "font-style": "normal",
+          "font-weight": "400",
+          "font-display": "swap",
+          src: "url('https://c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/AmnestyTradeGothic-Light.woff') format('woff');",
+        },
+      },
+    },
+  },
   onLoad: () => {
     (<any>window).DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
