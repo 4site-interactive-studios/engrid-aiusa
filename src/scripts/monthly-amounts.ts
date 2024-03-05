@@ -32,8 +32,40 @@ export class MonthlyAmounts {
   private defaultAmounts:
     | { selected: boolean; label: string; value: any }[]
     | null = null;
+  private loadCount: number = 0;
   constructor() {
     if (!this.shouldRun()) return;
+    // Wait for EN to have altLists
+    this.checkForAltLists();
+  }
+  checkForAltLists() {
+    if (this.loadCount > 10) {
+      this.logger.error("Unable to load altLists");
+      return false;
+    }
+    if (
+      ENGrid.checkNested(
+        window.EngagingNetworks,
+        "require",
+        "_defined",
+        "enjs",
+        "dependencies",
+        "altLists"
+      ) &&
+      Object.keys(
+        (window as any).EngagingNetworks.require._defined.enjs.dependencies
+          .altLists
+      ).length > 0
+    ) {
+      this.logger.log(`AltLists Loaded attempt ${this.loadCount}`);
+      this.run();
+      return true;
+    } else {
+      this.loadCount++;
+      setTimeout(() => this.checkForAltLists(), 200);
+    }
+  }
+  run() {
     this.loadDefaultAmounts();
     this._frequency.onFrequencyChange.subscribe(() => this.setMonthlyAmounts());
     this._amount.onAmountChange.subscribe(() => {
