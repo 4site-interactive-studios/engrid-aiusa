@@ -92,7 +92,7 @@ export default class DonationLightboxForm {
       ) {
         console.log("DonationLightboxForm: Submission Failed");
         // Submission failed
-        if (this.validateForm()) {
+        if (this.validateForm(false, false)) {
           // Front-End Validation Passed, get first Error Message
           const error = document.querySelector("li.en__error");
           if (error) {
