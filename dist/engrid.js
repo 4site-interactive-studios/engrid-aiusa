@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, April 2, 2024 @ 14:27:34 ET
+ *  Date: Thursday, April 4, 2024 @ 10:30:52 ET
  *  By: fernando
  *  ENGrid styles: v0.18.1
  *  ENGrid scripts: v0.18.4
@@ -21446,7 +21446,7 @@ class MonthlyAmounts {
 
       this.logger.log("Amounts Swapped To", window.EngridMonthlyAmounts);
       this.swapped = true;
-    } else if (this.defaultAmounts) {
+    } else if (this.defaultAmounts && this._frequency.frequency === "onetime") {
       window.EngagingNetworks.require._defined.enjs.swapList("donationAmt", this.defaultAmounts, {
         ignoreCurrentValue: this.ignoreCurrentValue()
       });
