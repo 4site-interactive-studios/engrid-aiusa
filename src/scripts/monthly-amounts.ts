@@ -96,7 +96,7 @@ export class MonthlyAmounts {
         (window as any).EngridMonthlyAmounts
       );
       this.swapped = true;
-    } else if (this.defaultAmounts) {
+    } else if (this.defaultAmounts && this._frequency.frequency === "onetime") {
       (window as any).EngagingNetworks.require._defined.enjs.swapList(
         "donationAmt",
         this.defaultAmounts,
