@@ -3025,6 +3025,7 @@ body#en__pagebuilder .content-footerSpacer {
         display: inline-block;
       }
     }
+
     svg {
       color: var(--color_primary);
       position: absolute;
@@ -3051,6 +3052,7 @@ body#en__pagebuilder .content-footerSpacer {
       }
     }
   }
+
   &[data-engrid-transaction-recurring-frequency="onetime"] {
     .monthly-upsell-message {
       p {
@@ -3598,6 +3600,19 @@ body#en__pagebuilder .content-footerSpacer {
     position: fixed;
     left: -1px;
     top: -1px;
+  }
+}
+
+// Visually indicate in page builder when the wrong wrapping tag is used to highlight a word
+// Screenshot: https://cln.sh/J10ms9tC
+// Task: https://app.productive.io/2650-4site-interactive-studios-inc/tasks/7523783
+#en__pagebuilder .monthly-upsell-message p {
+  strong {
+    text-decoration: underline solid var(--color_cta) 4px;
+  }
+
+  b {
+    text-decoration: underline solid var(--error__color) 4px;
   }
 }
 

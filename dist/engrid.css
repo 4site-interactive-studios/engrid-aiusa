@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 4, 2024 @ 10:30:52 ET
- *  By: fernando
+ *  Date: Tuesday, April 16, 2024 @ 16:29:57 ET
+ *  By: bryancasler
  *  ENGrid styles: v0.18.1
  *  ENGrid scripts: v0.18.4
  *
@@ -10235,6 +10235,15 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   left:-1px;
   position:fixed;
   top:-1px;
+}
+
+#en__pagebuilder .monthly-upsell-message p strong{
+  -webkit-text-decoration:underline solid var(--color_cta) 4px;
+          text-decoration:underline solid var(--color_cta) 4px;
+}
+#en__pagebuilder .monthly-upsell-message p b{
+  -webkit-text-decoration:underline solid var(--error__color) 4px;
+          text-decoration:underline solid var(--error__color) 4px;
 }
 
 [data-engrid-theme=aiusa][data-engrid-multistep]{
