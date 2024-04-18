@@ -2519,6 +2519,28 @@
     text-align: center;
     margin-bottom: 25px;
   }
+
+  .secure-payment-header {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1ch;
+
+    img {
+      height: 18px;
+      width: auto;
+      margin-bottom: calc(1rem * var(--scale-down_20pct));
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 22.68px;
+    }
+  }
 } // END AIUSA ENGRID CUSTOM THEME
 
 [data-engrid-theme="aiusa"] {
