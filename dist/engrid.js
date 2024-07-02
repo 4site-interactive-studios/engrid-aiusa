@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 2, 2024 @ 14:20:36 ET
+ *  Date: Tuesday, July 2, 2024 @ 14:21:35 ET
  *  By: fernando
  *  ENGrid styles: v0.18.14
  *  ENGrid scripts: v0.18.16
@@ -21993,11 +21993,9 @@ class MonthlyAmounts {
   }
 
   loadDefaultAmounts() {
-    var _filter$toString$matc;
-
     const amountContainer = document.querySelector(".en__field--donationAmt");
     if (!amountContainer) return;
-    let amountID = ((_filter$toString$matc = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)) === null || _filter$toString$matc === void 0 ? void 0 : _filter$toString$matc.join("")) || "";
+    let amountID = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)?.join("") || "";
     if (!amountID) return;
     this.logger.log("Amount ID", amountID);
 
@@ -22080,19 +22078,15 @@ class MultistepForm {
   }
 
   addStepDataAttributes() {
-    var _document$querySelect, _document$querySelect2, _document$querySelect3;
-
-    (_document$querySelect = document.querySelector(".body-title")) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.setAttribute("data-multistep-step", "1");
-    (_document$querySelect2 = document.querySelector(".body-top")) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.setAttribute("data-multistep-step", "1");
-    (_document$querySelect3 = document.querySelector(".body-bottom")) === null || _document$querySelect3 === void 0 ? void 0 : _document$querySelect3.setAttribute("data-multistep-step", "3");
+    document.querySelector(".body-title")?.setAttribute("data-multistep-step", "1");
+    document.querySelector(".body-top")?.setAttribute("data-multistep-step", "1");
+    document.querySelector(".body-bottom")?.setAttribute("data-multistep-step", "3");
     const stepperCodeBlocks = [...document.querySelectorAll(".multistep-stepper")].map(el => el.closest(".en__component--codeblock"));
     stepperCodeBlocks.forEach((step, index) => {
-      var _document$querySelect4;
-
       step.setAttribute("data-multistep-step", `${index + 1}`); // if this is the first step, we start from the first element in ".body-main"
       // (since the first stepper could be outside of ".body-main")
 
-      const start = index === 0 ? (_document$querySelect4 = document.querySelector(".body-main")) === null || _document$querySelect4 === void 0 ? void 0 : _document$querySelect4.firstChild : step;
+      const start = index === 0 ? document.querySelector(".body-main")?.firstChild : step;
       const nextStep = stepperCodeBlocks[index + 1];
       const elements = this.getElementsBetween(start, nextStep);
       elements.forEach(element => {
@@ -22138,10 +22132,8 @@ class MultistepForm {
 
 
     if (!this.validateStepsBetweenCurrentAndTargetStep(activeStep, targetStep)) {
-      var _field$closest;
-
       const field = document.querySelector(".en__field--validationFailed");
-      const invalidStep = (field === null || field === void 0 ? void 0 : (_field$closest = field.closest(".en__component--formblock")) === null || _field$closest === void 0 ? void 0 : _field$closest.getAttribute("data-multistep-step")) ?? "1";
+      const invalidStep = field?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") ?? "1";
       engrid_ENGrid.setBodyData("multistep-active-step", invalidStep);
       window.scrollTo(0, 0);
 
@@ -22179,9 +22171,7 @@ class MultistepForm {
   validateStep(step) {
     if (this.validators.length === 0) return true;
     const validators = this.validators.filter(validator => {
-      var _document$querySelect5, _document$querySelect6;
-
-      return ((_document$querySelect5 = document.querySelector(`.en__field--${validator.field}`)) === null || _document$querySelect5 === void 0 ? void 0 : (_document$querySelect6 = _document$querySelect5.closest(".en__component--formblock")) === null || _document$querySelect6 === void 0 ? void 0 : _document$querySelect6.getAttribute("data-multistep-step")) === step;
+      return document.querySelector(`.en__field--${validator.field}`)?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") === step;
     });
     const validationResults = validators.map(validator => {
       validator.hideMessage();
@@ -22425,8 +22415,6 @@ class DonationLightboxForm {
   buildSectionNavigation() {
     console.log("DonationLightboxForm: buildSectionNavigation");
     this.sections.forEach((section, key) => {
-      var _sectionNavigation$qu, _sectionNavigation$qu2, _sectionNavigation$qu3;
-
       section.dataset.sectionId = key;
       const sectionNavigation = document.createElement("div");
       sectionNavigation.classList.add("section-navigation");
@@ -22474,18 +22462,18 @@ class DonationLightboxForm {
         <span class="section-count__current">${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
-      (_sectionNavigation$qu = sectionNavigation.querySelector(".section-navigation__previous")) === null || _sectionNavigation$qu === void 0 ? void 0 : _sectionNavigation$qu.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {
         e.preventDefault();
         this.scrollToSection(key - 1);
       });
-      (_sectionNavigation$qu2 = sectionNavigation.querySelector(".section-navigation__next")) === null || _sectionNavigation$qu2 === void 0 ? void 0 : _sectionNavigation$qu2.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__next")?.addEventListener("click", e => {
         e.preventDefault();
 
         if (this.validateForm(key)) {
           this.scrollToSection(key + 1);
         }
       });
-      (_sectionNavigation$qu3 = sectionNavigation.querySelector(".section-navigation__submit")) === null || _sectionNavigation$qu3 === void 0 ? void 0 : _sectionNavigation$qu3.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__submit")?.addEventListener("click", e => {
         e.preventDefault(); // Validate the entire form again
 
         if (this.validateForm()) {
