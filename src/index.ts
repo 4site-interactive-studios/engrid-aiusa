@@ -4,14 +4,14 @@ import {
   DonationAmount,
   DonationFrequency,
 } from "@4site/engrid-common"; // Uses ENGrid via NPM
-import { MonthlyAmounts } from "./scripts/monthly-amounts";
-import MultistepForm from "./scripts/multistep-form";
 // import {
 //   Options,
 //   App,
 //   DonationAmount,
 //   DonationFrequency,
 // } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+import { MonthlyAmounts } from "./scripts/monthly-amounts";
+import MultistepForm from "./scripts/multistep-form";
 import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
