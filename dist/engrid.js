@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 2, 2024 @ 14:47:55 ET
+ *  Date: Tuesday, July 23, 2024 @ 13:09:24 ET
  *  By: fernando
  *  ENGrid styles: v0.18.17
  *  ENGrid scripts: v0.18.17
@@ -22255,7 +22255,10 @@ if (isSafari) {
 smoothscroll_default().polyfill();
 class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
-    if (!this.isIframe()) return; // Each EN Row is a Section
+    if (!this.isIframe() || !["premiumgift", "donation"].includes(pageJson.pageType)) {
+      return;
+    } // Each EN Row is a Section
+
 
     this.sections = document.querySelectorAll("form.en__component > .en__component");
     this.amount = DonationAmount;
