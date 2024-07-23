@@ -6,7 +6,12 @@ import smoothscroll from "smoothscroll-polyfill";
 smoothscroll.polyfill();
 export default class DonationLightboxForm {
   constructor(DonationAmount, DonationFrequency) {
-    if (!this.isIframe()) return;
+    if (
+      !this.isIframe() ||
+      !["premiumgift", "donation"].includes(pageJson.pageType)
+    ) {
+      return;
+    }
     // Each EN Row is a Section
     this.sections = document.querySelectorAll(
       "form.en__component > .en__component"
