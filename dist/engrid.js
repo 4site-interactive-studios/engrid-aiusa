@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 23, 2024 @ 06:49:54 ET
- *  By: michael
- *  ENGrid styles: v0.18.1
- *  ENGrid scripts: v0.18.4
+ *  Date: Tuesday, July 23, 2024 @ 13:10:06 ET
+ *  By: fernando
+ *  ENGrid styles: v0.18.18
+ *  ENGrid scripts: v0.18.18
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11238,6 +11238,7 @@ const UpsellOptionsDefaults = {
     annual: false,
     disablePaymentMethods: [],
     skipUpsell: false,
+    conversionField: "",
 };
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/translate-options.js
@@ -12172,14 +12173,20 @@ class engrid_ENGrid {
     static setPaymentType(paymentType) {
         const enFieldPaymentType = engrid_ENGrid.getField("transaction.paymenttype");
         if (enFieldPaymentType) {
-            const paymentTypeOption = Array.from(enFieldPaymentType.options).find((option) => option.value.toLowerCase() === paymentType.toLowerCase());
+            const paymentTypeOption = Array.from(enFieldPaymentType.options).find((option) => paymentType.toLowerCase() === "card"
+                ? ["card", "visa", "vi"].includes(option.value.toLowerCase())
+                : paymentType.toLowerCase() === option.value.toLowerCase());
             if (paymentTypeOption) {
                 paymentTypeOption.selected = true;
+                enFieldPaymentType.value = paymentTypeOption.value;
             }
             else {
                 enFieldPaymentType.value = paymentType;
             }
-            const event = new Event("change");
+            const event = new Event("change", {
+                bubbles: true,
+                cancelable: true,
+            });
             enFieldPaymentType.dispatchEvent(event);
         }
     }
@@ -12515,6 +12522,12 @@ class App extends engrid_ENGrid {
         // Add Options to window
         window.EngridOptions = this.options;
         this._dataLayer = DataLayer.getInstance();
+        // If there's a ?pbedit query string, redirect to the page builder to edit on EN
+        if (engrid_ENGrid.getUrlParameter("pbedit") === true ||
+            engrid_ENGrid.getUrlParameter("pbedit") === "true") {
+            window.location.href = `https://${engrid_ENGrid.getDataCenter()}.engagingnetworks.app/index.html#pages/${engrid_ENGrid.getPageID()}/edit`;
+            return;
+        }
         if (loader.reload())
             return;
         // Turn Debug ON if you use local assets
@@ -12550,6 +12563,12 @@ class App extends engrid_ENGrid {
             this.options = Object.assign(Object.assign({}, this.options), window.EngridPageOptions);
             // Add Options to window
             window.EngridOptions = this.options;
+        }
+        // If there's no pageJson.pageType, add a big red warning to the console
+        if (!engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
+            window.setTimeout(() => {
+                console.log("%c ⛔️ pageJson.pageType NOT FOUND - Go to the Account Settings and Expose the Transaction Details %s", "background-color: red; color: white; font-size: 22px; font-weight: bold;", "https://knowledge.engagingnetworks.net/datareports/expose-transaction-details-pagejson");
+            }, 2000);
         }
         if (this.options.Debug || App.getUrlParameter("debug") == "true")
             // Enable debug if available is the first thing
@@ -12622,6 +12641,7 @@ class App extends engrid_ENGrid {
             this.logger.success("Validation Passed");
             return true;
         };
+        new DataAttributes();
         // Country Redirect
         new CountryRedirect();
         // iFrame Logic
@@ -12650,7 +12670,7 @@ class App extends engrid_ENGrid {
         // about 20% of the time and we get a race condition if the client is also using the SwapAmounts feature
         window.setTimeout(() => {
             this._frequency.load();
-        }, 150);
+        }, 1000);
         // Fast Form Fill
         new FastFormFill();
         // Currency Related Components
@@ -12746,7 +12766,6 @@ class App extends engrid_ENGrid {
             new Plaid();
         // Give By Select
         new GiveBySelect();
-        new DataAttributes();
         //Exit Intent Lightbox
         new ExitIntentLightbox();
         new UrlParamsToBodyAttrs();
@@ -12757,6 +12776,9 @@ class App extends engrid_ENGrid {
         new VGS();
         new WelcomeBack();
         new EcardToTarget();
+        new UsOnlyForm();
+        new ThankYouPageConditionalContent();
+        new EmbeddedEcard();
         //Debug panel
         let showDebugPanel = this.options.Debug;
         try {
@@ -13028,7 +13050,7 @@ class ApplePay {
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/a11y.js
 // a11y means accessibility
-// This Component is supposed to be used as a helper for Arria Attributes & Other Accessibility Features
+// This Component is supposed to be used as a helper for Aria Attributes & Other Accessibility Features
 class A11y {
     constructor() {
         this.addRequired();
@@ -13075,6 +13097,8 @@ class A11y {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/capitalize-fields.js
+// CapitalizeFields is a class that capitalizes the first letter of the fields passed to it.
+// It subscribes to the onSubmit event of the EnForm class and capitalizes the fields on submit.
 
 
 class CapitalizeFields {
@@ -13237,7 +13261,8 @@ class Ecard {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/click-to-expand.js
-// Depends on engrid-click-to-expand.scss to work
+// This class is used to expand content when a user clicks on a div with the class "click-to-expand".
+// The content is shortened by default and will expand when clicked.
 
 // Works when the user has adds ".click-to-expand" as a class to any field
 class ClickToExpand {
@@ -14019,6 +14044,7 @@ class UpsellLightbox {
         this._fees = ProcessingFees.getInstance();
         this._frequency = DonationFrequency.getInstance();
         this._dataLayer = DataLayer.getInstance();
+        this._suggestAmount = 0;
         this.logger = new EngridLogger("UpsellLightbox", "black", "pink", "🪟");
         let options = "EngridUpsell" in window ? window.EngridUpsell : {};
         this.options = Object.assign(Object.assign({}, UpsellOptionsDefaults), options);
@@ -14131,7 +14157,6 @@ class UpsellLightbox {
     }
     // Should we run the script?
     shouldRun() {
-        // const hideModal = cookie.get("hideUpsell"); // Get cookie
         // if it's a first page of a Donation page
         return (
         // !hideModal &&
@@ -14203,6 +14228,7 @@ class UpsellLightbox {
     shouldOpen() {
         const upsellAmount = this.getUpsellAmount();
         const paymenttype = engrid_ENGrid.getFieldValue("transaction.paymenttype") || "";
+        this._suggestAmount = upsellAmount;
         // If frequency is not onetime or
         // the modal is already opened or
         // there's no suggestion for this donation amount,
@@ -14297,22 +14323,24 @@ class UpsellLightbox {
             this._dataLayer.addEndOfGiftProcessVariable("ENGRID_UPSELL", true);
             this._dataLayer.addEndOfGiftProcessVariable("ENGRID_UPSELL_ORIGINAL_AMOUNT", originalAmount);
             this._dataLayer.addEndOfGiftProcessVariable("ENGRID_UPSELL_DONATION_FREQUENCY", "MONTHLY");
+            this.renderConversionField("upsellSuccess", "onetime", originalAmount, "monthly", this._suggestAmount, "monthly", upsoldAmount);
         }
         else {
             this.setOriginalAmount("");
             window.sessionStorage.removeItem("original");
             this._dataLayer.addEndOfGiftProcessVariable("ENGRID_UPSELL", false);
             this._dataLayer.addEndOfGiftProcessVariable("ENGRID_UPSELL_DONATION_FREQUENCY", "ONE-TIME");
+            this.renderConversionField("upsellFail", this._frequency.frequency, this._amount.amount, "monthly", this._suggestAmount, this._frequency.frequency, this._amount.amount);
         }
         this._form.submitForm();
     }
-    // Close the lightbox (no cookies)
+    // Close the lightbox
     close(e) {
         e.preventDefault();
-        // cookie.set("hideUpsell", "1", { expires: 1 }); // Create one day cookie
         this.overlay.classList.add("is-hidden");
         engrid_ENGrid.setBodyData("has-lightbox", false);
         if (this.options.submitOnClose) {
+            this.renderConversionField("upsellFail", this._frequency.frequency, this._amount.amount, "monthly", this._suggestAmount, this._frequency.frequency, this._amount.amount);
             this._form.submitForm();
         }
         else {
@@ -14348,6 +14376,26 @@ class UpsellLightbox {
             }
         }
     }
+    renderConversionField(event, // The event that triggered the conversion
+    freq, // The frequency of the donation (onetime, monthly, annual)
+    amt, // The original amount of the donation (before the upsell)
+    sugFreq, // The suggested frequency of the upsell (monthly)
+    sugAmt, // The suggested amount of the upsell
+    subFreq, // The submitted frequency of the upsell (onetime, monthly, annual)
+    subAmt // The submitted amount of the upsell
+    ) {
+        if (this.options.conversionField === "")
+            return;
+        const conversionField = document.querySelector("input[name='" + this.options.conversionField + "']") ||
+            engrid_ENGrid.createHiddenInput(this.options.conversionField);
+        if (!conversionField) {
+            this.logger.error("Could not find or create the conversion field");
+            return;
+        }
+        const conversionValue = `event:${event},freq:${freq},amt:${amt},sugFreq:${sugFreq},sugAmt:${sugAmt},subFreq:${subFreq},subAmt:${subAmt}`;
+        conversionField.value = conversionValue;
+        this.logger.log(`Conversion Field ${event}`, conversionValue);
+    }
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/show-hide-radio-checkboxes.js
@@ -14359,6 +14407,7 @@ class ShowHideRadioCheckboxes {
         this.classes = classes;
         this.createDataAttributes();
         this.hideAll();
+        this.storeSessionState();
         for (let i = 0; i < this.elements.length; i++) {
             let element = this.elements[i];
             if (element.checked) {
@@ -14367,6 +14416,7 @@ class ShowHideRadioCheckboxes {
             element.addEventListener("change", (e) => {
                 this.hideAll();
                 this.show(element);
+                this.storeSessionState();
             });
         }
     }
@@ -14459,6 +14509,55 @@ class ShowHideRadioCheckboxes {
                 }
             });
         }
+    }
+    getSessionState() {
+        var _a;
+        try {
+            const plainState = (_a = window.sessionStorage.getItem(`engrid_ShowHideRadioCheckboxesState`)) !== null && _a !== void 0 ? _a : "";
+            return JSON.parse(plainState);
+        }
+        catch (err) {
+            return [];
+        }
+    }
+    storeSessionState() {
+        const state = this.getSessionState();
+        [...this.elements].forEach((element) => {
+            var _a, _b;
+            if (!(element instanceof HTMLInputElement))
+                return;
+            if (element.type == "radio" && element.checked) {
+                //remove other items that have the same "class" property
+                state.forEach((item, index) => {
+                    if (item.class == this.classes) {
+                        state.splice(index, 1);
+                    }
+                });
+                //add the current item, with the currently active value
+                state.push({
+                    page: engrid_ENGrid.getPageID(),
+                    class: this.classes,
+                    value: element.value,
+                });
+                this.logger.log("storing radio state", state[state.length - 1]);
+            }
+            if (element.type == "checkbox") {
+                //remove other items that have the same "class" property
+                state.forEach((item, index) => {
+                    if (item.class == this.classes) {
+                        state.splice(index, 1);
+                    }
+                });
+                //add the current item, with the first checked value or "N" if none are checked
+                state.push({
+                    page: engrid_ENGrid.getPageID(),
+                    class: this.classes,
+                    value: (_b = (_a = [...this.elements].find((el) => el.checked)) === null || _a === void 0 ? void 0 : _a.value) !== null && _b !== void 0 ? _b : "N", // First checked value or "N" if none
+                });
+                this.logger.log("storing checkbox state", state[state.length - 1]);
+            }
+        });
+        window.sessionStorage.setItem(`engrid_ShowHideRadioCheckboxesState`, JSON.stringify(state));
     }
 }
 
@@ -14556,6 +14655,10 @@ class TranslateFields {
         this.countriesSelect = document.querySelectorAll('select[name="supporter.country"], select[name="transaction.shipcountry"], select[name="supporter.billingCountry"], select[name="transaction.infcountry"]');
         let options = "EngridTranslate" in window ? window.EngridTranslate : {};
         this.options = TranslateOptionsDefaults;
+        // Don't run this for US-only forms.
+        if (document.querySelector(".en__component--formblock.us-only-form .en__field--country")) {
+            return;
+        }
         if (options) {
             for (let key in options) {
                 this.options[key] = this.options[key]
@@ -15996,9 +16099,10 @@ class RememberMe {
         }
     }
     insertClearRememberMeLink() {
-        if (!document.getElementById("clear-autofill-data")) {
+        let clearRememberMeField = document.getElementById("clear-autofill-data");
+        if (!clearRememberMeField) {
             const clearAutofillLabel = "clear autofill";
-            const clearRememberMeField = document.createElement("a");
+            clearRememberMeField = document.createElement("a");
             clearRememberMeField.setAttribute("id", "clear-autofill-data");
             clearRememberMeField.classList.add("label-tooltip");
             clearRememberMeField.setAttribute("style", "cursor: pointer;");
@@ -16011,27 +16115,27 @@ class RememberMe {
                 else {
                     targetField.prepend(clearRememberMeField);
                 }
-                clearRememberMeField.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    this.clearFields([
-                        "supporter.country" /*, 'supporter.emailAddress'*/,
-                    ]);
-                    if (this.useRemote()) {
-                        this.clearCookieOnRemote();
-                    }
-                    else {
-                        this.clearCookie();
-                    }
-                    let clearAutofillLink = document.getElementById("clear-autofill-data");
-                    if (clearAutofillLink) {
-                        clearAutofillLink.style.display = "none";
-                    }
-                    this.rememberMeOptIn = false;
-                    this._events.dispatchClear();
-                });
             }
         }
+        clearRememberMeField.addEventListener("click", (e) => {
+            e.preventDefault();
+            this.clearFields(["supporter.country" /*, 'supporter.emailAddress'*/]);
+            if (this.useRemote()) {
+                this.clearCookieOnRemote();
+            }
+            else {
+                this.clearCookie();
+            }
+            let clearAutofillLink = document.getElementById("clear-autofill-data");
+            if (clearAutofillLink) {
+                clearAutofillLink.style.display = "none";
+            }
+            this.rememberMeOptIn = false;
+            this._events.dispatchClear();
+            window.dispatchEvent(new CustomEvent("RememberMe_Cleared"));
+        });
         this._events.dispatchLoad(true);
+        window.dispatchEvent(new CustomEvent("RememberMe_Loaded", { detail: { withData: true } }));
     }
     getElementByFirstSelector(selectorsString) {
         // iterate through the selectors until we find one that exists
@@ -16097,6 +16201,7 @@ class RememberMe {
             rememberMeOptInField.checked = true;
         }
         this._events.dispatchLoad(false);
+        window.dispatchEvent(new CustomEvent("RememberMe_Loaded", { detail: { withData: false } }));
     }
     useRemote() {
         return (!!this.remoteUrl &&
@@ -16661,7 +16766,27 @@ class Ticker {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-layer.js
-// This class automatically select other radio input when an amount is entered into it.
+// The DataLayer class is a singleton class that is responsible for managing the data layer events.
+// It listens to the EnForm onSubmit event and the RememberMe onLoad event.
+// It also listens to the blur, change, and submit events of the form fields.
+// It adds the following events to the data layer:
+// - EN_PAGE_VIEW
+// - EN_SUCCESSFUL_DONATION
+// - EN_PAGEJSON_{property}
+// - EN_SUBMISSION_SUCCESS_{pageType}
+// - EN_URLPARAM_{key}-{value}
+// - EN_RECURRING_FREQUENCIES
+// - EN_FASTFORMFILL_PERSONALINFO_SUCCESS
+// - EN_FASTFORMFILL_PERSONALINFO_PARTIALSUCCESS
+// - EN_FASTFORMFILL_PERSONALINFO_FAILURE
+// - EN_FASTFORMFILL_ADDRESS_SUCCESS
+// - EN_FASTFORMFILL_ADDRESS_PARTIALSUCCESS
+// - EN_FASTFORMFILL_ADDRESS_FAILURE
+// - EN_FASTFORMFILL_ALL_SUCCESS
+// - EN_FASTFORMFILL_ALL_FAILURE
+// - EN_SUBMISSION_WITH_EMAIL_OPTIN
+// - EN_SUBMISSION_WITHOUT_EMAIL_OPTIN
+// - EN_FORM_VALUE_UPDATED
 
 class DataLayer {
     constructor() {
@@ -16955,6 +17080,13 @@ class DataLayer {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-replace.js
+// This script is used to replace merge tags in the EN Blocks of the page.
+// It searches for HTML elements containing the data to be replaced and replaces it.
+// The data to be replaced is passed as URL parameters, example: ?engrid_data[key]=value.
+// The merge tag, if found, is replaced with the value from the URL parameter.
+// If no value is found, the default value is used.
+// The default value is the value inside the merge tag, example: {engrid_data~key~default}.
+// If no default value is set, an empty string is used.
 
 class DataReplace {
     constructor() {
@@ -16966,6 +17098,9 @@ class DataReplace {
         this.logger.log("Elements Found:", this.enElements);
         this.replaceAll();
     }
+    /**
+     * Searches for HTML elements containing the data to be replaced.
+     */
     searchElements() {
         const enElements = document.querySelectorAll(`
       .en__component--copyblock,
@@ -16981,9 +17116,16 @@ class DataReplace {
             });
         }
     }
+    /**
+     * Checks if there are elements to be replaced.
+     * @returns True if there are elements to be replaced, false otherwise.
+     */
     shouldRun() {
         return this.enElements.length > 0;
     }
+    /**
+     * Replaces all occurrences of data in the HTML elements.
+     */
     replaceAll() {
         const regEx = /{engrid_data~\[([\w-]+)\]~?\[?(.+?)?\]?}/g;
         this.enElements.forEach((item) => {
@@ -16994,6 +17136,13 @@ class DataReplace {
         });
         engrid_ENGrid.setBodyData("merge-tags-processed", "");
     }
+    /**
+     * Replaces a specific data item in the given HTML element.
+     * @param where The HTML element where the replacement should occur.
+     * @param item The matched data item.
+     * @param key The key of the data item.
+     * @param defaultValue The default value to use if the data item is not found.
+     */
     replaceItem(where, [item, key, defaultValue]) {
         var _a;
         let value = (_a = engrid_ENGrid.getUrlParameter(`engrid_data[${key}]`)) !== null && _a !== void 0 ? _a : defaultValue;
@@ -17009,6 +17158,12 @@ class DataReplace {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/data-hide.js
+// Hides elements based on URL arguments.
+//
+// The DataHide class is used to hide elements based on URL arguments.
+// It retrieves the elements to hide from the URL arguments and hides them.
+// If no elements are found, the constructor returns early.
+// Otherwise, it logs the found elements and hides them.
 
 class DataHide {
     constructor() {
@@ -17023,6 +17178,9 @@ class DataHide {
         this.logger.log("Elements Found:", this.enElements);
         this.hideAll();
     }
+    /**
+     * Hides all the elements based on the URL arguments.
+     */
     hideAll() {
         this.enElements.forEach((element) => {
             const item = Object.keys(element)[0];
@@ -17031,6 +17189,11 @@ class DataHide {
         });
         return;
     }
+    /**
+     * Hides a specific element based on the item and type.
+     * @param item - The item to hide (ID or class name).
+     * @param type - The type of the item (either "id" or "class").
+     */
     hideItem(item, type) {
         const regEx = /engrid_hide\[([\w-]+)\]/g;
         const itemData = [...item.matchAll(regEx)].map((match) => match[1])[0];
@@ -19617,6 +19780,7 @@ class DigitalWallets {
             engrid_ENGrid.setBodyData("payment-type-option-google-pay", "false");
             engrid_ENGrid.setBodyData("payment-type-option-paypal-one-touch", "false");
             engrid_ENGrid.setBodyData("payment-type-option-venmo", "false");
+            engrid_ENGrid.setBodyData("payment-type-option-daf", "false");
             return;
         }
         // Add giveBySelect classes to the separate wallet containers
@@ -19633,6 +19797,11 @@ class DigitalWallets {
             paypalTouchButtons.classList.add("showif-paypaltouch-selected");
             // paypalTouchButtons.style.display = "none";
         }
+        const donorAdvisedFundButtonContainer = document.getElementById("en__digitalWallet__chariot__container");
+        if (donorAdvisedFundButtonContainer) {
+            donorAdvisedFundButtonContainer.classList.add("giveBySelect-daf");
+            donorAdvisedFundButtonContainer.classList.add("showif-daf-selected");
+        }
         /**
          * Check for presence of elements that indicated Stripe digital wallets
          * (Google Pay, Apple Pay) have loaded, and add functionality for them.
@@ -19648,6 +19817,11 @@ class DigitalWallets {
             const stripeContainer = document.getElementById("en__digitalWallet__stripeButtons__container");
             if (stripeContainer) {
                 this.checkForWalletsBeingAdded(stripeContainer, "stripe");
+            }
+            // If the default payment type is Stripe Digital Wallet and the page doesnt support it, set the payment type to Card
+            const paymentType = engrid_ENGrid.getPaymentType();
+            if (paymentType.toLowerCase() === "stripedigitalwallet") {
+                engrid_ENGrid.setPaymentType("card");
             }
         }
         /**
@@ -19667,6 +19841,20 @@ class DigitalWallets {
                 this.checkForWalletsBeingAdded(paypalContainer, "paypalTouch");
             }
         }
+        /**
+         * Check for presence of elements that indicate DAF is present, and add functionality for it.
+         * If it hasn't loaded yet, set up a Mutation Observer to check for when it does.
+         */
+        if (document.querySelector("#en__digitalWallet__chariot__container > *")) {
+            this.addDAF();
+        }
+        else {
+            engrid_ENGrid.setBodyData("payment-type-option-daf", "false");
+            const donorAdvisedFundButtonContainer = document.getElementById("en__digitalWallet__chariot__container");
+            if (donorAdvisedFundButtonContainer) {
+                this.checkForWalletsBeingAdded(donorAdvisedFundButtonContainer, "daf");
+            }
+        }
     }
     addStripeDigitalWallets() {
         this.addOptionToPaymentTypeField("stripedigitalwallet", "GooglePay / ApplePay");
@@ -19678,6 +19866,10 @@ class DigitalWallets {
         engrid_ENGrid.setBodyData("payment-type-option-paypal-one-touch", "true");
         engrid_ENGrid.setBodyData("payment-type-option-venmo", "true");
     }
+    addDAF() {
+        this.addOptionToPaymentTypeField("daf", "Donor Advised Fund");
+        engrid_ENGrid.setBodyData("payment-type-option-daf", "true");
+    }
     addOptionToPaymentTypeField(value, label) {
         const paymentTypeField = document.querySelector('[name="transaction.paymenttype"]');
         if (paymentTypeField &&
@@ -19686,6 +19878,17 @@ class DigitalWallets {
             walletOption.value = value;
             walletOption.innerText = label;
             paymentTypeField.appendChild(walletOption);
+        }
+        // If this payment type is set as the default on GiveBySelect, set the payment type to this value
+        // We need to do this here because the digital wallets are sometimes slow to load
+        const giveBySelect = document.querySelector('input[name="transaction.giveBySelect"][value="' + value + '"]');
+        if (giveBySelect && giveBySelect.dataset.default === "true") {
+            giveBySelect.checked = true;
+            const event = new Event("change", {
+                bubbles: true,
+                cancelable: true,
+            });
+            giveBySelect.dispatchEvent(event);
         }
     }
     checkForWalletsBeingAdded(node, walletType) {
@@ -19698,6 +19901,9 @@ class DigitalWallets {
                     }
                     else if (walletType === "paypalTouch") {
                         this.addPaypalTouchDigitalWallets();
+                    }
+                    else if (walletType === "daf") {
+                        this.addDAF();
                     }
                     //Disconnect observer to prevent multiple additions
                     observer.disconnect();
@@ -20044,17 +20250,14 @@ class GiveBySelect {
         this.logger = new EngridLogger("GiveBySelect", "#FFF", "#333", "🐇");
         this.transactionGiveBySelect = document.getElementsByName("transaction.giveBySelect");
         this.paymentTypeField = document.querySelector("select[name='transaction.paymenttype']");
+        this._frequency = DonationFrequency.getInstance();
         if (!this.transactionGiveBySelect)
             return;
+        this._frequency.onFrequencyChange.subscribe(() => this.checkPaymentTypeVisibility());
         this.transactionGiveBySelect.forEach((giveBySelect) => {
             giveBySelect.addEventListener("change", () => {
                 this.logger.log("Changed to " + giveBySelect.value);
-                if (giveBySelect.value.toLowerCase() === "card") {
-                    this.setCardPaymentType();
-                }
-                else {
-                    engrid_ENGrid.setPaymentType(giveBySelect.value);
-                }
+                engrid_ENGrid.setPaymentType(giveBySelect.value);
             });
         });
         // Set the initial value of giveBySelect to the transaction.paymenttype field
@@ -20086,25 +20289,41 @@ class GiveBySelect {
             });
         }
     }
-    setCardPaymentType() {
-        if (!this.paymentTypeField)
-            return;
-        this.logger.log("Change Payment Type to Card or Visa");
-        // Loop through the payment type field options and set the visa card as the default
-        for (let i = 0; i < this.paymentTypeField.options.length; i++) {
-            if (this.paymentTypeField.options[i].value.toLowerCase() === "card" ||
-                this.paymentTypeField.options[i].value.toLowerCase() === "visa" ||
-                this.paymentTypeField.options[i].value.toLowerCase() === "vi") {
-                this.paymentTypeField.selectedIndex = i;
-                // Trigger the change event
-                const event = new Event("change", {
-                    bubbles: true,
-                    cancelable: true,
-                });
-                this.paymentTypeField.dispatchEvent(event);
-                break;
+    // Returns true if the selected payment type is visible
+    // Returns false if the selected payment type is not visible
+    isSelectedPaymentVisible() {
+        let visible = true;
+        this.transactionGiveBySelect.forEach((giveBySelect) => {
+            const container = giveBySelect.parentElement;
+            if (giveBySelect.checked && !engrid_ENGrid.isVisible(container)) {
+                this.logger.log(`Selected Payment Type is not visible: ${giveBySelect.value}`);
+                visible = false;
             }
-        }
+        });
+        return visible;
+    }
+    // Checks if the selected payment type is visible
+    // If the selected payment type is not visible, it sets the payment type to the first visible option
+    checkPaymentTypeVisibility() {
+        window.setTimeout(() => {
+            var _a;
+            if (!this.isSelectedPaymentVisible()) {
+                this.logger.log("Setting payment type to first visible option");
+                const firstVisible = Array.from(this.transactionGiveBySelect).find((giveBySelect) => {
+                    const container = giveBySelect.parentElement;
+                    return engrid_ENGrid.isVisible(container);
+                });
+                if (firstVisible) {
+                    this.logger.log("Setting payment type to ", firstVisible.value);
+                    const container = firstVisible.parentElement;
+                    (_a = container.querySelector("label")) === null || _a === void 0 ? void 0 : _a.click();
+                    engrid_ENGrid.setPaymentType(firstVisible.value);
+                }
+            }
+            else {
+                this.logger.log("Selected Payment Type is visible");
+            }
+        }, 300);
     }
 }
 
@@ -20376,9 +20595,9 @@ class FastFormFill {
         }
     }
     run() {
-        const fastPersonalDetailsFormBlock = document.querySelector(".en__component--formblock.fast-personal-details");
-        if (fastPersonalDetailsFormBlock) {
-            if (FastFormFill.allMandatoryInputsAreFilled(fastPersonalDetailsFormBlock)) {
+        const fastPersonalDetailsFormBlocks = document.querySelectorAll(".en__component--formblock.fast-personal-details");
+        if (fastPersonalDetailsFormBlocks.length > 0) {
+            if ([...fastPersonalDetailsFormBlocks].every((formBlock) => FastFormFill.allMandatoryInputsAreFilled(formBlock))) {
                 this.logger.log("Personal details - All mandatory inputs are filled");
                 engrid_ENGrid.setBodyData("hide-fast-personal-details", "true");
             }
@@ -20387,9 +20606,9 @@ class FastFormFill {
                 engrid_ENGrid.setBodyData("hide-fast-personal-details", "false");
             }
         }
-        const fastAddressDetailsFormBlock = document.querySelector(".en__component--formblock.fast-address-details");
-        if (fastAddressDetailsFormBlock) {
-            if (FastFormFill.allMandatoryInputsAreFilled(fastAddressDetailsFormBlock)) {
+        const fastAddressDetailsFormBlocks = document.querySelectorAll(".en__component--formblock.fast-address-details");
+        if (fastAddressDetailsFormBlocks.length > 0) {
+            if ([...fastAddressDetailsFormBlocks].every((formBlock) => FastFormFill.allMandatoryInputsAreFilled(formBlock))) {
                 this.logger.log("Address details - All mandatory inputs are filled");
                 engrid_ENGrid.setBodyData("hide-fast-address-details", "true");
             }
@@ -20904,23 +21123,22 @@ class VGS {
                 validations: ["required", "validCardSecurityCode"],
                 css: styles,
             },
+            "transaction.ccexpire": {
+                placeholder: "MM/YY",
+                autoComplete: "cc-exp",
+                validations: ["required", "validCardExpirationDate"],
+                css: styles,
+                yearLength: 2,
+            },
         };
         // Deep merge the default options with the options set in the theme
         this.options = engrid_ENGrid.deepMerge(defaultOptions, options);
         this.logger.log("Options", this.options);
     }
     setPaymentType() {
-        // Because the VGS iFrame Communication doesn't change the value of the payment type field, we have to set it to Visa by default
-        if (this.paymentTypeField) {
-            // Loop through the payment type field options and set the visa card as the default
-            for (let i = 0; i < this.paymentTypeField.options.length; i++) {
-                if (this.paymentTypeField.options[i].value.toLowerCase() === "card" ||
-                    this.paymentTypeField.options[i].value.toLowerCase() === "visa" ||
-                    this.paymentTypeField.options[i].value.toLowerCase() === "vi") {
-                    this.paymentTypeField.selectedIndex = i;
-                    break;
-                }
-            }
+        // If there's no default payment type, set the default to card
+        if (engrid_ENGrid.getPaymentType() === "") {
+            engrid_ENGrid.setPaymentType("card");
         }
     }
     dumpGlobalVar() {
@@ -21265,11 +21483,315 @@ class EcardToTarget {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/interfaces/embedded-ecard-options.js
+const EmbeddedEcardOptionsDefaults = {
+    pageUrl: "",
+    headerText: "Send an Ecard notification of your gift",
+    checkboxText: "Yes, I would like to send an ecard to announce my gift.",
+    anchor: ".en__field--donationAmt",
+    placement: "afterend",
+};
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/embedded-ecard.js
+/**
+ * This class handles adding a checkbox to a form that, when checked, will display an embedded ecard form.
+ * The embedded ecard form is hosted on a separate page and is displayed in an iframe.
+ * The form data is saved in session storage and is submitted when the thank you page is loaded.
+ * Options can set on the page via window.EngridEmbeddedEcard.
+ */
+
+
+class EmbeddedEcard {
+    constructor() {
+        this.logger = new EngridLogger("Embedded Ecard", "#D95D39", "#0E1428", "📧");
+        this.options = EmbeddedEcardOptionsDefaults;
+        this._form = EnForm.getInstance();
+        // For the page hosting the embedded ecard
+        if (this.onHostPage()) {
+            // Clean up session variables if the page is reloaded, and it isn't a submission failure
+            const submissionFailed = !!(engrid_ENGrid.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "checkSubmissionFailed") &&
+                window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed());
+            if (!submissionFailed) {
+                sessionStorage.removeItem("engrid-embedded-ecard");
+                sessionStorage.removeItem("engrid-send-embedded-ecard");
+            }
+            this.options = Object.assign(Object.assign({}, EmbeddedEcardOptionsDefaults), window.EngridEmbeddedEcard);
+            const pageUrl = new URL(this.options.pageUrl);
+            pageUrl.searchParams.append("data-engrid-embedded-ecard", "true");
+            this.options.pageUrl = pageUrl.href;
+            this.logger.log("Running Embedded Ecard component", this.options);
+            this.embedEcard();
+            this.addEventListeners();
+        }
+        // For the thank you page - after the host page form has been submitted
+        // Only runs if eCard was selected on the main page
+        if (this.onPostActionPage()) {
+            engrid_ENGrid.setBodyData("embedded-ecard-sent", "true");
+            this.submitEcard();
+        }
+        // For the page that is embedded
+        if (this.onEmbeddedEcardPage()) {
+            this.setupEmbeddedPage();
+        }
+    }
+    onHostPage() {
+        return (window.hasOwnProperty("EngridEmbeddedEcard") &&
+            typeof window.EngridEmbeddedEcard === "object" &&
+            window.EngridEmbeddedEcard.hasOwnProperty("pageUrl") &&
+            window.EngridEmbeddedEcard.pageUrl !== "");
+    }
+    onEmbeddedEcardPage() {
+        return engrid_ENGrid.getPageType() === "ECARD" && engrid_ENGrid.hasBodyData("embedded");
+    }
+    onPostActionPage() {
+        return (sessionStorage.getItem("engrid-embedded-ecard") !== null &&
+            sessionStorage.getItem("engrid-send-embedded-ecard") !== null &&
+            !this.onHostPage() &&
+            !this.onEmbeddedEcardPage());
+    }
+    embedEcard() {
+        var _a;
+        const container = document.createElement("div");
+        container.classList.add("engrid--embedded-ecard");
+        const heading = document.createElement("h3");
+        heading.textContent = this.options.headerText;
+        heading.classList.add("engrid--embedded-ecard-heading");
+        container.appendChild(heading);
+        const checkbox = document.createElement("div");
+        checkbox.classList.add("pseudo-en-field", "en__field", "en__field--checkbox", "en__field--000000", "en__field--embedded-ecard");
+        checkbox.innerHTML = `
+      <div class="en__field__element en__field__element--checkbox">
+        <div class="en__field__item">
+          <input class="en__field__input en__field__input--checkbox" id="en__field_embedded-ecard" name="engrid.embedded-ecard" type="checkbox" value="Y">
+          <label class="en__field__label en__field__label--item" for="en__field_embedded-ecard">${this.options.checkboxText}</label>
+        </div>
+      </div>`;
+        container.appendChild(checkbox);
+        container.appendChild(this.createIframe(this.options.pageUrl));
+        (_a = document
+            .querySelector(this.options.anchor)) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement(this.options.placement, container);
+    }
+    createIframe(url) {
+        const iframe = document.createElement("iframe");
+        iframe.src = url;
+        iframe.setAttribute("src", url);
+        iframe.setAttribute("width", "100%");
+        iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("frameborder", "0");
+        iframe.classList.add("engrid-iframe", "engrid-iframe--embedded-ecard");
+        iframe.style.display = "none";
+        return iframe;
+    }
+    addEventListeners() {
+        const iframe = document.querySelector(".engrid-iframe--embedded-ecard");
+        const sendEcardCheckbox = document.getElementById("en__field_embedded-ecard");
+        // Initialize based on checkbox's default state
+        if (sendEcardCheckbox === null || sendEcardCheckbox === void 0 ? void 0 : sendEcardCheckbox.checked) {
+            iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: block");
+            sessionStorage.setItem("engrid-send-embedded-ecard", "true");
+        }
+        else {
+            iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: none");
+            sessionStorage.removeItem("engrid-send-embedded-ecard");
+        }
+        sendEcardCheckbox === null || sendEcardCheckbox === void 0 ? void 0 : sendEcardCheckbox.addEventListener("change", (e) => {
+            const checkbox = e.target;
+            if (checkbox === null || checkbox === void 0 ? void 0 : checkbox.checked) {
+                iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: block");
+                sessionStorage.setItem("engrid-send-embedded-ecard", "true");
+            }
+            else {
+                iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: none");
+                sessionStorage.removeItem("engrid-send-embedded-ecard");
+            }
+        });
+    }
+    setupEmbeddedPage() {
+        let ecardVariant = document.querySelector("[name='friend.ecard']");
+        let ecardSendDate = document.querySelector("[name='ecard.schedule']");
+        let ecardMessage = document.querySelector("[name='transaction.comments']");
+        let recipientName = document.querySelector(".en__ecardrecipients__name > input");
+        let recipientEmail = document.querySelector(".en__ecardrecipients__email > input");
+        [
+            ecardVariant,
+            ecardSendDate,
+            ecardMessage,
+            recipientName,
+            recipientEmail,
+        ].forEach((el) => {
+            el.addEventListener("input", () => {
+                //add "chain" param to window.location.href if it doesnt have it
+                const pageUrl = new URL(window.location.href);
+                if (!pageUrl.searchParams.has("chain")) {
+                    pageUrl.searchParams.append("chain", "");
+                }
+                sessionStorage.setItem("engrid-embedded-ecard", JSON.stringify({
+                    pageUrl: pageUrl.href,
+                    formData: {
+                        ecardVariant: (ecardVariant === null || ecardVariant === void 0 ? void 0 : ecardVariant.value) || "",
+                        ecardSendDate: (ecardSendDate === null || ecardSendDate === void 0 ? void 0 : ecardSendDate.value) || "",
+                        ecardMessage: (ecardMessage === null || ecardMessage === void 0 ? void 0 : ecardMessage.value) || "",
+                        recipientName: (recipientName === null || recipientName === void 0 ? void 0 : recipientName.value) || "",
+                        recipientEmail: (recipientEmail === null || recipientEmail === void 0 ? void 0 : recipientEmail.value) || "",
+                    },
+                }));
+            });
+        });
+        document.querySelectorAll(".en__ecarditems__thumb").forEach((el) => {
+            // Making sure the session value is changed when this is clicked
+            el.addEventListener("click", () => {
+                ecardVariant.dispatchEvent(new Event("input"));
+            });
+        });
+        window.addEventListener("message", (e) => {
+            if (e.origin !== location.origin || !e.data.action)
+                return;
+            this.logger.log("Received post message", e.data);
+            switch (e.data.action) {
+                case "submit_form":
+                    let embeddedEcardData = JSON.parse(sessionStorage.getItem("engrid-embedded-ecard") || "{}");
+                    if (ecardVariant) {
+                        ecardVariant.value = embeddedEcardData.formData["ecardVariant"];
+                    }
+                    if (ecardSendDate) {
+                        ecardSendDate.value = embeddedEcardData.formData["ecardSendDate"];
+                    }
+                    if (ecardMessage) {
+                        ecardMessage.value = embeddedEcardData.formData["ecardMessage"];
+                    }
+                    recipientName.value = embeddedEcardData.formData["recipientName"];
+                    recipientEmail.value = embeddedEcardData.formData["recipientEmail"];
+                    const addRecipientButton = document.querySelector(".en__ecarditems__addrecipient");
+                    addRecipientButton === null || addRecipientButton === void 0 ? void 0 : addRecipientButton.click();
+                    const form = EnForm.getInstance();
+                    form.submitForm();
+                    sessionStorage.removeItem("engrid-embedded-ecard");
+                    sessionStorage.removeItem("engrid-send-embedded-ecard");
+                    break;
+                case "set_recipient":
+                    recipientName.value = e.data.name;
+                    recipientEmail.value = e.data.email;
+                    recipientName.dispatchEvent(new Event("input"));
+                    recipientEmail.dispatchEvent(new Event("input"));
+                    break;
+            }
+        });
+        this.sendPostMessage("parent", "ecard_form_ready");
+    }
+    submitEcard() {
+        var _a;
+        const embeddedEcardData = JSON.parse(sessionStorage.getItem("engrid-embedded-ecard") || "{}");
+        this.logger.log("Submitting ecard", embeddedEcardData);
+        const iframe = this.createIframe(embeddedEcardData.pageUrl);
+        (_a = document.querySelector(".body-main")) === null || _a === void 0 ? void 0 : _a.appendChild(iframe);
+        window.addEventListener("message", (e) => {
+            if (e.origin !== location.origin || !e.data.action)
+                return;
+            if (e.data.action === "ecard_form_ready") {
+                this.sendPostMessage(iframe, "submit_form");
+            }
+        });
+    }
+    sendPostMessage(target, action, data = {}) {
+        var _a;
+        const message = Object.assign({ action }, data);
+        if (target === "parent") {
+            window.parent.postMessage(message, location.origin);
+        }
+        else {
+            (_a = target.contentWindow) === null || _a === void 0 ? void 0 : _a.postMessage(message, location.origin);
+        }
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/us-only-form.js
+/*
+ * This class disables the country field and fixes the country to "United States"
+ */
+
+class UsOnlyForm {
+    constructor() {
+        if (!this.shouldRun())
+            return;
+        if (!document.querySelector(".en__field--country .en__field__notice")) {
+            engrid_ENGrid.addHtml('<div class="en__field__notice"><em>Note: This action is limited to U.S. addresses.</em></div>', ".us-only-form .en__field--country .en__field__element", "after");
+        }
+        const countrySelect = engrid_ENGrid.getField("supporter.country");
+        countrySelect.setAttribute("disabled", "disabled");
+        let countryValue = "United States";
+        if ([...countrySelect.options].some((o) => o.value === "US")) {
+            countryValue = "US";
+        }
+        else if ([...countrySelect.options].some((o) => o.value === "USA")) {
+            countryValue = "USA";
+        }
+        engrid_ENGrid.setFieldValue("supporter.country", countryValue);
+        engrid_ENGrid.createHiddenInput("supporter.country", countryValue);
+        countrySelect.addEventListener("change", () => {
+            countrySelect.value = countryValue;
+        });
+    }
+    shouldRun() {
+        return !!document.querySelector(".en__component--formblock.us-only-form .en__field--country");
+    }
+}
+
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/thank-you-page-conditional-content.js
+
+class ThankYouPageConditionalContent {
+    constructor() {
+        this.logger = new EngridLogger("ThankYouPageConditionalContent");
+        if (!this.shouldRun())
+            return;
+        this.applyShowHideRadioCheckboxesState();
+    }
+    getShowHideRadioCheckboxesState() {
+        var _a;
+        try {
+            const plainState = (_a = window.sessionStorage.getItem(`engrid_ShowHideRadioCheckboxesState`)) !== null && _a !== void 0 ? _a : "";
+            return JSON.parse(plainState);
+        }
+        catch (err) {
+            return [];
+        }
+    }
+    applyShowHideRadioCheckboxesState() {
+        const state = this.getShowHideRadioCheckboxesState();
+        if (state) {
+            state.forEach((item) => {
+                this.logger.log("Processing TY page conditional content item:", item);
+                if (engrid_ENGrid.getPageID() === item.page) {
+                    document
+                        .querySelectorAll(`[class*="${item.class}"]`)
+                        .forEach((el) => {
+                        el.classList.add("hide");
+                    });
+                    document
+                        .querySelectorAll(`.${item.class}${item.value}`)
+                        .forEach((el) => {
+                        el.classList.remove("hide");
+                    });
+                }
+            });
+        }
+        this.deleteShowHideRadioCheckboxesState();
+    }
+    deleteShowHideRadioCheckboxesState() {
+        window.sessionStorage.removeItem(`engrid_ShowHideRadioCheckboxesState`);
+    }
+    shouldRun() {
+        return engrid_ENGrid.getGiftProcess();
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.18.4";
+const AppVersion = "0.18.18";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
+
+
 
 
 
@@ -21477,11 +21999,9 @@ class MonthlyAmounts {
   }
 
   loadDefaultAmounts() {
-    var _filter$toString$matc;
-
     const amountContainer = document.querySelector(".en__field--donationAmt");
     if (!amountContainer) return;
-    let amountID = ((_filter$toString$matc = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)) === null || _filter$toString$matc === void 0 ? void 0 : _filter$toString$matc.join("")) || "";
+    let amountID = [...amountContainer.classList.values()].filter(v => v.startsWith("en__field--") && Number(v.substring(11)) > 0).toString().match(/\d/g)?.join("") || "";
     if (!amountID) return;
     this.logger.log("Amount ID", amountID);
 
@@ -21564,19 +22084,15 @@ class MultistepForm {
   }
 
   addStepDataAttributes() {
-    var _document$querySelect, _document$querySelect2, _document$querySelect3;
-
-    (_document$querySelect = document.querySelector(".body-title")) === null || _document$querySelect === void 0 ? void 0 : _document$querySelect.setAttribute("data-multistep-step", "1");
-    (_document$querySelect2 = document.querySelector(".body-top")) === null || _document$querySelect2 === void 0 ? void 0 : _document$querySelect2.setAttribute("data-multistep-step", "1");
-    (_document$querySelect3 = document.querySelector(".body-bottom")) === null || _document$querySelect3 === void 0 ? void 0 : _document$querySelect3.setAttribute("data-multistep-step", "3");
+    document.querySelector(".body-title")?.setAttribute("data-multistep-step", "1");
+    document.querySelector(".body-top")?.setAttribute("data-multistep-step", "1");
+    document.querySelector(".body-bottom")?.setAttribute("data-multistep-step", "3");
     const stepperCodeBlocks = [...document.querySelectorAll(".multistep-stepper")].map(el => el.closest(".en__component--codeblock"));
     stepperCodeBlocks.forEach((step, index) => {
-      var _document$querySelect4;
-
       step.setAttribute("data-multistep-step", `${index + 1}`); // if this is the first step, we start from the first element in ".body-main"
       // (since the first stepper could be outside of ".body-main")
 
-      const start = index === 0 ? (_document$querySelect4 = document.querySelector(".body-main")) === null || _document$querySelect4 === void 0 ? void 0 : _document$querySelect4.firstChild : step;
+      const start = index === 0 ? document.querySelector(".body-main")?.firstChild : step;
       const nextStep = stepperCodeBlocks[index + 1];
       const elements = this.getElementsBetween(start, nextStep);
       elements.forEach(element => {
@@ -21622,10 +22138,8 @@ class MultistepForm {
 
 
     if (!this.validateStepsBetweenCurrentAndTargetStep(activeStep, targetStep)) {
-      var _field$closest;
-
       const field = document.querySelector(".en__field--validationFailed");
-      const invalidStep = (field === null || field === void 0 ? void 0 : (_field$closest = field.closest(".en__component--formblock")) === null || _field$closest === void 0 ? void 0 : _field$closest.getAttribute("data-multistep-step")) ?? "1";
+      const invalidStep = field?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") ?? "1";
       engrid_ENGrid.setBodyData("multistep-active-step", invalidStep);
       window.scrollTo(0, 0);
 
@@ -21663,9 +22177,7 @@ class MultistepForm {
   validateStep(step) {
     if (this.validators.length === 0) return true;
     const validators = this.validators.filter(validator => {
-      var _document$querySelect5, _document$querySelect6;
-
-      return ((_document$querySelect5 = document.querySelector(`.en__field--${validator.field}`)) === null || _document$querySelect5 === void 0 ? void 0 : (_document$querySelect6 = _document$querySelect5.closest(".en__component--formblock")) === null || _document$querySelect6 === void 0 ? void 0 : _document$querySelect6.getAttribute("data-multistep-step")) === step;
+      return document.querySelector(`.en__field--${validator.field}`)?.closest(".en__component--formblock")?.getAttribute("data-multistep-step") === step;
     });
     const validationResults = validators.map(validator => {
       validator.hideMessage();
@@ -21912,8 +22424,6 @@ class DonationLightboxForm {
   buildSectionNavigation() {
     console.log("DonationLightboxForm: buildSectionNavigation");
     this.sections.forEach((section, key) => {
-      var _sectionNavigation$qu, _sectionNavigation$qu2, _sectionNavigation$qu3;
-
       section.dataset.sectionId = key;
       const sectionNavigation = document.createElement("div");
       sectionNavigation.classList.add("section-navigation");
@@ -21961,18 +22471,18 @@ class DonationLightboxForm {
         <span class="section-count__current">${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
-      (_sectionNavigation$qu = sectionNavigation.querySelector(".section-navigation__previous")) === null || _sectionNavigation$qu === void 0 ? void 0 : _sectionNavigation$qu.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {
         e.preventDefault();
         this.scrollToSection(key - 1);
       });
-      (_sectionNavigation$qu2 = sectionNavigation.querySelector(".section-navigation__next")) === null || _sectionNavigation$qu2 === void 0 ? void 0 : _sectionNavigation$qu2.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__next")?.addEventListener("click", e => {
         e.preventDefault();
 
         if (this.validateForm(key)) {
           this.scrollToSection(key + 1);
         }
       });
-      (_sectionNavigation$qu3 = sectionNavigation.querySelector(".section-navigation__submit")) === null || _sectionNavigation$qu3 === void 0 ? void 0 : _sectionNavigation$qu3.addEventListener("click", e => {
+      sectionNavigation.querySelector(".section-navigation__submit")?.addEventListener("click", e => {
         e.preventDefault(); // Validate the entire form again
 
         if (this.validateForm()) {
@@ -23596,14 +24106,14 @@ const customScript = function (App) {
 };
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
-
-
- // import {
+// import {
 //   Options,
 //   App,
 //   DonationAmount,
 //   DonationFrequency,
 // } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+
+
 
 
 
