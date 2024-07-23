@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 23, 2024 @ 13:09:24 ET
+ *  Date: Tuesday, July 23, 2024 @ 13:10:06 ET
  *  By: fernando
- *  ENGrid styles: v0.18.17
- *  ENGrid scripts: v0.18.17
+ *  ENGrid styles: v0.18.18
+ *  ENGrid scripts: v0.18.18
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -12564,6 +12564,12 @@ class App extends engrid_ENGrid {
             // Add Options to window
             window.EngridOptions = this.options;
         }
+        // If there's no pageJson.pageType, add a big red warning to the console
+        if (!engrid_ENGrid.checkNested(window, "pageJson", "pageType")) {
+            window.setTimeout(() => {
+                console.log("%c ⛔️ pageJson.pageType NOT FOUND - Go to the Account Settings and Expose the Transaction Details %s", "background-color: red; color: white; font-size: 22px; font-weight: bold;", "https://knowledge.engagingnetworks.net/datareports/expose-transaction-details-pagejson");
+            }, 2000);
+        }
         if (this.options.Debug || App.getUrlParameter("debug") == "true")
             // Enable debug if available is the first thing
             App.setBodyData("debug", "");
@@ -21779,7 +21785,7 @@ class ThankYouPageConditionalContent {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/version.js
-const AppVersion = "0.18.17";
+const AppVersion = "0.18.18";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-common/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
