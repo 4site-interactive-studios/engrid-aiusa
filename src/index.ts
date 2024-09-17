@@ -16,6 +16,8 @@ import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
 
+import { CheckboxLabel } from "./scripts/checkbox-label";
+
 const options: Options = {
   applePay: false,
   CapitalizeFields: true,
@@ -37,6 +39,7 @@ const options: Options = {
     customScript(App);
     new MonthlyAmounts();
     new MultistepForm();
+    new CheckboxLabel();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };

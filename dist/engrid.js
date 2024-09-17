@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 23, 2024 @ 13:10:06 ET
+ *  Date: Tuesday, September 17, 2024 @ 11:17:59 ET
  *  By: fernando
  *  ENGrid styles: v0.18.18
  *  ENGrid scripts: v0.18.18
@@ -24104,6 +24104,41 @@ const customScript = function (App) {
     });
   }
 };
+;// CONCATENATED MODULE: ./src/scripts/checkbox-label.ts
+
+// @TODO: Delete this file when doing the October 2024 update
+// Component to allow the user to set custom labels for the checkboxes,
+// you can customize the checkbox label on a per-page basis, which is not possible with Engaging Networks
+// The .checkbox-label element should be placed right before the checkbox form block
+
+class CheckboxLabel {
+  constructor() {
+    _defineProperty(this, "logger", new EngridLogger("CheckboxLabel", "#00CC95", "#2C3E50", "✅"));
+
+    _defineProperty(this, "checkBoxesLabels", document.querySelectorAll(".checkbox-label"));
+
+    if (!this.shoudRun()) return;
+    this.logger.log(`Found ${this.checkBoxesLabels.length} custom labels`);
+    this.run();
+  }
+
+  shoudRun() {
+    return this.checkBoxesLabels.length > 0;
+  }
+
+  run() {
+    this.checkBoxesLabels.forEach(checkboxLabel => {
+      const labelText = checkboxLabel.textContent?.trim();
+      const checkboxContainer = checkboxLabel.nextElementSibling;
+      const checkboxLabelElement = checkboxContainer.querySelector("label");
+      if (!checkboxLabelElement || !labelText) return;
+      checkboxLabelElement.textContent = labelText;
+      checkboxLabel.remove();
+      this.logger.log(`Set checkbox label to "${labelText}"`);
+    });
+  }
+
+}
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
 // import {
@@ -24112,6 +24147,7 @@ const customScript = function (App) {
 //   DonationAmount,
 //   DonationFrequency,
 // } from "../../engrid-scripts/packages/common"; // Uses ENGrid via Visual Studio Workspace
+
 
 
 
@@ -24139,6 +24175,7 @@ const options = {
     customScript(App);
     new MonthlyAmounts();
     new MultistepForm();
+    new CheckboxLabel();
   },
   onResize: () => console.log("Starter Theme Window Resized")
 }; // if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {

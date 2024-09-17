@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, July 23, 2024 @ 13:10:06 ET
+ *  Date: Tuesday, September 17, 2024 @ 11:17:59 ET
  *  By: fernando
  *  ENGrid styles: v0.18.18
  *  ENGrid scripts: v0.18.18
@@ -10425,4 +10425,24 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 body{
   opacity:1;
   transition:opacity .2s;
+}
+#en__pagebuilder .checkbox-label{
+  background-color:#0000ff1a;
+  display:block;
+  position:relative;
+}
+#en__pagebuilder .checkbox-label:after{
+  background-color:#f08080;
+  border-radius:0;
+  color:#fafad2;
+  content:"Checkbox Label";
+  display:block;
+  padding:5px;
+  position:absolute;
+  right:0;
+  top:0;
+}
+
+body:not(#en__pagebuilder) .checkbox-label{
+  display:none;
 }
