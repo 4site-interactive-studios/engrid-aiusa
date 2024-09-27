@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, September 27, 2024 @ 17:52:50 ET
+ *  Date: Friday, September 27, 2024 @ 18:01:19 ET
  *  By: bryancasler
  *  ENGrid styles: v0.19.8
  *  ENGrid scripts: v0.18.19
@@ -9613,7 +9613,6 @@ body[data-engrid-debug]:before{
   font-size:22.68px;
   margin-top:0;
 }
-
 [data-engrid-theme=aiusa] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type=radio]+label:after{
   background-image:url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=161460392500);
   background-position:50%;
@@ -9668,6 +9667,9 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
     margin-left:auto;
     margin-right:23%;
   }
+}
+[data-engrid-theme=aiusa] .engrid--embedded-ecard{
+  width:100%;
 }
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
@@ -9765,8 +9767,15 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   --give-monthly-donation-amount-appended-label:"/mo";
   --give-annual-donation-amount-appended-label:"/yr";
 }
-[data-engrid-embedded] .engrid--embedded-ecard{
-  width:100%;
+[data-engrid-embedded] .en__ecarditems__showprev{
+  display:none;
+}
+[data-engrid-embedded][data-engrid-page-type=e-card] .en__component--ecardblock h2{
+  font-size:var(--h3_font-size);
+  font-weight:var(--h3_font-weight);
+  margin-bottom:calc(1rem*var(--scale-down_40pct));
+  margin-top:calc(2rem*var(--scale-down_40pct));
+  text-transform:var(--h3_text-transform);
 }
 @media only screen and (max-width:320px){
   [data-engrid-embedded][data-multi-step] #engrid{
