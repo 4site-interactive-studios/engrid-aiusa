@@ -16,7 +16,7 @@ import {
   DonationFrequency,
   ENGrid,
   EngridLogger,
-} from "@4site/engrid-common";
+} from "@4site/engrid-scripts";
 
 export class MonthlyAmounts {
   private logger: EngridLogger = new EngridLogger(
