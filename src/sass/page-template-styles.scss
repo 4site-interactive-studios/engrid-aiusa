@@ -2973,6 +2973,21 @@ body#en__pagebuilder .content-footerSpacer {
   }
 }
 
+[data-engrid-embedded-ecard="true"] {
+  .en__ecardrecipients__detail {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .en__ecardrecipients__email,
+  .en__ecardrecipients__name {
+    width: 100%!important;
+    input {
+      padding: var(--input_padding);
+    }
+  }
+}
+
 /* Add your custom theme styles here */
 [data-engrid-embedded][data-multi-step] {
   // Zoom Out If Screen Is 320px or less

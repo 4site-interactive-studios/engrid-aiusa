@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, November 18, 2024 @ 05:56:25 ET
+ *  Date: Monday, November 18, 2024 @ 06:25:47 ET
  *  By: michael
  *  ENGrid styles: v0.19.9
  *  ENGrid scripts: v0.19.9
@@ -9776,6 +9776,17 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   margin-bottom:calc(1rem*var(--scale-down_40pct));
   margin-top:calc(2rem*var(--scale-down_40pct));
   text-transform:var(--h3_text-transform);
+}
+
+[data-engrid-embedded-ecard=true] .en__ecardrecipients__detail{
+  flex-direction:column;
+  row-gap:20px;
+}
+[data-engrid-embedded-ecard=true] .en__ecardrecipients__email,[data-engrid-embedded-ecard=true] .en__ecardrecipients__name{
+  width:100% !important;
+}
+[data-engrid-embedded-ecard=true] .en__ecardrecipients__email input,[data-engrid-embedded-ecard=true] .en__ecardrecipients__name input{
+  padding:var(--input_padding);
 }
 @media only screen and (max-width:320px){
   [data-engrid-embedded][data-multi-step] #engrid{
