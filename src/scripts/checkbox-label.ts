@@ -4,7 +4,7 @@
 // you can customize the checkbox label on a per-page basis, which is not possible with Engaging Networks
 // The .checkbox-label element should be placed right before the checkbox form block
 
-import { EngridLogger } from "@4site/engrid-common";
+import { EngridLogger } from "@4site/engrid-scripts";
 
 export class CheckboxLabel {
   private logger: EngridLogger = new EngridLogger(
