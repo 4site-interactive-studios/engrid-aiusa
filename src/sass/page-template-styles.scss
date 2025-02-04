@@ -2628,6 +2628,11 @@
       }
     }
   }
+
+  /* Ensrues the embedded eCard parent wrapper spans 100% width */
+  .engrid--embedded-ecard {
+    width: 100%;
+  }
 }
 
 /*
@@ -2952,6 +2957,35 @@ body#en__pagebuilder .content-footerSpacer {
   // --error__background-color: #fff8f7;
 
   // --engrid__body-main_padding: 0;
+
+  /* Hide the eCard preview button when embedded */
+  .en__ecarditems__showprev {
+    display: none;
+  }
+
+  /* When embedded tone down the weight of the eCard headers */
+  &[data-engrid-page-type="e-card"] .en__component--ecardblock h2 {
+    font-size: var(--h3_font-size);
+    margin-bottom: calc(1rem * var(--scale-down_40pct));
+    margin-top: calc(2rem * var(--scale-down_40pct));
+    text-transform: var(--h3_text-transform);
+    font-weight: var(--h3_font-weight);
+  }
+}
+
+[data-engrid-embedded-ecard="true"] {
+  .en__ecardrecipients__detail {
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .en__ecardrecipients__email,
+  .en__ecardrecipients__name {
+    width: 100%!important;
+    input {
+      padding: var(--input_padding);
+    }
+  }
 }
 
 /* Add your custom theme styles here */
