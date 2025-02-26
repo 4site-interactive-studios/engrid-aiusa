@@ -17,6 +17,7 @@ import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
 
 import { CheckboxLabel } from "./scripts/checkbox-label";
+import { UanRememberMe } from "./scripts/uan-remember-me";
 
 const options: Options = {
   applePay: false,
@@ -40,6 +41,7 @@ const options: Options = {
     new MonthlyAmounts();
     new MultistepForm();
     new CheckboxLabel();
+    new UanRememberMe();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
