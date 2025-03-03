@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, February 13, 2025 @ 18:01:23 ET
- *  By: fernando
+ *  Date: Monday, March 3, 2025 @ 10:40:19 ET
+ *  By: michael
  *  ENGrid styles: v0.20.6
  *  ENGrid scripts: v0.20.8
  *
@@ -8880,7 +8880,7 @@ body[data-engrid-debug]:before{
   margin-left:.5rem;
   margin-right:.5rem;
 }
-[data-engrid-theme=aiusa] .en__component.en__component--copyblock.recurring-frequency-y-hide.inline-monthly-upsell{
+[data-engrid-theme=aiusa] .en__component.en__component--copyblock.inline-monthly-upsell{
   background-position:50%;
   background-repeat:no-repeat;
   background-size:90%;
@@ -8889,7 +8889,7 @@ body[data-engrid-debug]:before{
   position:relative;
   text-align:center;
 }
-[data-engrid-theme=aiusa] .en__component.en__component--copyblock.recurring-frequency-y-hide.inline-monthly-upsell p{
+[data-engrid-theme=aiusa] .en__component.en__component--copyblock.inline-monthly-upsell p{
   font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
   font-size:1rem;
   font-weight:700;
