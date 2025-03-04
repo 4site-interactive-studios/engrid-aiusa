@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, March 3, 2025 @ 10:40:19 ET
+ *  Date: Tuesday, March 4, 2025 @ 11:04:19 ET
  *  By: michael
  *  ENGrid styles: v0.20.6
  *  ENGrid scripts: v0.20.8
@@ -10310,6 +10310,51 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 #en__pagebuilder .monthly-upsell-message p b{
   -webkit-text-decoration:underline solid var(--error__color) 4px;
           text-decoration:underline solid var(--error__color) 4px;
+}
+
+.engrid-block-quote{
+  border-bottom:2px solid #000;
+  border-top:2px solid #000;
+  padding:16px 16px 24px;
+}
+.engrid-block-quote:before{
+  align-items:center;
+  background-color:#fffe00;
+  border-radius:50%;
+  content:url('data:image/svg+xml;charset=utf-8,<svg width="24" height="20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.936 19.072C-.313 11.335-.566 1 10.036.928V5.14c-3.377-.272-3.81 3.182-3.564 5.832h4.212v8.1H1.936ZM14.572 19.072c-2.19-7.633-2.443-18.13 8.1-18.144l-.013 4.2c-3.285.051-3.856 3.097-3.551 5.844h4.212v8.1h-8.748Z" fill="%23000"/></svg>');
+  display:flex;
+  height:52px;
+  justify-content:center;
+  line-height:1;
+  width:52px;
+}
+.engrid-block-quote .quote{
+  font-size:20px;
+  font-weight:700;
+  line-height:24px;
+}
+.engrid-block-quote .cite{
+  align-items:center;
+  display:flex;
+  flex-flow:row nowrap;
+  font-size:16px;
+  font-weight:700;
+  line-height:21px;
+  margin-bottom:0;
+}
+.engrid-block-quote .cite:before{
+  background-color:#000;
+  content:"";
+  display:block;
+  height:1px;
+  margin-right:7px;
+  width:20px;
+}
+.engrid-block-quote .cite-info{
+  font-size:14px;
+  font-weight:300;
+  line-height:18px;
+  margin:0;
 }
 
 [data-engrid-theme=aiusa][data-engrid-multistep]{

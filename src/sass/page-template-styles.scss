@@ -3672,4 +3672,54 @@ body#en__pagebuilder .content-footerSpacer {
   }
 }
 
+.engrid-block-quote {
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  padding: 16px 16px 24px 16px;
+
+  &:before {
+    content: url('data:image/svg+xml,<svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1.93556 19.0722C-0.313005 11.3351 -0.565725 0.999503 10.0356 0.928223V5.14022C6.65947 4.86806 6.22531 8.3219 6.47155 10.9722H10.6836V19.0722H1.93556Z" fill="black"/><path d="M14.5719 19.0722C12.3817 11.4388 12.129 0.941183 22.6719 0.928223L22.659 5.12726C19.3736 5.1791 18.8034 8.2247 19.1079 10.9722H23.3199V19.0722H14.5719Z" fill="black"/></svg>');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 52px;
+    width: 52px;
+    background-color: #FFFE00;
+    border-radius: 50%;
+    line-height: 1;
+  }
+
+  .quote {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+
+  .cite {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    font-size: 16px;
+    line-height: 21px;
+    font-weight: 700;
+    margin-bottom: 0;
+
+    &:before {
+      content: '';
+      display: block;
+      width: 20px;
+      height: 1px;
+      background-color: #000;
+      margin-right: 7px;
+    }
+  }
+
+  .cite-info {
+    margin: 0;
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 300;
+  }
+}
+
 // END AIUSA ENGRID CUSTOM LAYOUTS
