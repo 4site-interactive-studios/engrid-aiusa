@@ -3109,7 +3109,7 @@ body#en__pagebuilder .content-footerSpacer {
     }
   }
 
-  &[data-engrid-transaction-recurring-frequency="onetime"] {
+  &[data-engrid-transaction-recurring-frequency] {
     .monthly-upsell-message {
       p {
         strong {
