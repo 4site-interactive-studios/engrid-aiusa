@@ -19,10 +19,7 @@ export class UanRememberMe {
   private _form: EnForm = EnForm.getInstance();
   private defaultOptions: UanRememberMeOptions = {
     label: "Remember Me",
-    tooltip: `
-				Check “Remember me” to complete forms on this device faster. 
-				While your financial information won’t be stored, you should only check this box from a personal device. 
-			`,
+    tooltip: `Remember Me will save your Email Address and ZIP Code for faster form filling. Only use this on a personal device.`,
     anchor: ".en__field--emailAddress",
     placement: "afterend",
     fieldNames: [
@@ -95,7 +92,11 @@ export class UanRememberMe {
       .querySelector(this.options.anchor)
       ?.insertAdjacentHTML(this.options.placement, checkboxWrapperElement);
 
-    tippy("#uan-remember-me-tooltip", { content: this.options.tooltip });
+    tippy("#uan-remember-me-tooltip", {
+      content: this.options.tooltip,
+      placement: "right",
+      maxWidth: 200,
+    });
   }
 
   /*
