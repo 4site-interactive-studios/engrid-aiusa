@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, March 5, 2025 @ 12:18:17 ET
- *  By: michael
- *  ENGrid styles: v0.20.6
- *  ENGrid scripts: v0.20.8
+ *  Date: Tuesday, April 8, 2025 @ 11:10:41 ET
+ *  By: fernando
+ *  ENGrid styles: v0.21.0
+ *  ENGrid scripts: v0.21.0
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11840,6 +11840,9 @@ class engrid_ENGrid {
             return window.pageJson.pageNumber;
         return null;
     }
+    static isThankYouPage() {
+        return this.getPageNumber() === this.getPageCount();
+    }
     // Return the current page ID
     static getPageID() {
         if ("pageJson" in window)
@@ -12796,6 +12799,7 @@ class App extends engrid_ENGrid {
         new ThankYouPageConditionalContent();
         new EmbeddedEcard();
         new CheckboxLabel();
+        new PostDonationEmbed();
         //Debug panel
         let showDebugPanel = this.options.Debug;
         try {
@@ -19319,6 +19323,9 @@ class EventTickets {
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/swap-amounts.js
 // This script allows you to override the default donation amounts in Engaging Networks
 // with a custom list of amounts.
+// If the URL contains a query parameter "engrid-amounts" with a comma separated values, the script will load the
+// amounts from the parameter and set them as the default amounts for the donation
+// form.
 /**
  * Example:
  * window.EngridAmounts = {
@@ -19352,6 +19359,7 @@ class SwapAmounts {
         this._frequency = DonationFrequency.getInstance();
         this.defaultChange = false;
         this.swapped = false;
+        this.loadAmountsFromUrl();
         if (!this.shouldRun())
             return;
         this._frequency.onFrequencyChange.subscribe(() => this.swapAmounts());
@@ -19367,6 +19375,25 @@ class SwapAmounts {
                 this.defaultChange = true;
             }
         });
+    }
+    loadAmountsFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const amounts = urlParams.get("engrid-amounts");
+        if (amounts) {
+            const amountArray = amounts.split(",").map((amt) => amt.trim());
+            const defaultAmount = parseFloat(engrid_ENGrid.getUrlParameter("transaction.donationAmt")) || parseFloat(amountArray[0]);
+            const amountsObj = {};
+            for (let i = 0; i < amountArray.length; i++) {
+                amountsObj[amountArray[i].toString()] = isNaN(parseFloat(amountArray[i]))
+                    ? amountArray[i]
+                    : parseFloat(amountArray[i]);
+            }
+            amountsObj["Other"] = "other";
+            window.EngridAmounts = {
+                onetime: { amounts: amountsObj, default: defaultAmount },
+                monthly: { amounts: amountsObj, default: defaultAmount },
+            };
+        }
     }
     swapAmounts() {
         if (this._frequency.frequency in window.EngridAmounts) {
@@ -21925,6 +21952,8 @@ class EmbeddedEcard {
         this.options = EmbeddedEcardOptionsDefaults;
         this._form = en_form_EnForm.getInstance();
         this.isSubmitting = false;
+        this.ecardFormActive = false;
+        this.iframe = null;
         // For the page hosting the embedded ecard
         if (this.onHostPage()) {
             // Clean up session variables if the page is reloaded, and it isn't a submission failure
@@ -21986,7 +22015,8 @@ class EmbeddedEcard {
         </div>
       </div>`;
         container.appendChild(checkbox);
-        container.appendChild(this.createIframe(this.options.pageUrl));
+        this.iframe = this.createIframe(this.options.pageUrl);
+        container.appendChild(this.iframe);
         (_a = document
             .querySelector(this.options.anchor)) === null || _a === void 0 ? void 0 : _a.insertAdjacentElement(this.options.placement, container);
     }
@@ -22002,28 +22032,64 @@ class EmbeddedEcard {
         return iframe;
     }
     addEventListeners() {
-        const iframe = document.querySelector(".engrid-iframe--embedded-ecard");
         const sendEcardCheckbox = document.getElementById("en__field_embedded-ecard");
-        // Initialize based on checkbox's default state
-        if (sendEcardCheckbox === null || sendEcardCheckbox === void 0 ? void 0 : sendEcardCheckbox.checked) {
+        this.toggleEcardForm(sendEcardCheckbox.checked);
+        sendEcardCheckbox === null || sendEcardCheckbox === void 0 ? void 0 : sendEcardCheckbox.addEventListener("change", (e) => {
+            const checkbox = e.target;
+            this.toggleEcardForm(checkbox.checked);
+        });
+        this._form.onValidate.subscribe(this.validateRecipients.bind(this));
+    }
+    validateRecipients() {
+        var _a, _b, _c, _d;
+        if (!this.ecardFormActive || !this._form.validate)
+            return;
+        this.logger.log("Validating ecard");
+        let embeddedEcardData = JSON.parse(sessionStorage.getItem("engrid-embedded-ecard") || "{}");
+        // Testing if the ecard recipient data is set and valid
+        if (!embeddedEcardData.formData ||
+            !embeddedEcardData.formData.recipients ||
+            embeddedEcardData.formData.recipients.length == 0 ||
+            embeddedEcardData.formData.recipients.some((recipient) => {
+                const recipientName = recipient.name;
+                const recipientEmail = recipient.email;
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                return (recipientName === "" ||
+                    recipientEmail === "" ||
+                    !emailRegex.test(recipientEmail));
+            })) {
+            this.logger.log("Ecard recipients validation failed");
+            this._form.validate = false;
+            this.sendPostMessage(this.iframe, "recipient_error");
+            const iframeDoc = ((_a = this.iframe) === null || _a === void 0 ? void 0 : _a.contentDocument) || ((_c = (_b = this.iframe) === null || _b === void 0 ? void 0 : _b.contentWindow) === null || _c === void 0 ? void 0 : _c.document);
+            if (!iframeDoc)
+                return;
+            const scrollTarget = iframeDoc.querySelector(".en__ecardrecipients");
+            if (!scrollTarget)
+                return;
+            const iframeRect = (_d = this.iframe) === null || _d === void 0 ? void 0 : _d.getBoundingClientRect();
+            if (!iframeRect)
+                return;
+            const elementRect = scrollTarget.getBoundingClientRect();
+            window.scrollTo({
+                top: iframeRect.top + elementRect.top + window.scrollY - 10,
+                behavior: "smooth",
+            });
+        }
+    }
+    toggleEcardForm(visible) {
+        const iframe = document.querySelector(".engrid-iframe--embedded-ecard");
+        this.ecardFormActive = visible;
+        if (visible) {
             iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: block");
             sessionStorage.setItem("engrid-send-embedded-ecard", "true");
+            this.logger.log("Ecard form is visible");
         }
         else {
             iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: none");
             sessionStorage.removeItem("engrid-send-embedded-ecard");
+            this.logger.log("Ecard form is hidden");
         }
-        sendEcardCheckbox === null || sendEcardCheckbox === void 0 ? void 0 : sendEcardCheckbox.addEventListener("change", (e) => {
-            const checkbox = e.target;
-            if (checkbox === null || checkbox === void 0 ? void 0 : checkbox.checked) {
-                iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: block");
-                sessionStorage.setItem("engrid-send-embedded-ecard", "true");
-            }
-            else {
-                iframe === null || iframe === void 0 ? void 0 : iframe.setAttribute("style", "display: none");
-                sessionStorage.removeItem("engrid-send-embedded-ecard");
-            }
-        });
     }
     setEmbeddedEcardSessionData() {
         let ecardVariant = document.querySelector("[name='friend.ecard']");
@@ -22115,6 +22181,15 @@ class EmbeddedEcard {
                 ecardVariant.dispatchEvent(new Event("input"));
             });
         });
+        // Remove the recipient error message when the user starts typing in the recipient fields
+        [recipientName, recipientEmail].forEach((el) => {
+            el.addEventListener("input", () => {
+                const recipientDetails = document.querySelector(".en__ecardrecipients__detail");
+                const error = document.querySelector(".engrid__recipient__error");
+                recipientDetails === null || recipientDetails === void 0 ? void 0 : recipientDetails.classList.remove("validationFail");
+                error === null || error === void 0 ? void 0 : error.classList.add("hide");
+            });
+        });
         window.addEventListener("message", (e) => {
             if (e.origin !== location.origin || !e.data.action)
                 return;
@@ -22149,6 +22224,18 @@ class EmbeddedEcard {
                     recipientName.dispatchEvent(new Event("input"));
                     recipientEmail.dispatchEvent(new Event("input"));
                     break;
+                case "recipient_error":
+                    const recipientDetails = document.querySelector(".en__ecardrecipients__detail");
+                    const error = document.querySelector(".engrid__recipient__error");
+                    if (error) {
+                        error.classList.remove("hide");
+                    }
+                    else {
+                        recipientDetails === null || recipientDetails === void 0 ? void 0 : recipientDetails.insertAdjacentHTML("afterend", "<div class='en__field__error engrid__recipient__error'>Please provide the details for your eCard recipient</div>");
+                    }
+                    recipientDetails === null || recipientDetails === void 0 ? void 0 : recipientDetails.classList.add("validationFail");
+                    window.dispatchEvent(new Event("resize"));
+                    break;
             }
         });
         this.sendPostMessage("parent", "ecard_form_ready");
@@ -22169,6 +22256,8 @@ class EmbeddedEcard {
     }
     sendPostMessage(target, action, data = {}) {
         var _a;
+        if (!target)
+            return;
         const message = Object.assign({ action }, data);
         if (target === "parent") {
             window.parent.postMessage(message, location.origin);
@@ -22554,11 +22643,70 @@ class OptInLadder {
     }
 }
 
+;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/post-donation-embed.js
+// This component only works on Thank You pages and the current page IS NOT embedded as an iframe.
+// It searches for a post-donation tag (engrid-post-donation)
+// and if it exists, it will replace it with an iframe of the current donation page, replacing the
+// "/donate/2" with "/donate/1" and adding a ?chain.
+// It has 2 parameters:
+// 1. params: the URL parameters to pass to the iframe
+// 2. amounts: comma separated list of amounts to pass to the iframe
+
+class PostDonationEmbed {
+    constructor() {
+        this.logger = new logger_EngridLogger("PostDonationEmbed", "red", "white", "🖼️");
+        if (!this.shouldRun())
+            return;
+        this.logger.log("Post Donation Tag found");
+        const postDonationTag = document.querySelector("engrid-post-donation");
+        // Get current page URL
+        let currentUrl = new URL(window.location.href);
+        // Modify the path: replace "/donate/2" with "/donate/1"
+        currentUrl.pathname = currentUrl.pathname.replace("/donate/2", "/donate/1");
+        // Extract parameters from the <engrid-post-donation> tag
+        let params = postDonationTag.getAttribute("params") || "";
+        let amounts = postDonationTag.getAttribute("amounts");
+        // Format parameters correctly
+        let searchParams = new URLSearchParams(params.replace(/&/g, "&"));
+        let paramString = searchParams
+            .toString()
+            .replace(/%5B/g, "[")
+            .replace(/%5D/g, "]");
+        // Construct new URL with "chain" parameter
+        let newUrl = `${currentUrl.origin}${currentUrl.pathname}?chain&${paramString}`;
+        if (amounts) {
+            newUrl += `&engrid-amounts=${amounts}`;
+        }
+        // Create the iframe element
+        let iframe = document.createElement("iframe");
+        iframe.setAttribute("loading", "lazy");
+        iframe.setAttribute("width", "100%");
+        iframe.setAttribute("scrolling", "no");
+        iframe.setAttribute("class", "engrid-iframe thank-you-page-donation");
+        iframe.setAttribute("src", newUrl);
+        iframe.setAttribute("frameborder", "0");
+        iframe.setAttribute("allowfullscreen", "");
+        iframe.setAttribute("allowpaymentrequest", "true");
+        iframe.setAttribute("allow", "payment");
+        // Replace <engrid-post-donation> with the iframe
+        postDonationTag.replaceWith(iframe);
+    }
+    shouldRun() {
+        return (engrid_ENGrid.isThankYouPage() &&
+            this.hasPostDonationTag() &&
+            engrid_ENGrid.getBodyData("embedded") === null);
+    }
+    hasPostDonationTag() {
+        return !!document.querySelector("engrid-post-donation");
+    }
+}
+
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/version.js
-const AppVersion = "0.20.8";
+const AppVersion = "0.21.0";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
+
 
 
 
@@ -24912,6 +25060,238 @@ class checkbox_label_CheckboxLabel {
   }
 
 }
+;// CONCATENATED MODULE: ./src/scripts/uan-remember-me.ts
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+
+
+const uan_remember_me_tippy = (__webpack_require__(3861)/* ["default"] */ .ZP);
+
+class UanRememberMe {
+  constructor() {
+    _defineProperty(this, "_form", en_form_EnForm.getInstance());
+
+    _defineProperty(this, "defaultOptions", {
+      label: "Remember Me",
+      tooltip: `Remember Me will save your Email Address and ZIP Code for faster form filling. Only use this on a personal device.`,
+      anchor: ".en__field--emailAddress",
+      placement: "afterend",
+      fieldNames: ["supporter.firstName", "supporter.lastName", "supporter.emailAddress", "supporter.phoneNumber", "supporter.address1", "supporter.address2", "supporter.city", "supporter.region", "supporter.postcode", "supporter.country"]
+    });
+
+    _defineProperty(this, "options", void 0);
+
+    _defineProperty(this, "rememberMeChecked", true);
+
+    _defineProperty(this, "seed", "1242362031235323113911624374228108");
+
+    const pageOptions = typeof window.UanRememberMe === "object" ? window.UanRememberMe : {};
+    this.options = _objectSpread(_objectSpread({}, this.defaultOptions), pageOptions);
+    if (!this.shouldRun()) return;
+    this.createRememberMeCheckbox();
+    this.addEventListeners();
+    this.fillFormFieldsFromStorage();
+  }
+  /*
+   * Run if we don't have the RememberMe option set to true, have the UanRememberMe object, and crypto is supported by the browser
+   */
+
+
+  shouldRun() {
+    return !engrid_ENGrid.getOption("RememberMe") && window.hasOwnProperty("UanRememberMe") && window.UanRememberMe !== false && !!window.crypto && !!window.crypto.subtle;
+  }
+  /*
+   * Create the Remember Me checkbox and add it to the form
+   * And initialize the tippy tooltip
+   */
+
+
+  createRememberMeCheckbox() {
+    const checkboxWrapperElement = `
+      <div class="en__field en__field--checkbox">
+        <div class="en__field__element en__field__element--checkbox">
+          <div class="en__field__item">
+            <input id="uan-remember-me" type="checkbox" class="en__field__input en__field__input--checkbox" name="engrid.uan-remember-me" value="Y" checked>
+            <label for="uan-remember-me" class="en__field__label en__field__label--item">
+              ${this.options.label}
+              <span id="uan-remember-me-tooltip" style="line-height: 1; padding-left: 5px">
+                <svg style="height: 14px; width: auto; z-index: 1;" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 7H9V5H11V7ZM11 9H9V15H11V9ZM10 2C5.59 2 2 5.59 2 10C2 14.41 5.59 18 10 18C14.41 18 18 14.41 18 10C18 5.59 14.41 2 10 2ZM10 0C15.523 0 20 4.477 20 10C20 15.523 15.523 20 10 20C4.477 20 0 15.523 0 10C0 4.477 4.477 0 10 0Z" fill="currentColor"/></svg>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    `;
+    document.querySelector(this.options.anchor)?.insertAdjacentHTML(this.options.placement, checkboxWrapperElement);
+    uan_remember_me_tippy("#uan-remember-me-tooltip", {
+      content: this.options.tooltip,
+      placement: "right",
+      maxWidth: 200
+    });
+  }
+  /*
+   * Add event listeners to the form and the Remember Me checkbox
+   */
+
+
+  addEventListeners() {
+    this._form.onValidate.subscribe(this.saveSupporterDetailsToStorage.bind(this));
+
+    const rememberMeCheckbox = document.querySelector("#uan-remember-me");
+    rememberMeCheckbox?.addEventListener("change", () => {
+      this.rememberMeChecked = rememberMeCheckbox.checked;
+
+      if (!this.rememberMeChecked) {
+        this.deleteSupporterDetailsFromStorage();
+      }
+    });
+  }
+  /*
+   * Get the supporter details from the form fields
+   */
+
+
+  getSupporterDetailsFromFields() {
+    const supporterDetails = {};
+    this.options.fieldNames.forEach(fieldName => {
+      let field = document.querySelector(`[name="${fieldName}"]`); // If it is a radio or checkbox, get the checked value
+
+      if (field) {
+        if (field.type === "radio" || field.type === "checkbox") {
+          field = document.querySelector(`[name="${fieldName}"]:checked`);
+        }
+
+        supporterDetails[fieldName] = encodeURIComponent(field.value);
+      }
+    });
+    return supporterDetails;
+  }
+  /*
+   * Fill the form fields with the supporter details from the local storage
+   */
+
+
+  async fillFormFieldsFromStorage() {
+    const uanRememberMeData = window.localStorage.getItem("uan-remember-me");
+    if (!uanRememberMeData) return;
+    const encryptedSupporterDetails = JSON.parse(window.atob(uanRememberMeData));
+    if (!encryptedSupporterDetails) return;
+    const supporterDetails = JSON.parse(await this.decryptSupporterDetails(this.base64ToArrayBuffer(encryptedSupporterDetails.encryptedData), new Uint8Array(this.base64ToArrayBuffer(encryptedSupporterDetails.iv))));
+    this.options.fieldNames.forEach(fieldName => {
+      if (!supporterDetails[fieldName]) return;
+      engrid_ENGrid.setFieldValue(fieldName, decodeURIComponent(supporterDetails[fieldName]));
+    });
+  }
+  /*
+   * Save the supporter details to local storage
+   */
+
+
+  async saveSupporterDetailsToStorage() {
+    if (!this.rememberMeChecked || !this._form.validate) return;
+    const encryptedSupporterDetails = await this.encryptSupporterDetails(this.getSupporterDetailsFromFields());
+    window.localStorage.setItem("uan-remember-me", window.btoa(JSON.stringify({
+      encryptedData: encryptedSupporterDetails.encryptedData,
+      iv: encryptedSupporterDetails.iv
+    })));
+  }
+  /*
+   * Delete the supporter details from local storage
+   */
+
+
+  deleteSupporterDetailsFromStorage() {
+    window.localStorage.removeItem("uan-remember-me");
+  }
+  /*
+   * Encrypt the supporter details
+   */
+
+
+  async encryptSupporterDetails(supporterDetails) {
+    const supporterDetailsString = JSON.stringify(supporterDetails);
+    const encryptionKey = await this.createEncryptionKey();
+    const iv = window.crypto.getRandomValues(new Uint8Array(12));
+    const encryptedData = await window.crypto.subtle.encrypt({
+      name: "AES-GCM",
+      iv: iv
+    }, encryptionKey, new TextEncoder().encode(supporterDetailsString));
+    return {
+      encryptedData: this.arrayBufferToBase64(encryptedData),
+      iv: this.arrayBufferToBase64(iv)
+    };
+  }
+  /*
+   * Decrypt the supporter details
+   */
+
+
+  async decryptSupporterDetails(encryptedSupporterDetails, iv) {
+    const encryptionKey = await this.createEncryptionKey();
+    const decryptedData = await window.crypto.subtle.decrypt({
+      name: "AES-GCM",
+      iv: iv
+    }, encryptionKey, encryptedSupporterDetails);
+    return new TextDecoder().decode(decryptedData);
+  }
+  /*
+   * Create the encryption key
+   */
+
+
+  async createEncryptionKey() {
+    const encoder = new TextEncoder();
+    const keyMaterial = await window.crypto.subtle.importKey("raw", encoder.encode(this.seed), {
+      name: "PBKDF2"
+    }, false, ["deriveKey"]);
+    return await window.crypto.subtle.deriveKey({
+      name: "PBKDF2",
+      salt: encoder.encode(this.seed),
+      iterations: 100000,
+      hash: "SHA-256"
+    }, keyMaterial, {
+      name: "AES-GCM",
+      length: 256
+    }, false, ["encrypt", "decrypt"]);
+  }
+  /*
+   * Convert an ArrayBuffer to a base64 string
+   */
+
+
+  arrayBufferToBase64(buffer) {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+
+    return window.btoa(binary);
+  }
+  /*
+   * Create an Array Buffer from a base64 string
+   */
+
+
+  base64ToArrayBuffer(base64) {
+    const binary_string = window.atob(base64);
+    const len = binary_string.length;
+    const bytes = new Uint8Array(len);
+
+    for (let i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
+    }
+
+    return bytes.buffer;
+  }
+
+}
 ;// CONCATENATED MODULE: ./src/index.ts
  // Uses ENGrid via NPM
 // import {
@@ -24920,6 +25300,7 @@ class checkbox_label_CheckboxLabel {
 //   DonationAmount,
 //   DonationFrequency,
 // } from "../../engrid/packages/scripts"; // Uses ENGrid via Visual Studio Workspace
+
 
 
 
@@ -24949,6 +25330,7 @@ const options = {
     new MonthlyAmounts();
     new MultistepForm();
     new checkbox_label_CheckboxLabel();
+    new UanRememberMe();
   },
   onResize: () => console.log("Starter Theme Window Resized")
 }; // if (["ADVOCACY", "EMAILTOTARGET", "TWEETPAGE"].includes(App.getPageType())) {
