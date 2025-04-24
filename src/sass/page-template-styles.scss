@@ -2972,6 +2972,13 @@ body#en__pagebuilder .content-footerSpacer {
     display: none;
   }
 
+  .en__component--formblock,
+  .en__component--svblock,
+  .en__registrants__registrantDetails {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   /* When embedded tone down the weight of the eCard headers */
   &[data-engrid-page-type="e-card"] .en__component--ecardblock h2 {
     font-size: var(--h3_font-size);
