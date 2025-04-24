@@ -186,6 +186,15 @@
   }
 }
 [data-engrid-theme="aiusa"] {
+  // VGS
+  --en-vgs-height: 51px;
+  --en-vgs-width: 244px;
+  --en-vgs-borderWidth: 2px;
+  --en-vgs-borderStyle: solid;
+  --en-vgs-borderColor: rgb(245, 245, 245);
+  --en-vgs-borderRadius: 0px;
+  --en-vgs-backgroundColor: rgb(245, 245, 245);
+
   // FIXED COLOR PALETTE
   --color_transparent: transparent;
   --color_white: rgba(255, 255, 255, 1);
@@ -2981,7 +2990,7 @@ body#en__pagebuilder .content-footerSpacer {
 
   .en__ecardrecipients__email,
   .en__ecardrecipients__name {
-    width: 100%!important;
+    width: 100% !important;
     input {
       padding: var(--input_padding);
     }
@@ -3684,7 +3693,7 @@ body#en__pagebuilder .content-footerSpacer {
     align-items: center;
     height: 52px;
     width: 52px;
-    background-color: #FFFE00;
+    background-color: #fffe00;
     border-radius: 50%;
     line-height: 1;
   }
@@ -3705,7 +3714,7 @@ body#en__pagebuilder .content-footerSpacer {
     margin-bottom: 0;
 
     &:before {
-      content: '';
+      content: "";
       display: block;
       width: 20px;
       height: 1px;
