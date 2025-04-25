@@ -684,6 +684,35 @@ export default class DonationLightboxForm {
     )
       ? "$" + window.EngagingNetworks.require._defined.enjs.getDonationTotal()
       : null;
+    const tip = document.querySelector('#en__field_transaction_feeCover');
+    console.log("amount is: ", amount);
+
+    let totalAmount = amount;
+
+    tip.addEventListener('change', () => {
+      const base = parseFloat(amount.replace('$', ''));
+      const span = submit.querySelector("span");
+      
+      if (tip.checked) {
+        const withTip = base * 1.03;
+        totalAmount = `$${withTip.toFixed(2)}`;
+        label = label.replace("$AMOUNT", amount);
+        if (span) {
+          span.textContent = `GIVE ${totalAmount}`;
+        }
+      } else {
+        totalAmount = amount;
+        label = label.replace("$AMOUNT", amount);
+        if (span) {
+          span.textContent = `GIVE ${totalAmount}`;
+        }
+      }
+
+
+
+      console.log(`Total amount: ${totalAmount}`);
+    });
+
     let frequency = this.frequency.getInstance().frequency;
     let label = submit ? submit.dataset.label : "";
     frequency = frequency === "onetime" ? "" : "<small>/mo</small>";
