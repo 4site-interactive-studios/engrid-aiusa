@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, April 25, 2025 @ 24:07:34 ET
+ *  Date: Friday, April 25, 2025 @ 24:57:16 ET
  *  By: fernando
  *  ENGrid styles: v0.21.9
- *  ENGrid scripts: v0.21.10
+ *  ENGrid scripts: v0.21.11
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -19390,6 +19390,7 @@ class SwapAmounts {
         const urlParams = new URLSearchParams(window.location.search);
         const amounts = urlParams.get("engrid-amounts");
         if (amounts) {
+            this.defaultChange = true;
             const amountArray = amounts.split(",").map((amt) => amt.trim());
             const defaultAmount = parseFloat(engrid_ENGrid.getUrlParameter("transaction.donationAmt")) || parseFloat(amountArray[0]);
             const amountsObj = {};
@@ -19411,7 +19412,9 @@ class SwapAmounts {
                 ignoreCurrentValue: this.ignoreCurrentValue(),
             });
             this._amount.load();
-            this.logger.log("Amounts Swapped To", window.EngridAmounts[this._frequency.frequency]);
+            this.logger.log("Amounts Swapped To", window.EngridAmounts[this._frequency.frequency], {
+                ignoreCurrentValue: this.ignoreCurrentValue(),
+            });
             this.swapped = true;
         }
     }
@@ -19430,8 +19433,13 @@ class SwapAmounts {
         return "EngridAmounts" in window;
     }
     ignoreCurrentValue() {
+        if (engrid_ENGrid.getUrlParameter("transaction.donationAmt") !== null) {
+            return this._amount.amount ===
+                parseFloat(engrid_ENGrid.getUrlParameter("transaction.donationAmt"))
+                ? false
+                : true;
+        }
         return !(window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() ||
-            engrid_ENGrid.getUrlParameter("transaction.donationAmt") !== null ||
             this.defaultChange);
     }
 }
@@ -22725,7 +22733,7 @@ class PostDonationEmbed {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/version.js
-const AppVersion = "0.21.10";
+const AppVersion = "0.21.11";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
