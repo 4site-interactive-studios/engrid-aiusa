@@ -3004,9 +3004,12 @@ body#en__pagebuilder .content-footerSpacer {
 }
 
 [data-engrid-embedded="thank-you-page-donation"] {
+  .body-title {
+    padding-top: 16px;
+  }
   .en__component--dd360confirmation,
   .content-footer {
-    display: none;
+    display: none !important;
   }
 }
 
