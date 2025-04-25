@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 24, 2025 @ 23:42:40 ET
+ *  Date: Friday, April 25, 2025 @ 24:07:34 ET
  *  By: fernando
  *  ENGrid styles: v0.21.9
  *  ENGrid scripts: v0.21.10
@@ -9827,8 +9827,8 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   display:none;
 }
 [data-engrid-embedded] .en__component--formblock,[data-engrid-embedded] .en__component--svblock,[data-engrid-embedded] .en__registrants__registrantDetails{
-  margin-left:0;
-  margin-right:0;
+  margin-left:3px;
+  margin-right:3px;
 }
 [data-engrid-embedded][data-engrid-page-type=e-card] .en__component--ecardblock h2{
   font-size:var(--h3_font-size);
@@ -9836,6 +9836,10 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   margin-bottom:calc(1rem*var(--scale-down_40pct));
   margin-top:calc(2rem*var(--scale-down_40pct));
   text-transform:var(--h3_text-transform);
+}
+
+[data-engrid-embedded=thank-you-page-donation] .content-footer,[data-engrid-embedded=thank-you-page-donation] .en__component--dd360confirmation{
+  display:none;
 }
 
 [data-engrid-embedded-ecard=true] .en__ecardrecipients__detail{

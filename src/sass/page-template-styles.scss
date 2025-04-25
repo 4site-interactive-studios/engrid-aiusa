@@ -2989,8 +2989,8 @@ body#en__pagebuilder .content-footerSpacer {
   .en__component--formblock,
   .en__component--svblock,
   .en__registrants__registrantDetails {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: 3px;
+    margin-right: 3px;
   }
 
   /* When embedded tone down the weight of the eCard headers */
@@ -3000,6 +3000,13 @@ body#en__pagebuilder .content-footerSpacer {
     margin-top: calc(2rem * var(--scale-down_40pct));
     text-transform: var(--h3_text-transform);
     font-weight: var(--h3_font-weight);
+  }
+}
+
+[data-engrid-embedded="thank-you-page-donation"] {
+  .en__component--dd360confirmation,
+  .content-footer {
+    display: none;
   }
 }
 
