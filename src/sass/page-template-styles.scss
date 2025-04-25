@@ -2642,6 +2642,20 @@
   .engrid--embedded-ecard {
     width: 100%;
   }
+
+  /* Styles the iFrame of the embedded donation page that is displayed on the thank you page */
+  iframe.thank-you-page-donation {
+    margin: 1.5rem calc(1rem + 15px) 2rem;
+    position: relative;
+    left: calc(((1rem + 5px) * -1));
+    transition: all 0.2s ease-in-out;
+    visibility: hidden;
+    &.loaded {
+      outline: 4px dashed #252525;
+      outline-offset: 1rem;
+      visibility: visible;
+    }
+  }
 }
 
 /*
@@ -2860,8 +2874,8 @@ body#en__pagebuilder .content-footerSpacer {
 
   // // TYPOGRAPHY P
   // // --p_font-family: var(--default_font-family);
-  --p_color: #252525;
-  --p_font-size: 12px;
+  // --p_color: #252525;
+  // --p_font-size: 12px;
   // --p_font-weight: 600;
   // --p_line-height: 1.33;
 
@@ -3006,6 +3020,8 @@ body#en__pagebuilder .content-footerSpacer {
 
 /* Add your custom theme styles here */
 [data-engrid-embedded][data-multi-step] {
+  --p_color: #252525;
+  --p_font-size: 12px;
   // Zoom Out If Screen Is 320px or less
   @media only screen and (max-width: 320px) {
     #engrid {

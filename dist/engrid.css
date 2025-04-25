@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, April 24, 2025 @ 17:35:35 ET
+ *  Date: Thursday, April 24, 2025 @ 23:07:32 ET
  *  By: fernando
  *  ENGrid styles: v0.21.9
  *  ENGrid scripts: v0.21.7
@@ -9717,6 +9717,18 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 [data-engrid-theme=aiusa] .engrid--embedded-ecard{
   width:100%;
 }
+[data-engrid-theme=aiusa] iframe.thank-you-page-donation{
+  left:calc(-1rem + -5px);
+  margin:1.5rem calc(1rem + 15px) 2rem;
+  position:relative;
+  transition:all .2s ease-in-out;
+  visibility:hidden;
+}
+[data-engrid-theme=aiusa] iframe.thank-you-page-donation.loaded{
+  outline:4px dashed #252525;
+  outline-offset:1rem;
+  visibility:visible;
+}
 @media screen and (min-width:720px){
   [data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-footer,[data-engrid-theme=aiusa][data-engrid-layout=leftleft1col] .content-header{
     grid-column:pc;
@@ -9808,8 +9820,6 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   }
 }
 [data-engrid-embedded]{
-  --p_color:#252525;
-  --p_font-size:12px;
   --give-monthly-donation-amount-appended-label:"/mo";
   --give-annual-donation-amount-appended-label:"/yr";
 }
@@ -9837,6 +9847,10 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 }
 [data-engrid-embedded-ecard=true] .en__ecardrecipients__email input,[data-engrid-embedded-ecard=true] .en__ecardrecipients__name input{
   padding:var(--input_padding);
+}
+[data-engrid-embedded][data-multi-step]{
+  --p_color:#252525;
+  --p_font-size:12px;
 }
 @media only screen and (max-width:320px){
   [data-engrid-embedded][data-multi-step] #engrid{
