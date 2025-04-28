@@ -701,14 +701,16 @@ export default class DonationLightboxForm {
       if (tip.checked) {
         totalAmount = `$${withTip}`;
         label = label.replace("$AMOUNT", amount);
+        const cleanFrequency = frequency.replace(/<\/?small>/g, '');
+        
         if (span) {
-          span.textContent = `GIVE ${totalAmount}`;
+          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
         }
       } else {
         totalAmount = amount;
         label = label.replace("$AMOUNT", amount);
         if (span) {
-          span.textContent = `GIVE ${totalAmount}`;
+          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
         }
       }
     });

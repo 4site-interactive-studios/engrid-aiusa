@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, April 28, 2025 @ 12:02:38 ET
+ *  Date: Monday, April 28, 2025 @ 13:53:31 ET
  *  By: daryl
  *  ENGrid styles: v0.21.0
  *  ENGrid scripts: v0.21.0
@@ -43808,16 +43808,17 @@ class DonationLightboxForm {
       if (tip.checked) {
         totalAmount = `$${withTip}`;
         label = label.replace("$AMOUNT", amount);
+        const cleanFrequency = frequency.replace(/<\/?small>/g, '');
 
         if (span) {
-          span.textContent = `GIVE ${totalAmount}`;
+          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
         }
       } else {
         totalAmount = amount;
         label = label.replace("$AMOUNT", amount);
 
         if (span) {
-          span.textContent = `GIVE ${totalAmount}`;
+          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
         }
       }
     });
