@@ -687,21 +687,19 @@ export default class DonationLightboxForm {
     const tip = document.querySelector('#en__field_transaction_feeCover');
     
     const base = parseFloat(amount.replace('$', ''));
-    const span = submit.querySelector("span");
-    const withTip = base * 1.03;
+    
+    const withTip = (base * 1.03).toFixed(2);
     const onlyTip = (base * 0.03).toFixed(2);
     const feeLabel = document.querySelector('label[for="en__field_transaction_feeCover"]');
 
-    console.log("amount is: ", amount);
-    console.log("tip amount is: ", onlyTip);
     feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${onlyTip})`;
-    console.log("feeLabel is: ", feeLabel.innerHTML);
 
     let totalAmount = amount;
 
     tip.addEventListener('change', () => {
+      const span = submit.querySelector("span");
       if (tip.checked) {
-        totalAmount = `$${withTip.toFixed(2)}`;
+        totalAmount = `$${withTip}`;
         label = label.replace("$AMOUNT", amount);
         if (span) {
           span.textContent = `GIVE ${totalAmount}`;
