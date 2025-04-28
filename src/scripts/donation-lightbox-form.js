@@ -685,16 +685,22 @@ export default class DonationLightboxForm {
       ? "$" + window.EngagingNetworks.require._defined.enjs.getDonationTotal()
       : null;
     const tip = document.querySelector('#en__field_transaction_feeCover');
+    
+    const base = parseFloat(amount.replace('$', ''));
+    const span = submit.querySelector("span");
+    const withTip = base * 1.03;
+    const onlyTip = (base * 0.03).toFixed(2);
+    const feeLabel = document.querySelector('label[for="en__field_transaction_feeCover"]');
+
     console.log("amount is: ", amount);
+    console.log("tip amount is: ", onlyTip);
+    feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${onlyTip})`;
+    console.log("feeLabel is: ", feeLabel.innerHTML);
 
     let totalAmount = amount;
 
     tip.addEventListener('change', () => {
-      const base = parseFloat(amount.replace('$', ''));
-      const span = submit.querySelector("span");
-      
       if (tip.checked) {
-        const withTip = base * 1.03;
         totalAmount = `$${withTip.toFixed(2)}`;
         label = label.replace("$AMOUNT", amount);
         if (span) {
@@ -707,10 +713,6 @@ export default class DonationLightboxForm {
           span.textContent = `GIVE ${totalAmount}`;
         }
       }
-
-
-
-      console.log(`Total amount: ${totalAmount}`);
     });
 
     let frequency = this.frequency.getInstance().frequency;
@@ -729,6 +731,7 @@ export default class DonationLightboxForm {
       submit.innerHTML = `<span>${label}</span>`;
     }
   }
+
   clickPaymentOptions(opts) {
     opts.querySelectorAll("button").forEach((btn) => {
       btn.addEventListener("click", (e) => {

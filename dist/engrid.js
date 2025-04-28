@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, April 25, 2025 @ 18:48:00 ET
+ *  Date: Monday, April 28, 2025 @ 09:21:43 ET
  *  By: daryl
  *  ENGrid styles: v0.21.0
  *  ENGrid scripts: v0.21.0
@@ -43796,14 +43796,18 @@ class DonationLightboxForm {
     const submit = document.querySelector(".section-navigation__submit");
     const amount = this.checkNested(window.EngagingNetworks, "require", "_defined", "enjs", "getDonationTotal") ? "$" + window.EngagingNetworks.require._defined.enjs.getDonationTotal() : null;
     const tip = document.querySelector('#en__field_transaction_feeCover');
+    const base = parseFloat(amount.replace('$', ''));
+    const span = submit.querySelector("span");
+    const withTip = base * 1.03;
+    const onlyTip = (base * 0.03).toFixed(2);
+    const feeLabel = document.querySelector('label[for="en__field_transaction_feeCover"]');
     console.log("amount is: ", amount);
+    console.log("tip amount is: ", onlyTip);
+    feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${onlyTip})`;
+    console.log("feeLabel is: ", feeLabel.innerHTML);
     let totalAmount = amount;
     tip.addEventListener('change', () => {
-      const base = parseFloat(amount.replace('$', ''));
-      const span = submit.querySelector("span");
-
       if (tip.checked) {
-        const withTip = base * 1.03;
         totalAmount = `$${withTip.toFixed(2)}`;
         label = label.replace("$AMOUNT", amount);
 
@@ -43818,8 +43822,6 @@ class DonationLightboxForm {
           span.textContent = `GIVE ${totalAmount}`;
         }
       }
-
-      console.log(`Total amount: ${totalAmount}`);
     });
     let frequency = this.frequency.getInstance().frequency;
     let label = submit ? submit.dataset.label : "";
