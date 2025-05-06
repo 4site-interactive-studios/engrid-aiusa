@@ -2,6 +2,13 @@ const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 if (isSafari) {
   window.__forceSmoothScrollPolyfill__ = true;
 }
+
+import { ProcessingFees } from "@4site/engrid-scripts";
+const pf = new ProcessingFees(50);
+console.log("Instance:", pf);
+console.log("Keys on instance:", Object.keys(pf));
+console.log("Prototype methods:", Object.getOwnPropertyNames(Object.getPrototypeOf(pf)));
+
 import smoothscroll from "smoothscroll-polyfill";
 smoothscroll.polyfill();
 export default class DonationLightboxForm {
@@ -675,61 +682,36 @@ export default class DonationLightboxForm {
   }
   changeSubmitButton() {
     const submit = document.querySelector(".section-navigation__submit");
-    const amount = this.checkNested(
-      window.EngagingNetworks,
-      "require",
-      "_defined",
-      "enjs",
-      "getDonationTotal"
-    )
-      ? "$" + window.EngagingNetworks.require._defined.enjs.getDonationTotal()
-      : null;
-    const tip = document.querySelector('#en__field_transaction_feeCover');
-    
-    const base = parseFloat(amount.replace('$', ''));
-    
-    const withTip = (base * 1.03).toFixed(2);
-    const onlyTip = (base * 0.03).toFixed(2);
+    const feeCover = document.querySelector('#en__field_transaction_feeCover');
     const feeLabel = document.querySelector('label[for="en__field_transaction_feeCover"]');
-
-    feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${onlyTip})`;
-
-    let totalAmount = amount;
-
-    tip.addEventListener('change', () => {
-      const span = submit.querySelector("span");
-      if (tip.checked) {
-        totalAmount = `$${withTip}`;
-        label = label.replace("$AMOUNT", amount);
-        const cleanFrequency = frequency.replace(/<\/?small>/g, '');
-        
-        if (span) {
-          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
-        }
-      } else {
-        totalAmount = amount;
-        label = label.replace("$AMOUNT", amount);
-        if (span) {
-          span.innerHTML = `GIVE ${totalAmount}${frequency}`;
-        }
+    const processingFees = ProcessingFees.getInstance();
+  
+    const frequencyRaw = this.frequency.getInstance().frequency;
+    const frequency = frequencyRaw === "onetime" ? "" : "<small>/mo</small>";
+  
+    const updateLabel = () => {
+      const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
+  
+      // Show the fee amount, just for display (don't use in calculation)
+      const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') ||
+                    document.querySelector('input[name="transaction.donationAmt"]');
+      const rawAmount = amountField ? parseFloat(amountField.value) : 0;
+      const fee = processingFees.calculateFees(rawAmount); // CORRECT
+      if (feeLabel) {
+        feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${fee.toFixed(2)})`;
       }
-    });
-
-    let frequency = this.frequency.getInstance().frequency;
-    let label = submit ? submit.dataset.label : "";
-    frequency = frequency === "onetime" ? "" : "<small>/mo</small>";
-
-    if (amount) {
-      label = label.replace("$AMOUNT", amount);
-      label = label.replace("$FREQUENCY", frequency);
-    } else {
-      label = label.replace("$AMOUNT", "");
-      label = label.replace("$FREQUENCY", "");
-    }
-
-    if (submit && label) {
-      submit.innerHTML = `<span>${label}</span>`;
-    }
+  
+      const label = submit?.dataset.label
+        ?.replace("$AMOUNT", `$${amount.toFixed(2)}`)
+        ?.replace("$FREQUENCY", frequency);
+  
+      if (submit && label) {
+        submit.innerHTML = `<span>${label}</span>`;
+      }
+    };
+  
+    updateLabel(); // On load
+    feeCover?.addEventListener("change", updateLabel);
   }
 
   clickPaymentOptions(opts) {
