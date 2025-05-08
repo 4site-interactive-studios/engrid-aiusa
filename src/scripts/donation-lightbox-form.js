@@ -709,7 +709,7 @@ export default class DonationLightboxForm {
     };
   
     updateLabel(); // On load
-    //feeCover?.addEventListener("change", updateLabel);
+    feeCover?.addEventListener("change", updateLabel);
   }
 
   clickPaymentOptions(opts) {
