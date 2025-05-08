@@ -692,9 +692,7 @@ export default class DonationLightboxForm {
     const updateLabel = () => {
       const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
   
-      // Show the fee amount, just for display (don't use in calculation)
-      const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') ||
-                    document.querySelector('input[name="transaction.donationAmt"]');
+      const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') || document.querySelector('input[name="transaction.donationAmt"]');
       const rawAmount = amountField ? parseFloat(amountField.value) : 0;
       const fee = processingFees.calculateFees(rawAmount); // CORRECT
       if (feeLabel) {
@@ -711,7 +709,7 @@ export default class DonationLightboxForm {
     };
   
     updateLabel(); // On load
-    feeCover?.addEventListener("change", updateLabel);
+    //feeCover?.addEventListener("change", updateLabel);
   }
 
   clickPaymentOptions(opts) {
