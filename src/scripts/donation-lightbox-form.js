@@ -693,7 +693,7 @@ export default class DonationLightboxForm {
       const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
   
       const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') || document.querySelector('input[name="transaction.donationAmt"]');
-      const rawAmount = amountField ? parseFloat(amountField.value) : 0;
+      const rawAmount = parseFloat(amountField.value);
       const fee = processingFees.calculateFees(rawAmount); // CORRECT
       if (feeLabel) {
         feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${fee.toFixed(2)})`;
