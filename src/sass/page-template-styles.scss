@@ -186,6 +186,15 @@
   }
 }
 [data-engrid-theme="aiusa"] {
+  // VGS
+  --en-vgs-height: 51px;
+  --en-vgs-width: 244px;
+  --en-vgs-borderWidth: 2px;
+  --en-vgs-borderStyle: solid;
+  --en-vgs-borderColor: rgb(245, 245, 245);
+  --en-vgs-borderRadius: 0px;
+  --en-vgs-backgroundColor: rgb(245, 245, 245);
+
   // FIXED COLOR PALETTE
   --color_transparent: transparent;
   --color_white: rgba(255, 255, 255, 1);
@@ -2633,6 +2642,20 @@
   .engrid--embedded-ecard {
     width: 100%;
   }
+
+  /* Styles the iFrame of the embedded donation page that is displayed on the thank you page */
+  iframe.thank-you-page-donation {
+    margin: 1.5rem calc(1rem + 15px) 2rem;
+    position: relative;
+    left: calc(((1rem + 5px) * -1));
+    transition: all 0.2s ease-in-out;
+    visibility: hidden;
+    &.loaded {
+      outline: 4px dashed #252525;
+      outline-offset: 1rem;
+      visibility: visible;
+    }
+  }
 }
 
 /*
@@ -2851,8 +2874,8 @@ body#en__pagebuilder .content-footerSpacer {
 
   // // TYPOGRAPHY P
   // // --p_font-family: var(--default_font-family);
-  --p_color: #252525;
-  --p_font-size: 12px;
+  // --p_color: #252525;
+  // --p_font-size: 12px;
   // --p_font-weight: 600;
   // --p_line-height: 1.33;
 
@@ -2963,6 +2986,13 @@ body#en__pagebuilder .content-footerSpacer {
     display: none;
   }
 
+  .en__component--formblock,
+  .en__component--svblock,
+  .en__registrants__registrantDetails {
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+
   /* When embedded tone down the weight of the eCard headers */
   &[data-engrid-page-type="e-card"] .en__component--ecardblock h2 {
     font-size: var(--h3_font-size);
@@ -2970,6 +3000,16 @@ body#en__pagebuilder .content-footerSpacer {
     margin-top: calc(2rem * var(--scale-down_40pct));
     text-transform: var(--h3_text-transform);
     font-weight: var(--h3_font-weight);
+  }
+}
+
+[data-engrid-embedded="thank-you-page-donation"] {
+  .body-title {
+    padding-top: 16px;
+  }
+  .en__component--dd360confirmation,
+  .content-footer {
+    display: none !important;
   }
 }
 
@@ -2981,7 +3021,7 @@ body#en__pagebuilder .content-footerSpacer {
 
   .en__ecardrecipients__email,
   .en__ecardrecipients__name {
-    width: 100%!important;
+    width: 100% !important;
     input {
       padding: var(--input_padding);
     }
@@ -2990,6 +3030,8 @@ body#en__pagebuilder .content-footerSpacer {
 
 /* Add your custom theme styles here */
 [data-engrid-embedded][data-multi-step] {
+  --p_color: #252525;
+  --p_font-size: 12px;
   // Zoom Out If Screen Is 320px or less
   @media only screen and (max-width: 320px) {
     #engrid {
@@ -3684,7 +3726,7 @@ body#en__pagebuilder .content-footerSpacer {
     align-items: center;
     height: 52px;
     width: 52px;
-    background-color: #FFFE00;
+    background-color: #fffe00;
     border-radius: 50%;
     line-height: 1;
   }
@@ -3705,7 +3747,7 @@ body#en__pagebuilder .content-footerSpacer {
     margin-bottom: 0;
 
     &:before {
-      content: '';
+      content: "";
       display: block;
       width: 20px;
       height: 1px;

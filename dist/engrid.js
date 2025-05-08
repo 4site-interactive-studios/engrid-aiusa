@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, May 6, 2025 @ 10:52:46 ET
- *  By: daryl
- *  ENGrid styles: v0.21.0
- *  ENGrid scripts: v0.21.0
+ *  Date: Friday, April 25, 2025 @ 01:15:00 ET
+ *  By: fernando
+ *  ENGrid styles: v0.21.9
+ *  ENGrid scripts: v0.21.11
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -11863,6 +11863,8 @@ class engrid_ENGrid {
     static getPageType() {
         if ("pageJson" in window && "pageType" in window.pageJson) {
             switch (window.pageJson.pageType) {
+                case "p2pcheckout":
+                case "p2pdonation":
                 case "donation":
                 case "premiumgift":
                     return "DONATION";
@@ -11882,6 +11884,9 @@ class engrid_ENGrid {
                     break;
                 case "emailsubscribeform":
                     return "SUBSCRIBEFORM";
+                    break;
+                case "event":
+                    return "EVENT";
                     break;
                 case "supporterhub":
                     return "SUPPORTERHUB";
@@ -17735,7 +17740,12 @@ class UrlToForm {
         this.urlParams.forEach((value, key) => {
             const field = document.getElementsByName(key)[0];
             if (field) {
-                if (!["text", "textarea", "email"].includes(field.type) ||
+                if (field.type === "checkbox") {
+                    field.checked = value === "true" || value === "Y" || value === "1";
+                    engrid_ENGrid.setFieldValue(key, field.checked);
+                    this.logger.log(`Set: ${key} to ${field.checked}`);
+                }
+                else if (!["text", "textarea", "email"].includes(field.type) ||
                     !field.value) {
                     engrid_ENGrid.setFieldValue(key, value);
                     this.logger.log(`Set: ${key} to ${value}`);
@@ -19380,6 +19390,7 @@ class SwapAmounts {
         const urlParams = new URLSearchParams(window.location.search);
         const amounts = urlParams.get("engrid-amounts");
         if (amounts) {
+            this.defaultChange = true;
             const amountArray = amounts.split(",").map((amt) => amt.trim());
             const defaultAmount = parseFloat(engrid_ENGrid.getUrlParameter("transaction.donationAmt")) || parseFloat(amountArray[0]);
             const amountsObj = {};
@@ -19401,7 +19412,9 @@ class SwapAmounts {
                 ignoreCurrentValue: this.ignoreCurrentValue(),
             });
             this._amount.load();
-            this.logger.log("Amounts Swapped To", window.EngridAmounts[this._frequency.frequency]);
+            this.logger.log("Amounts Swapped To", window.EngridAmounts[this._frequency.frequency], {
+                ignoreCurrentValue: this.ignoreCurrentValue(),
+            });
             this.swapped = true;
         }
     }
@@ -19420,8 +19433,13 @@ class SwapAmounts {
         return "EngridAmounts" in window;
     }
     ignoreCurrentValue() {
+        if (engrid_ENGrid.getUrlParameter("transaction.donationAmt") !== null) {
+            return this._amount.amount ===
+                parseFloat(engrid_ENGrid.getUrlParameter("transaction.donationAmt"))
+                ? false
+                : true;
+        }
         return !(window.EngagingNetworks.require._defined.enjs.checkSubmissionFailed() ||
-            engrid_ENGrid.getUrlParameter("transaction.donationAmt") !== null ||
             this.defaultChange);
     }
 }
@@ -19942,6 +19960,7 @@ DebugPanel.debugSessionStorageKey = "engrid_debug_panel";
 class DebugHiddenFields {
     constructor() {
         this.logger = new logger_EngridLogger("Debug hidden fields", "#f0f0f0", "#ff0000", "🫣");
+        this.ignoreFields = ["transaction.paycurrency"];
         // Query all hidden input elements within the specified selectors
         const fields = document.querySelectorAll(".en__component--row [type='hidden'][class*='en_'], .engrid-added-input[type='hidden']");
         // Check if there are any hidden fields
@@ -19954,6 +19973,11 @@ class DebugHiddenFields {
                 .join(", ")}`);
             // Iterate through each hidden input element
             fields.forEach((el) => {
+                // Check if the field name is in the ignore list
+                if (this.ignoreFields.includes(el.name)) {
+                    this.logger.log(`Ignoring field: ${el.name} because it is in the ignore list`);
+                    return;
+                }
                 // Change the input type to 'text' and add the required classes
                 el.type = "text";
                 el.classList.add("en__field__input", "en__field__input--text");
@@ -21554,7 +21578,6 @@ class VGS {
                 autoComplete: "cc-exp",
                 validations: ["required", "validCardExpirationDate"],
                 css: styles,
-                yearLength: 2,
             },
         };
         // Deep merge the default options with the options set in the theme
@@ -21623,9 +21646,9 @@ class VGS {
             this.paymentTypeField.value.toLowerCase() === "visa" ||
             this.paymentTypeField.value.toLowerCase() === "vi") {
             const cardContainer = document.querySelector(".en__field--vgs.en__field--ccnumber");
-            const cardEmpty = cardContainer.querySelector(".vgs-collect-container__empty");
+            const cardEmpty = cardContainer === null || cardContainer === void 0 ? void 0 : cardContainer.querySelector(".vgs-collect-container__empty");
             const cvvContainer = document.querySelector(".en__field--vgs.en__field--ccvv");
-            const cvvEmpty = cvvContainer.querySelector(".vgs-collect-container__empty");
+            const cvvEmpty = cvvContainer === null || cvvContainer === void 0 ? void 0 : cvvContainer.querySelector(".vgs-collect-container__empty");
             if (cardContainer && cardEmpty) {
                 window.setTimeout(() => {
                     engrid_ENGrid.setError(cardContainer, "Please enter a valid card number");
@@ -22646,11 +22669,12 @@ class OptInLadder {
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/post-donation-embed.js
 // This component only works on Thank You pages and the current page IS NOT embedded as an iframe.
 // It searches for a post-donation tag (engrid-post-donation)
-// and if it exists, it will replace it with an iframe of the current donation page, replacing the
-// "/donate/2" with "/donate/1" and adding a ?chain.
-// It has 2 parameters:
-// 1. params: the URL parameters to pass to the iframe
-// 2. amounts: comma separated list of amounts to pass to the iframe
+// and if it exists, it will replace it with an iframe of the chained `src` attribute (or the current donation page, replacing the
+// "/donate/2" with "/donate/1").
+// The engrid-post-donation tag has 3 attributes:
+// 1. src: the URL of the iframe to load (optional)
+// 2. params: the URL parameters to pass to the iframe
+// 3. amounts: comma separated list of amounts to pass to the iframe
 
 class PostDonationEmbed {
     constructor() {
@@ -22659,10 +22683,17 @@ class PostDonationEmbed {
             return;
         this.logger.log("Post Donation Tag found");
         const postDonationTag = document.querySelector("engrid-post-donation");
-        // Get current page URL
-        let currentUrl = new URL(window.location.href);
-        // Modify the path: replace "/donate/2" with "/donate/1"
-        currentUrl.pathname = currentUrl.pathname.replace("/donate/2", "/donate/1");
+        // Get `src` attribute from the <engrid-post-donation> tag if it exists
+        // If not, use the current page URL as the base URL
+        let iFrameSRC;
+        if (!postDonationTag.getAttribute("src")) {
+            iFrameSRC = new URL(window.location.href);
+            // Modify the path: replace "/donate/2" with "/donate/1"
+            iFrameSRC.pathname = iFrameSRC.pathname.replace("/donate/2", "/donate/1");
+        }
+        else {
+            iFrameSRC = new URL(postDonationTag.getAttribute("src") || "");
+        }
         // Extract parameters from the <engrid-post-donation> tag
         let params = postDonationTag.getAttribute("params") || "";
         let amounts = postDonationTag.getAttribute("amounts");
@@ -22673,7 +22704,7 @@ class PostDonationEmbed {
             .replace(/%5B/g, "[")
             .replace(/%5D/g, "]");
         // Construct new URL with "chain" parameter
-        let newUrl = `${currentUrl.origin}${currentUrl.pathname}?chain&${paramString}`;
+        let newUrl = `${iFrameSRC.origin}${iFrameSRC.pathname}?chain&${paramString}`;
         if (amounts) {
             newUrl += `&engrid-amounts=${amounts}`;
         }
@@ -22702,7 +22733,7 @@ class PostDonationEmbed {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/version.js
-const AppVersion = "0.21.0";
+const AppVersion = "0.21.11";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
