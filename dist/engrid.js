@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, May 8, 2025 @ 17:02:03 ET
+ *  Date: Thursday, May 8, 2025 @ 17:13:08 ET
  *  By: daryl
  *  ENGrid styles: v0.21.0
  *  ENGrid scripts: v0.21.0
@@ -23828,9 +23828,10 @@ class DonationLightboxForm {
     const frequency = frequencyRaw === "onetime" ? "" : "<small>/mo</small>";
 
     const updateLabel = () => {
-      const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
+      const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal()); // Show the fee amount, just for display (don't use in calculation)
+
       const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') || document.querySelector('input[name="transaction.donationAmt"]');
-      const rawAmount = parseFloat(amountField.value);
+      const rawAmount = amountField ? parseFloat(amountField.value) : 0;
       const fee = processingFees.calculateFees(rawAmount); // CORRECT
 
       if (feeLabel) {
