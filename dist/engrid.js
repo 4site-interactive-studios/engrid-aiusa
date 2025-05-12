@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, May 8, 2025 @ 17:13:08 ET
+ *  Date: Monday, May 12, 2025 @ 09:19:46 ET
  *  By: daryl
  *  ENGrid styles: v0.21.0
  *  ENGrid scripts: v0.21.0
@@ -23827,17 +23827,18 @@ class DonationLightboxForm {
     const frequencyRaw = this.frequency.getInstance().frequency;
     const frequency = frequencyRaw === "onetime" ? "" : "<small>/mo</small>";
 
-    const updateLabel = () => {
-      const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal()); // Show the fee amount, just for display (don't use in calculation)
-
+    const updateFeeLabel = () => {
       const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') || document.querySelector('input[name="transaction.donationAmt"]');
       const rawAmount = amountField ? parseFloat(amountField.value) : 0;
-      const fee = processingFees.calculateFees(rawAmount); // CORRECT
+      const fee = processingFees.calculateFees(rawAmount);
 
       if (feeLabel) {
         feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${fee.toFixed(2)})`;
       }
+    };
 
+    const updateSubmitButton = () => {
+      const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
       const label = submit?.dataset.label?.replace("$AMOUNT", `$${amount.toFixed(2)}`)?.replace("$FREQUENCY", frequency);
 
       if (submit && label) {
@@ -23845,9 +23846,13 @@ class DonationLightboxForm {
       }
     };
 
-    updateLabel(); // On load
-
-    feeCover?.addEventListener("change", updateLabel);
+    updateFeeLabel();
+    updateSubmitButton();
+    const donationAmountInputs = document.querySelectorAll('[id*="transaction_donationAmt"]');
+    donationAmountInputs.forEach(input => {
+      input.addEventListener("change", updateSubmitButton);
+    });
+    feeCover?.addEventListener("change", updateSubmitButton);
   }
 
   clickPaymentOptions(opts) {
