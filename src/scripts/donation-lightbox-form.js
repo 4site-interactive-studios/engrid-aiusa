@@ -701,8 +701,14 @@ export default class DonationLightboxForm {
 
   const updateSubmitButton = () => {
     const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
+    let amountUpdated = amount.toFixed(2); 
+
+    if (amountUpdated.endsWith(".00")) {
+      amountUpdated = amountUpdated.slice(0, -3);
+    }
+    
     const label = submit?.dataset.label
-      ?.replace("$AMOUNT", `$${amount.toFixed(2)}`)
+      ?.replace("$AMOUNT", `$${amountUpdated}`)
       ?.replace("$FREQUENCY", frequency);
 
     if (submit && label) {
