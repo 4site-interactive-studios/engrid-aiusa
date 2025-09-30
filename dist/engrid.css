@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Monday, July 7, 2025 @ 13:46:38 ET
+ *  Date: Tuesday, September 30, 2025 @ 14:18:11 ET
  *  By: fernando
  *  ENGrid styles: v0.22.4
  *  ENGrid scripts: v0.22.7
@@ -8084,7 +8084,9 @@ body[data-engrid-debug]:before{
   --recurring-frequency__button_font-size:var(--button_font-size);
   --recurring-frequency__button_font-weight:var(--button_font-weight);
   --recurring-frequency__button_line-height:var(--button_line-height);
-  --recurring-frequency__button_background-color:var(--button_background-color);
+  --recurring-frequency__button_background-color:var(
+    --button_background-color
+  );
   --recurring-frequency__button_border-width:var(--button_border-width);
   --recurring-frequency__button_border-color:var(--button_border-color);
   --recurring-frequency__button_border-radius:var(--button_border-radius);
@@ -8105,8 +8107,12 @@ body[data-engrid-debug]:before{
   --donation-amount__button_border-color:var(--button_border-color);
   --donation-amount__button_border-radius:var(--button_border-radius);
   --donation-amount__button_color_hover:var(--button_color_hover);
-  --donation-amount__button_background-color_hover:var(--button_background-color_hover);
-  --donation-amount__button_border-color_hover:var(--button_border-color_hover);
+  --donation-amount__button_background-color_hover:var(
+    --button_background-color_hover
+  );
+  --donation-amount__button_border-color_hover:var(
+    --button_border-color_hover
+  );
   --donation-amount__button_color_checked:var(--color_white);
   --donation-amount__button_background-color_checked:var(--button_color);
   --donation-amount__button_border-color_checked:var(--button_color);
@@ -8120,7 +8126,9 @@ body[data-engrid-debug]:before{
   --give-by-select__button_border-color:var(--button_border-color);
   --give-by-select__button_border-radius:var(--button_border-radius);
   --give-by-select__button_color_hover:var(--button_color_hover);
-  --give-by-select__button_background-color_hover:var(--button_background-color_hover);
+  --give-by-select__button_background-color_hover:var(
+    --button_background-color_hover
+  );
   --give-by-select__button_border-color_hover:var(--button_border-color_hover);
   --give-by-select__button_color_checked:var(--color_white);
   --give-by-select__button_background-color_checked:var(--button_color);
@@ -8148,12 +8156,20 @@ body[data-engrid-debug]:before{
   --engrid__body-bottom_background-color:var(--engrid__body_background-color);
   --engrid__body-footer_background-color:var(--engrid__body_background-color);
   --engrid__body-footerOutside_background-color:var(--color_transparent);
-  --engrid__content-footerSpacer_background-color:var(--engrid__content_background-color);
-  --engrid__content-preFooter_background-color:var(--engrid__content_background-color);
+  --engrid__content-footerSpacer_background-color:var(
+    --engrid__content_background-color
+  );
+  --engrid__content-preFooter_background-color:var(
+    --engrid__content_background-color
+  );
   --engrid__content-footer_background-color:var(--color_white);
   --engrid__page-backgroundImage_background-color:--color_light-gray;
-  --engrid__page-backgroundImageOverlay_background-color:var(--color_transparent);
-  --engrid__page-customCode_background-color:var(--engrid__page_background-color);
+  --engrid__page-backgroundImageOverlay_background-color:var(
+    --color_transparent
+  );
+  --engrid__page-customCode_background-color:var(
+    --engrid__page_background-color
+  );
   --engrid__page_padding:0px;
   --engrid__content_padding:0px;
   --engrid__body_padding:0px 60px;
@@ -8419,8 +8435,12 @@ body[data-engrid-debug]:before{
 }
 [data-engrid-theme=aiusa] .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
   --donation-amount__flex-grow:1;
-  --donation-amount__button_background-color_checked:var(--input_background-color);
-  --donation-amount__button_border-color_checked:var(--input_background-color_hover);
+  --donation-amount__button_background-color_checked:var(
+    --input_background-color
+  );
+  --donation-amount__button_border-color_checked:var(
+    --input_background-color_hover
+  );
   --donation-amount__button_color_checked:initial;
 }
 [data-engrid-theme=aiusa] #menu-wrapper{
@@ -8931,6 +8951,18 @@ body[data-engrid-debug]:before{
 }
 [data-engrid-theme=aiusa] .give-by-select.en__field--radio .paypal.en__field__item input[type=radio]:checked+label span{
   filter:invert(100%);
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect{
+  align-items:stretch;
+  display:flex;
+  min-height:67px;
+  min-width:120px;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect img{
+  max-width:80%;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect input:checked+label>img.daf-logo{
+  filter:grayscale(1) brightness(1) invert(1);
 }
 [data-engrid-theme=aiusa] .en__field__item.paypal label span{
   background-image:url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/paypal.png?v=1614704461000);

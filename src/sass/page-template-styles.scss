@@ -461,7 +461,9 @@
   --recurring-frequency__button_font-size: var(--button_font-size);
   --recurring-frequency__button_font-weight: var(--button_font-weight);
   --recurring-frequency__button_line-height: var(--button_line-height);
-  --recurring-frequency__button_background-color: var(--button_background-color);
+  --recurring-frequency__button_background-color: var(
+    --button_background-color
+  );
   --recurring-frequency__button_border-width: var(--button_border-width);
   --recurring-frequency__button_border-color: var(--button_border-color);
   --recurring-frequency__button_border-radius: var(--button_border-radius);
@@ -490,8 +492,12 @@
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:HOVER
   --donation-amount__button_color_hover: var(--button_color_hover);
-  --donation-amount__button_background-color_hover: var(--button_background-color_hover);
-  --donation-amount__button_border-color_hover: var(--button_border-color_hover);
+  --donation-amount__button_background-color_hover: var(
+    --button_background-color_hover
+  );
+  --donation-amount__button_border-color_hover: var(
+    --button_border-color_hover
+  );
 
   // TYPOGRAPHY GIVING AMOUNT BUTTON:CHECKED
   --donation-amount__button_color_checked: var(--color_white);
@@ -511,7 +517,9 @@
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:HOVER
   --give-by-select__button_color_hover: var(--button_color_hover);
-  --give-by-select__button_background-color_hover: var(--button_background-color_hover);
+  --give-by-select__button_background-color_hover: var(
+    --button_background-color_hover
+  );
   --give-by-select__button_border-color_hover: var(--button_border-color_hover);
 
   // TYPOGRAPHY GIVE BY SELECT BUTTON:CHECKED
@@ -553,12 +561,20 @@
   --engrid__body-bottom_background-color: var(--engrid__body_background-color);
   --engrid__body-footer_background-color: var(--engrid__body_background-color);
   --engrid__body-footerOutside_background-color: var(--color_transparent);
-  --engrid__content-footerSpacer_background-color: var(--engrid__content_background-color);
-  --engrid__content-preFooter_background-color: var(--engrid__content_background-color);
+  --engrid__content-footerSpacer_background-color: var(
+    --engrid__content_background-color
+  );
+  --engrid__content-preFooter_background-color: var(
+    --engrid__content_background-color
+  );
   --engrid__content-footer_background-color: var(--color_white);
   --engrid__page-backgroundImage_background-color: --color_light-gray;
-  --engrid__page-backgroundImageOverlay_background-color: var(--color_transparent);
-  --engrid__page-customCode_background-color: var(--engrid__page_background-color);
+  --engrid__page-backgroundImageOverlay_background-color: var(
+    --color_transparent
+  );
+  --engrid__page-customCode_background-color: var(
+    --engrid__page_background-color
+  );
 
   // ENGRID SECTIONS PADDING
   // QUICK SETTINGS
@@ -699,7 +715,6 @@
 
   /* All headlines, labels, abd button text within the body are capitalized */
   [class*="body-"] {
-
     h1,
     h2,
     h3,
@@ -729,12 +744,12 @@
     }
   }
 
-  .sms-disclaimer>p:first-child {
+  .sms-disclaimer > p:first-child {
     margin-top: 0;
   }
 
-  .sms-disclaimer>p,
-  .sms-disclaimer>p>a {
+  .sms-disclaimer > p,
+  .sms-disclaimer > p > a {
     font-style: italic;
     font-size: 0.75rem;
     line-height: 1rem;
@@ -742,7 +757,6 @@
   }
 
   .dtd-company-selected {
-
     // Double the Donation Wrong Amount A link styled as a button overrides
     .wrongcompany a {
       color: var(--button_color_checked);
@@ -758,17 +772,26 @@
     }
   }
 
-  .en__field.en__field--checkbox>label {
+  .en__field.en__field--checkbox > label {
     display: none;
   }
 
   // Hide Annual Giving Amount
-  &#en__pagebuilder .hide-annual .en__field--recurrfreq .en__field__item:last-child,
-  &[data-engrid-debug] .hide-annual .en__field--recurrfreq .en__field__item:last-child {
+  &#en__pagebuilder
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child,
+  &[data-engrid-debug]
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child {
     background-color: #ff00001a;
   }
 
-  &:not(#en__pagebuilder):not([data-engrid-debug]) .hide-annual .en__field--recurrfreq .en__field__item:last-child {
+  &:not(#en__pagebuilder):not([data-engrid-debug])
+    .hide-annual
+    .en__field--recurrfreq
+    .en__field__item:last-child {
     display: none;
   }
 
@@ -781,28 +804,32 @@
   //   margin-left: calc(var(--checkbox_width) + 0.5rem);
   // }
 
-  .en__field__input--checkbox+.en__field__label:before {
+  .en__field__input--checkbox + .en__field__label:before {
     font-size: 0.99936rem;
   }
 
-  .en__component--contactblock .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__rows:before {
+  .en__component--contactblock
+    .en__contacts:not(.en__contacts--hideCheck)
+    .en__contactDetails__rows:before {
     top: 5px;
     left: 0px;
   }
 
-  .en__field__input--checkbox:checked+.en__field__label:before,
+  .en__field__input--checkbox:checked + .en__field__label:before,
   .en__component--contactblock .en__contactDetails__rows:before {
     box-shadow: none !important;
   }
 
-  .en__field__input--checkbox:checked+.en__field__label::after {
+  .en__field__input--checkbox:checked + .en__field__label::after {
     left: 5px !important;
     top: 6px !important;
     font-size: 1.2rem !important;
     font-weight: 700;
   }
 
-  .en__contacts:not(.en__contacts--hideCheck) .en__contactDetails__select:checked+.en__contactDetails__rows:after {
+  .en__contacts:not(.en__contacts--hideCheck)
+    .en__contactDetails__select:checked
+    + .en__contactDetails__rows:after {
     left: 7px;
     top: 7px;
   }
@@ -815,8 +842,8 @@
     display: none;
   }
 
-  input.en__field__input--checkbox:checked+label,
-  input.en__field__input--checkbox+label {
+  input.en__field__input--checkbox:checked + label,
+  input.en__field__input--checkbox + label {
     font-weight: 500;
     font-family: var(--default_font-family);
     text-transform: none;
@@ -882,7 +909,8 @@
   //   display: inline-block;
   //   text-align: center;
   // }
-  .en__field--radio.en__field--survey label.en__field__label.en__field__label--item {
+  .en__field--radio.en__field--survey
+    label.en__field__label.en__field__label--item {
     text-align: left;
   }
 
@@ -975,24 +1003,45 @@
     font-family: var(--font-stack-aiusa-bold-condensed);
   }
 
-  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other) label {
+  &[data-engrid-transaction-recurring-frequency="annual"]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    > .en__field__element
+    > .en__field__item:not(.en__field__item--other)
+    label {
     flex-direction: column;
   }
 
-  &[data-engrid-transaction-recurring-frequency="annual"] .radio-to-buttons_donationAmt .en__field--donationAmt>.en__field__element>.en__field__item:not(.en__field__item--other) .en__field__label--item:after {
+  &[data-engrid-transaction-recurring-frequency="annual"]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    > .en__field__element
+    > .en__field__item:not(.en__field__item--other)
+    .en__field__label--item:after {
     margin-left: 0;
   }
 
-  &[data-engrid-transaction-recurring-frequency] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after {
+  &[data-engrid-transaction-recurring-frequency]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    div:not(.en__field__item--other)
+    .en__field__label--item:after {
     font-size: 100%;
     opacity: 1;
     margin-left: 0.5ch;
   }
 
-  .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other {
+  .radio-to-buttons_donationAmt
+    .en__field--donationAmt.en__field--radio
+    > .en__field__element
+    .en__field__item.en__field__item--other {
     --donation-amount__flex-grow: 1;
-    --donation-amount__button_background-color_checked: var(--input_background-color);
-    --donation-amount__button_border-color_checked: var(--input_background-color_hover);
+    --donation-amount__button_background-color_checked: var(
+      --input_background-color
+    );
+    --donation-amount__button_border-color_checked: var(
+      --input_background-color_hover
+    );
     --donation-amount__button_color_checked: initial;
   }
 
@@ -1054,7 +1103,7 @@
       padding: 0;
     }
 
-    ul[role="menubar"]>li {
+    ul[role="menubar"] > li {
       display: inline;
       position: relative;
     }
@@ -1063,7 +1112,7 @@
     //   content: url('https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/images/down-arrow-brown.png');
     // }
 
-    ul[role="menubar"]>li>[role="menuitem"] {
+    ul[role="menubar"] > li > [role="menuitem"] {
       padding-top: 8px;
       padding-bottom: 8px;
       padding-left: 16px;
@@ -1267,14 +1316,14 @@
     padding-bottom: 1rem;
 
     // Let it butt right up against the top of the section
-    &>div:first-of-type> :first-child {
+    & > div:first-of-type > :first-child {
       margin-top: 0px;
       padding-top: 0px;
     }
 
     // Let the second to last element determine the spacing between it and the last element
     // Let the parent section determin the spacing between the last element and the next section
-    &>div:last-of-type> :last-child {
+    & > div:last-of-type > :last-child {
       margin-top: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -1291,23 +1340,23 @@
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
 
-    >.en__component--copyblock {
+    > .en__component--copyblock {
       &:first-child {
-        >*:first-child {
+        > *:first-child {
           margin-top: 0;
         }
       }
 
       &:last-child {
-        >*:last-child {
+        > *:last-child {
           margin-bottom: 0;
         }
       }
     }
 
     // If the first child is a paragraph or click-to-expand block, add top margin like it was a H1
-    &>p:first-child,
-    &>.click-to-expand-text-wrapper:first-child {
+    & > p:first-child,
+    & > .click-to-expand-text-wrapper:first-child {
       margin-top: 0.67rem;
     }
 
@@ -1329,14 +1378,14 @@
     padding-top: 24px;
 
     // Let it butt right up against the top of the section
-    &>div:first-of-type> :first-child {
+    & > div:first-of-type > :first-child {
       margin-top: 0;
       padding-top: 0;
     }
 
     // Let the second to last element determine the spacing between it and the last element
     // Let the parent section determin the spacing between the last element and the next section
-    &>div:last-of-type> :last-child {
+    & > div:last-of-type > :last-child {
       margin-top: 0;
       padding-top: 0;
       padding-bottom: 0;
@@ -1415,11 +1464,11 @@
     outline-width: 0px;
   }
 
-  .en__field__element--checkbox input:focus+label {
+  .en__field__element--checkbox input:focus + label {
     outline-color: black;
   }
 
-  .en__field__element--radio input:focus+label,
+  .en__field__element--radio input:focus + label,
   button:focus {
     outline-color: black;
   }
@@ -1462,7 +1511,7 @@
       }
     }
 
-    h1~p {
+    h1 ~ p {
       text-align: left;
       margin: 0 auto;
       margin-top: 24px;
@@ -1488,7 +1537,8 @@
       margin-bottom: var(--fields_spacing-block);
       max-width: 358px;
       margin: 0 auto;
-      filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.1)) drop-shadow(-22px 21px 29px rgba(0, 0, 0, 0.12));
+      filter: drop-shadow(0px 8px 12px rgba(0, 0, 0, 0.1))
+        drop-shadow(-22px 21px 29px rgba(0, 0, 0, 0.12));
 
       a.pseduo__en__submit_button {
         --submit__button_padding-top: 1.5rem;
@@ -1647,7 +1697,9 @@
       overflow: inherit;
 
       .enWidget__fill {
-        background-color: var(--color_primary) !important; // !important required
+        background-color: var(
+          --color_primary
+        ) !important; // !important required
         box-shadow: inset -13px 0px 0px 0px rgba(255, 255, 255, 1);
 
         &::before {
@@ -1706,7 +1758,7 @@
       flex-grow: 1;
     }
 
-    .en__field__item input:checked+label {
+    .en__field__item input:checked + label {
       background-color: var(--button_background-color);
       color: var(--button_color);
       border-color: var(--button_border-color);
@@ -1843,8 +1895,24 @@
   }
 
   // Makes the paypal logo white and selection
-  .give-by-select.en__field--radio .paypal.en__field__item input[type="radio"]:checked+label span {
+  .give-by-select.en__field--radio
+    .paypal.en__field__item
+    input[type="radio"]:checked
+    + label
+    span {
     filter: invert(100%);
+  }
+  .en__field--giveBySelect {
+    min-height: 67px;
+    min-width: 120px;
+    display: flex;
+    align-items: stretch;
+    img {
+      max-width: 80%;
+    }
+  }
+  .en__field--giveBySelect input:checked + label > img.daf-logo {
+    filter: grayscale(1) brightness(1) invert(1);
   }
 
   .en__field__item.paypal label {
@@ -1933,14 +2001,13 @@
 * ##########################################################
 */
   @mixin until-mobile-l {
-
     // Let the radio buttons expand to take up their full row
     .en__field--recurrfreq .en__field__element--radio,
     .give-by-select .en__field__element--radio {
       flex-direction: column;
       flex-wrap: nowrap;
 
-      >* {
+      > * {
         width: 100%;
       }
     }
@@ -2009,7 +2076,6 @@
 
   // Footer Styles
   @mixin simplified-content-footer {
-
     // Adjust donation amount fields to display two to a Row
     .en__field--donationAmt div.en__field__item:not(.en__field__item--other) {
       // flex-basis: calc((100% * (1 / 2)) - 1rem);
@@ -2146,7 +2212,6 @@
   }
 
   .en__contact__detail {
-
     .en__contactSubject::before,
     .en__contactMessage::before {
       word-break: break-word;
@@ -2196,9 +2261,8 @@
   }
 
   .en__field--survey {
-
     /* Style survey question field labels like <h4> tags */
-    &.en__field>label {
+    &.en__field > label {
       font-size: calc(var(--h3_font-size) * var(--scale-down_20pct));
       margin-top: calc(2rem * var(--scale-down_80pct));
       margin-bottom: calc(1rem * var(--scale-down_80pct));
@@ -2208,7 +2272,7 @@
       line-height: var(--h3_line-height);
     }
 
-    &.en__field.en__field--checkbox>label {
+    &.en__field.en__field--checkbox > label {
       display: block;
     }
 
@@ -2249,8 +2313,8 @@
     }
 
     /* Style survey question options labels like <p> tags */
-    .en__field__item>label,
-    .en__field__item>input.en__field__input--checkbox:checked+label {
+    .en__field__item > label,
+    .en__field__item > input.en__field__input--checkbox:checked + label {
       font-family: var(--p_font-family) !important;
       color: var(--p_color);
       font-size: var(--p_font-size);
@@ -2259,18 +2323,23 @@
     }
 
     /* Adjusts the relative position of the checkbox checkmark now that the label is differently sized */
-    .en__field__item>input.en__field__input--checkbox:checked+.en__field__label:after {
+    .en__field__item
+      > input.en__field__input--checkbox:checked
+      + .en__field__label:after {
       top: 0px !important;
     }
   }
 
   // Chrome introduced a visual regression causing accessible focus outlines to outline the candle embers. There is no way to remove them just from the embers so we remove it from the root label
   // REF: https://app.productive.io/2650-4site-interactive-studios-inc/tasks/2821791
-  .radio-to-buttons_recurrfreq .en__field__input--radio+label {
+  .radio-to-buttons_recurrfreq .en__field__input--radio + label {
     outline: none;
   }
 
-  .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type="radio"]+label {
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]
+    + label {
     position: relative;
     display: flex;
     justify-content: center;
@@ -2289,8 +2358,7 @@
 
       opacity: 1;
       z-index: 0;
-      transition: opacity 0.3s ease-in-out,
-      top 0.3s ease-in-out;
+      transition: opacity 0.3s ease-in-out, top 0.3s ease-in-out;
       width: 0;
       position: relative;
 
@@ -2416,7 +2484,10 @@
     }
   }
 
-  .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type="radio"]:checked+label {
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]:checked
+    + label {
     .candle {
       .candle-flame {
         max-height: 26px;
@@ -2614,9 +2685,11 @@
 // END AIUSA ENGRID CUSTOM THEME
 
 [data-engrid-theme="aiusa"] {
-
   // Append an "upsell" arrow to the giving amount radio button that has everything defined but its "content". Content will be defined in a text block on an inline <style> tag so that the upsell text itself helps deine where to attach the arrow to.
-  .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type="radio"]+label:after {
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]
+    + label:after {
     // content: "";
     bottom: calc(-15.5px - 0.5rem);
     background-image: url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/upsell_arrow.png?v=161460392500);
@@ -2630,25 +2703,34 @@
   }
 
   &[data-engrid-transaction-recurring="y"] {
-    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type="radio"][value="ONETIME" i]+label:after {
+    .radio-to-buttons_recurrfreq
+      .en__field--recurrfreq.en__field--radio
+      input[type="radio"][value="ONETIME" i]
+      + label:after {
       content: var(--giving-frequency-upsell-arrow-onetime);
     }
   }
 
   &[data-engrid-transaction-recurring="n"] {
-    .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio input[type="radio"] {
-      monthly &[value="MONTHLY" i]+label:after {
+    .radio-to-buttons_recurrfreq
+      .en__field--recurrfreq.en__field--radio
+      input[type="radio"] {
+      monthly &[value="MONTHLY" i] + label:after {
         content: var(--giving-frequency-upsell-arrow-monthly);
       }
 
-      &[value="ANNUAL" i]+label:after {
+      &[value="ANNUAL" i] + label:after {
         content: var(--giving-frequency-upsell-arrow-annual);
       }
     }
   }
 
   &[data-engrid-transaction-recurring="y"] div.en__field__item.paypal,
-  &[data-engrid-payment-type="paypal"] .radio-to-buttons_recurrfreq .en__field--recurrfreq.en__field--radio>.en__field__element .en__field__item:not(:first-child) {
+  &[data-engrid-payment-type="paypal"]
+    .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    > .en__field__element
+    .en__field__item:not(:first-child) {
     display: none !important;
   }
 
@@ -2727,7 +2809,6 @@
 
 [data-engrid-theme="aiusa"][data-engrid-layout="leftleft1col"] {
   @media screen and (min-width: $leftleft1col_content-column_min-width) {
-
     .content-header,
     .content-footer {
       grid-column: pc;
@@ -2750,7 +2831,6 @@
 
 [data-engrid-theme="aiusa"][data-engrid-layout="rightright1col"] {
   @media screen and (min-width: $rightright1col_content-column_min-width) {
-
     .content-header,
     .content-footer {
       grid-column: pc;
@@ -2773,7 +2853,7 @@
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   @media screen and (min-width: $centercenter2col_content-column_min-width) {
-    form>.en__component--advrow {
+    form > .en__component--advrow {
       .body-top {
         grid-row: body-banner-end / body-bottom-end;
       }
@@ -2888,7 +2968,6 @@ body#en__pagebuilder .content-footerSpacer {
 
 [data-engrid-theme="aiusa"][data-engrid-layout="centercenter2col"] {
   @media screen and (min-width: $centercenter2col_content-column_min-width) {
-
     .body-title,
     .body-banner,
     .body-bannerOverlay,
@@ -3127,7 +3206,8 @@ body#en__pagebuilder .content-footerSpacer {
   .radio-to-buttons_donationAmt {
     --donation-amount__button_count: 3;
 
-    .en__field--radio.en__field--withOther.en__field--donationAmt .en__field__item--other {
+    .en__field--radio.en__field--withOther.en__field--donationAmt
+      .en__field__item--other {
       flex-basis: 100%;
       position: relative;
 
@@ -3232,7 +3312,9 @@ body#en__pagebuilder .content-footerSpacer {
     }
   }
 
-  &:not(#en__pagebuilder) .en__field:not(.en__field--checkbox)>.en__field__label {
+  &:not(#en__pagebuilder)
+    .en__field:not(.en__field--checkbox)
+    > .en__field__label {
     display: none;
   }
 
@@ -3240,7 +3322,11 @@ body#en__pagebuilder .content-footerSpacer {
     text-align: center;
   }
 
-  &[data-engrid-transaction-recurring-frequency="monthly"] .radio-to-buttons_donationAmt .en__field--donationAmt div:not(.en__field__item--other) .en__field__label--item:after {
+  &[data-engrid-transaction-recurring-frequency="monthly"]
+    .radio-to-buttons_donationAmt
+    .en__field--donationAmt
+    div:not(.en__field__item--other)
+    .en__field__label--item:after {
     font-size: calc(var(--donation-amount__button_font-size) * (1 / 1.75));
     margin-left: 0px;
     position: relative;
@@ -3264,7 +3350,7 @@ body#en__pagebuilder .content-footerSpacer {
     display: none;
   }
 
-  form.en__component>.en__component {
+  form.en__component > .en__component {
     position: relative;
 
     .section-navigation {
@@ -3369,38 +3455,110 @@ body#en__pagebuilder .content-footerSpacer {
       }
     }
 
-    >.en__component {
+    > .en__component {
       min-width: auto;
     }
   }
 
-  .en__component--formblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--radio .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--rating .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--splittext .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,
-  .en__component--formblock .en__field .en__field__element.en__field__element--withOther .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--checkbox .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--imgselect .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--radio .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--rating .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--splitselect .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--splittext .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--tripleselect .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--tripletext .en__field__item,
-  .en__component--svblock .en__field .en__field__element.en__field__element--withOther .en__field__item {
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--checkbox
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--imgselect
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--radio
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--rating
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--splitselect
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--splittext
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--tripleselect
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--tripletext
+    .en__field__item,
+  .en__component--formblock
+    .en__field
+    .en__field__element.en__field__element--withOther
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--checkbox
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--imgselect
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--radio
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--rating
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--splitselect
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--splittext
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--tripleselect
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--tripletext
+    .en__field__item,
+  .en__component--svblock
+    .en__field
+    .en__field__element.en__field__element--withOther
+    .en__field__item {
     padding: 3px;
   }
 
-  .en__component--formblock .en__field:not(.en__field--validationFailed) .en__field__element>input,
-  .en__component--formblock .en__field:not(.en__field--validationFailed) .en__field__element>select,
-  .en__component--formblock .en__field:not(.en__field--validationFailed) .en__field__element>textarea,
-  .en__component--svblock .en__field:not(.en__field--validationFailed) .en__field__element>input,
-  .en__component--svblock .en__field:not(.en__field--validationFailed) .en__field__element>select,
-  .en__component--svblock .en__field:not(.en__field--validationFailed) .en__field__element>textarea {
+  .en__component--formblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > input,
+  .en__component--formblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > select,
+  .en__component--formblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > textarea,
+  .en__component--svblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > input,
+  .en__component--svblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > select,
+  .en__component--svblock
+    .en__field:not(.en__field--validationFailed)
+    .en__field__element
+    > textarea {
     margin-bottom: 3px;
     margin-top: 3px;
   }
@@ -3410,8 +3568,8 @@ body#en__pagebuilder .content-footerSpacer {
     margin-bottom: 0;
   }
 
-  .en__component--formblock>*,
-  .en__component--svblock>* {
+  .en__component--formblock > *,
+  .en__component--svblock > * {
     padding-left: 0;
     padding-right: 0;
   }
@@ -3535,7 +3693,7 @@ body#en__pagebuilder .content-footerSpacer {
       // overscroll-behavior-x: contain;
       // scroll-behavior: smooth;
 
-      &>.en__component {
+      & > .en__component {
         width: 350px;
         padding: 45px;
         scroll-snap-align: start;
@@ -3549,18 +3707,24 @@ body#en__pagebuilder .content-footerSpacer {
           overflow-y: auto;
         }
 
-        &>.en__component {
+        & > .en__component {
           height: 100%;
           padding-bottom: 65px;
         }
       }
 
-      .en__component--row>.en__component--column .en__component:first-of-type>*:first-child {
+      .en__component--row
+        > .en__component--column
+        .en__component:first-of-type
+        > *:first-child {
         margin-top: 0;
         padding-top: 0;
       }
 
-      .en__component--row>.en__component--column .en__component:last-of-type>*:last-child {
+      .en__component--row
+        > .en__component--column
+        .en__component:last-of-type
+        > *:last-child {
         margin-bottom: 0;
         padding-bottom: 0;
       }
@@ -3574,7 +3738,6 @@ body#en__pagebuilder .content-footerSpacer {
   }
 
   .has-error {
-
     label,
     .en__field__input--other,
     .en__field__input {
@@ -3584,7 +3747,6 @@ body#en__pagebuilder .content-footerSpacer {
   }
 
   &[data-thank-you] {
-
     // form.en__component > .en__component {
     //   padding: 0;
     // }
@@ -3603,7 +3765,7 @@ body#en__pagebuilder .content-footerSpacer {
     }
 
     form.en__component {
-      &>.en__component[data-section-id] {
+      & > .en__component[data-section-id] {
         padding: 60px 45px;
         margin: auto;
       }
@@ -3809,16 +3971,16 @@ body#en__pagebuilder .content-footerSpacer {
     width: auto !important;
     line-height: 1rem !important;
   }
-  
-  form.en__component>.en__component {
+
+  form.en__component > .en__component {
     padding: 30px 40px !important;
   }
 
-  form.en__component>.en__component .section-navigation {
+  form.en__component > .en__component .section-navigation {
     bottom: 5px !important;
   }
 
-  form.en__component>.en__component .section-count {
+  form.en__component > .en__component .section-count {
     bottom: -25px;
   }
 }

@@ -18,6 +18,7 @@ import { customScript } from "./scripts/main";
 
 import { CheckboxLabel } from "./scripts/checkbox-label";
 import { UanRememberMe } from "./scripts/uan-remember-me";
+import { AddDAF } from "./scripts/add-daf";
 
 const options: Options = {
   applePay: false,
@@ -42,6 +43,7 @@ const options: Options = {
     new MultistepForm();
     new CheckboxLabel();
     new UanRememberMe();
+    new AddDAF();
   },
   onResize: () => console.log("Starter Theme Window Resized"),
 };
