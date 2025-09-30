@@ -19,7 +19,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, September 30, 2025 @ 14:18:11 ET
+ *  Date: Tuesday, September 30, 2025 @ 14:35:06 ET
  *  By: fernando
  *  ENGrid styles: v0.22.4
  *  ENGrid scripts: v0.22.7
@@ -8945,7 +8945,7 @@ body[data-engrid-debug]:before{
 [data-engrid-theme=aiusa] label a.label-tooltip{
   color:#767676;
 }
-[data-engrid-theme=aiusa] .card,[data-engrid-theme=aiusa] .check,[data-engrid-theme=aiusa] .paypal{
+[data-engrid-theme=aiusa] .card,[data-engrid-theme=aiusa] .check,[data-engrid-theme=aiusa] .daf,[data-engrid-theme=aiusa] .paypal{
   flex-basis:33.3333333333%;
   min-width:12ch;
 }
@@ -8953,13 +8953,17 @@ body[data-engrid-debug]:before{
   filter:invert(100%);
 }
 [data-engrid-theme=aiusa] .en__field--giveBySelect{
-  align-items:stretch;
-  display:flex;
   min-height:67px;
   min-width:120px;
+  width:100%;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect label{
+  min-height:55px;
 }
 [data-engrid-theme=aiusa] .en__field--giveBySelect img{
+  max-height:25px;
   max-width:80%;
+  object-fit:contain;
 }
 [data-engrid-theme=aiusa] .en__field--giveBySelect input:checked+label>img.daf-logo{
   filter:grayscale(1) brightness(1) invert(1);
