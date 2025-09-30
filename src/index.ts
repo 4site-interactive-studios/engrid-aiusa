@@ -15,7 +15,6 @@ import MultistepForm from "./scripts/multistep-form";
 import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
-import { AddDAF } from "./scripts/add-daf";
 
 import { CheckboxLabel } from "./scripts/checkbox-label";
 import { UanRememberMe } from "./scripts/uan-remember-me";
