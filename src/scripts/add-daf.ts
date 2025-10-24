@@ -103,6 +103,13 @@ export class AddDAF {
     dafOption.addEventListener("change", () => {
       this.logger.log("Payment DAF selected");
       ENGrid.setPaymentType("daf");
+      // Uncheck the fee cover option with a ghost click
+      const feeCoverLabel = document.querySelector(
+        "label[for='en__field_transaction_feeCover']"
+      ) as HTMLLabelElement;
+      if (feeCoverLabel) {
+        feeCoverLabel.click();
+      }
     });
   }
 }
