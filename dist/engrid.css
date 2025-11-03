@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, October 9, 2025 @ 16:26:24 ET
- *  By: fernando
+ *  Date: Monday, November 3, 2025 @ 18:49:52 ET
+ *  By: npgiano
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
  *
@@ -10657,4 +10657,56 @@ body{
 
 body:not(#en__pagebuilder) .checkbox-label{
   display:none;
+}
+
+.match_gift_container{
+  background:#000;
+  font-size:22px;
+  font-weight:700;
+  margin:auto -60px;
+  padding:32px 40px;
+}
+.match_gift_container span.line{
+  display:inline-block;
+}
+.match_gift_container .match_code_heading{
+  color:var(--color_primary);
+  font-family:var(--font-stack-aiusa-bold-condensed);
+  font-size:28px;
+  letter-spacing:.42px;
+  line-height:normal;
+  margin-bottom:12px;
+  text-align:center;
+}
+.match_gift_container .match_code_row{
+  display:grid;
+  gap:8px;
+  grid-template-columns:auto 130px;
+  width:100%;
+}
+.match_gift_container .match_code_code{
+  background:var(--color_white);
+  color:#667085;
+  letter-spacing:-.44px;
+  line-height:27px;
+  padding:13px 14px;
+  text-align:center;
+}
+.match_gift_container .match_code_applied_button{
+  background:var(--color_primary);
+  border-radius:56px;
+  color:#000;
+  font-family:var(--font-stack-aiusa-bold-condensed);
+  line-height:27px;
+  padding:12px 0;
+  text-align:center;
+}
+.match_gift_container .match_code_success_message{
+  color:var(--color_white);
+  font-size:14px;
+  font-style:italic;
+  letter-spacing:-.168px;
+  line-height:normal;
+  margin-top:4px;
+  text-align:center;
 }
