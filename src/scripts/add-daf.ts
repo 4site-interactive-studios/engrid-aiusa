@@ -108,7 +108,10 @@ export class AddDAF {
         "label[for='en__field_transaction_feeCover']"
       ) as HTMLLabelElement;
       if (feeCoverLabel) {
-        feeCoverLabel.click();
+        const feeCoverCheckbox = document.getElementById(
+          "en__field_transaction_feeCover"
+        ) as HTMLInputElement;
+        if (feeCoverCheckbox?.checked) feeCoverLabel.click();
       }
     });
   }

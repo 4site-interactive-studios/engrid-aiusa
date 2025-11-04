@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, October 24, 2025 @ 14:54:48 ET
+ *  Date: Tuesday, November 4, 2025 @ 11:49:30 ET
  *  By: fernando
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
@@ -26568,7 +26568,8 @@ class AddDAF {
       const feeCoverLabel = document.querySelector("label[for='en__field_transaction_feeCover']");
 
       if (feeCoverLabel) {
-        feeCoverLabel.click();
+        const feeCoverCheckbox = document.getElementById("en__field_transaction_feeCover");
+        if (feeCoverCheckbox?.checked) feeCoverLabel.click();
       }
     });
   }
