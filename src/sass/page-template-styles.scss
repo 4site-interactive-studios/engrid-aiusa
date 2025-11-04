@@ -3990,4 +3990,12 @@ body#en__pagebuilder .content-footerSpacer {
   }
 }
 
+[data-engrid-theme][data-conditonally-hide-show-digital-wallet-elements]
+  #en__digitalWallet
+  .en__digitalWallet__container,
+[data-engrid-theme] .en__submit button {
+  margin-top: 1rem !important;
+  margin-bottom: 2.5rem !important;
+}
+
 // END AIUSA ENGRID CUSTOM LAYOUTS
