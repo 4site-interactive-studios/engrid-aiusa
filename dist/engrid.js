@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, November 4, 2025 @ 12:02:24 ET
+ *  Date: Tuesday, November 11, 2025 @ 13:39:53 ET
  *  By: fernando
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
@@ -26608,6 +26608,14 @@ const options = {
   MaxAmountMessage: "Amount must be less than $100,000,000",
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
+    // Send a GTM event is the First Page
+    if (App.getPageNumber() === 1) {
+      window.dataLayer.push({
+        event: "EN_PAGEJSON_PAGENUMBER-1",
+        pageType: App.getPageType()
+      });
+    }
+
     window.DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
     customScript(App);

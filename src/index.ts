@@ -36,6 +36,13 @@ const options: Options = {
   MaxAmountMessage: "Amount must be less than $100,000,000",
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
+    // Send a GTM event is the First Page
+    if (App.getPageNumber() === 1) {
+      (window as any).dataLayer.push({
+        event: "EN_PAGEJSON_PAGENUMBER-1",
+        pageType: App.getPageType(),
+      });
+    }
     (<any>window).DonationLightboxForm = DonationLightboxForm;
     new DonationLightboxForm(DonationAmount, DonationFrequency);
     customScript(App);
