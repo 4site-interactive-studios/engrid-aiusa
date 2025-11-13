@@ -91,3 +91,8 @@ body:not(#en__pagebuilder) .checkbox-label {
     letter-spacing: -0.168px;
   }
 }
+@media screen and (max-width: 720px) {
+  .match_gift_container {
+    margin: auto -2px;
+  }
+}
