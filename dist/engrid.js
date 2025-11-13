@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, October 9, 2025 @ 16:26:24 ET
- *  By: fernando
+ *  Date: Thursday, November 13, 2025 @ 16:12:00 ET
+ *  By: nick
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
  *
@@ -24316,6 +24316,260 @@ class MultistepForm {
   }
 
 }
+;// CONCATENATED MODULE: ./src/scripts/data-layer.ts
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+// DataLayer: singleton helper for pushing structured analytics events/vars to window.dataLayer.
+// On load it emits one aggregated event `pageJsonVariablesReady` with:
+//   EN_PAGEJSON_* (normalized pageJson), EN_URLPARAM_*, EN_RECURRING_FREQUENCIES (donation pages),
+//   and EN_SUBMISSION_SUCCESS_{PAGETYPE} when on the final page.
+// User actions emit: EN_FORM_VALUE_UPDATED (field changes) and submission opt‑in/out events.
+// Queued end‑of‑gift events/variables (via addEndOfGiftProcessEvent / addEndOfGiftProcessVariable)
+// are replayed after a successful gift process load.
+// Sensitive payment/bank fields are excluded; selected PII fields are Base64 “hashed” (btoa — not cryptographic).
+// Replace with a real hash (e.g., SHA‑256) if required.
+
+class data_layer_DataLayer {
+  constructor() {
+    _defineProperty(this, "logger", new logger_EngridLogger("DataLayer", "#f1e5bc", "#009cdc", "📊"));
+
+    _defineProperty(this, "dataLayer", window.dataLayer || []);
+
+    _defineProperty(this, "_form", en_form_EnForm.getInstance());
+
+    _defineProperty(this, "encoder", new TextEncoder());
+
+    _defineProperty(this, "endOfGiftProcessStorageKey", "ENGRID_END_OF_GIFT_PROCESS_EVENTS");
+
+    _defineProperty(this, "excludedFields", [// Credit Card
+    "transaction.ccnumber", "transaction.ccexpire.delimiter", "transaction.ccexpire", "transaction.ccvv", "supporter.creditCardHolderName", // Bank Account
+    "supporter.bankAccountNumber", "supporter.bankAccountType", "transaction.bankname", "supporter.bankRoutingNumber"]);
+
+    _defineProperty(this, "hashedFields", [// Supporter Address, Phone Numbers, and Address
+    "supporter.emailAddress", "supporter.phoneNumber", "supporter.phoneNumber2", "supporter.address1", "supporter.address2", "supporter.address3", // In Honor/Memory Inform Email and Address
+    "transaction.infemail", "transaction.infadd1", "transaction.infadd2", "transaction.infadd3", // Billing Address
+    "supporter.billingAddress1", "supporter.billingAddress2", "supporter.billingAddress3"]);
+
+    _defineProperty(this, "retainedFields", [// Supporter Address, Phone Numbers, and Address
+    "supporter.emailAddress", "supporter.phoneNumber2", "supporter.address1", "supporter.address2", "supporter.address3"]);
+
+    if (engrid_ENGrid.getOption("RememberMe")) {
+      RememberMeEvents.getInstance().onLoad.subscribe(hasData => {
+        this.logger.log("Remember me - onLoad", hasData);
+        this.onLoad();
+      });
+    } else {
+      this.onLoad();
+    }
+
+    this._form.onSubmit.subscribe(() => this.onSubmit());
+  }
+
+  static getInstance() {
+    if (!data_layer_DataLayer.instance) {
+      data_layer_DataLayer.instance = new data_layer_DataLayer();
+      window._dataLayer = data_layer_DataLayer.instance;
+    }
+
+    return data_layer_DataLayer.instance;
+  }
+
+  transformJSON(value) {
+    if (typeof value === "string") {
+      return value.toUpperCase().trim().replace(/\s+/g, "-").replace(/:-/g, "-");
+    }
+
+    if (typeof value === "boolean") {
+      return value ? "TRUE" : "FALSE";
+    }
+
+    if (typeof value === "number") {
+      return value; // Preserve numeric type for analytics platforms that infer number vs string
+    }
+
+    return "";
+  }
+
+  onLoad() {
+    // Collect all data layer variables to push at once
+    const dataLayerData = {};
+
+    if (engrid_ENGrid.getGiftProcess()) {
+      this.logger.log("EN_SUCCESSFUL_DONATION");
+      this.addEndOfGiftProcessEventsToDataLayer();
+    } // @ts-ignore
+
+
+    if (window.pageJson) {
+      // @ts-ignore
+      const pageJson = window.pageJson;
+
+      for (const property in pageJson) {
+        const key = `EN_PAGEJSON_${property.toUpperCase()}`;
+        const value = pageJson[property];
+        dataLayerData[key] = this.transformJSON(value);
+      }
+
+      if (engrid_ENGrid.getPageCount() === engrid_ENGrid.getPageNumber()) {
+        dataLayerData[`EN_SUBMISSION_SUCCESS_${pageJson.pageType.toUpperCase()}`] = "TRUE";
+      }
+    }
+
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.forEach((value, key) => {
+      dataLayerData[`EN_URLPARAM_${key.toUpperCase()}`] = this.transformJSON(value);
+    });
+    this.retainedFields.forEach(fieldName => {
+      const storedValue = localStorage.getItem(`EN_RETAINED_FIELD_${fieldName.toUpperCase()}`);
+
+      if (storedValue) {
+        dataLayerData[`EN_RETAINED_FIELD_${fieldName.toUpperCase()}`] = storedValue;
+      }
+    });
+
+    if (engrid_ENGrid.getPageType() === "DONATION") {
+      const recurrFreqEls = document.querySelectorAll('[name="transaction.recurrfreq"]');
+      const recurrValues = [...recurrFreqEls].map(el => el.value);
+      dataLayerData[`EN_RECURRING_FREQUENCIES`] = recurrValues;
+    } // Push all collected variables at once
+
+
+    if (Object.keys(dataLayerData).length > 0) {
+      dataLayerData.event = "pageJsonVariablesReady";
+      this.dataLayer.push(dataLayerData);
+    }
+
+    console.log('data layer data', dataLayerData);
+    this.attachEventListeners();
+  }
+
+  onSubmit() {
+    const optIn = document.querySelector(".en__field__item:not(.en__field--question) input[name^='supporter.questions'][type='checkbox']:checked");
+
+    if (optIn) {
+      this.logger.log("EN_SUBMISSION_WITH_EMAIL_OPTIN");
+      this.dataLayer.push({
+        event: "EN_SUBMISSION_WITH_EMAIL_OPTIN"
+      });
+    } else {
+      this.logger.log("EN_SUBMISSION_WITHOUT_EMAIL_OPTIN");
+      this.dataLayer.push({
+        event: "EN_SUBMISSION_WITHOUT_EMAIL_OPTIN"
+      });
+    }
+  }
+
+  attachEventListeners() {
+    const textInputs = document.querySelectorAll(".en__component--advrow input:not([type=checkbox]):not([type=radio]):not([type=submit]):not([type=button]):not([type=hidden]):not([unhidden]), .en__component--advrow textarea");
+    textInputs.forEach(el => {
+      el.addEventListener("blur", e => {
+        this.handleFieldValueChange(e.target);
+      });
+    });
+    const radioAndCheckboxInputs = document.querySelectorAll(".en__component--advrow input[type=checkbox], .en__component--advrow input[type=radio]");
+    radioAndCheckboxInputs.forEach(el => {
+      el.addEventListener("change", e => {
+        this.handleFieldValueChange(e.target);
+      });
+    });
+    const selectInputs = document.querySelectorAll(".en__component--advrow select");
+    selectInputs.forEach(el => {
+      el.addEventListener("change", e => {
+        this.handleFieldValueChange(e.target);
+      });
+    });
+  }
+
+  async handleFieldValueChange(el) {
+    if (el.value === "" || this.excludedFields.includes(el.name)) return;
+    const value = this.hashedFields.includes(el.name) ? await this.hash(el.value) : el.value;
+
+    if (["checkbox", "radio"].includes(el.type)) {
+      if (el.checked) {
+        if (el.name === "en__pg") {
+          //Premium gift handling
+          this.dataLayer.push({
+            event: "EN_FORM_VALUE_UPDATED",
+            enFieldName: el.name,
+            enFieldLabel: "Premium Gift",
+            enFieldValue: el.closest(".en__pg__body")?.querySelector(".en__pg__name")?.textContent,
+            enProductId: document.querySelector('[name="transaction.selprodvariantid"]')?.value
+          });
+        } else {
+          this.dataLayer.push({
+            event: "EN_FORM_VALUE_UPDATED",
+            enFieldName: el.name,
+            enFieldLabel: this.getFieldLabel(el),
+            enFieldValue: value
+          });
+        }
+      }
+
+      return;
+    }
+
+    if (this.retainedFields.includes(el.name)) {
+      console.log("Retaining field value for", el.name);
+      localStorage.setItem(`EN_RETAINED_FIELD_${el.name.toUpperCase()}`, value);
+    }
+
+    this.dataLayer.push({
+      event: "EN_FORM_VALUE_UPDATED",
+      enFieldName: el.name,
+      enFieldLabel: this.getFieldLabel(el),
+      enFieldValue: value
+    });
+  }
+
+  async hash(value) {
+    const data = this.encoder.encode(value);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hashBuffer)).map(byte => byte.toString(16).padStart(2, '0')).join('');
+  }
+
+  getFieldLabel(el) {
+    return el.closest(".en__field")?.querySelector("label")?.textContent || "";
+  }
+
+  addEndOfGiftProcessEvent(eventName) {
+    let eventProperties = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    this.storeEndOfGiftProcessData(_objectSpread({
+      event: eventName
+    }, eventProperties));
+  }
+
+  addEndOfGiftProcessVariable(variableName) {
+    let variableValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+    this.storeEndOfGiftProcessData({
+      [variableName.toUpperCase()]: variableValue
+    });
+  }
+
+  storeEndOfGiftProcessData(data) {
+    const events = this.getEndOfGiftProcessData();
+    events.push(data);
+    window.sessionStorage.setItem(this.endOfGiftProcessStorageKey, JSON.stringify(events));
+  }
+
+  addEndOfGiftProcessEventsToDataLayer() {
+    this.getEndOfGiftProcessData().forEach(event => {
+      this.dataLayer.push(event);
+    });
+    window.sessionStorage.removeItem(this.endOfGiftProcessStorageKey);
+  }
+
+  getEndOfGiftProcessData() {
+    let eventsData = window.sessionStorage.getItem(this.endOfGiftProcessStorageKey);
+    return !eventsData ? [] : JSON.parse(eventsData);
+  }
+
+}
+
+_defineProperty(data_layer_DataLayer, "instance", void 0);
 // EXTERNAL MODULE: ./node_modules/smoothscroll-polyfill/dist/smoothscroll.js
 var smoothscroll = __webpack_require__(523);
 var smoothscroll_default = /*#__PURE__*/__webpack_require__.n(smoothscroll);
@@ -26238,9 +26492,9 @@ class checkbox_label_CheckboxLabel {
 ;// CONCATENATED MODULE: ./src/scripts/uan-remember-me.ts
 
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+function uan_remember_me_ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+function uan_remember_me_objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? uan_remember_me_ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : uan_remember_me_ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
 
 
 
@@ -26265,7 +26519,7 @@ class UanRememberMe {
     _defineProperty(this, "seed", "1242362031235323113911624374228108");
 
     const pageOptions = typeof window.UanRememberMe === "object" ? window.UanRememberMe : {};
-    this.options = _objectSpread(_objectSpread({}, this.defaultOptions), pageOptions);
+    this.options = uan_remember_me_objectSpread(uan_remember_me_objectSpread({}, this.defaultOptions), pageOptions);
     if (!this.shouldRun()) return;
     this.createRememberMeCheckbox();
     this.addEventListeners();
@@ -26483,6 +26737,7 @@ class UanRememberMe {
 
 
 
+
 const options = {
   applePay: false,
   CapitalizeFields: true,
@@ -26512,6 +26767,7 @@ const options = {
     customScript(App);
     new MonthlyAmounts();
     new MultistepForm();
+    new data_layer_DataLayer();
     new checkbox_label_CheckboxLabel();
     new UanRememberMe();
   },

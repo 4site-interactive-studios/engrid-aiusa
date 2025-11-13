@@ -12,6 +12,7 @@ import {
 // } from "../../engrid/packages/scripts"; // Uses ENGrid via Visual Studio Workspace
 import { MonthlyAmounts } from "./scripts/monthly-amounts";
 import MultistepForm from "./scripts/multistep-form";
+import { DataLayer } from "./scripts/data-layer";
 import "./sass/main.scss";
 import DonationLightboxForm from "./scripts/donation-lightbox-form";
 import { customScript } from "./scripts/main";
@@ -47,6 +48,7 @@ const options: Options = {
     customScript(App);
     new MonthlyAmounts();
     new MultistepForm();
+    new DataLayer();
     new CheckboxLabel();
     new UanRememberMe();
   },
