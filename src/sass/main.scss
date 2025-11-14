@@ -40,3 +40,59 @@ body {
 body:not(#en__pagebuilder) .checkbox-label {
   display: none;
 }
+.match_gift_container {
+  background: #000;
+  margin: auto -60px;
+  padding: 32px 40px;
+  font-weight: 700;
+  font-size: 22px;
+  span.line {
+    display: inline-block;
+  }
+  .match_code_heading {
+    font-family: var(--font-stack-aiusa-bold-condensed);
+    color: var(--color_primary);
+    text-align: center;
+    font-size: 28px;
+    letter-spacing: 0.42px;
+    line-height: normal;
+    margin-bottom: 12px;
+  }
+  .match_code_row {
+    display: grid;
+    width: 100%;
+    grid-template-columns: auto 130px;
+    gap: 8px;
+  }
+  .match_code_code {
+    background: var(--color_white);
+    text-align: center;
+    color: #667085;
+    line-height: 27px; /* 122.727% */
+    letter-spacing: -0.44px;
+    padding: 13px 14px;
+  }
+  .match_code_applied_button {
+    font-family: var(--font-stack-aiusa-bold-condensed);
+    border-radius: 56px;
+    background: var(--color_primary);
+    color: #000;
+    line-height: 27px; /* 122.727% */
+    padding: 12px 0;
+    text-align: center;
+  }
+  .match_code_success_message {
+    margin-top: 4px;
+    color: var(--color_white);
+    text-align: center;
+    font-style: italic;
+    font-size: 14px;
+    line-height: normal;
+    letter-spacing: -0.168px;
+  }
+}
+@media screen and (max-width: 720px) {
+  .match_gift_container {
+    margin: auto -2px;
+  }
+}
