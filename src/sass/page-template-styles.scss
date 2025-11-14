@@ -3904,6 +3904,15 @@ body#en__pagebuilder .content-footerSpacer {
     left: -1px;
     top: -1px;
   }
+
+  // Adjust box shadow for the continue / submit button on the splash page so it doesn't get visibly cut off
+  &[data-engrid-display-context="splashpage"]
+    form.en__component
+    > .en__component
+    .section-navigation
+    button.section-navigation__next {
+    box-shadow: 0px 7px 29px 2px #00000021, 0 8px 12px 0 #00000017;
+  }
 }
 
 // Visually indicate in page builder when the wrong wrapping tag is used to highlight a word

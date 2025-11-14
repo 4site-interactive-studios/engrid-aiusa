@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, November 14, 2025 @ 14:34:49 ET
- *  By: fernando
+ *  Date: Friday, November 14, 2025 @ 14:49:46 ET
+ *  By: bryancasler
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
  *
@@ -2854,7 +2854,8 @@ body:not(#en__pagebuilder) .click-to-expand:not(.expanded){
   overflow:hidden;
 }
 body:not(#en__pagebuilder) .click-to-expand:not(.expanded) .click-to-expand-text-wrapper{
-  mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
+  -webkit-mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
+          mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
   max-height:calc(var(--click-to-expand__copy-area_height) - var(--click-to-expand__cta-image_height) - 35px);
 }
 body:not(#en__pagebuilder) .click-to-expand:not(.expanded) .click-to-expand-cta{
@@ -10416,6 +10417,9 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   left:-1px;
   position:fixed;
   top:-1px;
+}
+[data-engrid-embedded][data-multi-step][data-engrid-display-context=splashpage] form.en__component>.en__component .section-navigation button.section-navigation__next{
+  box-shadow:0 7px 29px 2px #00000021,0 8px 12px 0 #00000017;
 }
 
 #en__pagebuilder .monthly-upsell-message p strong{
