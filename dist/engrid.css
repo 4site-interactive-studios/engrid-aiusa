@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, November 13, 2025 @ 15:11:57 ET
- *  By: nick
+ *  Date: Friday, November 14, 2025 @ 14:34:49 ET
+ *  By: fernando
  *  ENGrid styles: v0.22.18
  *  ENGrid scripts: v0.22.20
  *
@@ -2854,8 +2854,7 @@ body:not(#en__pagebuilder) .click-to-expand:not(.expanded){
   overflow:hidden;
 }
 body:not(#en__pagebuilder) .click-to-expand:not(.expanded) .click-to-expand-text-wrapper{
-  -webkit-mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
-          mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
+  mask-image:linear-gradient(to bottom, #000 50%, #fff0 calc(100% - var(--click-to-expand__cta-image_height)));
   max-height:calc(var(--click-to-expand__copy-area_height) - var(--click-to-expand__cta-image_height) - 35px);
 }
 body:not(#en__pagebuilder) .click-to-expand:not(.expanded) .click-to-expand-cta{
@@ -8132,7 +8131,9 @@ body[data-engrid-debug]:before{
   --recurring-frequency__button_font-size:var(--button_font-size);
   --recurring-frequency__button_font-weight:var(--button_font-weight);
   --recurring-frequency__button_line-height:var(--button_line-height);
-  --recurring-frequency__button_background-color:var(--button_background-color);
+  --recurring-frequency__button_background-color:var(
+    --button_background-color
+  );
   --recurring-frequency__button_border-width:var(--button_border-width);
   --recurring-frequency__button_border-color:var(--button_border-color);
   --recurring-frequency__button_border-radius:var(--button_border-radius);
@@ -8153,8 +8154,12 @@ body[data-engrid-debug]:before{
   --donation-amount__button_border-color:var(--button_border-color);
   --donation-amount__button_border-radius:var(--button_border-radius);
   --donation-amount__button_color_hover:var(--button_color_hover);
-  --donation-amount__button_background-color_hover:var(--button_background-color_hover);
-  --donation-amount__button_border-color_hover:var(--button_border-color_hover);
+  --donation-amount__button_background-color_hover:var(
+    --button_background-color_hover
+  );
+  --donation-amount__button_border-color_hover:var(
+    --button_border-color_hover
+  );
   --donation-amount__button_color_checked:var(--color_white);
   --donation-amount__button_background-color_checked:var(--button_color);
   --donation-amount__button_border-color_checked:var(--button_color);
@@ -8168,7 +8173,9 @@ body[data-engrid-debug]:before{
   --give-by-select__button_border-color:var(--button_border-color);
   --give-by-select__button_border-radius:var(--button_border-radius);
   --give-by-select__button_color_hover:var(--button_color_hover);
-  --give-by-select__button_background-color_hover:var(--button_background-color_hover);
+  --give-by-select__button_background-color_hover:var(
+    --button_background-color_hover
+  );
   --give-by-select__button_border-color_hover:var(--button_border-color_hover);
   --give-by-select__button_color_checked:var(--color_white);
   --give-by-select__button_background-color_checked:var(--button_color);
@@ -8196,12 +8203,20 @@ body[data-engrid-debug]:before{
   --engrid__body-bottom_background-color:var(--engrid__body_background-color);
   --engrid__body-footer_background-color:var(--engrid__body_background-color);
   --engrid__body-footerOutside_background-color:var(--color_transparent);
-  --engrid__content-footerSpacer_background-color:var(--engrid__content_background-color);
-  --engrid__content-preFooter_background-color:var(--engrid__content_background-color);
+  --engrid__content-footerSpacer_background-color:var(
+    --engrid__content_background-color
+  );
+  --engrid__content-preFooter_background-color:var(
+    --engrid__content_background-color
+  );
   --engrid__content-footer_background-color:var(--color_white);
   --engrid__page-backgroundImage_background-color:--color_light-gray;
-  --engrid__page-backgroundImageOverlay_background-color:var(--color_transparent);
-  --engrid__page-customCode_background-color:var(--engrid__page_background-color);
+  --engrid__page-backgroundImageOverlay_background-color:var(
+    --color_transparent
+  );
+  --engrid__page-customCode_background-color:var(
+    --engrid__page_background-color
+  );
   --engrid__page_padding:0px;
   --engrid__content_padding:0px;
   --engrid__body_padding:0px 60px;
@@ -8467,8 +8482,12 @@ body[data-engrid-debug]:before{
 }
 [data-engrid-theme=aiusa] .radio-to-buttons_donationAmt .en__field--donationAmt.en__field--radio>.en__field__element .en__field__item.en__field__item--other{
   --donation-amount__flex-grow:1;
-  --donation-amount__button_background-color_checked:var(--input_background-color);
-  --donation-amount__button_border-color_checked:var(--input_background-color_hover);
+  --donation-amount__button_background-color_checked:var(
+    --input_background-color
+  );
+  --donation-amount__button_border-color_checked:var(
+    --input_background-color_hover
+  );
   --donation-amount__button_color_checked:initial;
 }
 [data-engrid-theme=aiusa] #menu-wrapper{
@@ -8973,12 +8992,28 @@ body[data-engrid-debug]:before{
 [data-engrid-theme=aiusa] label a.label-tooltip{
   color:#767676;
 }
-[data-engrid-theme=aiusa] .card,[data-engrid-theme=aiusa] .check,[data-engrid-theme=aiusa] .paypal{
+[data-engrid-theme=aiusa] .card,[data-engrid-theme=aiusa] .check,[data-engrid-theme=aiusa] .daf,[data-engrid-theme=aiusa] .paypal{
   flex-basis:33.3333333333%;
   min-width:12ch;
 }
 [data-engrid-theme=aiusa] .give-by-select.en__field--radio .paypal.en__field__item input[type=radio]:checked+label span{
   filter:invert(100%);
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect{
+  min-height:67px;
+  min-width:120px;
+  width:100%;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect label{
+  min-height:55px;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect img{
+  max-height:25px;
+  max-width:80%;
+  object-fit:contain;
+}
+[data-engrid-theme=aiusa] .en__field--giveBySelect input:checked+label>img.daf-logo{
+  filter:grayscale(1) brightness(1) invert(1);
 }
 [data-engrid-theme=aiusa] .en__field__item.paypal label span{
   background-image:url(https://aaf1a18515da0e792f78-c27fdabe952dfc357fe25ebf5c8897ee.ssl.cf5.rackcdn.com/1839/paypal.png?v=1614704461000);
@@ -10451,6 +10486,11 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 }
 [data-engrid-embedded][data-multi-step] form.en__component>.en__component .section-count{
   bottom:-25px;
+}
+
+[data-engrid-theme] .en__submit button,[data-engrid-theme][data-conditonally-hide-show-digital-wallet-elements] #en__digitalWallet .en__digitalWallet__container{
+  margin-bottom:2.5rem !important;
+  margin-top:1rem !important;
 }
 
 [data-engrid-theme=aiusa][data-engrid-multistep]{
