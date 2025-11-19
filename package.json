@@ -26,7 +26,6 @@
   "license": "Unlicense",
   "url": "https://github.com/4site-interactive-studios/engrid-aiusa",
   "devDependencies": {
-    "@4site/engrid-scripts": "https://gitpkg.vercel.app/4site-interactive-studios/engrid/packages/scripts?sha-256-datalayer",
     "@4site/engrid-styles": "*",
     "@babel/core": "^7.14.3",
     "@babel/plugin-proposal-class-properties": "7.13.0",
@@ -55,6 +54,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "@4site/engrid-scripts": "https://gitpkg.vercel.app/4site-interactive-studios/engrid/packages/scripts?sha-256-datalayer",
     "@babel/runtime": "^7.14.0",
     "babel": "^6.23.0",
     "clean-webpack-plugin": "^3.0.0",

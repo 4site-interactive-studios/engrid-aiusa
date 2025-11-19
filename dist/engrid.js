@@ -17,9 +17,9 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, November 19, 2025 @ 01:06:49 ET
+ *  Date: Wednesday, November 19, 2025 @ 01:19:54 ET
  *  By: nick
- *  ENGrid styles: v0.22.18
+ *  ENGrid styles: v0.23.4
  *  ENGrid scripts: v0.23.4
  *
  *  Created by 4Site Studios
@@ -17803,6 +17803,12 @@ class DataLayer {
             if (this.retainedFields.includes(el.name)) {
                 const sha256value = yield this.shaHash(el.value);
                 localStorage.setItem(`EN_RETAINED_FIELD_${el.name.toUpperCase()}`, sha256value);
+                this.dataLayer.push({
+                    event: "EN_RETAINED_VALUE_UPDATED",
+                    enFieldName: el.name,
+                    enFieldLabel: this.getFieldLabel(el),
+                    enFieldValue: sha256value,
+                });
             }
             this.dataLayer.push({
                 event: "EN_FORM_VALUE_UPDATED",
