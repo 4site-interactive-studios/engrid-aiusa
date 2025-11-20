@@ -91,6 +91,9 @@ body:not(#en__pagebuilder) .checkbox-label {
     letter-spacing: -0.168px;
   }
 }
+[data-engrid-display-context="splashpage"][data-thank-you="true"] footer {
+  display: none;
+}
 @media screen and (max-width: 720px) {
   .match_gift_container {
     margin: auto -2px;
