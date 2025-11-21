@@ -99,3 +99,8 @@ body:not(#en__pagebuilder) .checkbox-label {
     margin: auto -2px;
   }
 }
+@media screen and (max-width: 450px) {
+  .match_code_row {
+    grid-template-columns: auto;
+  }
+}
