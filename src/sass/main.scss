@@ -100,7 +100,7 @@ body:not(#en__pagebuilder) .checkbox-label {
   }
 }
 @media screen and (max-width: 450px) {
-  .match_code_row {
+  .match_gift_container .match_code_row {
     grid-template-columns: auto;
   }
 }
