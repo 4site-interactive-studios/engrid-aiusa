@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, November 21, 2025 @ 11:52:26 ET
- *  By: nick
+ *  Date: Monday, November 24, 2025 @ 21:57:19 ET
+ *  By: fernando
  *  ENGrid styles: v0.23.4
- *  ENGrid scripts: v0.23.4
+ *  ENGrid scripts: v0.23.5
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -24219,7 +24219,7 @@ class PreferredPaymentMethod {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/version.js
-const AppVersion = "0.23.4";
+const AppVersion = "0.23.5";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
