@@ -17,10 +17,10 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, November 25, 2025 @ 00:14:58 ET
+ *  Date: Saturday, January 10, 2026 @ 02:54:46 ET
  *  By: fernando
  *  ENGrid styles: v0.23.4
- *  ENGrid scripts: v0.23.6
+ *  ENGrid scripts: v0.23.7
  *
  *  Created by 4Site Studios
  *  Come work with us or join our team, we would love to hear from you
@@ -17043,6 +17043,7 @@ class RememberMe {
         }
     }
     setFieldValue(field, value, overwrite = false) {
+        value = decodeURIComponent(value || "");
         if (field && value !== undefined) {
             if ((field.value && overwrite) || !field.value) {
                 field.value = value;
@@ -24275,7 +24276,7 @@ class PreferredPaymentMethod {
 }
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/version.js
-const AppVersion = "0.23.6";
+const AppVersion = "0.23.7";
 
 ;// CONCATENATED MODULE: ./node_modules/@4site/engrid-scripts/dist/index.js
  // Runs first so it can change the DOM markup before any markup dependent code fires
