@@ -7,7 +7,10 @@ import { ProcessingFees } from "@4site/engrid-scripts";
 const pf = new ProcessingFees(50);
 console.log("Instance:", pf);
 console.log("Keys on instance:", Object.keys(pf));
-console.log("Prototype methods:", Object.getOwnPropertyNames(Object.getPrototypeOf(pf)));
+console.log(
+  "Prototype methods:",
+  Object.getOwnPropertyNames(Object.getPrototypeOf(pf))
+);
 
 import smoothscroll from "smoothscroll-polyfill";
 smoothscroll.polyfill();
@@ -681,50 +684,60 @@ export default class DonationLightboxForm {
     }
   }
   changeSubmitButton() {
-  const submit = document.querySelector(".section-navigation__submit");
-  const feeCover = document.querySelector('#en__field_transaction_feeCover');
-  const feeLabel = document.querySelector('label[for="en__field_transaction_feeCover"]');
-  const processingFees = ProcessingFees.getInstance();
+    const submit = document.querySelector(".section-navigation__submit");
+    const feeCover = document.querySelector("#en__field_transaction_feeCover");
+    const feeLabel = document.querySelector(
+      'label[for="en__field_transaction_feeCover"]'
+    );
+    const processingFees = ProcessingFees.getInstance();
 
-  const frequencyRaw = this.frequency.getInstance().frequency;
-  const frequency = frequencyRaw === "onetime" ? "" : "<small>/mo</small>";
+    const frequencyRaw = this.frequency.getInstance().frequency;
+    const frequency = frequencyRaw === "onetime" ? "" : "<small>/mo</small>";
 
-  const updateFeeLabel = () => {
-    const amountField = document.querySelector('input[name="transaction.donationAmt"]:checked') ||
-                        document.querySelector('input[name="transaction.donationAmt"]');
-    const rawAmount = amountField ? parseFloat(amountField.value) : 0;
-    const fee = processingFees.calculateFees(rawAmount);
-    if (feeLabel) {
-      feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${fee.toFixed(2)})`;
-    }
-  };
+    const updateFeeLabel = () => {
+      const amountField =
+        document.querySelector(
+          'input[name="transaction.donationAmt"]:checked'
+        ) || document.querySelector('input[name="transaction.donationAmt"]');
+      const rawAmount = amountField ? parseFloat(amountField.value) : 0;
+      const fee = processingFees.calculateFees(rawAmount);
+      if (feeLabel) {
+        feeLabel.innerHTML = `Yes! Make my donation go further by adding 3% to cover processing fees. ($${fee.toFixed(
+          2
+        )})`;
+      }
+    };
 
-  const updateSubmitButton = () => {
-    const amount = parseFloat(window.EngagingNetworks.require._defined.enjs.getDonationTotal());
-    let amountUpdated = amount.toFixed(2); 
+    const updateSubmitButton = () => {
+      const amount = parseFloat(
+        window.EngagingNetworks.require._defined.enjs.getDonationTotal()
+      );
+      let amountUpdated = amount.toFixed(2);
 
-    if (amountUpdated.endsWith(".00")) {
-      amountUpdated = amountUpdated.slice(0, -3);
-    }
-    
-    const label = submit?.dataset.label
-      ?.replace("$AMOUNT", `$${amountUpdated}`)
-      ?.replace("$FREQUENCY", frequency);
+      if (amountUpdated.endsWith(".00")) {
+        amountUpdated = amountUpdated.slice(0, -3);
+      }
 
-    if (submit && label) {
-      submit.innerHTML = `<span>${label}</span>`;
-    }
-  };
-  updateFeeLabel();
-  updateSubmitButton(); 
-  
-  const donationAmountInputs = document.querySelectorAll('[id*="transaction_donationAmt"]');
-  donationAmountInputs.forEach((input) => {
-    input.addEventListener("change", updateSubmitButton);
-  });
+      const label = submit?.dataset.label
+        ?.replace("$AMOUNT", `$${amountUpdated}`)
+        ?.replace("$FREQUENCY", frequency);
 
-  feeCover?.addEventListener("change", updateSubmitButton);
-}
+      if (submit && label) {
+        submit.innerHTML = `<span>${label}</span>`;
+      }
+    };
+    updateFeeLabel();
+    updateSubmitButton();
+
+    const donationAmountInputs = document.querySelectorAll(
+      '[id*="transaction_donationAmt"]'
+    );
+    donationAmountInputs.forEach((input) => {
+      input.addEventListener("change", updateSubmitButton);
+    });
+
+    feeCover?.addEventListener("change", updateSubmitButton);
+  }
 
   clickPaymentOptions(opts) {
     opts.querySelectorAll("button").forEach((btn) => {
