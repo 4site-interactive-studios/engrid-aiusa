@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, July 2, 2026 @ 17:20:57 ET
- *  By: fernando
+ *  Date: Monday, August 10, 2026 @ 20:41:42 ET
+ *  By: doursun
  *  ENGrid styles: v0.25.11
  *  ENGrid scripts: v0.25.11
  *
@@ -28103,16 +28103,19 @@ const customScript = function (App) {
 
 
   const menuBtn = document.querySelector('a[role="menuitem"]');
-  menuBtn.addEventListener("touchstart", function (event) {
-    const menu = document.querySelector('ul#main-menu ul[role="menu"]');
 
-    if (menu.style.display === "block") {
-      menu.style.display = "none";
-      menuBtn.setAttribute("aria-expanded", "false");
-    }
-  }, {
-    passive: true
-  }); // Menu copied from: https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/menubar-1.html#
+  if (menuBtn) {
+    menuBtn.addEventListener("touchstart", function (event) {
+      const menu = document.querySelector('ul#main-menu ul[role="menu"]');
+
+      if (menu && menu.style.display === "block") {
+        menu.style.display = "none";
+        menuBtn.setAttribute("aria-expanded", "false");
+      }
+    }, {
+      passive: true
+    });
+  } // Menu copied from: https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/menubar-1.html#
   // @TODO Move to this package https://github.com/NickDJM/accessible-menu/blob/HEAD/docs/basics/two-level-menu-with-toggle.md
   // MenubarItemLinks.js
 
@@ -28120,6 +28123,7 @@ const customScript = function (App) {
    *   This content is licensed according to the W3C Software License at
    *   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
    */
+
 
   var MenubarItem = function (domNode, menuObj) {
     this.menu = menuObj;
@@ -28906,9 +28910,10 @@ const customScript = function (App) {
     }
   };
 
-  var menubar = new Menubar(document.getElementById("main-menu"));
+  var mainMenuElement = document.getElementById("main-menu");
 
-  if (menubar) {
+  if (mainMenuElement) {
+    var menubar = new Menubar(mainMenuElement);
     menubar.init();
   }
 

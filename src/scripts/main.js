@@ -216,17 +216,19 @@ export const customScript = function (App) {
   // Close's the menu when tapping the close button on mobile
   const menuBtn = document.querySelector('a[role="menuitem"]');
 
-  menuBtn.addEventListener(
-    "touchstart",
-    function (event) {
-      const menu = document.querySelector('ul#main-menu ul[role="menu"]');
-      if (menu.style.display === "block") {
-        menu.style.display = "none";
-        menuBtn.setAttribute("aria-expanded", "false");
-      }
-    },
-    { passive: true }
-  );
+  if (menuBtn) {
+    menuBtn.addEventListener(
+      "touchstart",
+      function (event) {
+        const menu = document.querySelector('ul#main-menu ul[role="menu"]');
+        if (menu && menu.style.display === "block") {
+          menu.style.display = "none";
+          menuBtn.setAttribute("aria-expanded", "false");
+        }
+      },
+      { passive: true }
+    );
+  }
 
   // Menu copied from: https://www.w3.org/TR/wai-aria-practices-1.2/examples/menubar/menubar-1/menubar-1.html#
   // @TODO Move to this package https://github.com/NickDJM/accessible-menu/blob/HEAD/docs/basics/two-level-menu-with-toggle.md
@@ -1011,8 +1013,9 @@ export const customScript = function (App) {
     }
   };
 
-  var menubar = new Menubar(document.getElementById("main-menu"));
-  if (menubar) {
+  var mainMenuElement = document.getElementById("main-menu");
+  if (mainMenuElement) {
+    var menubar = new Menubar(mainMenuElement);
     menubar.init();
   }
 
