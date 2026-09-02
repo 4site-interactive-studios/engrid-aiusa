@@ -17,8 +17,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Thursday, July 2, 2026 @ 17:20:57 ET
- *  By: fernando
+ *  Date: Wednesday, September 2, 2026 @ 09:09:21 ET
+ *  By: pedroluan
  *  ENGrid styles: v0.25.11
  *  ENGrid scripts: v0.25.11
  *
@@ -29423,6 +29423,7 @@ const options = {
   MaxAmount: 100000000,
   MinAmountMessage: "Please enter a minimum donation of $5",
   MaxAmountMessage: "Amount must be less than $100,000,000",
+  UseAmountValidatorFromEN: true,
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     // Send a GTM event is the First Page
