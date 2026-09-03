@@ -34,6 +34,7 @@ const options: Options = {
   MaxAmount: 100000000,
   MinAmountMessage: "Please enter a minimum donation of $5",
   MaxAmountMessage: "Amount must be less than $100,000,000",
+  UseAmountValidatorFromEN: true,
   Debug: App.getUrlParameter("debug") == "true" ? true : false,
   onLoad: () => {
     // Send a GTM event is the First Page
