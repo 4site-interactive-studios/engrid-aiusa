@@ -2745,6 +2745,28 @@
     }
   }
 
+  @media screen and (max-width: 720px) {
+    .hide-on-mobile {
+      display: none !important;
+    }
+  }
+
+  body#en__pagebuilder .hide-on-mobile {
+    display: flex !important;
+    background-color: var(--pagebuilder__background-color);
+  }
+
+  @media screen and (min-width: 721px) {
+    .hide-on-desktop {
+      display: none !important;
+    }
+  }
+
+  body#en__pagebuilder .hide-on-desktop {
+    display: flex !important;
+    background-color: var(--pagebuilder__background-color);
+  }
+
   .amount-nudge {
     display: flex;
     align-self: center;
