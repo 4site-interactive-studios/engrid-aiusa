@@ -2751,6 +2751,10 @@
     align-items: center;
     flex-direction: column;
 
+    @media screen and (min-width: 721px) {
+      align-items: flex-end;
+    }
+
     p {
       //width: 41%;
       color: #ff4700;
@@ -2770,6 +2774,10 @@
       margin-left: 5px;
       flex-basis: 45px;
       transform: rotate(-45deg) scale(0.9);
+
+      @media screen and (min-width: 721px) {
+        margin-right: 50px;
+      }
 
       @media screen and (max-width: 720px) {
         margin-left: auto;

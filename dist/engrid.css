@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, October 3, 2026 @ 00:30:16 ET
- *  By: fernando
+ *  Date: Friday, October 9, 2026 @ 08:58:09 ET
+ *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
  *
@@ -10015,6 +10015,11 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   display:flex;
   flex-direction:column;
 }
+@media screen and (min-width:721px){
+  [data-engrid-theme=aiusa] .amount-nudge{
+    align-items:flex-end;
+  }
+}
 [data-engrid-theme=aiusa] .amount-nudge p{
   color:#ff4700;
   font-family:"Kalam", var(--font-stack-aiusa-bold-condensed);
@@ -10031,6 +10036,11 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   flex-basis:45px;
   margin-left:5px;
   transform:rotate(-45deg) scale(.9);
+}
+@media screen and (min-width:721px){
+  [data-engrid-theme=aiusa] .amount-nudge svg{
+    margin-right:50px;
+  }
 }
 @media screen and (max-width:720px){
   [data-engrid-theme=aiusa] .amount-nudge svg{
