@@ -19,8 +19,8 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Saturday, October 3, 2026 @ 00:30:16 ET
- *  By: fernando
+ *  Date: Friday, October 9, 2026 @ 12:34:05 ET
+ *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
  *
@@ -10009,11 +10009,34 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
 [data-engrid-theme=aiusa][data-engrid-payment-type=paypal] .inline-monthly-upsell{
   display:none;
 }
+@media screen and (max-width:720px){
+  [data-engrid-theme=aiusa] .hide-on-mobile{
+    display:none !important;
+  }
+}
+[data-engrid-theme=aiusa] body#en__pagebuilder .hide-on-mobile{
+  background-color:var(--pagebuilder__background-color);
+  display:flex !important;
+}
+@media screen and (min-width:721px){
+  [data-engrid-theme=aiusa] .hide-on-desktop{
+    display:none !important;
+  }
+}
+[data-engrid-theme=aiusa] body#en__pagebuilder .hide-on-desktop{
+  background-color:var(--pagebuilder__background-color);
+  display:flex !important;
+}
 [data-engrid-theme=aiusa] .amount-nudge{
   align-items:center;
   align-self:center;
   display:flex;
   flex-direction:column;
+}
+@media screen and (min-width:721px){
+  [data-engrid-theme=aiusa] .amount-nudge{
+    align-items:flex-end;
+  }
 }
 [data-engrid-theme=aiusa] .amount-nudge p{
   color:#ff4700;
@@ -10031,6 +10054,11 @@ monthly [data-engrid-theme=aiusa][data-engrid-transaction-recurring=n] .radio-to
   flex-basis:45px;
   margin-left:5px;
   transform:rotate(-45deg) scale(.9);
+}
+@media screen and (min-width:721px){
+  [data-engrid-theme=aiusa] .amount-nudge svg{
+    margin-right:50px;
+  }
 }
 @media screen and (max-width:720px){
   [data-engrid-theme=aiusa] .amount-nudge svg{
