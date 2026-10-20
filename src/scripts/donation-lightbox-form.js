@@ -255,7 +255,7 @@ export default class DonationLightboxForm {
       `;
       }
       sectionCount.innerHTML = `
-        <span class="section-count__current">${key + 1}</span> of
+        <span class="section-count__current">Step ${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
 

@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Friday, October 9, 2026 @ 12:34:05 ET
+ *  Date: Tuesday, October 20, 2026 @ 13:35:30 ET
  *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
@@ -28885,7 +28885,7 @@ class DonationLightboxForm {
       }
 
       sectionCount.innerHTML = `
-        <span class="section-count__current">${key + 1}</span> of
+        <span class="section-count__current">Step ${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
       sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {
