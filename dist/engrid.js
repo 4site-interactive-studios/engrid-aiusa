@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Tuesday, October 20, 2026 @ 13:45:24 ET
+ *  Date: Tuesday, October 20, 2026 @ 14:08:17 ET
  *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
@@ -28840,6 +28840,7 @@ class DonationLightboxForm {
 
   buildSectionNavigation() {
     console.log("DonationLightboxForm: buildSectionNavigation");
+    const isNewLightbox = document.body.classList.contains("new-lightbox");
     this.sections.forEach((section, key) => {
       section.dataset.sectionId = key;
       const sectionNavigation = document.createElement("div");
@@ -28851,7 +28852,7 @@ class DonationLightboxForm {
       if (key == 0) {
         sectionNavigation.innerHTML = `
         <button class="section-navigation__next" data-section-id="${key}">
-          <span>Next</span>
+          <span>${isNewLightbox ? "Next" : "Continue"}</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none" viewBox="0 0 14 14">
               <path fill="currentColor" d="M7.687 13.313c-.38.38-.995.38-1.374 0-.38-.38-.38-.996 0-1.375L10 8.25H1.1c-.608 0-1.1-.493-1.1-1.1 0-.608.492-1.1 1.1-1.1h9.2L6.313 2.062c-.38-.38-.38-.995 0-1.375s.995-.38 1.374 0L14 7l-6.313 6.313z"/>
           </svg>
@@ -28885,7 +28886,7 @@ class DonationLightboxForm {
       }
 
       sectionCount.innerHTML = `
-        <span class="section-count__current">Step ${key + 1}</span> of
+        <span class="section-count__current">${isNewLightbox ? "Step " : ""}${key + 1}</span> of
         <span class="section-count__total">${sectionTotal}</span>
       `;
       sectionNavigation.querySelector(".section-navigation__previous")?.addEventListener("click", e => {

@@ -2491,8 +2491,10 @@
 
   .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
-    input[type="radio"]:checked,
-  .radio-to-buttons_recurrfreq
+    input[type="radio"]:checked
+    + label,
+  &.new-lightbox
+    .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
     input[type="radio"]:hover
     + label {
@@ -3482,17 +3484,27 @@ body#en__pagebuilder .content-footerSpacer {
       position: absolute;
       right: 0;
       bottom: -30px;
-      font-size: 14px;
+      font-size: 10px;
       font-stretch: normal;
       font-style: normal;
       letter-spacing: 0.84px;
       color: #252525;
-      font-weight: bold;
-      text-transform: uppercase;
+
+      span {
+        font-weight: bold;
+      }
     }
 
     > .en__component {
       min-width: auto;
+    }
+  }
+
+  &.new-lightbox {
+    form.en__component > .en__component .section-count {
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
     }
   }
 
