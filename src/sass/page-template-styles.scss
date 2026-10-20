@@ -2491,7 +2491,10 @@
 
   .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
-    input[type="radio"]:checked
+    input[type="radio"]:checked,
+  .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]:hover
     + label {
     .candle {
       .candle-flame {
