@@ -2492,6 +2492,11 @@
   .radio-to-buttons_recurrfreq
     .en__field--recurrfreq.en__field--radio
     input[type="radio"]:checked
+    + label,
+  &.new-lightbox
+    .radio-to-buttons_recurrfreq
+    .en__field--recurrfreq.en__field--radio
+    input[type="radio"]:hover
     + label {
     .candle {
       .candle-flame {
@@ -3492,6 +3497,14 @@ body#en__pagebuilder .content-footerSpacer {
 
     > .en__component {
       min-width: auto;
+    }
+  }
+
+  &.new-lightbox {
+    form.en__component > .en__component .section-count {
+      font-size: 14px;
+      font-weight: bold;
+      text-transform: uppercase;
     }
   }
 
