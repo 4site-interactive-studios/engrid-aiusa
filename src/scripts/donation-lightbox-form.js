@@ -149,7 +149,11 @@ export default class DonationLightboxForm {
             const sectionId = this.getSectionId(e);
             setTimeout(() => {
               if (sectionId > 0 && this.validateForm(sectionId - 1)) {
-                this.trackStep(sectionId);
+                // Browser autofill can fire focus on fields the donor never reached,
+                // so only count the step if the field really has focus
+                if (document.activeElement === e) {
+                  this.trackStep(sectionId);
+                }
                 this.scrollToElement(e);
               }
             }, 50);

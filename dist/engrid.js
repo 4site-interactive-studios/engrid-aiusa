@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, November 18, 2026 @ 13:21:35 ET
+ *  Date: Wednesday, November 18, 2026 @ 13:34:04 ET
  *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
@@ -28775,7 +28775,12 @@ class DonationLightboxForm {
           const sectionId = this.getSectionId(e);
           setTimeout(() => {
             if (sectionId > 0 && this.validateForm(sectionId - 1)) {
-              this.trackStep(sectionId);
+              // Browser autofill can fire focus on fields the donor never reached,
+              // so only count the step if the field really has focus
+              if (document.activeElement === e) {
+                this.trackStep(sectionId);
+              }
+
               this.scrollToElement(e);
             }
           }, 50);
