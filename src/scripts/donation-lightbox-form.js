@@ -408,8 +408,8 @@ export default class DonationLightboxForm {
     const section = this.sections[stepIndex];
     const stepNames = [
       ["gift", ".en__field--donationAmt, .en__field--recurrfreq"],
-      ["payment_method", ".payment-options"],
       ["payment", ".en__field--ccnumber, .en__field--bankRoutingNumber"],
+      ["payment_method", ".payment-options"],
       ["billing", ".en__field--address1"],
       ["contact", ".en__field--emailAddress"],
     ];

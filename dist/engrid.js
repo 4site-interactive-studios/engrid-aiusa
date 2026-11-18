@@ -17,7 +17,7 @@
  *
  *  ENGRID PAGE TEMPLATE ASSETS
  *
- *  Date: Wednesday, November 18, 2026 @ 13:03:11 ET
+ *  Date: Wednesday, November 18, 2026 @ 13:21:35 ET
  *  By: pedroluan
  *  ENGrid styles: v0.28.3
  *  ENGrid scripts: v0.28.5
@@ -29013,7 +29013,7 @@ class DonationLightboxForm {
 
   getStepName(stepIndex) {
     const section = this.sections[stepIndex];
-    const stepNames = [["gift", ".en__field--donationAmt, .en__field--recurrfreq"], ["payment_method", ".payment-options"], ["payment", ".en__field--ccnumber, .en__field--bankRoutingNumber"], ["billing", ".en__field--address1"], ["contact", ".en__field--emailAddress"]];
+    const stepNames = [["gift", ".en__field--donationAmt, .en__field--recurrfreq"], ["payment", ".en__field--ccnumber, .en__field--bankRoutingNumber"], ["payment_method", ".payment-options"], ["billing", ".en__field--address1"], ["contact", ".en__field--emailAddress"]];
     const match = stepNames.find(_ref => {
       let [, selector] = _ref;
       return section.querySelector(selector);
