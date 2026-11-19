@@ -29,6 +29,9 @@ export default class DonationLightboxForm {
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
+    // Steps already reported to the parent page on this lightbox load.
+    // Step 1 starts as reported because the lightbox display event covers it.
+    this.trackedSteps = new Set([0]);
     console.log("DonationLightboxForm: constructor");
 
     // Check if we're on the Thank You page
@@ -106,6 +109,8 @@ export default class DonationLightboxForm {
         EngagingNetworks.require._defined.enjs.checkSubmissionFailed()
       ) {
         console.log("DonationLightboxForm: Submission Failed");
+        // The donor already reached every step before submitting, so don't report them again
+        this.sections.forEach((section, key) => this.trackedSteps.add(key));
         // Submission failed
         if (this.validateForm(false, false)) {
           // Front-End Validation Passed, get first Error Message
@@ -359,6 +364,7 @@ export default class DonationLightboxForm {
       window.setTimeout(() => {
         this.sendIframeHeight(true);
       }, 400);
+      this.scheduleStepTracking();
     }
   }
   // Scroll to an element's section
@@ -369,6 +375,60 @@ export default class DonationLightboxForm {
         this.scrollToSection(sectionId);
       }
     }
+  }
+  // Step tracking only runs on EN pages that opt in with a code block:
+  // window.EngridPageOptions.LightboxStepTracking = true
+  isStepTrackingEnabled() {
+    return window.EngridPageOptions?.LightboxStepTracking === true;
+  }
+  // Report the step the donor ends up on, whatever moved them there (Next, keyboard,
+  // payment buttons, autofill). Waiting 1 second skips quick back-and-forth jumps,
+  // e.g. browser autofill touching fields in a later step.
+  scheduleStepTracking() {
+    window.clearTimeout(this.stepTrackingTimer);
+    this.stepTrackingTimer = window.setTimeout(() => {
+      const activeStep = Array.from(this.sections).findIndex((section) =>
+        section.classList.contains("active")
+      );
+      this.trackStep(activeStep);
+    }, 1000);
+  }
+  // Tell the parent page the donor reached a new step (once per step per lightbox load)
+  trackStep(sectionId) {
+    const stepIndex = parseInt(sectionId, 10);
+    if (
+      !this.isStepTrackingEnabled() ||
+      isNaN(stepIndex) ||
+      !this.sections[stepIndex] ||
+      this.trackedSteps.has(stepIndex)
+    ) {
+      return;
+    }
+    this.trackedSteps.add(stepIndex);
+    window.parent.postMessage(
+      {
+        key: "lightbox_step",
+        value: this.getStepName(stepIndex),
+        step: stepIndex + 1,
+        page_id: window.pageJson.campaignPageId,
+      },
+      "*"
+    );
+  }
+  // Short, stable step name based on the fields in the section, so copy edits don't change it
+  getStepName(stepIndex) {
+    const section = this.sections[stepIndex];
+    const stepNames = [
+      ["gift", ".en__field--donationAmt, .en__field--recurrfreq"],
+      ["payment", ".en__field--ccnumber, .en__field--bankRoutingNumber"],
+      ["payment_method", ".payment-options"],
+      ["billing", ".en__field--address1"],
+      ["contact", ".en__field--emailAddress"],
+    ];
+    const match = stepNames.find(([, selector]) =>
+      section.querySelector(selector)
+    );
+    return match ? match[0] : `step_${stepIndex + 1}`;
   }
   // Get Element's section id
   getSectionId(element) {
