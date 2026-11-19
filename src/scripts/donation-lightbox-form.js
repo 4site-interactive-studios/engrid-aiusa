@@ -29,8 +29,9 @@ export default class DonationLightboxForm {
     this.amount = DonationAmount;
     this.frequency = DonationFrequency;
     this.ipCountry = "";
-    // Steps already reported to the parent page on this lightbox load
-    this.trackedSteps = new Set();
+    // Steps already reported to the parent page on this lightbox load.
+    // Step 1 starts as reported because the lightbox display event covers it.
+    this.trackedSteps = new Set([0]);
     console.log("DonationLightboxForm: constructor");
 
     // Check if we're on the Thank You page
@@ -149,11 +150,6 @@ export default class DonationLightboxForm {
             const sectionId = this.getSectionId(e);
             setTimeout(() => {
               if (sectionId > 0 && this.validateForm(sectionId - 1)) {
-                // Browser autofill can fire focus on fields the donor never reached,
-                // so only count the step if the field really has focus
-                if (document.activeElement === e) {
-                  this.trackStep(sectionId);
-                }
                 this.scrollToElement(e);
               }
             }, 50);
@@ -281,7 +277,6 @@ export default class DonationLightboxForm {
         ?.addEventListener("click", (e) => {
           e.preventDefault();
           if (this.validateForm(key)) {
-            this.trackStep(key + 1);
             this.scrollToSection(key + 1);
           }
         });
@@ -369,6 +364,7 @@ export default class DonationLightboxForm {
       window.setTimeout(() => {
         this.sendIframeHeight(true);
       }, 400);
+      this.scheduleStepTracking();
     }
   }
   // Scroll to an element's section
@@ -384,6 +380,18 @@ export default class DonationLightboxForm {
   // window.EngridPageOptions.LightboxStepTracking = true
   isStepTrackingEnabled() {
     return window.EngridPageOptions?.LightboxStepTracking === true;
+  }
+  // Report the step the donor ends up on, whatever moved them there (Next, keyboard,
+  // payment buttons, autofill). Waiting 1 second skips quick back-and-forth jumps,
+  // e.g. browser autofill touching fields in a later step.
+  scheduleStepTracking() {
+    window.clearTimeout(this.stepTrackingTimer);
+    this.stepTrackingTimer = window.setTimeout(() => {
+      const activeStep = Array.from(this.sections).findIndex((section) =>
+        section.classList.contains("active")
+      );
+      this.trackStep(activeStep);
+    }, 1000);
   }
   // Tell the parent page the donor reached a new step (once per step per lightbox load)
   trackStep(sectionId) {
@@ -893,10 +901,9 @@ export default class DonationLightboxForm {
         if (paymentType) {
           paymentType.value = btn.dataset.paymentType;
           // Go to the next section
-          const nextSectionId =
-            parseInt(btn.closest("[data-section-id]").dataset.sectionId) + 1;
-          this.trackStep(nextSectionId);
-          this.scrollToSection(nextSectionId);
+          this.scrollToSection(
+            parseInt(btn.closest("[data-section-id]").dataset.sectionId) + 1
+          );
         }
       });
     });
